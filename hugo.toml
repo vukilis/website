@@ -9,7 +9,7 @@ languageName = "English"
 [author]
     name = "Vuk1lis"
     email = ""
-    link = ""
+    link = "/about/"
 
 # Menu config
 [menu]
@@ -68,6 +68,32 @@ languageName = "English"
 
 [params]
     defaultTheme = "dark"
+
+    [params.footer]
+        enable = true
+        custom = "ovo je footer"
+        hugo = false
+        since = 2023
+    
+    [params.home]
+    # amount of RSS pages
+    rss = 5
+    [params.home.profile]
+        enable = true
+        gravatarEmail = ""
+        # URL of avatar shown in home page
+        avatarURL = ""
+        title = "Vuk1lis Tech"
+        subtitle = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+        typeit = false
+        social = true
+        disclaimer = ""
+
+    [params.social]
+        GitHub = "vukilis"
+        Steam = "vuk1lis"
+        Linkedin = "vuklekic"
+        Email = "hello.vuklekic@gmail.com"
 
 [markup]
     [markup.highlight]
