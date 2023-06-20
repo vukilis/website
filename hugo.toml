@@ -1,0 +1,75 @@
+baseURL = "http://example.org/"
+theme = "LoveIt"
+# website title
+title = "Vuk1lis"
+languageCode = "en"
+languageName = "English"
+
+# Author config
+[author]
+    name = "Vuk1lis"
+    email = ""
+    link = ""
+
+# Menu config
+[menu]
+    [[menu.main]]
+        weight = 1
+        identifier = "posts"
+        # you can add extra information before the name (HTML format is supported), such as icons
+        pre = ""
+        # you can add extra information after the name (HTML format is supported), such as icons
+        post = ""
+        name = "Posts"
+        url = "/posts/"
+        # title will be shown when you hover on this menu link
+        title = ""
+    [[menu.main]]
+        weight = 2
+        identifier = "tags"
+        pre = ""
+        post = ""
+        name = "Tags"
+        url = "/tags/"
+        title = ""
+    [[menu.main]]
+        weight = 3
+        identifier = "categories"
+        pre = ""
+        post = ""
+        name = "Categories"
+        url = "/categories/"
+        title = ""
+    [[menu.main]]
+        weight = 4
+        identifier = "about"
+        pre = ""
+        post = ""
+        name = "About"
+        url = "/about/"
+        title = ""
+
+[outputs]
+    home = ["HTML", "RSS", "JSON"]
+
+[params.search]
+    enable = true
+    type = "lunr"
+    contentLength = 4000
+    placeholder = "search"
+    maxResultLength = 10
+    snippetLength = 30
+    highlightTag = "em"
+    absoluteURL = false
+    [params.search.algolia]
+        index = ""
+        appID = ""
+        searchKey = ""
+
+[params]
+    defaultTheme = "dark"
+
+[markup]
+    [markup.highlight]
+        # false is a necessary configuration (https://github.com/dillonzq/LoveIt/issues/158)
+        noClasses = false
