@@ -29,4 +29,18 @@ share:
     enable: false
 ---
 
-HI
+
+&nbsp;
+
+#                                           Vuk Lekić
+#                                     DevOps Engineer
+
+{{< figure src="https://c.tenor.com/qJ5evVs-_uUAAAAC/coding.gif">}}
+
+&nbsp;
+
+###  Languages and Tools :
+
+<!-- # :(fa-brands fa-linux): -->
+
+![Tux, the Linux mascot](/images/about/linux_logo.png)
