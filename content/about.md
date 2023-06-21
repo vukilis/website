@@ -35,6 +35,8 @@ share:
 #                                           Vuk Lekić
 #                                     DevOps Engineer
 
+&nbsp;
+
 {{< figure src="https://c.tenor.com/qJ5evVs-_uUAAAAC/coding.gif">}}
 
 &nbsp;
