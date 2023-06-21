@@ -45,4 +45,6 @@ share:
 
 <!-- # :(fa-brands fa-linux): -->
 
-![Tux, the Linux mascot](/images/about/linux_logo.png)
+![Tux, the Linux mascot](/images/about/linux_logo.png) 
+![Tux, the Linux mascot](/images/about/aws_logo.png) 
+![Tux, the Linux mascot](/images/about/docker_logo.png)
