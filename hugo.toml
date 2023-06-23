@@ -69,6 +69,15 @@ languageName = "English"
 [params]
     defaultTheme = "dark"
 
+    title = "V"
+    name = "fddf"
+    description = "This is my cool site"
+    [params.header.title]
+        logo = "/images/logo.png"
+        name = ""
+        pre = ""
+        post = ""
+        typeit = true
     [params.footer]
         enable = true
         custom = "ovo je footer"
