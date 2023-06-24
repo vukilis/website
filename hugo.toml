@@ -1,10 +1,10 @@
 baseURL = "http://example.org/"
 theme = "LoveIt"
 # website title
-title = "Vuk1lis"
+title = "V For Vuk1lis"
 languageCode = "en"
 languageName = "English"
-
+summaryLength = true
 # Author config
 [author]
     name = "Vuk1lis"
@@ -16,9 +16,7 @@ languageName = "English"
     [[menu.main]]
         weight = 1
         identifier = "posts"
-        # you can add extra information before the name (HTML format is supported), such as icons
         pre = ""
-        # you can add extra information after the name (HTML format is supported), such as icons
         post = ""
         name = "Posts"
         url = "/posts/"
@@ -68,9 +66,9 @@ languageName = "English"
 
 [params]
     defaultTheme = "dark"
-
-    title = "V"
-    name = "fddf"
+    
+    title = "V For Vuk1lis"
+    name = "V For Vuk1lis"
     description = "This is my cool site"
     [params.header.title]
         logo = "/images/logo_4.png"
@@ -92,7 +90,7 @@ languageName = "English"
         gravatarEmail = ""
         # URL of avatar shown in home page
         avatarURL = "/images/logo_4.png"
-        title = "Vuk1lis Tech"
+        title = "V For Vuk1lis"
         subtitle = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
         typeit = false
         social = true

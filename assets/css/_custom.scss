@@ -1,7 +1,7 @@
 header .logo {
-    min-height: 1.5em;
-    height: 3.5em;
-    vertical-align: text-bottom;
+    // min-height: 1.5em;
+    height: 3.33em;
+    // vertical-align: text-bottom;
 }
 
 #header-desktop {
@@ -26,4 +26,18 @@ header .logo {
 .home-recent {
     text-align: center;
     font-size: 1.05em;
+}
+
+#header-desktop .header-wrapper {
+    padding: 0 2rem 0 10vh;
+    height: 5em;
+}
+
+#header-desktop .header-wrapper .header-title {
+    font-size: var(--header-title-font-size);
+    height: 3.34em;
+}
+
+.single-title, .single .single-title {
+    margin: 3rem 0 .5rem;
 }

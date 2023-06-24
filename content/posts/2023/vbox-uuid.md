@@ -7,7 +7,7 @@ license: ""
 
 tags: [virtualization, linux, windows]
 categories: [Virtualization]
-description: "The Problem When I want to copy existing VMs to create a new project / VM, my new created VM have..."
+description: "When I want to copy existing VMs to create a new project / VM, my new created VM have..."
 
 featuredImagePreview: "/images/2023/vbox_uuid/vbox_uuid.png"
 
@@ -38,6 +38,7 @@ share:
     Line: false
     Weibo: false
 ---
+<!--more-->
 
 ## The Problem
 

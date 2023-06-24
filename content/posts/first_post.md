@@ -7,6 +7,7 @@ license: ""
 
 tags: [ubuntu]
 categories: [Linux, Windows, Networking]
+description: "This is first post for testing purposes..."
 
 featuredImagePreview: "/images/home.jpg"
 
@@ -37,6 +38,8 @@ share:
     Weibo: false
 
 ---
+<!--more-->
+
 [Hugo]^(An open-source static site generator)
 
 That is so funny! :(far fa-grin-tears):
