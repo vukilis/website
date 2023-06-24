@@ -73,7 +73,7 @@ languageName = "English"
     name = "fddf"
     description = "This is my cool site"
     [params.header.title]
-        logo = "/images/logo.png"
+        logo = "/images/logo_4.png"
         name = ""
         pre = ""
         post = ""
@@ -91,7 +91,7 @@ languageName = "English"
         enable = true
         gravatarEmail = ""
         # URL of avatar shown in home page
-        avatarURL = ""
+        avatarURL = "/images/logo_4.png"
         title = "Vuk1lis Tech"
         subtitle = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
         typeit = false
@@ -108,3 +108,5 @@ languageName = "English"
     [markup.highlight]
         # false is a necessary configuration (https://github.com/dillonzq/LoveIt/issues/158)
         noClasses = false
+
+custom_css = ["css/_custom.scss"]
