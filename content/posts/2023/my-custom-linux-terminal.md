@@ -7,7 +7,7 @@ license: ""
 
 tags: [ubuntu]
 categories: [Linux, Windows, Networking]
-description: "My custom"
+description: "In this article, I will show my 3 favourite terminal with implementation of ZSH shell..."
 
 featuredImagePreview: "/images/2023/my_custom_linux_terminal/my_custom_linux_terminal.png"
 
@@ -39,3 +39,52 @@ share:
     Weibo: false
 ---
 <!--more-->
+
+<!-- https://christitus.com/zsh/
+https://christitus.com/custom-vim/ -->
+
+In this article, I will show my 3 favourite terminal with implementation of ZSH shell.
+
+## ZSH Shell
+
+ZSH is an amazing shell that just makes everything a bit easier from auto suggestions, autojump and completing tasks you do regularly considerably faster.
+
+- Theme I'm using for ZSH is Powerlevel10k.
+
+## Terminal
+
+[**Kitty**](https://sw.kovidgoyal.net/kitty/) is very fast and configurable, uses threaded rendering for absolutely minimal latency and designed for power keyboard users.
+
+- Main config file is **kitty.conf**
+
+[**Alacritty**](https://alacritty.org/) is a modern terminal emulator that comes with sensible defaults, but allows for extensive configuration and manages to provide a flexible set of features with high performance.
+
+- Main config file is **lacritty.toml**
+
+[**Terminator**](https://gnome-terminator.org/) has become The Robot Future of Terminals. Gnome based terminal, It has multi window support and great tiling function. Definitely one of the best to ssh into different remote machines.
+
+- Main config file is **terminator.conf**
+
+## Requirements
+
+If you are **Arch** user you need to install **AUR** package manager
+
+```bash
+git clone "https://aur.archlinux.org/yay.git"
+cd yay
+makepkg -si --noconfirm
+yay -Sy
+```
+
+## How To Install
+
+I built a script to install and customize terminal. Script only support distributions based on Debian and Arch.
+Check the script [here](https://github.com/vukilis/terminal_zsh_script) on my github.
+
+```bash
+git clone git@github.com:vukilis/terminal_zsh_script.git
+cd terminal-zsh-script
+./terminal-setup.sh
+```
+
+![Image of Yaktocat](https://raw.githubusercontent.com/vukilis/terminal_zsh_script/main/script.png)
