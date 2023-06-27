@@ -91,10 +91,13 @@ summaryLength = true
         # URL of avatar shown in home page
         avatarURL = "/images/logo_4.png"
         title = "V For Vuk1lis"
-        subtitle = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+        #subtitle = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+        #subtitle = "This site is made to document my work and show my way "
+        subtitle = "This site is made to document all my work, store a different guides and how-to articles."
+        #subtitle = "Ovaj sajt je napravljen da dokumentuje sav moj rad. Ovde cu prikazati razne gajdove i kako da artikle.  "
         typeit = false
         social = true
-        disclaimer = ""
+        disclaimer = "Behind this mask there is more than just flesh. Beneath this mask there is an idea... and ideas are bulletproof"
 
     [params.social]
         GitHub = "vukilis"

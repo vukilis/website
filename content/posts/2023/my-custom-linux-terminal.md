@@ -5,8 +5,8 @@ lastmod: 2023-06-26T01:57:12+02:00
 draft: false
 license: ""
 
-tags: [ubuntu]
-categories: [Linux, Windows, Networking]
+tags: [terminal, customization, zsh]
+categories: [Linux]
 description: "In this article, I will show my 3 favourite terminal with implementation of ZSH shell..."
 
 featuredImagePreview: "/images/2023/my_custom_linux_terminal/my_custom_linux_terminal.png"
@@ -40,14 +40,15 @@ share:
 ---
 <!--more-->
 
-<!-- https://christitus.com/zsh/
-https://christitus.com/custom-vim/ -->
+---
 
 In this article, I will show my 3 favourite terminal with implementation of ZSH shell.
 
+---
+
 ## ZSH Shell
 
-ZSH is an amazing shell that just makes everything a bit easier from auto suggestions, autojump and completing tasks you do regularly considerably faster.
+**ZSH** is an amazing shell that just makes everything a bit easier from auto suggestions, autojump and completing tasks you do regularly considerably faster.
 
 - Theme I'm using for ZSH is Powerlevel10k.
 
@@ -87,4 +88,4 @@ cd terminal-zsh-script
 ./terminal-setup.sh
 ```
 
-![Image of Yaktocat](https://raw.githubusercontent.com/vukilis/terminal_zsh_script/main/script.png)
+![Script](https://raw.githubusercontent.com/vukilis/terminal_zsh_script/main/script.png)

@@ -19,13 +19,19 @@ header .logo {
 }
 
 .home .home-profile .home-subtitle {
-    text-align: left;
+    // text-align: left;
     font-size: larger;
 }
 
 .home-recent {
     text-align: center;
     font-size: 1.05em;
+}
+
+.home-disclaimer {
+    width: 60%;
+    margin: auto!important;
+    font-style: italic;
 }
 
 #header-desktop .header-wrapper {
