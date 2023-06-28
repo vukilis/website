@@ -30,7 +30,7 @@ header .logo {
 
 .home-disclaimer {
     width: 60%;
-    margin: auto!important;
+    margin: auto !important;
     font-style: italic;
     color: #5d5d5f;
 }
@@ -50,7 +50,7 @@ header .logo {
 }
 
 #header-desktop .header-wrapper .menu .menu-item:nth-child(5) {
-    margin-left: 2rem!important;
+    margin-left: 2rem !important;
     color: blueviolet;
 }
 
@@ -64,4 +64,9 @@ header .logo {
 
 .fa-2 {
     color: gold;
+}
+
+details summary{
+    cursor: pointer;
+    font-size: 1.3em;
 }
