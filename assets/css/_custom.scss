@@ -32,6 +32,7 @@ header .logo {
     width: 60%;
     margin: auto!important;
     font-style: italic;
+    color: #5d5d5f;
 }
 
 #header-desktop .header-wrapper {
@@ -46,4 +47,21 @@ header .logo {
 
 .single-title, .single .single-title {
     margin: 3rem 0 .5rem;
+}
+
+#header-desktop .header-wrapper .menu .menu-item:nth-child(5) {
+    margin-left: 2rem!important;
+    color: blueviolet;
+}
+
+#header-mobile .header-container .menu .menu-item:nth-child(6) {
+    color: blueviolet;
+}
+
+.teal {
+    color: teal;
+}
+
+.fa-2 {
+    color: gold;
 }

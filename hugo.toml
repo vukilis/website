@@ -46,6 +46,14 @@ summaryLength = true
         name = "About"
         url = "/about/"
         title = ""
+    [[menu.main]]
+        weight = 5
+        identifier = "design.html"
+        pre = ""
+        post = ""
+        name = "Design"
+        url = "/design/"
+        title = ""
 
 [outputs]
     home = ["HTML", "RSS", "JSON"]
