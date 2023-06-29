@@ -70,3 +70,12 @@ details summary{
     cursor: pointer;
     font-size: 1.3em;
 }
+
+@media only screen and (min-width: 768px) {
+    .embed {
+        width: 80%;
+    }
+    .embed div{
+        width: 80% !important;
+    }
+}
