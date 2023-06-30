@@ -78,4 +78,13 @@ details summary{
     .embed div{
         width: 80% !important;
     }
+    .skills img{
+        width: 6% !important;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .skills img{
+        width: 10% !important;
+    }
 }
