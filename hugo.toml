@@ -78,6 +78,8 @@ summaryLength = true
     title = "V For Vuk1lis"
     name = "V For Vuk1lis"
     description = "This is my cool site"
+    [params.app]
+    svgFavicon = "/images/logo_4.png"
     [params.header.title]
         logo = "/images/logo_4.png"
         name = ""
