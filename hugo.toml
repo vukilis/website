@@ -5,7 +5,7 @@ title = "V For Vuk1lis"
 languageCode = "en"
 languageName = "English"
 summaryLength = true
-
+# Author config
 [author]
     name = "Vuk1lis"
     email = ""
