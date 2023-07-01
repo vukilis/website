@@ -59,7 +59,7 @@ header .logo {
 }
 
 .teal {
-    color: teal;
+    color: teal !important;
 }
 
 .fa-2 {
@@ -108,6 +108,7 @@ details summary{
     border-radius: var(--border-width);
     padding: 1em;
     margin: auto;
+    color: #C0C0C0	;
   
     &::after {
       position: absolute;
