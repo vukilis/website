@@ -1,5 +1,6 @@
 ---
 title: "My Custom Linux Terminal"
+url: /my-custom-linux-terminal
 date: 2023-06-26T01:57:12+02:00
 lastmod: 2023-06-26T01:57:12+02:00
 draft: false
@@ -25,6 +26,8 @@ rssFullText: false
 toc:
     enable: true
     auto: true
+comment:
+    enable: true
 code:
     copy: true
     maxShownLines: 50

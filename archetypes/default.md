@@ -1,5 +1,6 @@
 ---
 title: "{{ replace .Name "-" " " | title }}"
+url: /{{ .Name }}
 date: {{ .Date }}
 lastmod: {{ .Date }}
 draft: false
@@ -25,6 +26,8 @@ rssFullText: false
 toc:
     enable: true
     auto: true
+comment:
+    enable: true
 code:
     copy: true
     maxShownLines: 50
