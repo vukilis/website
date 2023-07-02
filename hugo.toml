@@ -5,7 +5,6 @@ title = "V For Vuk1lis"
 languageCode = "en"
 languageName = "English"
 summaryLength = true
-canonifyurls = true
 
 [Permalinks]
     # posts = ":year/:month/:filename"
@@ -71,7 +70,7 @@ canonifyurls = true
     maxResultLength = 10
     snippetLength = 30
     highlightTag = "em"
-    absoluteURL = true
+    absoluteURL = false
     [params.search.algolia]
         index = "website"
         appID = "DAENWQCI5B"
