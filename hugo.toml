@@ -72,10 +72,6 @@ canonifyurls = true
     snippetLength = 30
     highlightTag = "em"
     absoluteURL = false
-    [params.search.algolia]
-        index = ""
-        appID = ""
-        searchKey = ""
 
 [params]
     defaultTheme = "dark"
