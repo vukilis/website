@@ -134,9 +134,9 @@ canonifyurls = true
     
     [params.analytics]
         enable = true
-        # Plausible Analytics
-        [params.analytics.plausible]
-            dataDomain = "vukilis.github.io/website"
+        # Yandex Metrica
+        [params.analytics.yandexMetrica]
+        id = "94181021"
 
 [markup]
     [markup.highlight]
