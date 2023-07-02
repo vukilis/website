@@ -65,13 +65,17 @@ canonifyurls = true
 
 [params.search]
     enable = true
-    type = "lunr"
+    type = "algolia"
     contentLength = 4000
     placeholder = "search"
     maxResultLength = 10
     snippetLength = 30
     highlightTag = "em"
-    absoluteURL = true
+    absoluteURL = false
+    [params.search.algolia]
+        index = "website"
+        appID = "DAENWQCI5B"
+        searchKey = "3a87729afa43d11594394f5b86df56f8"
 
 [params]
     defaultTheme = "dark"
