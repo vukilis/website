@@ -93,9 +93,10 @@ canonifyurls = true
         typeit = true
     [params.footer]
         enable = true
-        custom = "ovo je footer"
+        custom = ""
         hugo = false
         since = 2023
+        license= "Privacy Policy"
     
     [params.home]
     # amount of RSS pages
@@ -128,7 +129,7 @@ canonifyurls = true
                 repo = "vukilis/website"
                 issueTerm = "url"
                 label = "comment"
-                lightTheme = "github-light"
+                lightTheme = "github-dark"
                 darkTheme = "github-dark"
 
 [markup]

@@ -35,7 +35,7 @@ math:
     enable: false
 share:
     enable: true
-    HackerNews: false
+    HackerNews: true
     Reddit: true
     VK: true
     Line: false
