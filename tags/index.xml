@@ -1,54 +1,54 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Tags - Tag - V For Vuk1lis</title>
-        <link>https://vukilis.github.io/website/tags/</link>
+        <link>https://vukilis.github.io/tags/</link>
         <description>Tags - Tag - V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 26 Jun 2023 01:57:12 &#43;0200</lastBuildDate><atom:link href="https://vukilis.github.io/website/tags/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 26 Jun 2023 01:57:12 &#43;0200</lastBuildDate><atom:link href="https://vukilis.github.io/tags/" rel="self" type="application/rss+xml" /><item>
     <title>customization</title>
-    <link>https://vukilis.github.io/website/tags/customization/</link>
+    <link>https://vukilis.github.io/tags/customization/</link>
     <pubDate>Mon, 26 Jun 2023 01:57:12 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/customization/</guid>
+    <guid>https://vukilis.github.io/tags/customization/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>terminal</title>
-    <link>https://vukilis.github.io/website/tags/terminal/</link>
+    <link>https://vukilis.github.io/tags/terminal/</link>
     <pubDate>Mon, 26 Jun 2023 01:57:12 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/terminal/</guid>
+    <guid>https://vukilis.github.io/tags/terminal/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>zsh</title>
-    <link>https://vukilis.github.io/website/tags/zsh/</link>
+    <link>https://vukilis.github.io/tags/zsh/</link>
     <pubDate>Mon, 26 Jun 2023 01:57:12 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/zsh/</guid>
+    <guid>https://vukilis.github.io/tags/zsh/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>linux</title>
-    <link>https://vukilis.github.io/website/tags/linux/</link>
+    <link>https://vukilis.github.io/tags/linux/</link>
     <pubDate>Wed, 21 Jun 2023 01:48:51 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/linux/</guid>
+    <guid>https://vukilis.github.io/tags/linux/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>virtualization</title>
-    <link>https://vukilis.github.io/website/tags/virtualization/</link>
+    <link>https://vukilis.github.io/tags/virtualization/</link>
     <pubDate>Wed, 21 Jun 2023 01:48:51 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/virtualization/</guid>
+    <guid>https://vukilis.github.io/tags/virtualization/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>windows</title>
-    <link>https://vukilis.github.io/website/tags/windows/</link>
+    <link>https://vukilis.github.io/tags/windows/</link>
     <pubDate>Wed, 21 Jun 2023 01:48:51 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/windows/</guid>
+    <guid>https://vukilis.github.io/tags/windows/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>
