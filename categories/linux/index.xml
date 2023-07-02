@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Linux - Category - V For Vuk1lis</title>
-        <link>https://vukilis.github.io/categories/linux/</link>
+        <link>https://vukilis.github.io/website/categories/linux/</link>
         <description>Linux - Category - V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 26 Jun 2023 01:57:12 &#43;0200</lastBuildDate><atom:link href="https://vukilis.github.io/categories/linux/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 26 Jun 2023 01:57:12 &#43;0200</lastBuildDate><atom:link href="https://vukilis.github.io/website/categories/linux/" rel="self" type="application/rss+xml" /><item>
     <title>My Custom Linux Terminal</title>
-    <link>https://vukilis.github.io/my-custom-linux-terminal/</link>
+    <link>https://vukilis.github.io/website/my-custom-linux-terminal/</link>
     <pubDate>Mon, 26 Jun 2023 01:57:12 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/my-custom-linux-terminal/</guid>
+    <guid>https://vukilis.github.io/website/my-custom-linux-terminal/</guid>
     <description><![CDATA[In this article, I will show my 3 favourite terminal with implementation of ZSH shell...]]></description>
 </item>
 </channel>
