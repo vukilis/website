@@ -362,7 +362,7 @@ var Theme = /*#__PURE__*/function () {
                 var hits = _ref3.hits;
                 var results = {};
                 hits.forEach(function (_ref4) {
-                  var uri = "website/"+_ref4.uri,
+                  var uri = 'https://vukilis.github.io/website'+_ref4.uri,
                       date = _ref4.date,
                       title = _ref4._highlightResult.title,
                       content = _ref4._snippetResult.content;
