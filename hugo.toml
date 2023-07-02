@@ -71,7 +71,7 @@ canonifyurls = true
     maxResultLength = 10
     snippetLength = 30
     highlightTag = "em"
-    absoluteURL = false
+    absoluteURL = true
     [params.search.algolia]
         index = "website"
         appID = "DAENWQCI5B"
