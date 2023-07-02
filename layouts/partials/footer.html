@@ -32,12 +32,12 @@
 
                 {{- /* Author */ -}}
                 {{- if ne .Site.Params.footer.author false -}}
-                    <span class="author" itemprop="copyrightHolder">&nbsp;<a href="{{ $.Site.Author.link | default .Site.Home.RelPermalink }}" target="_blank">{{ .Site.Author.name }}</a></span>
+                    <span class="author" itemprop="copyrightHolder">&nbsp;<a href="{{ $.Site.Author.link | default .Site.Home.RelPermalink }}">{{ .Site.Author.name }}</a></span>
                 {{- end -}}
 
                 {{- /* License */ -}}
                 {{- with .Site.Params.footer.license -}}
-                    &nbsp;|&nbsp;<span class="license"><a href="/privacy" target="_blank">Privacy</a></span>
+                    &nbsp;|&nbsp;<span class="license"><a href="/privacy">Privacy</a></span>
                 {{- end -}}
 
                 {{- /* ICP */ -}}

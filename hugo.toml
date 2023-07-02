@@ -131,6 +131,12 @@ canonifyurls = true
                 label = "comment"
                 lightTheme = "github-dark"
                 darkTheme = "github-dark"
+    
+    [params.analytics]
+        enable = true
+        # Plausible Analytics
+        [params.analytics.plausible]
+            dataDomain = "vukilis.github.io/website"
 
 [markup]
     [markup.highlight]
