@@ -272,7 +272,7 @@ var Theme = /*#__PURE__*/function () {
                 var results = {};
 
                 _this3._index.search(query).forEach(function (_ref) {
-                  var ref = _ref.ref,
+                  var ref = 'https://vukilis.github.io/website'+_ref.ref,
                       metadata = _ref.matchData.metadata;
                   var matchData = _this3._indexData[ref];
                   var uri = matchData.uri,
