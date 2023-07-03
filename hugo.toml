@@ -82,9 +82,10 @@ canonifyurls = true
     
     title = "V For Vuk1lis"
     name = "V For Vuk1lis"
-    description = "This is my cool site"
+    description = "Happy Coding"
+    images = ["/images/logo_4.png"]
     [params.app]
-    svgFavicon = "/images/logo_4.png"
+        svgFavicon = "/images/favicon.png"
     [params.header.title]
         logo = "/images/logo_4.png"
         name = ""
@@ -119,6 +120,7 @@ canonifyurls = true
         Email = "hello.vuklekic@gmail.com"
     
     [params.page]
+        rssFullText = true
         [params.page.comment]
             enable = true
             [params.page.comment.valine]
