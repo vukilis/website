@@ -83,11 +83,11 @@ canonifyurls = true
     title = "V For Vuk1lis"
     name = "V For Vuk1lis"
     description = "Happy Coding"
-    images = ["/images/logo_4.png"]
+    images = ["/images/logo.png"]
     [params.app]
         svgFavicon = "/images/favicon.png"
     [params.header.title]
-        logo = "/images/logo_4.png"
+        logo = "/images/logo.png"
         name = ""
         pre = ""
         post = ""
@@ -106,7 +106,7 @@ canonifyurls = true
         enable = true
         gravatarEmail = ""
         # URL of avatar shown in home page
-        avatarURL = "/images/logo_4.png"
+        avatarURL = "/images/logo.png"
         title = "V For Vuk1lis"
         subtitle = "This site is made to document all my work, store a different guides and how-to articles."
         typeit = false
