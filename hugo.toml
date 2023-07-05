@@ -98,6 +98,7 @@ canonifyurls = true
         hugo = false
         since = 2023
         license= "Privacy Policy"
+        icp = "Terms and Conditions"
     
     [params.home]
     # amount of RSS pages
