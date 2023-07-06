@@ -1,8 +1,8 @@
 ---
 title: "My Custom Windows Terminal"
 url: /my-custom-windows-terminal
-date: 2023-07-05T22:29:02+02:00
-lastmod: 2023-07-05T22:29:02+02:00
+date: 2023-07-07T22:29:02+02:00
+lastmod: 2023-07-07T22:29:02+02:00
 draft: false
 license: ""
 
