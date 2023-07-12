@@ -60,7 +60,7 @@ If somehow you don't have installed windows terminal install it via [**Microsoft
 winget install -e -i --id=9N0DX20HK701 --source=msstore
 ```
 
-{{< image src="Cyberpunk" src_s="/images/2023/my_custom_windows_terminal/font_settings.png" src_l="/images/2023/my_custom_windows_terminal/font_settings.png" width="100%">}}
+{{< image src="Font" src_s="/images/2023/my_custom_windows_terminal/font_settings.png" src_l="/images/2023/my_custom_windows_terminal/font_settings.png" width="100%">}}
 
 ## Install PowerShell
 
@@ -133,7 +133,7 @@ git clone https://github.com/vukilis/oh-my-windows-terminal
         . $PROFILE
         ```
 
-        {{< image src="Cyberpunk" src_s="/images/2023/my_custom_windows_terminal/terminal.png" src_l="/images/2023/my_custom_windows_terminal/terminal.png" width="100%">}}
+        {{< image src="Terminal" src_s="/images/2023/my_custom_windows_terminal/terminal.png" src_l="/images/2023/my_custom_windows_terminal/terminal.png" width="100%">}}
 
 - If you want to delete history of stored input lines run ```delete_history.ps1``` script
 

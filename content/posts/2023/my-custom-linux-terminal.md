@@ -91,4 +91,5 @@ cd terminal-zsh-script
 ./terminal-setup.sh
 ```
 
-![Script](https://raw.githubusercontent.com/vukilis/terminal_zsh_script/main/script.png)
+<!-- ![Script](https://raw.githubusercontent.com/vukilis/terminal_zsh_script/main/script.png) -->
+{{< image src="Script Menu" src_s="https://raw.githubusercontent.com/vukilis/terminal_zsh_script/main/script.png" src_l="https://raw.githubusercontent.com/vukilis/terminal_zsh_script/main/script.png" width="400">}}
