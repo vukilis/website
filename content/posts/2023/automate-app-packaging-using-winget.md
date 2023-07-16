@@ -1,6 +1,6 @@
 ---
-title: "Automate App Installation Using Winget"
-url: /automate-app-installation-using-winget
+title: "Automate App Packaging Using Winget"
+url: /automate-app-packaging-using-winget
 date: 2023-07-16T14:25:21+02:00
 lastmod: 2023-07-16T14:25:21+02:00
 draft: false
@@ -8,7 +8,7 @@ license: ""
 
 tags: [winget, automation]
 categories: [Windows]
-description: "I will show my simple script which automate install..."
+description: "I want to show my simple script that automates the installation of..."
 
 featuredImagePreview: "/images/2023/automate_app_installation_using_winget/automate_app_installation_using_winget.png"
 
@@ -45,7 +45,8 @@ share:
 
 ---
 
-I will show my simple script which automate install multiple windows apps using winget.
+I want to show my simple script that automates the installation of multiple Windows apps using winget.  
+It's better and faster way than manual installation, especially when you often installing a new Windows.
 
 ---
 
