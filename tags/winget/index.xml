@@ -4,12 +4,12 @@
         <link>https://vukilis.github.io/website/tags/winget/</link>
         <description>winget - Tag - V For Vuk1lis</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 16 Jul 2023 14:25:21 &#43;0200</lastBuildDate><atom:link href="https://vukilis.github.io/website/tags/winget/" rel="self" type="application/rss+xml" /><item>
-    <title>Automate App Installation Using Winget</title>
-    <link>https://vukilis.github.io/website/automate-app-installation-using-winget/</link>
+    <title>Automate App Packaging Using Winget</title>
+    <link>https://vukilis.github.io/website/automate-app-packaging-using-winget/</link>
     <pubDate>Sun, 16 Jul 2023 14:25:21 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/automate-app-installation-using-winget/</guid>
-    <description><![CDATA[I will show my simple script which automate install...]]></description>
+    <guid>https://vukilis.github.io/website/automate-app-packaging-using-winget/</guid>
+    <description><![CDATA[I want to show my simple script that automates the installation of...]]></description>
 </item>
 </channel>
 </rss>
