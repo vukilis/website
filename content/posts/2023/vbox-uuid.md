@@ -5,8 +5,8 @@ lastmod: 2023-06-21T01:48:51+02:00
 draft: false
 license: ""
 
-tags: [virtualization, linux, windows]
-categories: [Virtualization]
+tags: [vbox]
+categories: [Virtualization, Linux, Windows]
 description: "When I want to copy existing VMs to create a new project / VM, my new created VM have..."
 
 featuredImagePreview: "/images/2023/vbox_uuid/vbox_uuid.png"
