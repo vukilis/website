@@ -3,9 +3,17 @@
         <title>V For Vuk1lis</title>
         <link>https://vukilis.github.io/website/</link>
         <description>Happy Coding</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 14 Jul 2023 20:30:58 &#43;0200</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 16 Jul 2023 14:25:21 &#43;0200</lastBuildDate>
             <atom:link href="https://vukilis.github.io/website/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Automate App Installation Using Winget</title>
+    <link>https://vukilis.github.io/website/automate-app-installation-using-winget/</link>
+    <pubDate>Sun, 16 Jul 2023 14:25:21 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.github.io/website/automate-app-installation-using-winget/</guid>
+    <description><![CDATA[I will show my simple script which automate install...]]></description>
+</item>
+<item>
     <title>PostgreSQL Database Migration With CLI</title>
     <link>https://vukilis.github.io/website/postgresql-database-migration-with-cli/</link>
     <pubDate>Fri, 14 Jul 2023 20:30:58 &#43;0200</pubDate>
@@ -36,14 +44,6 @@
     <author>Vuk1lis</author>
     <guid>https://vukilis.github.io/website/my-custom-linux-terminal/</guid>
     <description><![CDATA[In this article, I will show my 3 favourite terminal with implementation of ZSH shell...]]></description>
-</item>
-<item>
-    <title>Changing UUID for VirtualBox VMs</title>
-    <link>https://vukilis.github.io/website/vbox-uuid/</link>
-    <pubDate>Wed, 21 Jun 2023 01:48:51 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/vbox-uuid/</guid>
-    <description><![CDATA[When I want to copy existing VMs to create a new project / VM, my new created VM have...]]></description>
 </item>
 </channel>
 </rss>
