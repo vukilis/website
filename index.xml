@@ -3,9 +3,17 @@
         <title>V For Vuk1lis</title>
         <link>https://vukilis.github.io/website/</link>
         <description>Happy Coding</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 16 Jul 2023 14:25:21 &#43;0200</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 22 Jul 2023 18:19:15 &#43;0200</lastBuildDate>
             <atom:link href="https://vukilis.github.io/website/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Deploy Docker With Ansible on Ubuntu</title>
+    <link>https://vukilis.github.io/website/deploy-docker-with-ansible-on-ubuntu/</link>
+    <pubDate>Sat, 22 Jul 2023 18:19:15 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.github.io/website/deploy-docker-with-ansible-on-ubuntu/</guid>
+    <description><![CDATA[In this guide I want to show how to install and deploy docker container...]]></description>
+</item>
+<item>
     <title>Automate App Packaging Using Winget</title>
     <link>https://vukilis.github.io/website/automate-app-packaging-using-winget/</link>
     <pubDate>Sun, 16 Jul 2023 14:25:21 &#43;0200</pubDate>
@@ -36,14 +44,6 @@
     <author>Vuk1lis</author>
     <guid>https://vukilis.github.io/website/my-custom-windows-terminal/</guid>
     <description><![CDATA[I will show how I made my windows terminal look better and how made me more productive...]]></description>
-</item>
-<item>
-    <title>My Custom Linux Terminal</title>
-    <link>https://vukilis.github.io/website/my-custom-linux-terminal/</link>
-    <pubDate>Mon, 26 Jun 2023 01:57:12 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/my-custom-linux-terminal/</guid>
-    <description><![CDATA[In this article, I will show my 3 favourite terminal with implementation of ZSH shell...]]></description>
 </item>
 </channel>
 </rss>
