@@ -2,14 +2,18 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
+            <loc>https://vukilis.github.io/website/tags/asdf/</loc><lastmod>2023-08-08T19:56:02&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.github.io/website/asdf-with-poetry/</loc><lastmod>2023-08-08T19:56:02&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.github.io/website/categories/</loc><lastmod>2023-08-08T19:56:02&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.github.io/website/categories/linux/</loc><lastmod>2023-08-08T19:56:02&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.github.io/website/tags/poetry/</loc><lastmod>2023-08-08T19:56:02&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.github.io/website/posts/</loc><lastmod>2023-08-08T19:56:02&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.github.io/website/tags/python/</loc><lastmod>2023-08-08T19:56:02&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.github.io/website/tags/</loc><lastmod>2023-08-08T19:56:02&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.github.io/website/tags/ubuntu/</loc><lastmod>2023-08-08T19:56:02&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.github.io/website/</loc><lastmod>2023-08-08T19:56:02&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.github.io/website/tags/ansible/</loc><lastmod>2023-07-22T18:19:15&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.github.io/website/categories/</loc><lastmod>2023-07-22T18:19:15&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.github.io/website/deploy-docker-with-ansible-on-ubuntu/</loc><lastmod>2023-07-22T18:19:15&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.github.io/website/categories/linux/</loc><lastmod>2023-07-22T18:19:15&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.github.io/website/posts/</loc><lastmod>2023-07-22T18:19:15&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.github.io/website/tags/</loc><lastmod>2023-07-22T18:19:15&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.github.io/website/tags/ubuntu/</loc><lastmod>2023-07-22T18:19:15&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.github.io/website/</loc><lastmod>2023-07-22T18:19:15&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.github.io/website/automate-app-packaging-using-winget/</loc><lastmod>2023-07-16T14:25:21&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.github.io/website/tags/automation/</loc><lastmod>2023-07-16T14:25:21&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.github.io/website/categories/windows/</loc><lastmod>2023-07-16T14:25:21&#43;02:00</lastmod></url><url>

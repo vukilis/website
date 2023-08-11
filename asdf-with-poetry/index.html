@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Asdf With Poetry - V For Vuk1lis</title><meta name="Description" content="In this guide I will show how to setup asdf tool with python poetry..."><meta property="og:title" content="Asdf With Poetry" />
+<meta property="og:description" content="In this guide I will show how to setup asdf tool with python poetry..." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://vukilis.github.io/website/asdf-with-poetry/" /><meta property="og:image" content="https://vukilis.github.io/images/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-08-08T19:56:02+02:00" />
+<meta property="article:modified_time" content="2023-08-08T19:56:02+02:00" /><meta property="og:site_name" content="V For Vuk1lis" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://vukilis.github.io/images/logo.png"/>
+
+<meta name="twitter:title" content="Asdf With Poetry"/>
+<meta name="twitter:description" content="In this guide I will show how to setup asdf tool with python poetry..."/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://vukilis.github.io/website/images/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="https://vukilis.github.io/website/apple-touch-icon.png"><link rel="mask-icon" href="https://vukilis.github.io/website/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="https://vukilis.github.io/website/site.webmanifest"><link rel="canonical" href="https://vukilis.github.io/website/asdf-with-poetry/" /><link rel="prev" href="https://vukilis.github.io/website/deploy-docker-with-ansible-on-ubuntu/" /><link rel="stylesheet" href="https://vukilis.github.io/website/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Asdf With Poetry",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/vukilis.github.io\/website\/asdf-with-poetry\/"
+        },"genre": "posts","keywords": "ubuntu, asdf, poetry, python","wordcount":  373 ,
+        "url": "https:\/\/vukilis.github.io\/website\/asdf-with-poetry\/","datePublished": "2023-08-08T19:56:02+02:00","dateModified": "2023-08-08T19:56:02+02:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Vuk1lis"
+            },"description": "In this guide I will show how to setup asdf tool with python poetry..."
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="https://vukilis.github.io/website/" title="V For Vuk1lis"><img
+        class="lazyload logo"
+        src="https://vukilis.github.io/website/svg/loading.min.svg"
+        data-src="https://vukilis.github.io/website/images/logo.png"
+        data-srcset="https://vukilis.github.io/website/images/logo.png, https://vukilis.github.io/website/images/logo.png 1.5x, https://vukilis.github.io/website/images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="https://vukilis.github.io/website/posts/"> Posts </a><a class="menu-item" href="https://vukilis.github.io/website/tags/"> Tags </a><a class="menu-item" href="https://vukilis.github.io/website/categories/"> Categories </a><a class="menu-item" href="https://vukilis.github.io/website/about/"> About </a><a class="menu-item" href="https://vukilis.github.io/website/design/"> Design </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="search" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="https://vukilis.github.io/website/" title="V For Vuk1lis"><img
+        class="lazyload logo"
+        src="https://vukilis.github.io/website/svg/loading.min.svg"
+        data-src="https://vukilis.github.io/website/images/logo.png"
+        data-srcset="https://vukilis.github.io/website/images/logo.png, https://vukilis.github.io/website/images/logo.png 1.5x, https://vukilis.github.io/website/images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="search" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="https://vukilis.github.io/website/posts/" title="">Posts</a><a class="menu-item" href="https://vukilis.github.io/website/tags/" title="">Tags</a><a class="menu-item" href="https://vukilis.github.io/website/categories/" title="">Categories</a><a class="menu-item" href="https://vukilis.github.io/website/about/" title="">About</a><a class="menu-item" href="https://vukilis.github.io/website/design/" title="">Design</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Asdf With Poetry</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://vukilis.github.io/website/about/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Vuk1lis</a></span>&nbsp;<span class="post-category">included in <a href="https://vukilis.github.io/website/categories/linux/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-08">2023-08-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;373 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#install-prerequirements">Install prerequirements</a></li>
+    <li><a href="#install-asdf">Install asdf</a></li>
+    <li><a href="#install-python">install python</a></li>
+    <li><a href="#install-poetry">Install poetry</a></li>
+    <li><a href="#activate-poetry">Activate poetry</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><hr>
+<p>In this guide I will show how to setup asdf tool with python poetry. ASDF is a tool version manager and very useful tool for many other language and tools like go, node, terraform, docker&hellip;</p>
+<hr>
+<h2 id="install-prerequirements">Install prerequirements</h2>
+<ul>
+<li>First we need install dependencies. This dependencies are important to prevent installation failed when we install our language or tool version.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install -y make build-essential libssl-dev zlib1g-dev <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python3-openssl <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>git
+</span></span></code></pre></div><h2 id="install-asdf">Install asdf</h2>
+<ul>
+<li>We want to download from official repository.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.12.0
+</span></span></code></pre></div><ul>
+<li>After we download we need to install/configure.</li>
+<li>Configure depends what the shell you are using, I will show for bash and zsh.</li>
+</ul>
+<p><strong>BASH</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;# asdf #&#39;</span> &gt;&gt; ~/.zshrc
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;. $HOME/.asdf/asdf.sh&#39;</span> &gt;&gt; ~/.bashrc
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;. $HOME/.asdf/completions/asdf.bash&#39;</span> &gt;&gt; ~/.bashrc
+</span></span><span class="line"><span class="cl"><span class="nb">source</span> ~/.bashrc
+</span></span></code></pre></div><p><strong>ZSH</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;# asdf #&#39;</span> &gt;&gt; ~/.zshrc
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;. $HOME/.asdf/asdf.sh&#39;</span> &gt;&gt; ~/.zshrc
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;fpath=(${ASDF_DIR}/completions $fpath)&#39;</span> &gt;&gt; ~/.zshrc
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;autoload -Uz compinit &amp;&amp; compinit&#39;</span> &gt;&gt; ~/.zshrc
+</span></span><span class="line"><span class="cl"><span class="nb">source</span> ~/.zshrc
+</span></span></code></pre></div><ul>
+<li>Here is my installation script for zsh users whoes using ubuntu and fedora.<br>
+<a href="https://github.com/vukilis/asdf-easy" target="_blank" rel="noopener noreffer ">https://github.com/vukilis/asdf-easy</a></li>
+</ul>
+<h2 id="install-python">install python</h2>
+<ul>
+<li>First we need to add asdf plugin for python.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">asdf plugin add python
+</span></span></code></pre></div><ul>
+<li>After we added a plugin we can now install python version we want.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">asdf install python 3.10.8
+</span></span></code></pre></div><ul>
+<li>If you want check all available version you can do with next command:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">asdf list all python
+</span></span></code></pre></div><ul>
+<li>
+<p>Our python version is now installed, with <strong>asdf list</strong> command we can list installed plugins and versions.</p>
+</li>
+<li>
+<p>Now we need to set our python version to global or local einvorment.</p>
+</li>
+</ul>
+<p><strong>GLOBAL</strong></p>
+<p>Global defaults are managed in <strong>$HOME/.tool-versions</strong>. Set a global version with:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">asdf global python 3.10.8
+</span></span></code></pre></div><p><strong>LOCAL</strong></p>
+<p>Local versions are defined in the <strong>$PWD/.tool-versions</strong> file (your current working directory). Usually, this will be the Git repository for a project. When in your desired directory execute:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">asdf <span class="nb">local</span> python 3.10.8
+</span></span></code></pre></div><h2 id="install-poetry">Install poetry</h2>
+<p>To install poetry run next command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -sSL https://install.python-poetry.org <span class="p">|</span> python3 -
+</span></span></code></pre></div><ul>
+<li>Add Poetry to your PATH</li>
+</ul>
+<p><strong>BASH</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;export PATH=&#34;/home/linuxmint/.local/bin:$PATH&#34;&#39;</span> &gt;&gt; ~/.bashrc
+</span></span><span class="line"><span class="cl"><span class="nb">source</span> ~/.bashrc
+</span></span></code></pre></div><p><strong>ZSH</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;export PATH=&#34;/home/linuxmint/.local/bin:$PATH&#34;&#39;</span> &gt;&gt; ~/.zshrc
+</span></span><span class="line"><span class="cl"><span class="nb">source</span> ~/.zshrc
+</span></span></code></pre></div><ul>
+<li>IF you want to create the virtualenv inside the project’s root directory run next command:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">poetry config virtualenvs.in-project <span class="nb">true</span>
+</span></span></code></pre></div><h2 id="activate-poetry">Activate poetry</h2>
+<ul>
+<li>To activate poetry virtualenv execute:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">poetry init
+</span></span><span class="line"><span class="cl">poetry install
+</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-08-08</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://vukilis.github.io/website/asdf-with-poetry/" data-title="Asdf With Poetry" data-hashtags="ubuntu,asdf,poetry,python"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://vukilis.github.io/website/asdf-with-poetry/" data-hashtag="ubuntu"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://vukilis.github.io/website/asdf-with-poetry/" data-title="Asdf With Poetry"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Reddit" data-sharer="reddit" data-url="https://vukilis.github.io/website/asdf-with-poetry/"><i class="fab fa-reddit fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on VK" data-sharer="vk" data-url="https://vukilis.github.io/website/asdf-with-poetry/" data-title="Asdf With Poetry" data-caption="In this guide I will show how to setup asdf tool with python poetry..."><i class="fab fa-vk fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="https://vukilis.github.io/website/tags/ubuntu/">ubuntu</a>,&nbsp;<a href="https://vukilis.github.io/website/tags/asdf/">asdf</a>,&nbsp;<a href="https://vukilis.github.io/website/tags/poetry/">poetry</a>,&nbsp;<a href="https://vukilis.github.io/website/tags/python/">python</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://vukilis.github.io/website/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://vukilis.github.io/website/deploy-docker-with-ansible-on-ubuntu/" class="prev" rel="prev" title="Deploy Docker With Ansible on Ubuntu"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Deploy Docker With Ansible on Ubuntu</a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://vukilis.github.io/website/about/">Vuk1lis</a></span>&nbsp;|&nbsp;<span class="license"><a href="https://vukilis.github.io/website/privacy">Privacy</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://vukilis.github.io/website/terms-conditions">Terms and Conditions</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"url","label":"comment","lightTheme":"github-dark","repo":"vukilis/website"}},"lightgallery":true,"search":{"algoliaAppID":"DAENWQCI5B","algoliaIndex":"website","algoliaSearchKey":"3a87729afa43d11594394f5b86df56f8","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="https://vukilis.github.io/website/js/theme.min.js"></script><script type="text/javascript" >
+           (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+           m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+           (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+           ym("94181021", "init", {
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true
+           });
+        </script>
+        <noscript><div><img src="https://mc.yandex.ru/watch/94181021" style="position:absolute; left:-9999px;" alt="" /></div></noscript></body>
+</html>

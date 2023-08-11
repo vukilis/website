@@ -3,20 +3,44 @@
         <title>Tags - Tag - V For Vuk1lis</title>
         <link>https://vukilis.github.io/website/tags/</link>
         <description>Tags - Tag - V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 22 Jul 2023 18:19:15 &#43;0200</lastBuildDate><atom:link href="https://vukilis.github.io/website/tags/" rel="self" type="application/rss+xml" /><item>
-    <title>ansible</title>
-    <link>https://vukilis.github.io/website/tags/ansible/</link>
-    <pubDate>Sat, 22 Jul 2023 18:19:15 &#43;0200</pubDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 08 Aug 2023 19:56:02 &#43;0200</lastBuildDate><atom:link href="https://vukilis.github.io/website/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>asdf</title>
+    <link>https://vukilis.github.io/website/tags/asdf/</link>
+    <pubDate>Tue, 08 Aug 2023 19:56:02 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/ansible/</guid>
+    <guid>https://vukilis.github.io/website/tags/asdf/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>poetry</title>
+    <link>https://vukilis.github.io/website/tags/poetry/</link>
+    <pubDate>Tue, 08 Aug 2023 19:56:02 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.github.io/website/tags/poetry/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>python</title>
+    <link>https://vukilis.github.io/website/tags/python/</link>
+    <pubDate>Tue, 08 Aug 2023 19:56:02 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.github.io/website/tags/python/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>ubuntu</title>
     <link>https://vukilis.github.io/website/tags/ubuntu/</link>
-    <pubDate>Sat, 22 Jul 2023 18:19:15 &#43;0200</pubDate>
+    <pubDate>Tue, 08 Aug 2023 19:56:02 &#43;0200</pubDate>
     <author>Vuk1lis</author>
     <guid>https://vukilis.github.io/website/tags/ubuntu/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>ansible</title>
+    <link>https://vukilis.github.io/website/tags/ansible/</link>
+    <pubDate>Sat, 22 Jul 2023 18:19:15 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.github.io/website/tags/ansible/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
@@ -57,30 +81,6 @@
     <pubDate>Fri, 14 Jul 2023 20:30:58 &#43;0200</pubDate>
     <author>Vuk1lis</author>
     <guid>https://vukilis.github.io/website/tags/sql/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>forensics</title>
-    <link>https://vukilis.github.io/website/tags/forensics/</link>
-    <pubDate>Tue, 11 Jul 2023 19:32:29 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/forensics/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>nmap</title>
-    <link>https://vukilis.github.io/website/tags/nmap/</link>
-    <pubDate>Tue, 11 Jul 2023 19:32:29 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/nmap/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>customization</title>
-    <link>https://vukilis.github.io/website/tags/customization/</link>
-    <pubDate>Fri, 07 Jul 2023 01:01:26 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/customization/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>

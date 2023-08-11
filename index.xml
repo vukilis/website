@@ -3,9 +3,17 @@
         <title>V For Vuk1lis</title>
         <link>https://vukilis.github.io/website/</link>
         <description>Happy Coding</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 22 Jul 2023 18:19:15 &#43;0200</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 08 Aug 2023 19:56:02 &#43;0200</lastBuildDate>
             <atom:link href="https://vukilis.github.io/website/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Asdf With Poetry</title>
+    <link>https://vukilis.github.io/website/asdf-with-poetry/</link>
+    <pubDate>Tue, 08 Aug 2023 19:56:02 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.github.io/website/asdf-with-poetry/</guid>
+    <description><![CDATA[In this guide I will show how to setup asdf tool with python poetry...]]></description>
+</item>
+<item>
     <title>Deploy Docker With Ansible on Ubuntu</title>
     <link>https://vukilis.github.io/website/deploy-docker-with-ansible-on-ubuntu/</link>
     <pubDate>Sat, 22 Jul 2023 18:19:15 &#43;0200</pubDate>
@@ -36,14 +44,6 @@
     <author>Vuk1lis</author>
     <guid>https://vukilis.github.io/website/scan-your-network-with-nmap/</guid>
     <description><![CDATA[How to scan and find Network Vulnerabilities with nmap tool. With just one command...]]></description>
-</item>
-<item>
-    <title>My Custom Windows Terminal</title>
-    <link>https://vukilis.github.io/website/my-custom-windows-terminal/</link>
-    <pubDate>Fri, 07 Jul 2023 01:01:26 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/my-custom-windows-terminal/</guid>
-    <description><![CDATA[I will show how I made my windows terminal look better and how made me more productive...]]></description>
 </item>
 </channel>
 </rss>
