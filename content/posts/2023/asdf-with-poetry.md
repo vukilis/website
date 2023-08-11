@@ -45,7 +45,7 @@ share:
 
 ---
 
-In this guide I will show how to setup asdf tool with python poetry. ASDF is a tool version manager and very useful tool for many other language and tools like go, node, terraform, docker...
+In this guide I will show how to setup asdf tool with python and poetry. ASDF is a tool version manager and very useful tool for many other language and tools like go, node, terraform, docker...
 
 ---
 
