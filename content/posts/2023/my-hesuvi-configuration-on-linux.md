@@ -6,7 +6,7 @@ lastmod: 2023-09-17T19:28:33+02:00
 draft: false
 license: ""
 
-tags: [ubuntu, fedora, arch]
+tags: [ubuntu, fedora, arch, audio]
 categories: [Linux]
 description: "In this guide I will show how to setup Hesuvi (Virtual 7.1 Surround Sound) in Linux using PipeWire."
 
@@ -51,7 +51,7 @@ In this guide I will show how to setup Hesuvi (Virtual 7.1 Surround Sound) in Li
 
 ## Check your audio driver
 
-Firstly, we need to check if we already running PipeWire as our audio driver. To do that we need to run next command:
+First, we need to check if we already running PipeWire as our audio driver. To do that we need to run next command:
 
 ```bash
 pactl info | grep "Server Name"
@@ -119,7 +119,7 @@ systemctl --user --now start pipewire.service pipewire-pulse.service wireplumber
 * Copy **pipewire.conf** from **/usr/share/pipewire/** to **.config/**
 * Check HRTF Database  
 https://airtable.com/appayGNkn3nSuXkaz/shruimhjdSakUPg2m/tbloLjoZKWJDnLtTc  
-Choose your desire sound profile and download **.wav** in **.config/**
+Choose your favourite sound profile and download **.wav** in **.config/**
 * Check pipewire configuration  
 https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/Filter-Chain#draining
 
