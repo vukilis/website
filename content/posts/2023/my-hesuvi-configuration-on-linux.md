@@ -8,7 +8,7 @@ license: ""
 
 tags: [ubuntu, fedora, arch, audio]
 categories: [Linux]
-description: "In this guide I will show how to setup Hesuvi (Virtual 7.1 Surround Sound) in Linux using PipeWire."
+description: "In this article I will show how to setup Hesuvi (Virtual 7.1 Surround Sound) in Linux using PipeWire..."
 
 featuredImagePreview: "/images/2023/my_hesuvi_configuration_on_linux/my_hesuvi_configuration_on_linux.png"
 
@@ -45,7 +45,7 @@ share:
 
 ---
 
-In this guide I will show how to setup Hesuvi (Virtual 7.1 Surround Sound) in Linux using PipeWire. 
+In this guide I will show how to setup Hesuvi (Virtual 7.1 Surround Sound) in Linux using PipeWire. On Windows I'm using HeSuVi for sound virtualization, so I'm decided to configure on Linux too.
 
 ---
 
