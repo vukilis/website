@@ -3,7 +3,39 @@
         <title>Tags - Tag - V For Vuk1lis</title>
         <link>https://vukilis.github.io/website/tags/</link>
         <description>Tags - Tag - V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 08 Aug 2023 19:56:02 &#43;0200</lastBuildDate><atom:link href="https://vukilis.github.io/website/tags/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 17 Sep 2023 19:28:33 &#43;0200</lastBuildDate><atom:link href="https://vukilis.github.io/website/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>arch</title>
+    <link>https://vukilis.github.io/website/tags/arch/</link>
+    <pubDate>Sun, 17 Sep 2023 19:28:33 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.github.io/website/tags/arch/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>audio</title>
+    <link>https://vukilis.github.io/website/tags/audio/</link>
+    <pubDate>Sun, 17 Sep 2023 19:28:33 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.github.io/website/tags/audio/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>fedora</title>
+    <link>https://vukilis.github.io/website/tags/fedora/</link>
+    <pubDate>Sun, 17 Sep 2023 19:28:33 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.github.io/website/tags/fedora/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>ubuntu</title>
+    <link>https://vukilis.github.io/website/tags/ubuntu/</link>
+    <pubDate>Sun, 17 Sep 2023 19:28:33 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.github.io/website/tags/ubuntu/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
     <title>asdf</title>
     <link>https://vukilis.github.io/website/tags/asdf/</link>
     <pubDate>Tue, 08 Aug 2023 19:56:02 &#43;0200</pubDate>
@@ -28,14 +60,6 @@
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>ubuntu</title>
-    <link>https://vukilis.github.io/website/tags/ubuntu/</link>
-    <pubDate>Tue, 08 Aug 2023 19:56:02 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/ubuntu/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
     <title>ansible</title>
     <link>https://vukilis.github.io/website/tags/ansible/</link>
     <pubDate>Sat, 22 Jul 2023 18:19:15 &#43;0200</pubDate>
@@ -57,30 +81,6 @@
     <pubDate>Sun, 16 Jul 2023 14:25:21 &#43;0200</pubDate>
     <author>Vuk1lis</author>
     <guid>https://vukilis.github.io/website/tags/winget/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>cli</title>
-    <link>https://vukilis.github.io/website/tags/cli/</link>
-    <pubDate>Fri, 14 Jul 2023 20:30:58 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/cli/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>postgresql</title>
-    <link>https://vukilis.github.io/website/tags/postgresql/</link>
-    <pubDate>Fri, 14 Jul 2023 20:30:58 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/postgresql/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>sql</title>
-    <link>https://vukilis.github.io/website/tags/sql/</link>
-    <pubDate>Fri, 14 Jul 2023 20:30:58 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/sql/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>
