@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>scripts - Tag - V For Vuk1lis</title>
+        <link>https://vukilis.github.io/website/tags/scripts/</link>
+        <description>scripts - Tag - V For Vuk1lis</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 06 Nov 2023 22:55:36 &#43;0100</lastBuildDate><atom:link href="https://vukilis.github.io/website/tags/scripts/" rel="self" type="application/rss+xml" /><item>
+    <title>How to Find Last Modified Files Recursively</title>
+    <link>https://vukilis.github.io/website/how-to-find-latest-modified-files-recursively/</link>
+    <pubDate>Mon, 06 Nov 2023 22:55:36 &#43;0100</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.github.io/website/how-to-find-latest-modified-files-recursively/</guid>
+    <description><![CDATA[In this post I will show a bash script which show how to find most recent modified files recursively...]]></description>
+</item>
+</channel>
+</rss>
