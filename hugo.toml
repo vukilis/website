@@ -1,4 +1,5 @@
-baseURL = "https://vukilis.github.io/website/"
+# baseURL = "https://vukilis.github.io/website/"
+baseURL = "https://vukilis.com"
 theme = "LoveIt"
 # website title
 title = "V For Vuk1lis"
