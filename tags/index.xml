@@ -1,86 +1,86 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Tags - Tag - V For Vuk1lis</title>
-        <link>https://vukilis.github.io/website/tags/</link>
+        <link>https://vukilis.com/tags/</link>
         <description>Tags - Tag - V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 06 Nov 2023 22:55:36 &#43;0100</lastBuildDate><atom:link href="https://vukilis.github.io/website/tags/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 06 Nov 2023 22:55:36 &#43;0100</lastBuildDate><atom:link href="https://vukilis.com/tags/" rel="self" type="application/rss+xml" /><item>
     <title>bash</title>
-    <link>https://vukilis.github.io/website/tags/bash/</link>
+    <link>https://vukilis.com/tags/bash/</link>
     <pubDate>Mon, 06 Nov 2023 22:55:36 &#43;0100</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/bash/</guid>
+    <guid>https://vukilis.com/tags/bash/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>scripts</title>
-    <link>https://vukilis.github.io/website/tags/scripts/</link>
+    <link>https://vukilis.com/tags/scripts/</link>
     <pubDate>Mon, 06 Nov 2023 22:55:36 &#43;0100</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/scripts/</guid>
+    <guid>https://vukilis.com/tags/scripts/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>arch</title>
-    <link>https://vukilis.github.io/website/tags/arch/</link>
+    <link>https://vukilis.com/tags/arch/</link>
     <pubDate>Sun, 17 Sep 2023 19:28:33 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/arch/</guid>
+    <guid>https://vukilis.com/tags/arch/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>audio</title>
-    <link>https://vukilis.github.io/website/tags/audio/</link>
+    <link>https://vukilis.com/tags/audio/</link>
     <pubDate>Sun, 17 Sep 2023 19:28:33 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/audio/</guid>
+    <guid>https://vukilis.com/tags/audio/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>fedora</title>
-    <link>https://vukilis.github.io/website/tags/fedora/</link>
+    <link>https://vukilis.com/tags/fedora/</link>
     <pubDate>Sun, 17 Sep 2023 19:28:33 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/fedora/</guid>
+    <guid>https://vukilis.com/tags/fedora/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>ubuntu</title>
-    <link>https://vukilis.github.io/website/tags/ubuntu/</link>
+    <link>https://vukilis.com/tags/ubuntu/</link>
     <pubDate>Sun, 17 Sep 2023 19:28:33 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/ubuntu/</guid>
+    <guid>https://vukilis.com/tags/ubuntu/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>asdf</title>
-    <link>https://vukilis.github.io/website/tags/asdf/</link>
+    <link>https://vukilis.com/tags/asdf/</link>
     <pubDate>Tue, 08 Aug 2023 19:56:02 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/asdf/</guid>
+    <guid>https://vukilis.com/tags/asdf/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>poetry</title>
-    <link>https://vukilis.github.io/website/tags/poetry/</link>
+    <link>https://vukilis.com/tags/poetry/</link>
     <pubDate>Tue, 08 Aug 2023 19:56:02 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/poetry/</guid>
+    <guid>https://vukilis.com/tags/poetry/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>python</title>
-    <link>https://vukilis.github.io/website/tags/python/</link>
+    <link>https://vukilis.com/tags/python/</link>
     <pubDate>Tue, 08 Aug 2023 19:56:02 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/python/</guid>
+    <guid>https://vukilis.com/tags/python/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>ansible</title>
-    <link>https://vukilis.github.io/website/tags/ansible/</link>
+    <link>https://vukilis.com/tags/ansible/</link>
     <pubDate>Sat, 22 Jul 2023 18:19:15 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/tags/ansible/</guid>
+    <guid>https://vukilis.com/tags/ansible/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>

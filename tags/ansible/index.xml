@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>ansible - Tag - V For Vuk1lis</title>
-        <link>https://vukilis.github.io/website/tags/ansible/</link>
+        <link>https://vukilis.com/tags/ansible/</link>
         <description>ansible - Tag - V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 22 Jul 2023 18:19:15 &#43;0200</lastBuildDate><atom:link href="https://vukilis.github.io/website/tags/ansible/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 22 Jul 2023 18:19:15 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/tags/ansible/" rel="self" type="application/rss+xml" /><item>
     <title>Deploy Docker With Ansible on Ubuntu</title>
-    <link>https://vukilis.github.io/website/deploy-docker-with-ansible-on-ubuntu/</link>
+    <link>https://vukilis.com/deploy-docker-with-ansible-on-ubuntu/</link>
     <pubDate>Sat, 22 Jul 2023 18:19:15 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/deploy-docker-with-ansible-on-ubuntu/</guid>
+    <guid>https://vukilis.com/deploy-docker-with-ansible-on-ubuntu/</guid>
     <description><![CDATA[In this guide I want to show how to install and deploy docker container...]]></description>
 </item>
 </channel>

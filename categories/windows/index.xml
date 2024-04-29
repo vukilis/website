@@ -1,30 +1,30 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Windows - Category - V For Vuk1lis</title>
-        <link>https://vukilis.github.io/website/categories/windows/</link>
+        <link>https://vukilis.com/categories/windows/</link>
         <description>Windows - Category - V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 16 Jul 2023 14:25:21 &#43;0200</lastBuildDate><atom:link href="https://vukilis.github.io/website/categories/windows/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 16 Jul 2023 14:25:21 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/categories/windows/" rel="self" type="application/rss+xml" /><item>
     <title>Automate App Packaging Using Winget</title>
-    <link>https://vukilis.github.io/website/automate-app-packaging-using-winget/</link>
+    <link>https://vukilis.com/automate-app-packaging-using-winget/</link>
     <pubDate>Sun, 16 Jul 2023 14:25:21 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/automate-app-packaging-using-winget/</guid>
+    <guid>https://vukilis.com/automate-app-packaging-using-winget/</guid>
     <description><![CDATA[I want to show my simple script that automates the installation of...]]></description>
 </item>
 <item>
     <title>My Custom Windows Terminal</title>
-    <link>https://vukilis.github.io/website/my-custom-windows-terminal/</link>
+    <link>https://vukilis.com/my-custom-windows-terminal/</link>
     <pubDate>Fri, 07 Jul 2023 01:01:26 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/my-custom-windows-terminal/</guid>
+    <guid>https://vukilis.com/my-custom-windows-terminal/</guid>
     <description><![CDATA[I will show how I made my windows terminal look better and how made me more productive...]]></description>
 </item>
 <item>
     <title>Changing UUID for VirtualBox VMs</title>
-    <link>https://vukilis.github.io/website/vbox-uuid/</link>
+    <link>https://vukilis.com/vbox-uuid/</link>
     <pubDate>Wed, 21 Jun 2023 01:48:51 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/vbox-uuid/</guid>
+    <guid>https://vukilis.com/vbox-uuid/</guid>
     <description><![CDATA[When I want to copy existing VMs to create a new project / VM, my new created VM have...]]></description>
 </item>
 </channel>

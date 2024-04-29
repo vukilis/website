@@ -1,30 +1,30 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>ubuntu - Tag - V For Vuk1lis</title>
-        <link>https://vukilis.github.io/website/tags/ubuntu/</link>
+        <link>https://vukilis.com/tags/ubuntu/</link>
         <description>ubuntu - Tag - V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 17 Sep 2023 19:28:33 &#43;0200</lastBuildDate><atom:link href="https://vukilis.github.io/website/tags/ubuntu/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 17 Sep 2023 19:28:33 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/tags/ubuntu/" rel="self" type="application/rss+xml" /><item>
     <title>My Hesuvi Configuration on Linux</title>
-    <link>https://vukilis.github.io/website/my-hesuvi-configuration-on-linux/</link>
+    <link>https://vukilis.com/my-hesuvi-configuration-on-linux/</link>
     <pubDate>Sun, 17 Sep 2023 19:28:33 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/my-hesuvi-configuration-on-linux/</guid>
+    <guid>https://vukilis.com/my-hesuvi-configuration-on-linux/</guid>
     <description><![CDATA[In this article I will show how to setup Hesuvi (Virtual 7.1 Surround Sound) in Linux using PipeWire...]]></description>
 </item>
 <item>
     <title>Asdf With Poetry</title>
-    <link>https://vukilis.github.io/website/asdf-with-poetry/</link>
+    <link>https://vukilis.com/asdf-with-poetry/</link>
     <pubDate>Tue, 08 Aug 2023 19:56:02 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/asdf-with-poetry/</guid>
+    <guid>https://vukilis.com/asdf-with-poetry/</guid>
     <description><![CDATA[In this guide I will show how to setup asdf tool with python poetry...]]></description>
 </item>
 <item>
     <title>Deploy Docker With Ansible on Ubuntu</title>
-    <link>https://vukilis.github.io/website/deploy-docker-with-ansible-on-ubuntu/</link>
+    <link>https://vukilis.com/deploy-docker-with-ansible-on-ubuntu/</link>
     <pubDate>Sat, 22 Jul 2023 18:19:15 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/deploy-docker-with-ansible-on-ubuntu/</guid>
+    <guid>https://vukilis.com/deploy-docker-with-ansible-on-ubuntu/</guid>
     <description><![CDATA[In this guide I want to show how to install and deploy docker container...]]></description>
 </item>
 </channel>

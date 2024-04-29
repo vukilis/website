@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>poetry - Tag - V For Vuk1lis</title>
-        <link>https://vukilis.github.io/website/tags/poetry/</link>
+        <link>https://vukilis.com/tags/poetry/</link>
         <description>poetry - Tag - V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 08 Aug 2023 19:56:02 &#43;0200</lastBuildDate><atom:link href="https://vukilis.github.io/website/tags/poetry/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 08 Aug 2023 19:56:02 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/tags/poetry/" rel="self" type="application/rss+xml" /><item>
     <title>Asdf With Poetry</title>
-    <link>https://vukilis.github.io/website/asdf-with-poetry/</link>
+    <link>https://vukilis.com/asdf-with-poetry/</link>
     <pubDate>Tue, 08 Aug 2023 19:56:02 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/asdf-with-poetry/</guid>
+    <guid>https://vukilis.com/asdf-with-poetry/</guid>
     <description><![CDATA[In this guide I will show how to setup asdf tool with python poetry...]]></description>
 </item>
 </channel>

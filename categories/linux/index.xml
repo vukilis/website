@@ -1,54 +1,54 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Linux - Category - V For Vuk1lis</title>
-        <link>https://vukilis.github.io/website/categories/linux/</link>
+        <link>https://vukilis.com/categories/linux/</link>
         <description>Linux - Category - V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 06 Nov 2023 22:55:36 &#43;0100</lastBuildDate><atom:link href="https://vukilis.github.io/website/categories/linux/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 06 Nov 2023 22:55:36 &#43;0100</lastBuildDate><atom:link href="https://vukilis.com/categories/linux/" rel="self" type="application/rss+xml" /><item>
     <title>How to Find Last Modified Files Recursively</title>
-    <link>https://vukilis.github.io/website/how-to-find-latest-modified-files-recursively/</link>
+    <link>https://vukilis.com/how-to-find-latest-modified-files-recursively/</link>
     <pubDate>Mon, 06 Nov 2023 22:55:36 &#43;0100</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/how-to-find-latest-modified-files-recursively/</guid>
+    <guid>https://vukilis.com/how-to-find-latest-modified-files-recursively/</guid>
     <description><![CDATA[In this post I will show a bash script which show how to find most recent modified files recursively...]]></description>
 </item>
 <item>
     <title>My Hesuvi Configuration on Linux</title>
-    <link>https://vukilis.github.io/website/my-hesuvi-configuration-on-linux/</link>
+    <link>https://vukilis.com/my-hesuvi-configuration-on-linux/</link>
     <pubDate>Sun, 17 Sep 2023 19:28:33 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/my-hesuvi-configuration-on-linux/</guid>
+    <guid>https://vukilis.com/my-hesuvi-configuration-on-linux/</guid>
     <description><![CDATA[In this article I will show how to setup Hesuvi (Virtual 7.1 Surround Sound) in Linux using PipeWire...]]></description>
 </item>
 <item>
     <title>Asdf With Poetry</title>
-    <link>https://vukilis.github.io/website/asdf-with-poetry/</link>
+    <link>https://vukilis.com/asdf-with-poetry/</link>
     <pubDate>Tue, 08 Aug 2023 19:56:02 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/asdf-with-poetry/</guid>
+    <guid>https://vukilis.com/asdf-with-poetry/</guid>
     <description><![CDATA[In this guide I will show how to setup asdf tool with python poetry...]]></description>
 </item>
 <item>
     <title>Deploy Docker With Ansible on Ubuntu</title>
-    <link>https://vukilis.github.io/website/deploy-docker-with-ansible-on-ubuntu/</link>
+    <link>https://vukilis.com/deploy-docker-with-ansible-on-ubuntu/</link>
     <pubDate>Sat, 22 Jul 2023 18:19:15 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/deploy-docker-with-ansible-on-ubuntu/</guid>
+    <guid>https://vukilis.com/deploy-docker-with-ansible-on-ubuntu/</guid>
     <description><![CDATA[In this guide I want to show how to install and deploy docker container...]]></description>
 </item>
 <item>
     <title>My Custom Linux Terminal</title>
-    <link>https://vukilis.github.io/website/my-custom-linux-terminal/</link>
+    <link>https://vukilis.com/my-custom-linux-terminal/</link>
     <pubDate>Mon, 26 Jun 2023 01:57:12 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/my-custom-linux-terminal/</guid>
+    <guid>https://vukilis.com/my-custom-linux-terminal/</guid>
     <description><![CDATA[In this article, I will show my 3 favourite terminal with implementation of ZSH shell...]]></description>
 </item>
 <item>
     <title>Changing UUID for VirtualBox VMs</title>
-    <link>https://vukilis.github.io/website/vbox-uuid/</link>
+    <link>https://vukilis.com/vbox-uuid/</link>
     <pubDate>Wed, 21 Jun 2023 01:48:51 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.github.io/website/vbox-uuid/</guid>
+    <guid>https://vukilis.com/vbox-uuid/</guid>
     <description><![CDATA[When I want to copy existing VMs to create a new project / VM, my new created VM have...]]></description>
 </item>
 </channel>
