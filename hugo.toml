@@ -140,7 +140,7 @@ canonifyurls = true
         enable = true
         # Yandex Metrica
         [params.analytics.yandexMetrica]
-        id = "94181021"
+        id = "97163691"
 
 [markup]
     [markup.highlight]
