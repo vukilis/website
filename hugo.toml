@@ -142,6 +142,10 @@ canonifyurls = true
         [params.analytics.yandexMetrica]
         id = "97163691"
 
+        [params.analytics.google]
+        id = "G-BPK5CT0MGQ"
+        anonymizeIP = true
+
 [markup]
     [markup.highlight]
         # false is a necessary configuration (https://github.com/dillonzq/LoveIt/issues/158)
