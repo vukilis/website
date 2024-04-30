@@ -1063,7 +1063,7 @@ var Theme = /*#__PURE__*/function () {
         this.initMapbox();
         this.initCookieconsent();
       } catch (err) {
-        // console.error(err);
+        console.error(err);
       }
 
       window.setTimeout(function () {
