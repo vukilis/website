@@ -119,7 +119,7 @@ canonifyurls = true
         GitHub = "vukilis"
         Steam = "vuk1lis"
         Linkedin = "vuklekic"
-        Email = "hello.vuklekic@gmail.com"
+        Email = "vuk.lekic@vukilis.com"
     
     [params.page]
         rssFullText = true
