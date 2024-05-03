@@ -3,7 +3,15 @@
         <title>All Posts - V For Vuk1lis</title>
         <link>https://vukilis.com/posts/</link>
         <description>All Posts | V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 06 Nov 2023 22:55:36 &#43;0100</lastBuildDate><atom:link href="https://vukilis.com/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 03 May 2024 17:10:17 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>How to install and setup EJBCA 8.2 with galera and HSM module</title>
+    <link>https://vukilis.com/How-to-install-and-setup-EJBCA-8.2-with-galera-and-HSM-module</link>
+    <pubDate>Fri, 03 May 2024 17:10:17 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.com/How-to-install-and-setup-EJBCA-8.2-with-galera-and-HSM-module</guid>
+    <description><![CDATA[In this tutorial I will show how to install and setup EJBCA 8.2 with Hardware security module (HSM)....]]></description>
+</item>
+<item>
     <title>How to Find Last Modified Files Recursively</title>
     <link>https://vukilis.com/how-to-find-latest-modified-files-recursively/</link>
     <pubDate>Mon, 06 Nov 2023 22:55:36 &#43;0100</pubDate>
@@ -74,14 +82,6 @@
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/my-custom-linux-terminal/</guid>
     <description><![CDATA[In this article, I will show my 3 favourite terminal with implementation of ZSH shell...]]></description>
-</item>
-<item>
-    <title>Changing UUID for VirtualBox VMs</title>
-    <link>https://vukilis.com/vbox-uuid/</link>
-    <pubDate>Wed, 21 Jun 2023 01:48:51 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.com/vbox-uuid/</guid>
-    <description><![CDATA[When I want to copy existing VMs to create a new project / VM, my new created VM have...]]></description>
 </item>
 </channel>
 </rss>

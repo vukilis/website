@@ -3,9 +3,17 @@
         <title>V For Vuk1lis</title>
         <link>https://vukilis.com/</link>
         <description>Happy Coding</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 06 Nov 2023 22:55:36 &#43;0100</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 03 May 2024 17:10:17 &#43;0200</lastBuildDate>
             <atom:link href="https://vukilis.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>How to install and setup EJBCA 8.2 with galera and HSM module</title>
+    <link>https://vukilis.com/How-to-install-and-setup-EJBCA-8.2-with-galera-and-HSM-module</link>
+    <pubDate>Fri, 03 May 2024 17:10:17 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.com/How-to-install-and-setup-EJBCA-8.2-with-galera-and-HSM-module</guid>
+    <description><![CDATA[In this tutorial I will show how to install and setup EJBCA 8.2 with Hardware security module (HSM)....]]></description>
+</item>
+<item>
     <title>How to Find Last Modified Files Recursively</title>
     <link>https://vukilis.com/how-to-find-latest-modified-files-recursively/</link>
     <pubDate>Mon, 06 Nov 2023 22:55:36 &#43;0100</pubDate>
@@ -36,14 +44,6 @@
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/deploy-docker-with-ansible-on-ubuntu/</guid>
     <description><![CDATA[In this guide I want to show how to install and deploy docker container...]]></description>
-</item>
-<item>
-    <title>Automate App Packaging Using Winget</title>
-    <link>https://vukilis.com/automate-app-packaging-using-winget/</link>
-    <pubDate>Sun, 16 Jul 2023 14:25:21 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.com/automate-app-packaging-using-winget/</guid>
-    <description><![CDATA[I want to show my simple script that automates the installation of...]]></description>
 </item>
 </channel>
 </rss>
