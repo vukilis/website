@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>How to install and setup EJBCA 8.2 with galera and HSM module - V For Vuk1lis</title><meta name="Description" content="In this tutorial I will show how to install and setup EJBCA 8.2 with Hardware security module (HSM)...."><meta property="og:title" content="How to install and setup EJBCA 8.2 with galera and HSM module" />
+<meta property="og:description" content="In this tutorial I will show how to install and setup EJBCA 8.2 with Hardware security module (HSM)...." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://vukilis.com/How-to-install-and-setup-EJBCA-with-galera-and-HSM-module/" /><meta property="og:image" content="https://vukilis.com/images/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-05-03T17:10:17+02:00" />
+<meta property="article:modified_time" content="2024-05-03T17:10:17+02:00" /><meta property="og:site_name" content="V For Vuk1lis" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://vukilis.com/images/logo.png"/>
+
+<meta name="twitter:title" content="How to install and setup EJBCA 8.2 with galera and HSM module"/>
+<meta name="twitter:description" content="In this tutorial I will show how to install and setup EJBCA 8.2 with Hardware security module (HSM)...."/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://vukilis.com/images/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="https://vukilis.com/apple-touch-icon.png"><link rel="mask-icon" href="https://vukilis.com/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://vukilis.com/How-to-install-and-setup-EJBCA-with-galera-and-HSM-module/" /><link rel="prev" href="https://vukilis.com/how-to-find-latest-modified-files-recursively/" /><link rel="stylesheet" href="https://vukilis.com/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "How to install and setup EJBCA 8.2 with galera and HSM module",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/vukilis.com\/How-to-install-and-setup-EJBCA-with-galera-and-HSM-module\/"
+        },"genre": "posts","keywords": "debian, crtificates, security","wordcount":  3248 ,
+        "url": "https:\/\/vukilis.com\/How-to-install-and-setup-EJBCA-with-galera-and-HSM-module\/","datePublished": "2024-05-03T17:10:17+02:00","dateModified": "2024-05-03T17:10:17+02:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Vuk1lis"
+            },"description": "In this tutorial I will show how to install and setup EJBCA 8.2 with Hardware security module (HSM)...."
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="https://vukilis.com/" title="V For Vuk1lis"><img
+        class="lazyload logo"
+        src="https://vukilis.com/svg/loading.min.svg"
+        data-src="https://vukilis.com/images/logo.png"
+        data-srcset="https://vukilis.com/images/logo.png, https://vukilis.com/images/logo.png 1.5x, https://vukilis.com/images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="https://vukilis.com/posts/"> Posts </a><a class="menu-item" href="https://vukilis.com/tags/"> Tags </a><a class="menu-item" href="https://vukilis.com/categories/"> Categories </a><a class="menu-item" href="https://vukilis.com/about/"> About </a><a class="menu-item" href="https://vukilis.com/design/"> Design </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="search" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="https://vukilis.com/" title="V For Vuk1lis"><img
+        class="lazyload logo"
+        src="https://vukilis.com/svg/loading.min.svg"
+        data-src="https://vukilis.com/images/logo.png"
+        data-srcset="https://vukilis.com/images/logo.png, https://vukilis.com/images/logo.png 1.5x, https://vukilis.com/images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="search" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="https://vukilis.com/posts/" title="">Posts</a><a class="menu-item" href="https://vukilis.com/tags/" title="">Tags</a><a class="menu-item" href="https://vukilis.com/categories/" title="">Categories</a><a class="menu-item" href="https://vukilis.com/about/" title="">About</a><a class="menu-item" href="https://vukilis.com/design/" title="">Design</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">How to install and setup EJBCA 8.2 with galera and HSM module</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://vukilis.com/about/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Vuk1lis</a></span>&nbsp;<span class="post-category">included in <a href="https://vukilis.com/categories/linux/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-05-03">2024-05-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3248 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;16 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#important"><code>Important</code></a></li>
+    <li><a href="#steps"><code>Steps</code></a></li>
+    <li><a href="#1-debian-12-installation"><code>1. Debian 12 Installation</code></a></li>
+    <li><a href="#2-follow-the-procedure-for-ejbca-installation-and-hsm-installation"><code>2. Follow the procedure for EJBCA installation and HSM installation</code></a>
+      <ul>
+        <li><a href="#preface">Preface</a></li>
+        <li><a href="#software-stack">Software Stack</a></li>
+        <li><a href="#system-set-up">System Set-up</a></li>
+        <li><a href="#installation-prerequisites">Installation Prerequisites</a></li>
+        <li><a href="#installing-java">Installing Java</a></li>
+        <li><a href="#installing-database">Installing Database</a></li>
+        <li><a href="#installing-application-server">Installing Application Server</a></li>
+        <li><a href="#configuring-jbosswildfly">Configuring JBOSS/WildFly</a></li>
+        <li><a href="#set-allowed-memory-usage">Set allowed memory usage</a></li>
+        <li><a href="#create-an-elytron-credential-store">Create an Elytron Credential Store</a></li>
+        <li><a href="#mariadb-database-driver-setup">MariaDB Database Driver Setup</a></li>
+        <li><a href="#datasource-configuration">Datasource Configuration</a></li>
+        <li><a href="#configure-remoting">Configure Remoting</a></li>
+        <li><a href="#configure-logging">Configure Logging</a></li>
+        <li><a href="#audit-logging-to-file">Audit logging to file</a></li>
+        <li><a href="#https-configuration">HTTP(S) Configuration</a></li>
+        <li><a href="#install-apache-ant">Install Apache Ant</a></li>
+        <li><a href="#ejbca-installation">EJBCA Installation</a></li>
+        <li><a href="#hsm-configuration">HSM configuration</a></li>
+        <li><a href="#build-ejbca">Build EJBCA</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-when-ejbca-installation-is-done-stop-mariadb-service"><code>3. When EJBCA installation is done stop mariadb service</code></a></li>
+    <li><a href="#4-follow-the-procedure-for-galera-installation"><code>4. Follow the procedure for Galera installation</code></a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#testing-replication">Testing Replication</a></li>
+        <li><a href="#mariadb-backup-and-restore">MariaDB Backup and Restore</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-open-ejbca-administration-page"><code>5. Open EJBCA Administration page</code></a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><hr>
+<p>In this tutorial I will show how to install and setup EJBCA 8.2 with galera cluster using mysql database and  Hardware security module (HSM).</p>
+<hr>
+<h2 id="important"><code>Important</code></h2>
+<ul>
+<li>HSM is hardware device so you must having one to follow this tutorial fully. If you don&rsquo;t have one you can just ignore HSM configuration steps and you won&rsquo;t be able to generate pkcs#11 keys.</li>
+</ul>
+<h2 id="steps"><code>Steps</code></h2>
+<ol>
+<li>For this purpose Debian 12 is installed.</li>
+<li>Follow the procedure for EJBCA and HSM installation.</li>
+<li>When EJBCA installation is done stop mariadb service.</li>
+<li>Follow the procedure for Galera installation.</li>
+<li>Open EJBCA Administration page</li>
+</ol>
+<h2 id="1-debian-12-installation"><code>1. Debian 12 Installation</code></h2>
+<p>For more details check official documentation <a href="https://www.debian.org/releases/bookworm/amd64/" target="_blank" rel="noopener noreffer ">https://www.debian.org/releases/bookworm/amd64/</a></p>
+<h2 id="2-follow-the-procedure-for-ejbca-installation-and-hsm-installation"><code>2. Follow the procedure for EJBCA installation and HSM installation</code></h2>
+<h3 id="preface">Preface</h3>
+<p>The purpose of this part is to describe all necessary steps for CA installation and configuration.</p>
+<h3 id="software-stack">Software Stack</h3>
+<p>The following software stack is used during the training:</p>
+<ul>
+<li><strong>Debian:</strong> A Linux based Operating system.</li>
+<li><strong>OpenJDK:</strong> Contains the Java Virtual Machine.</li>
+<li><strong>WildFly:</strong> A Java Enterprise Edition (JEE) application server providing middleware services for security, persistance and management of resources.</li>
+<li><strong>Apache Ant:</strong> A build system for compiiling EJBCA.</li>
+<li><strong>MariaDB:</strong> An SQL database supported by EJBCA.</li>
+<li><strong>MariaDB Java Connector:</strong> A Java application acting as a bridge between EJBCA and MariaDB.</li>
+<li><strong>Utimaco HSM Simmulator:</strong> A Hardware Security Module emulator.</li>
+</ul>
+<h3 id="system-set-up">System Set-up</h3>
+<p>Log in as a user <code>vukilis</code> using the password <code>linux!2345</code> using <code>ssh</code>.</p>
+<p>Install the latest update for the Debian 12 GNU/Linux OS.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt update <span class="o">&amp;&amp;</span> sudo apt upgrade
+</span></span></code></pre></div><blockquote>
+<p>Note</p>
+<p>Confirm that IP address is correct using the command &lsquo;ip a&rsquo;</p>
+</blockquote>
+<p>Install necessary tools:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install bash-completion tcpdump net-tools bind9-utils bind9-dnsutils bind9utils ncat wget unzip zip lsof vim lshw telnet tmux rsync nano apt-utils chrony 
+</span></span></code></pre></div><p>Apart from the <code>root</code> user which was created during the installation of the operating system, we are going to create two additional users called <strong>vukilis</strong> and <strong>wildfly.</strong></p>
+<blockquote>
+<p>Note</p>
+<p>vukilis user is created during installation proccess.<br>
+Wildfly user will be created later during wildfly installation proccess.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">User</th>
+<th style="text-align:left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">vukilis</td>
+<td style="text-align:left">Used during system administration, e.g. to install software, edit configuration files and perform other administrative tasks. Has full access to the system.</td>
+</tr>
+<tr>
+<td style="text-align:left">wildfly</td>
+<td style="text-align:left">Used by the application server. Has access to all applications under <strong>/opt/</strong> directory.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="installation-prerequisites">Installation Prerequisites</h3>
+<ul>
+<li>JAVA -&gt; OpenJDK 11 - Supported and recommended.</li>
+<li>Database -&gt; MariaDB is recommended.</li>
+<li>Application Server -&gt; Wildfly 26 - is currently recommended.</li>
+<li>MariaDB Database Driver -&gt; 2.7.11</li>
+<li>Build Tool -&gt; Apache Ant 1.10.14 or later.</li>
+<li>EJBCA -&gt; 8_2_0_1</li>
+</ul>
+<h3 id="installing-java">Installing Java</h3>
+<p>OpenJDK 11 is the open-source edition of the Oracle standard Java Platform that is available to install on almost all Linux systems using their default system repository. It is released under the GNU license and is extremely important if you are planning to install some application that requires JAVA</p>
+<p>Although there is already a newer version of OpenJDK available we can install version 11 on Debian 12 Linux with:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;deb http://deb.debian.org/debian unstable main non-free contrib&#34;</span> &gt;&gt; /etc/apt/sources.list
+</span></span></code></pre></div><p>Set preferences for the packages:<br>
+<strong>/etc/apt/preferences</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Package: *
+</span></span><span class="line"><span class="cl">Pin: release <span class="nv">a</span><span class="o">=</span>stable
+</span></span><span class="line"><span class="cl">Pin-Priority: <span class="m">900</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Package: *
+</span></span><span class="line"><span class="cl">Pin: release <span class="nv">a</span><span class="o">=</span>unstable
+</span></span><span class="line"><span class="cl">Pin-Priority: <span class="m">50</span>
+</span></span></code></pre></div><p>Run system update to refresh the APT repository cache:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt update
+</span></span></code></pre></div><p>Install Java OpenJDK 11 and confirm version:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt install openjdk-11-jdk-headless
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">java -version
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">update-alternatives --config java
+</span></span></code></pre></div><h3 id="installing-database">Installing Database</h3>
+<p>Install and configure MariaDB:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt install mariadb-server mariadb-client
+</span></span></code></pre></div><p>Start MariaDB server:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl start mariadb
+</span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> mariadb
+</span></span></code></pre></div><p>See wheather Mariadb is started and listening:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ss -tnlp
+</span></span><span class="line"><span class="cl">systemctl status mariadb
+</span></span></code></pre></div><p>Run MariaDB hardening shell script <code>mariadb-secure-installation</code> in order to:</p>
+<ul>
+<li>set a password for <code>root</code> account (vukilis)</li>
+<li>disallow root login remotely</li>
+<li>remove anonymous-user accounts and test databases</li>
+<li>reload privileges</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mariadb-secure-installation
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
+</span></span><span class="line"><span class="cl">      SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">In order to log into MariaDB to secure it, we<span class="s1">&#39;ll need the current
+</span></span></span><span class="line"><span class="cl"><span class="s1">password for the root user. If you&#39;</span>ve just installed MariaDB, and
+</span></span><span class="line"><span class="cl">haven<span class="s1">&#39;t set the root password yet, you should just press enter here.
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">Enter current password for root (enter for none): 
+</span></span></span><span class="line"><span class="cl"><span class="s1">OK, successfully used password, moving on...
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">Setting the root password or using the unix_socket ensures that nobody
+</span></span></span><span class="line"><span class="cl"><span class="s1">can log into the MariaDB root user without the proper authorisation.
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">You already have your root account protected, so you can safely answer &#39;</span>n<span class="s1">&#39;.
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">Switch to unix_socket authentication [Y/n] n
+</span></span></span><span class="line"><span class="cl"><span class="s1"> ... skipping.
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">You already have your root account protected, so you can safely answer &#39;</span>n<span class="s1">&#39;.
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">Change the root password? [Y/n] 
+</span></span></span><span class="line"><span class="cl"><span class="s1">New password: 
+</span></span></span><span class="line"><span class="cl"><span class="s1">Re-enter new password: 
+</span></span></span><span class="line"><span class="cl"><span class="s1">Password updated successfully!
+</span></span></span><span class="line"><span class="cl"><span class="s1">Reloading privilege tables..
+</span></span></span><span class="line"><span class="cl"><span class="s1"> ... Success!
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">By default, a MariaDB installation has an anonymous user, allowing anyone
+</span></span></span><span class="line"><span class="cl"><span class="s1">to log into MariaDB without having to have a user account created for
+</span></span></span><span class="line"><span class="cl"><span class="s1">them.  This is intended only for testing, and to make the installation
+</span></span></span><span class="line"><span class="cl"><span class="s1">go a bit smoother.  You should remove them before moving into a
+</span></span></span><span class="line"><span class="cl"><span class="s1">production environment.
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">Remove anonymous users? [Y/n] 
+</span></span></span><span class="line"><span class="cl"><span class="s1"> ... Success!
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">Normally, root should only be allowed to connect from &#39;</span>localhost<span class="s1">&#39;.  This
+</span></span></span><span class="line"><span class="cl"><span class="s1">ensures that someone cannot guess at the root password from the network.
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">Disallow root login remotely? [Y/n] 
+</span></span></span><span class="line"><span class="cl"><span class="s1"> ... Success!
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">By default, MariaDB comes with a database named &#39;</span>test<span class="s1">&#39; that anyone can
+</span></span></span><span class="line"><span class="cl"><span class="s1">access.  This is also intended only for testing, and should be removed
+</span></span></span><span class="line"><span class="cl"><span class="s1">before moving into a production environment.
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">Remove test database and access to it? [Y/n] 
+</span></span></span><span class="line"><span class="cl"><span class="s1"> - Dropping test database...
+</span></span></span><span class="line"><span class="cl"><span class="s1"> ... Success!
+</span></span></span><span class="line"><span class="cl"><span class="s1"> - Removing privileges on test database...
+</span></span></span><span class="line"><span class="cl"><span class="s1"> ... Success!
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">Reloading the privilege tables will ensure that all changes made so far
+</span></span></span><span class="line"><span class="cl"><span class="s1">will take effect immediately.
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">Reload privilege tables now? [Y/n] 
+</span></span></span><span class="line"><span class="cl"><span class="s1"> ... Success!
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">Cleaning up...
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">All done!  If you&#39;</span>ve completed all of the above steps, your MariaDB
+</span></span><span class="line"><span class="cl">installation should now be secure.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Thanks <span class="k">for</span> using MariaDB!
+</span></span></code></pre></div><p>For MariaDB, use the following commands to create the database, matching the <code>DataSource</code> in the next step, and add privileges to connect to the database:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql -u root -p
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mysql&gt; CREATE DATABASE ejbcadb CHARACTER SET utf8 COLLATE utf8_general_ci<span class="p">;</span>
+</span></span><span class="line"><span class="cl">mysql&gt; GRANT ALL PRIVILEGES ON ejbcadb.* TO <span class="s1">&#39;ejbca&#39;</span>@<span class="s1">&#39;localhost&#39;</span> IDENTIFIED BY <span class="s1">&#39;vukilis&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">mysql&gt; GRANT ALL PRIVILEGES ON ejbcadb.* TO <span class="s1">&#39;ejbca&#39;</span>@<span class="s1">&#39;127.0.0.1&#39;</span> IDENTIFIED BY <span class="s1">&#39;vukilis&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">mysql&gt; GRANT ALL PRIVILEGES ON ejbcadb.* TO <span class="s1">&#39;ejbca&#39;</span>@<span class="s1">&#39;::1&#39;</span> IDENTIFIED BY <span class="s1">&#39;vukilis&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">QUIT
+</span></span></code></pre></div><p>Test connection to the new database with:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql -u ejbca -D ejbcadb -p
+</span></span></code></pre></div><h3 id="installing-application-server">Installing Application Server</h3>
+<p>EJBCA can run on a supported AS. Due to differences between application servers, your AS should be configured according to the AS specific instructions referenced below.</p>
+<p>To download, refer to <a href="http://wildfly.org/downloads/" target="_blank" rel="noopener noreffer ">WildFly download</a>.</p>
+<p>Download the Wildfly and extract tar.gz file to /opt folder</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo mkdir -p /opt/packages
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> /opt/
+</span></span><span class="line"><span class="cl">sudo wget https://github.com/wildfly/wildfly/releases/download/26.0.0.Final/wildfly-26.0.0.Final.zip -O /opt/packages/wildfly-26.0.0.Final.zip
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo unzip -q /opt/packages/wildfly-26.0.0.Final.zip -d /opt/
+</span></span></code></pre></div><p>Set the <strong>APPSRV_HOME</strong> environment variable to <strong>/opt/wildfly:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;export APPSRV_HOME=&#34;/opt/wildfly&#34;&#39;</span> <span class="p">|</span> sudo tee --append /etc/profile.d/vukilis-ejbca.sh
+</span></span><span class="line"><span class="cl"><span class="nb">source</span> /etc/profile.d/vukilis-ejbca.sh
+</span></span></code></pre></div><p>Add wildfly user:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">useradd -r -U -M -d /opt/wildfly -s /bin/bash -c <span class="s2">&#34;Wildfly&#34;</span> wildfly
+</span></span></code></pre></div><blockquote>
+<p>Note</p>
+<p>Change default shell of wildfly to /sbin/nologin after the installation.</p>
+</blockquote>
+<p>Create a symbolic link to point to the WildFly installation directory, and give access to the WildFly group and user:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ln -snf /opt/wildfly-26.0.0.Final /opt/wildfly
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo rm -f /opt/wildfly/bin/*.<span class="o">{</span>bat,ps1<span class="o">}</span>
+</span></span><span class="line"><span class="cl">sudo find /opt/wildfly/ -type d -exec chmod <span class="m">0750</span> <span class="o">{}</span> <span class="se">\;</span>
+</span></span><span class="line"><span class="cl">sudo find /opt/wildfly/ -type f -exec chmod <span class="m">0640</span> <span class="o">{}</span> <span class="se">\;</span>
+</span></span><span class="line"><span class="cl">sudo chown -R root:wildfly /opt/wildfly/
+</span></span><span class="line"><span class="cl">sudo chown -R wildfly /opt/wildfly/standalone/
+</span></span></code></pre></div><h3 id="configuring-jbosswildfly">Configuring JBOSS/WildFly</h3>
+<p>Backup default/original <code>standalone.conf</code> configuration file:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cp -rp /opt/wildfly/bin/standalone.conf /opt/wildfly/bin/standalone.conf.bak
+</span></span></code></pre></div><p>Replace <code>standalone.conf</code> with the following:<br>
+<strong>/opt/wildfly/bin/standalone.conf</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">if [ &#34;x$JBOSS_MODULES_SYSTEM_PKGS&#34;</span> <span class="o">=</span> <span class="s">&#34;x&#34; ]; then
+</span></span></span><span class="line"><span class="cl"><span class="s">     JBOSS_MODULES_SYSTEM_PKGS=&#34;org.jboss.byteman&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="na">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">if [ &#34;x$JAVA_OPTS&#34;</span> <span class="o">=</span> <span class="s">&#34;x&#34; ]; then
+</span></span></span><span class="line"><span class="cl"><span class="s">     JAVA_OPTS=&#34;-Xms{{ HEAP_SIZE }}m -Xmx{{ HEAP_SIZE }}m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">     JAVA_OPTS=&#34;$JAVA_OPTS -Dhttps.protocols=TLSv1.2,TLSv1.3&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">     JAVA_OPTS=&#34;$JAVA_OPTS -Djdk.tls.client.protocols=TLSv1.2,TLSv1.3&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">     JAVA_OPTS=&#34;$JAVA_OPTS -Djava.net.preferIPv4Stack=true&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">     JAVA_OPTS=&#34;$JAVA_OPTS -Djboss.modules.system.pkgs=$JBOSS_MODULES_SYSTEM_PKGS&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">     JAVA_OPTS=&#34;$JAVA_OPTS -Djava.awt.headless=true&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">     JAVA_OPTS=&#34;$JAVA_OPTS -Djboss.tx.node.id={{ TX_NODE_ID }}&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">     JAVA_OPTS=&#34;$JAVA_OPTS -XX:+HeapDumpOnOutOfMemoryError&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">     JAVA_OPTS=&#34;$JAVA_OPTS -Djdk.tls.ephemeralDHKeySize=2048&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="na">else</span>
+</span></span><span class="line"><span class="cl">     <span class="na">echo &#34;JAVA_OPTS already set in environment; overriding default settings with values: $JAVA_OPTS&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="na">fi</span>
+</span></span></code></pre></div><h3 id="set-allowed-memory-usage">Set allowed memory usage</h3>
+<p>By default, 512 MB of heap (RAM) is allowed to be used by the AS. This is not sufficient to run EJBCA. We recommended to allocate at least 2048 MB of RAM. To increase the default value, run the following command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sed -i -e <span class="s1">&#39;s/{{ HEAP_SIZE }}/2048/g&#39;</span> /opt/wildfly/bin/standalone.conf
+</span></span></code></pre></div><p>Set the Transaction Node ID</p>
+<p>Set the transaction node ID to a unique number. The node ID is used by the transactions subsystem and ensures that the transaction manager only recovers branches which match the specified identifier. It is imperative that this identifier is unique between WildFly instances sharing either an object store or access common resource managers (i.e. when EJBCA is operating in a cluster).</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sed -i -e <span class="s2">&#34;s/{{ TX_NODE_ID }}/</span><span class="k">$(</span>od -A n -t d -N <span class="m">1</span> /dev/urandom <span class="p">|</span> tr -d <span class="s1">&#39; &#39;</span><span class="k">)</span><span class="s2">/g&#34;</span> /opt/wildfly/bin/standalone.conf
+</span></span></code></pre></div><p>Configure WildFly as a Service</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cp /opt/wildfly/docs/contrib/scripts/systemd/launch.sh /opt/wildfly/bin
+</span></span><span class="line"><span class="cl">cp /opt/wildfly/docs/contrib/scripts/systemd/wildfly.service /etc/systemd/system
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mkdir /etc/wildfly/
+</span></span><span class="line"><span class="cl">cp /opt/wildfly/docs/contrib/scripts/systemd/wildfly.conf /etc/wildfly/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">systemctl daemon-reload
+</span></span><span class="line"><span class="cl">chown -R wildfly:wildfly /opt/wildfly-26.0.0.Final/
+</span></span><span class="line"><span class="cl">sudo chmod <span class="m">0750</span> /opt/wildfly/bin/*.sh
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;export APPSRV_HOME=&#34;/opt/wildfly&#34;&#39;</span> &gt; /etc/profile.d/wildfly.sh
+</span></span><span class="line"><span class="cl"><span class="nb">source</span> /etc/profile.d/wildfly.sh
+</span></span></code></pre></div><p>Start and enable wildfly service</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">systemctl start wildfly
+</span></span><span class="line"><span class="cl">systemctl <span class="nb">enable</span> wildfly
+</span></span><span class="line"><span class="cl">systemctl status wildfly
+</span></span></code></pre></div><h3 id="create-an-elytron-credential-store">Create an Elytron Credential Store</h3>
+<p>You can protect passwords by storing them in a credential store. The credential is encrypted with a master password which is fetched by WildFly on startup.</p>
+<p>Create a master password, by creating a script which outputs the master password to stdout and ensure the script can only be executed by the wildfly user:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;#!/bin/sh&#39;</span> &gt; /usr/bin/wildfly_pass
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;echo &#39;</span><span class="k">$(</span>openssl rand -base64 24<span class="k">)</span><span class="s2">&#39;&#34;</span> &gt;&gt; /usr/bin/wildfly_pass
+</span></span><span class="line"><span class="cl">chown wildfly:wildfly /usr/bin/wildfly_pass
+</span></span><span class="line"><span class="cl">chmod <span class="m">700</span> /usr/bin/wildfly_pass
+</span></span></code></pre></div><p>Create a credential store in /opt/wildfly/standalone/configuration encrypted with the password echoed by the wildfly_pass script.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir /opt/wildfly/standalone/configuration/keystore
+</span></span><span class="line"><span class="cl">chown wildfly:wildfly /opt/wildfly/standalone/configuration/keystore
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/opt/wildfly/bin/jboss-cli.sh --connect <span class="s1">&#39;/subsystem=elytron/credential-store=defaultCS:add(path=keystore/credentials, relative-to=jboss.server.config.dir, credential-reference={clear-text=&#34;{EXT}/usr/bin/wildfly_pass&#34;, type=&#34;COMMAND&#34;}, create=true)&#39;</span>
+</span></span></code></pre></div><h3 id="mariadb-database-driver-setup">MariaDB Database Driver Setup</h3>
+<p>Download MariaDB Java Connector and copy this file manually to the wildfly deployment directory:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wget https://dlm.mariadb.com/3478926/Connectors/java/connector-java-2.7.11/mariadb-java-client-2.7.11.jar -O /opt/packages/mariadb-java-client-2.7.11.jar
+</span></span></code></pre></div><p>Copy existing <code>mariadb-java-client.jar</code> to deployment directory in order to hot-deploy JDBC driver. This will be picked up by WildFly and deployed so we can create a data source straigh away.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cp /opt/packages/mariadb-java-client-2.7.11.jar /opt/wildfly/standalone/deployments/mariadb-java-client.jar
+</span></span></code></pre></div><p>Fix permissions:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chown -v wildfly: /opt/wildfly/standalone/deployments/mariadb-java-client.jar
+</span></span><span class="line"><span class="cl">chmod -v <span class="m">0640</span> /opt/wildfly/standalone/deployments/mariadb-java-client.jar
+</span></span></code></pre></div><h3 id="datasource-configuration">Datasource Configuration</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/opt/wildfly/bin/jboss-cli.sh --connect
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>elytron/credential-store<span class="o">=</span>defaultCS:add-alias<span class="o">(</span><span class="nv">alias</span><span class="o">=</span>dbPassword, secret-value<span class="o">=</span><span class="s2">&#34;linux!2345&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">data-source add --name<span class="o">=</span>ejbcads --connection-url<span class="o">=</span><span class="s2">&#34;jdbc:mysql://127.0.0.1:3306/ejbcadb&#34;</span> --jndi-name<span class="o">=</span><span class="s2">&#34;java:/EjbcaDS&#34;</span> --use-ccm<span class="o">=</span><span class="nb">true</span> --driver-name<span class="o">=</span><span class="s2">&#34;mariadb-java-client.jar&#34;</span> --driver-class<span class="o">=</span><span class="s2">&#34;org.mariadb.jdbc.Driver&#34;</span> --user-name<span class="o">=</span><span class="s2">&#34;ejbca&#34;</span> --credential-reference<span class="o">={</span><span class="nv">store</span><span class="o">=</span>defaultCS, <span class="nv">alias</span><span class="o">=</span>dbPassword<span class="o">}</span> --validate-on-match<span class="o">=</span><span class="nb">true</span> --background-validation<span class="o">=</span><span class="nb">false</span> --prepared-statements-cache-size<span class="o">=</span><span class="m">50</span> --share-prepared-statements<span class="o">=</span><span class="nb">true</span> --min-pool-size<span class="o">=</span><span class="m">5</span> --max-pool-size<span class="o">=</span><span class="m">150</span> --pool-prefill<span class="o">=</span><span class="nb">true</span> --transaction-isolation<span class="o">=</span>TRANSACTION_READ_COMMITTED --check-valid-connection-sql<span class="o">=</span><span class="s2">&#34;select 1;&#34;</span>
+</span></span></code></pre></div><h3 id="configure-remoting">Configure Remoting</h3>
+<p>EJBCA needs to use JBOSS Remoting for EJBCA CLI to work. Configure it to use a separate port 4447 and remove any other dependency on remoting except for what EJBCA needs.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/subsystem<span class="o">=</span>remoting/http-connector<span class="o">=</span>http-remoting-connector:write-attribute<span class="o">(</span><span class="nv">name</span><span class="o">=</span>connector-ref,value<span class="o">=</span>remoting<span class="o">)</span>
+</span></span><span class="line"><span class="cl">/socket-binding-group<span class="o">=</span>standard-sockets/socket-binding<span class="o">=</span>remoting:add<span class="o">(</span><span class="nv">port</span><span class="o">=</span>4447,interface<span class="o">=</span>management<span class="o">)</span>
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>undertow/server<span class="o">=</span>default-server/http-listener<span class="o">=</span>remoting:add<span class="o">(</span>socket-binding<span class="o">=</span>remoting,enable-http2<span class="o">=</span><span class="nb">true</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">:reload
+</span></span></code></pre></div><h3 id="configure-logging">Configure Logging</h3>
+<p>Configure logging in WildFly to be able to dynamically change logging while the application server is running.</p>
+<p>Logging options:</p>
+<ol>
+<li>INFO - Recommended Logging</li>
+<li>QUIET - audit log messages, warnnings and errors</li>
+</ol>
+<blockquote>
+<p>Note</p>
+<p>INFO log level for org.ejbca and org.cesecore is recommended for production systems.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/subsystem<span class="o">=</span>logging/logger<span class="o">=</span>org.ejbca:add<span class="o">(</span><span class="nv">level</span><span class="o">=</span>INFO<span class="o">)</span>
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>logging/logger<span class="o">=</span>org.cesecore:add<span class="o">(</span><span class="nv">level</span><span class="o">=</span>INFO<span class="o">)</span>
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>logging/logger<span class="o">=</span>com.keyfactor:add<span class="o">(</span><span class="nv">level</span><span class="o">=</span>INFO<span class="o">)</span>
+</span></span></code></pre></div><h3 id="audit-logging-to-file">Audit logging to file</h3>
+<p>You can write the EJBCA audit log to a separate file (<code>/opt/wildfly/standalone/log/cesecore-audit.log</code>), rotate every 128 MB and keep one rotated file:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/subsystem<span class="o">=</span>logging/size-rotating-file-handler<span class="o">=</span>cesecore-audit-log:add<span class="o">(</span><span class="nv">file</span><span class="o">={</span><span class="nv">path</span><span class="o">=</span>cesecore-audit.log, relative-to<span class="o">=</span>jboss.server.log.dir<span class="o">}</span>, max-backup-index<span class="o">=</span>1, rotate-size<span class="o">=</span>128m<span class="o">)</span>
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>logging/logger<span class="o">=</span>org.cesecore.audit.impl.log4j.Log4jDevice:add
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>logging/logger<span class="o">=</span>org.cesecore.audit.impl.log4j.Log4jDevice:add-handler<span class="o">(</span><span class="nv">name</span><span class="o">=</span>cesecore-audit-log<span class="o">)</span>
+</span></span></code></pre></div><h3 id="https-configuration">HTTP(S) Configuration</h3>
+<p>The following section explains how to configure HTTP(S) using Undertow.</p>
+<p>Run the following commands in JBoss CLI to remove existing TLS and HTTP configuration:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/subsystem<span class="o">=</span>undertow/server<span class="o">=</span>default-server/http-listener<span class="o">=</span>default:remove<span class="o">()</span>
+</span></span><span class="line"><span class="cl">/socket-binding-group<span class="o">=</span>standard-sockets/socket-binding<span class="o">=</span>http:remove<span class="o">()</span>
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>undertow/server<span class="o">=</span>default-server/https-listener<span class="o">=</span>https:remove<span class="o">()</span>
+</span></span><span class="line"><span class="cl">/socket-binding-group<span class="o">=</span>standard-sockets/socket-binding<span class="o">=</span>https:remove<span class="o">()</span>
+</span></span><span class="line"><span class="cl">:reload
+</span></span></code></pre></div><p>Wait for the reload to complete by checking the server log or the result of:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">:read-attribute<span class="o">(</span><span class="nv">name</span><span class="o">=</span>server-state<span class="o">)</span>
+</span></span></code></pre></div><p>The following section explains how to set up Undertow with 3-port separation. Port 8080 is used for HTTP (unencrypted traffic), port 8442 for HTTPS (encrypted) traffic with only server authentication and port 8443 for HTTPS (encrypted) traffic with both server and client authentication.</p>
+<p>To add new interfaces and sockets, use the following:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/interface<span class="o">=</span>http:add<span class="o">(</span>inet-address<span class="o">=</span><span class="s2">&#34;0.0.0.0&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">/interface<span class="o">=</span>httpspub:add<span class="o">(</span>inet-address<span class="o">=</span><span class="s2">&#34;0.0.0.0&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">/interface<span class="o">=</span>httpspriv:add<span class="o">(</span>inet-address<span class="o">=</span><span class="s2">&#34;0.0.0.0&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">/socket-binding-group<span class="o">=</span>standard-sockets/socket-binding<span class="o">=</span>http:add<span class="o">(</span><span class="nv">port</span><span class="o">=</span><span class="s2">&#34;8080&#34;</span>,interface<span class="o">=</span><span class="s2">&#34;http&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">/socket-binding-group<span class="o">=</span>standard-sockets/socket-binding<span class="o">=</span>httpspub:add<span class="o">(</span><span class="nv">port</span><span class="o">=</span><span class="s2">&#34;8442&#34;</span>,interface<span class="o">=</span><span class="s2">&#34;httpspub&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">/socket-binding-group<span class="o">=</span>standard-sockets/socket-binding<span class="o">=</span>httpspriv:add<span class="o">(</span><span class="nv">port</span><span class="o">=</span><span class="s2">&#34;8443&#34;</span>,interface<span class="o">=</span><span class="s2">&#34;httpspriv&#34;</span><span class="o">)</span>
+</span></span></code></pre></div><p>Configure TLS</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/subsystem<span class="o">=</span>elytron/credential-store<span class="o">=</span>defaultCS:add-alias<span class="o">(</span><span class="nv">alias</span><span class="o">=</span>httpsKeystorePassword, secret-value<span class="o">=</span><span class="s2">&#34;serverpwd&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>elytron/credential-store<span class="o">=</span>defaultCS:add-alias<span class="o">(</span><span class="nv">alias</span><span class="o">=</span>httpsTruststorePassword, secret-value<span class="o">=</span><span class="s2">&#34;changeit&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>elytron/key-store<span class="o">=</span>httpsKS:add<span class="o">(</span><span class="nv">path</span><span class="o">=</span><span class="s2">&#34;keystore/keystore.p12&#34;</span>,relative-to<span class="o">=</span>jboss.server.config.dir,credential-reference<span class="o">={</span><span class="nv">store</span><span class="o">=</span>defaultCS, <span class="nv">alias</span><span class="o">=</span>httpsKeystorePassword<span class="o">}</span>,type<span class="o">=</span>PKCS12<span class="o">)</span>
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>elytron/key-store<span class="o">=</span>httpsTS:add<span class="o">(</span><span class="nv">path</span><span class="o">=</span><span class="s2">&#34;keystore/truststore.p12&#34;</span>,relative-to<span class="o">=</span>jboss.server.config.dir,credential-reference<span class="o">={</span><span class="nv">store</span><span class="o">=</span>defaultCS, <span class="nv">alias</span><span class="o">=</span>httpsTruststorePassword<span class="o">}</span>,type<span class="o">=</span>PKCS12<span class="o">)</span>
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>elytron/key-manager<span class="o">=</span>httpsKM:add<span class="o">(</span>key-store<span class="o">=</span>httpsKS,algorithm<span class="o">=</span><span class="s2">&#34;SunX509&#34;</span>,credential-reference<span class="o">={</span><span class="nv">store</span><span class="o">=</span>defaultCS, <span class="nv">alias</span><span class="o">=</span>httpsKeystorePassword<span class="o">})</span>
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>elytron/trust-manager<span class="o">=</span>httpsTM:add<span class="o">(</span>key-store<span class="o">=</span>httpsTS<span class="o">)</span>
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>elytron/server-ssl-context<span class="o">=</span>httpspub:add<span class="o">(</span>key-manager<span class="o">=</span>httpsKM,protocols<span class="o">=[</span><span class="s2">&#34;TLSv1.3&#34;</span>,<span class="s2">&#34;TLSv1.2&#34;</span><span class="o">]</span>,use-cipher-suites-order<span class="o">=</span>false,cipher-suite-filter<span class="o">=</span><span class="s2">&#34;TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256&#34;</span>,cipher-suite-names<span class="o">=</span><span class="s2">&#34;TLS_AES_256_GCM_SHA384:TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>elytron/server-ssl-context<span class="o">=</span>httpspriv:add<span class="o">(</span>key-manager<span class="o">=</span>httpsKM,protocols<span class="o">=[</span><span class="s2">&#34;TLSv1.3&#34;</span>,<span class="s2">&#34;TLSv1.2&#34;</span><span class="o">]</span>,use-cipher-suites-order<span class="o">=</span>false,cipher-suite-filter<span class="o">=</span><span class="s2">&#34;TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256&#34;</span>,cipher-suite-names<span class="o">=</span><span class="s2">&#34;TLS_AES_256_GCM_SHA384:TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256&#34;</span>,trust-manager<span class="o">=</span>httpsTM,need-client-auth<span class="o">=</span><span class="nb">true</span><span class="o">)</span>
+</span></span></code></pre></div><p>Add HTTP(S) Listeners</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/subsystem<span class="o">=</span>undertow/server<span class="o">=</span>default-server/http-listener<span class="o">=</span>http:add<span class="o">(</span>socket-binding<span class="o">=</span><span class="s2">&#34;http&#34;</span>, redirect-socket<span class="o">=</span><span class="s2">&#34;httpspriv&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>undertow/server<span class="o">=</span>default-server/https-listener<span class="o">=</span>httpspub:add<span class="o">(</span>socket-binding<span class="o">=</span><span class="s2">&#34;httpspub&#34;</span>, ssl-context<span class="o">=</span><span class="s2">&#34;httpspub&#34;</span>, max-parameters<span class="o">=</span>2048<span class="o">)</span>
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>undertow/server<span class="o">=</span>default-server/https-listener<span class="o">=</span>httpspriv:add<span class="o">(</span>socket-binding<span class="o">=</span><span class="s2">&#34;httpspriv&#34;</span>, ssl-context<span class="o">=</span><span class="s2">&#34;httpspriv&#34;</span>, max-parameters<span class="o">=</span>2048<span class="o">)</span>
+</span></span><span class="line"><span class="cl">:reload
+</span></span></code></pre></div><p>HTTP Protocol Behaivor Configuration</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/system-property<span class="o">=</span>org.apache.catalina.connector.URI_ENCODING:add<span class="o">(</span><span class="nv">value</span><span class="o">=</span><span class="s2">&#34;UTF-8&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">/system-property<span class="o">=</span>org.apache.catalina.connector.USE_BODY_ENCODING_FOR_QUERY_STRING:add<span class="o">(</span><span class="nv">value</span><span class="o">=</span><span class="nb">true</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">/system-property<span class="o">=</span>org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH:add<span class="o">(</span><span class="nv">value</span><span class="o">=</span><span class="nb">true</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">/system-property<span class="o">=</span>org.apache.tomcat.util.http.Parameters.MAX_COUNT:add<span class="o">(</span><span class="nv">value</span><span class="o">=</span>2048<span class="o">)</span>
+</span></span><span class="line"><span class="cl">/system-property<span class="o">=</span>org.apache.catalina.connector.CoyoteAdapter.ALLOW_BACKSLASH:add<span class="o">(</span><span class="nv">value</span><span class="o">=</span><span class="nb">true</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>webservices:write-attribute<span class="o">(</span><span class="nv">name</span><span class="o">=</span>wsdl-host, <span class="nv">value</span><span class="o">=</span>jbossws.undefined.host<span class="o">)</span>
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>webservices:write-attribute<span class="o">(</span><span class="nv">name</span><span class="o">=</span>modify-wsdl-address, <span class="nv">value</span><span class="o">=</span><span class="nb">true</span><span class="o">)</span>
+</span></span></code></pre></div><p>Redirect to Application for Unknown URLs</p>
+<p>Known URLs for EJBCA starts with /ejbca, /crls, /certificates or /.well-known (EST and ACME) according to the following example:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/subsystem<span class="o">=</span>undertow/configuration<span class="o">=</span>filter/rewrite<span class="o">=</span>redirect-to-app:add<span class="o">(</span><span class="nv">redirect</span><span class="o">=</span>true,target<span class="o">=</span><span class="s2">&#34;/ejbca/&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>undertow/server<span class="o">=</span>default-server/host<span class="o">=</span>default-host/filter-ref<span class="o">=</span>redirect-to-app:add<span class="o">(</span><span class="nv">priority</span><span class="o">=</span>1,predicate<span class="o">=</span><span class="s2">&#34;method(GET) and not path-prefix(/ejbca,/crls,/certificates,/.well-known) and not equals({\%{LOCAL_PORT}, 4447})&#34;</span><span class="o">)</span>
+</span></span></code></pre></div><p>URL Rewriting</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/subsystem<span class="o">=</span>undertow/configuration<span class="o">=</span>filter/rewrite<span class="o">=</span>crl-rewrite:add<span class="o">(</span><span class="nv">target</span><span class="o">=</span><span class="s2">&#34;/ejbca/publicweb/crls/</span><span class="nv">$$</span><span class="s2">{1}&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">quit
+</span></span></code></pre></div><p>Execute following command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/opt/wildfly/bin/jboss-cli.sh --connect <span class="s2">&#34;/subsystem=undertow/server=default-server/host=default-host/filter-ref=crl-rewrite:add(predicate=\&#34;method(GET) and regex(&#39;/crls/(.*)&#39;)\&#34;)&#34;</span>
+</span></span></code></pre></div><p>You can remove the ExampleDS datasource as it is not being used.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/opt/wildfly/bin/jboss-cli.sh --connect
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/subsystem<span class="o">=</span>ee/service<span class="o">=</span>default-bindings:remove<span class="o">()</span>
+</span></span><span class="line"><span class="cl">data-source remove --name<span class="o">=</span>ExampleDS
+</span></span><span class="line"><span class="cl">:reload
+</span></span><span class="line"><span class="cl">quit
+</span></span></code></pre></div><h3 id="install-apache-ant">Install Apache Ant</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /opt/packages/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">wget https://dlcdn.apache.org//ant/binaries/apache-ant-1.10.14-bin.zip
+</span></span><span class="line"><span class="cl">wget https://downloads.apache.org/ant/binaries/apache-ant-1.10.14-bin.zip.sha512
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">unzip /opt/packages/apache-ant-1.10.14-bin.zip -d /opt/
+</span></span><span class="line"><span class="cl">sudo ln -s /opt/apache-ant-1.10.14 /opt/ant
+</span></span></code></pre></div><blockquote>
+<p>Note</p>
+<p>Edit <strong>/etc/profile.d/ant.sh</strong> with nano or vi.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># /etc/profile.d/ant.sh</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">ANT_HOME</span><span class="o">=</span>/opt/ant
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">PATH</span><span class="si">}</span>:<span class="si">${</span><span class="nv">ANT_HOME</span><span class="si">}</span>/bin
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">source</span> /etc/profile.d/ant.sh
+</span></span></code></pre></div><h3 id="ejbca-installation">EJBCA Installation</h3>
+<p>Extract archive to <code>/opt</code> and create symbolic link</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">unzip ejbca_ee_8_2_0_3.zip -d /opt/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">ln -snf /opt/ejbca_ee* /opt/ejbca
+</span></span></code></pre></div><p>The folder <code>/opt/ejbca</code> contains the EJBCA source code. Create folder <code>/opt/ejbca-custom</code> contains following configuration files within <code>conf</code> directory:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir -p /opt/ejbca-custom/conf
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">ejbca-custom/
+</span></span><span class="line"><span class="cl">└── conf
+</span></span><span class="line"><span class="cl">    ├── cesecore.properties
+</span></span><span class="line"><span class="cl">    ├── database.properties
+</span></span><span class="line"><span class="cl">    ├── ejbca.properties
+</span></span><span class="line"><span class="cl">    ├── install.properties
+</span></span><span class="line"><span class="cl">    └── web.properties
+</span></span></code></pre></div><p>Edit next configuration files:</p>
+<ul>
+<li><strong>/opt/ejbca-custom/conf/cesecore.properties</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">allow.external-dynamic.configuration</span><span class="o">=</span><span class="s">true</span>
+</span></span><span class="line"><span class="cl"><span class="na">certificate.validityoffset</span><span class="o">=</span><span class="s">-10m</span>
+</span></span><span class="line"><span class="cl"><span class="na">database.crlgenfetchsize</span><span class="o">=</span><span class="s">500000</span>
+</span></span><span class="line"><span class="cl"><span class="na">securityeventsaudit.implementation.0</span><span class="o">=</span><span class="s">org.cesecore.audit.impl.log4j.Log4jDevice</span>
+</span></span><span class="line"><span class="cl"><span class="na">securityeventsaudit.implementation.1</span><span class="o">=</span><span class="s">org.cesecore.audit.impl.integrityprotected.IntegrityProtectedDevice</span>
+</span></span><span class="line"><span class="cl"><span class="na">securityeventsaudit.exporter.1</span><span class="o">=</span><span class="s">org.cesecore.audit.impl.AuditExporterXml</span>
+</span></span></code></pre></div><ul>
+<li><strong>/opt/ejbca-custom/conf/database.properties</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">datasource.jndi-name</span><span class="o">=</span><span class="s">EjbcaDS</span>
+</span></span><span class="line"><span class="cl"><span class="na">database.name</span><span class="o">=</span><span class="s">mysql</span>
+</span></span><span class="line"><span class="cl"><span class="na">database.url</span><span class="o">=</span><span class="s">jdbc:mysql://127.0.0.1:3306/ejbcadb?characterEncoding=UTF-8</span>
+</span></span><span class="line"><span class="cl"><span class="na">database.driver</span><span class="o">=</span><span class="s">org.mariadb.jdbc.Driver</span>
+</span></span><span class="line"><span class="cl"><span class="na">database.username</span><span class="o">=</span><span class="s">ejbca</span>
+</span></span><span class="line"><span class="cl"><span class="na">database.password</span><span class="o">=</span><span class="s">linux!2345</span>
+</span></span></code></pre></div><ul>
+<li><strong>/opt/ejbca-custom/conf/ejbca.properties</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">appserver.home</span><span class="o">=</span><span class="s">/opt/wildfly</span>
+</span></span><span class="line"><span class="cl"><span class="na">appserver.type</span><span class="o">=</span><span class="s">jboss</span>
+</span></span><span class="line"><span class="cl"><span class="na">ejbca.productionmode</span><span class="o">=</span><span class="s">true</span>
+</span></span><span class="line"><span class="cl"><span class="na">allow.external-dynamic.configuration</span><span class="o">=</span><span class="s">true</span>
+</span></span><span class="line"><span class="cl"><span class="na">ejbca.cli.defaultusername</span><span class="o">=</span><span class="s">ejbca</span>
+</span></span><span class="line"><span class="cl"><span class="na">ejbca.cli.defaultpassword</span><span class="o">=</span><span class="s">ejbca</span>
+</span></span></code></pre></div><ul>
+<li><strong>/opt/ejbca-custom/conf/install.properties</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">ca.name</span><span class="o">=</span><span class="s">ManagementCA</span>
+</span></span><span class="line"><span class="cl"><span class="na">ca.dn</span><span class="o">=</span><span class="s">CN=ManagementCA,O=Vukilis,C=RS</span>
+</span></span><span class="line"><span class="cl"><span class="na">ca.tokentype</span><span class="o">=</span><span class="s">soft</span>
+</span></span><span class="line"><span class="cl"><span class="na">ca.tokenpassword</span><span class="o">=</span><span class="s">null</span>
+</span></span><span class="line"><span class="cl"><span class="na">ca.keyspec</span><span class="o">=</span><span class="s">2048</span>
+</span></span><span class="line"><span class="cl"><span class="na">ca.keytype</span><span class="o">=</span><span class="s">RSA</span>
+</span></span><span class="line"><span class="cl"><span class="na">ca.signaturealgorithm</span><span class="o">=</span><span class="s">SHA256WithRSA</span>
+</span></span><span class="line"><span class="cl"><span class="na">ca.validity</span><span class="o">=</span><span class="s">3650</span>
+</span></span><span class="line"><span class="cl"><span class="na">ca.policy</span><span class="o">=</span><span class="s">null</span>
+</span></span></code></pre></div><ul>
+<li><strong>/opt/ejbca-custom/conf/web.properties</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">java.trustpassword</span><span class="o">=</span><span class="s">changeit</span>
+</span></span><span class="line"><span class="cl"><span class="na">superadmin.cn</span><span class="o">=</span><span class="s">SuperAdmin-Training</span>
+</span></span><span class="line"><span class="cl"><span class="na">superadmin.dn</span><span class="o">=</span><span class="s">CN=${superadmin.cn},O=Vukilis,C=RS</span>
+</span></span><span class="line"><span class="cl"><span class="na">superadmin.password</span><span class="o">=</span><span class="s">ejbca</span>
+</span></span><span class="line"><span class="cl"><span class="na">superadmin.batch</span><span class="o">=</span><span class="s">true</span>
+</span></span><span class="line"><span class="cl"><span class="na">httpsserver.password</span><span class="o">=</span><span class="s">serverpwd</span>
+</span></span><span class="line"><span class="cl"><span class="na">httpsserver.hostname</span><span class="o">=</span><span class="s">localhost</span>
+</span></span><span class="line"><span class="cl"><span class="na">httpsserver.dn</span><span class="o">=</span><span class="s">CN=${httpsserver.hostname},O=Vukilis,C=RS</span>
+</span></span><span class="line"><span class="cl"><span class="na">httpsserver.tokentype</span><span class="o">=</span><span class="s">P12</span>
+</span></span></code></pre></div><p>Fix file and directory permissions:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chown -R wildfly:wildfly /opt/wildfly/*
+</span></span><span class="line"><span class="cl">chown -R wildfly:wildfly /opt/ejbca-custom/
+</span></span><span class="line"><span class="cl">chown -R wildfly:wildfly /opt/ejbca_*/
+</span></span><span class="line"><span class="cl">chown -R wildfly:wildfly /opt/wildfly-*/
+</span></span><span class="line"><span class="cl">chown -R wildfly:wildfly /etc/utimaco/
+</span></span><span class="line"><span class="cl">chown -R wildfly:wildfly /opt/utimaco/
+</span></span></code></pre></div><h3 id="hsm-configuration">HSM configuration</h3>
+<p>Before you start configuring ejbca for HSM be sure you configured correctly HSM.</p>
+<ul>
+<li><strong>/opt/ejbca-custom/conf/catoken.properties</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">sharedLibrary /opt/utimaco/p11/libcs_pkcs11_R3.so</span>
+</span></span><span class="line"><span class="cl"><span class="na">slotLabelType</span><span class="o">=</span><span class="s">SLOT_NUMBER</span>
+</span></span><span class="line"><span class="cl"><span class="na">slotLabelValue</span><span class="o">=</span><span class="s">3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># CA key configuration</span>
+</span></span><span class="line"><span class="cl"><span class="na">defaultKey sign</span>
+</span></span><span class="line"><span class="cl"><span class="na">certSignKey sign</span>
+</span></span><span class="line"><span class="cl"><span class="na">crlSignKey sign</span>
+</span></span><span class="line"><span class="cl"><span class="na">testKey test</span>
+</span></span></code></pre></div><p>Add following lines in <strong>/opt/ejbca-custom/conf/web.properties</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;cryptotoken.p11.lib.110.name=Utimaco R3&#34;</span> &gt;&gt; /opt/ejbca-custom/conf/web.properties
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;cryptotoken.p11.lib.110.file=/opt/utimaco/p11/libcs_pkcs11_R3.so&#34;</span> &gt;&gt; /opt/ejbca-custom/conf/web.properties
+</span></span></code></pre></div><p>Copy following files and directories from the client PC to the remote server:</p>
+<ul>
+<li>p11tool2</li>
+<li>libcs_pkcs11_R3.so</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">scp -r &lt;file&gt; vukilis@172.10.0.10:/tmp/
+</span></span></code></pre></div><p>Create utimaco configuration directory:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir -p /opt/utimaco/p11/
+</span></span></code></pre></div><p>Move files from <strong>/tmp</strong> to <strong>/opt/packages/utimaco/</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mv /tmp/p11tool2 /opt/utimaco/p11/
+</span></span><span class="line"><span class="cl">mv /tmp/libcs* /opt/utimaco/p11/
+</span></span></code></pre></div><ul>
+<li>Create file <strong>/opt/utimaco/p11/libcs_pkcs11_R3.ini</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="k">[Global]</span>
+</span></span><span class="line"><span class="cl"><span class="na">Timeout</span> <span class="o">=</span> <span class="s">5000</span>
+</span></span><span class="line"><span class="cl"><span class="na">Logging</span> <span class="o">=</span> <span class="s">0</span>
+</span></span><span class="line"><span class="cl"><span class="na">Logpath</span> <span class="o">=</span> <span class="s">/tmp</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">[CryptoServer]</span>
+</span></span><span class="line"><span class="cl"><span class="na">Device</span>     <span class="o">=</span> <span class="s">172.30.1.34</span>
+</span></span><span class="line"><span class="cl"><span class="na">Timeout</span>    <span class="o">=</span> <span class="s">600000</span>
+</span></span><span class="line"><span class="cl"><span class="na">AppTimeout</span> <span class="o">=</span> <span class="s">172800</span>
+</span></span><span class="line"><span class="cl"><span class="na">SlotCount</span>  <span class="o">=</span> <span class="s">2</span>
+</span></span></code></pre></div><p>Set permissions:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chmod -v <span class="m">0750</span> /opt/utimaco/p11/p11tool2
+</span></span><span class="line"><span class="cl">chmod -v <span class="m">0644</span> /opt/utimaco/p11/libcs_pkcs11_R3.so
+</span></span><span class="line"><span class="cl">chmod u+w /opt/utimaco/p11/libcs_pkcs11_R3.ini
+</span></span></code></pre></div><h3 id="build-ejbca">Build EJBCA</h3>
+<p>Log in as <code>wildfly</code> user and change working directory to <code>/opt/ejbca</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">su - wildfly
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> /opt/ejbca
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">ant -q clean deployear
+</span></span></code></pre></div><p>Build <code>clientToolBox</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ant -q clientToolBox
+</span></span></code></pre></div><p>Install The EJBCA:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ant runinstall
+</span></span></code></pre></div><p>Deploy keystore:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ant deploy-keystore
+</span></span></code></pre></div><p>Restart EJBCA</p>
+<blockquote>
+<p>Note</p>
+<p>First try to access EJBCA Public page without wildfly service restart. If there is problem with TLS handshake, please do restart wildlfly service.</p>
+</blockquote>
+<p>Access the EJBCA Public Web using web browser using first node on the following link:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">@ http://172.10.0.10:8080/ejbca</span>
+</span></span></code></pre></div><p>Download <code>superadmin.p12</code>. It is located under:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/opt/ejbca/p12/
+</span></span></code></pre></div><p>Import <code>superadmin.p12</code> into browser and restart web browser in order to reload its cert store.</p>
+<p>Open EJBCA Administration page:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">@ https://172.10.0.10:8443/ejbca/adminweb</span>
+</span></span></code></pre></div><h2 id="3-when-ejbca-installation-is-done-stop-mariadb-service"><code>3. When EJBCA installation is done stop mariadb service</code></h2>
+<p>On each nodes stop mariadb service with following command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl stop mariadb.service
+</span></span></code></pre></div><h2 id="4-follow-the-procedure-for-galera-installation"><code>4. Follow the procedure for Galera installation</code></h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<ol>
+<li>3 servers with preinstalled Debian 12 Linux distribution</li>
+<li>For each server, 2 network adapters configured<br>
+a) 1 adapter for Internet access<br>
+b) 1 adapter for communication/replication among the nodes
+<ul>
+<li>(172.30.0.165, 172.30.0.166, 172.30.0.167)</li>
+</ul>
+</li>
+<li>Root password set to &lsquo;<strong>linux!2345</strong>&rsquo;</li>
+<li>Optional: Default configuration of Debian installation doesn&rsquo;t have an
+active firewall. For other Linux distribution it is needed to open and
+configure ports <strong>3306 (TCP)</strong>, <strong>4444 (TCP)</strong>, <strong>4567 (TCP and UDP)</strong>, <strong>4568 (TCP)</strong>
+and configure <strong>SELinux</strong> policies if needed.</li>
+</ol>
+<h3 id="installation">Installation</h3>
+<p>On each node create galera configuration file:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/mysql/conf.d/galera.cnf
+</span></span></code></pre></div><p>On the first node, add the following configuration to (<code>/etc/mysql/conf.d/galera.cnf</code>) file.<br>
+<em>(IP address of the first node is <strong>172.30.0.165</strong>)</em>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="k">[mysqld]</span>
+</span></span><span class="line"><span class="cl"><span class="na">binlog_format</span><span class="o">=</span><span class="s">ROW</span>
+</span></span><span class="line"><span class="cl"><span class="na">default-storage-engine</span><span class="o">=</span><span class="s">innodb</span>
+</span></span><span class="line"><span class="cl"><span class="na">innodb_autoinc_lock_mode</span><span class="o">=</span><span class="s">2</span>
+</span></span><span class="line"><span class="cl"><span class="na">bind-address</span><span class="o">=</span><span class="s">0.0.0.0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Galera Provider Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_on</span><span class="o">=</span><span class="s">ON</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_provider</span><span class="o">=</span><span class="s">/usr/lib/galera/libgalera_smm.so</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Galera Cluster Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_cluster_name</span><span class="o">=</span><span class="s">&#34;alg_cluster&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_cluster_address</span><span class="o">=</span><span class="s">&#34;gcomm://172.10.0.166,172.10.0.167&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Galera Synchronization Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_sst_method</span><span class="o">=</span><span class="s">rsync</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Galera Node Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_node_address</span><span class="o">=</span><span class="s">&#34;172.10.0.165&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_node_name</span><span class="o">=</span><span class="s">&#34;galera1&#34;</span>
+</span></span></code></pre></div><p>On the second node, add the following configuration to (<code>/etc/mysql/conf.d/galera.cnf</code>) file<br>
+<em>(IP address of the second node is <strong>172.10.0.166</strong>)</em>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="k">[mysqld]</span>
+</span></span><span class="line"><span class="cl"><span class="na">binlog_format</span><span class="o">=</span><span class="s">ROW</span>
+</span></span><span class="line"><span class="cl"><span class="na">default-storage-engine</span><span class="o">=</span><span class="s">innodb</span>
+</span></span><span class="line"><span class="cl"><span class="na">innodb_autoinc_lock_mode</span><span class="o">=</span><span class="s">2</span>
+</span></span><span class="line"><span class="cl"><span class="na">bind-address</span><span class="o">=</span><span class="s">0.0.0.0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Galera Provider Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_on</span><span class="o">=</span><span class="s">ON</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_provider</span><span class="o">=</span><span class="s">/usr/lib/galera/libgalera_smm.so</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Galera Cluster Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_cluster_name</span><span class="o">=</span><span class="s">&#34;alg_cluster&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_cluster_address</span><span class="o">=</span><span class="s">&#34;gcomm://172.10.0.165,172.10.0.167&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Galera Synchronization Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_sst_method</span><span class="o">=</span><span class="s">rsync</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Galera Node Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_node_address</span><span class="o">=</span><span class="s">&#34;172.10.0.166&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_node_name</span><span class="o">=</span><span class="s">&#34;galera2&#34;</span>
+</span></span></code></pre></div><p>On the third node, add the following configuration to (<code>/etc/mysql/conf.d/galera.cnf</code>) file<br>
+<em>(IP address of the third node is <strong>172.10.0.167</strong>)</em>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="k">[mysqld]</span>
+</span></span><span class="line"><span class="cl"><span class="na">binlog_format</span><span class="o">=</span><span class="s">ROW</span>
+</span></span><span class="line"><span class="cl"><span class="na">default-storage-engine</span><span class="o">=</span><span class="s">innodb</span>
+</span></span><span class="line"><span class="cl"><span class="na">innodb_autoinc_lock_mode</span><span class="o">=</span><span class="s">2</span>
+</span></span><span class="line"><span class="cl"><span class="na">bind-address</span><span class="o">=</span><span class="s">0.0.0.0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Galera Provider Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_on</span><span class="o">=</span><span class="s">ON</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_provider</span><span class="o">=</span><span class="s">/usr/lib/galera/libgalera_smm.so</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Galera Cluster Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_cluster_name</span><span class="o">=</span><span class="s">&#34;alg_cluster&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_cluster_address</span><span class="o">=</span><span class="s">&#34;gcomm://172.10.0.165,172.10.0.166&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Galera Synchronization Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_sst_method</span><span class="o">=</span><span class="s">rsync</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Galera Node Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_node_address</span><span class="o">=</span><span class="s">&#34;172.10.0.167&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="na">wsrep_node_name</span><span class="o">=</span><span class="s">&#34;galera3&#34;</span>
+</span></span></code></pre></div><p>On the first node start galera cluster:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo galera_new_cluster
+</span></span></code></pre></div><p>On the first node execute the following command to check the cluster size<br>
+<em>(DB root password &ldquo;<strong>linux!2345</strong>&rdquo;)</em>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql -u root -p -e <span class="s2">&#34;SHOW STATUS LIKE &#39;wsrep_cluster_size&#39;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Output
+</span></span><span class="line"><span class="cl">+--------------------+-------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> Variable_name      <span class="p">|</span> Value <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+--------------------+-------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> wsrep_cluster_size <span class="p">|</span> <span class="m">1</span>     <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+--------------------+-------+
+</span></span></code></pre></div><p>On the second node start mariadb service and add the node to the cluster:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl start mariadb
+</span></span></code></pre></div><p>On the third node start mariadb service and add the node to the cluster:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl start mariadb
+</span></span></code></pre></div><p>On the first node execute the following command to check the updated cluster size:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql -u root -p -e <span class="s2">&#34;SHOW STATUS LIKE &#39;wsrep_cluster_size&#39;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Output
+</span></span><span class="line"><span class="cl">+--------------------+-------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> Variable_name      <span class="p">|</span> Value <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+--------------------+-------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> wsrep_cluster_size <span class="p">|</span> <span class="m">3</span>     <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+--------------------+-------+
+</span></span></code></pre></div><h3 id="testing-replication">Testing Replication</h3>
+<p>On the first node create a database and insert test data:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql -u root -p -e <span class="s1">&#39;CREATE DATABASE playground;&#39;</span>
+</span></span><span class="line"><span class="cl">mysql&gt; CREATE TABLE playground.equipment <span class="o">(</span> id INT NOT NULL AUTO_INCREMENT, <span class="nb">type</span> VARCHAR<span class="o">(</span>50<span class="o">)</span>, quant INT, color VARCHAR<span class="o">(</span>25<span class="o">)</span>, PRIMARY KEY<span class="o">(</span>id<span class="o">))</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">mysql&gt; INSERT INTO playground.equipment <span class="o">(</span>type, quant, color<span class="o">)</span> VALUES <span class="o">(</span><span class="s2">&#34;slide&#34;</span>, 2, <span class="s2">&#34;blue&#34;</span><span class="o">)</span><span class="p">;</span>
+</span></span></code></pre></div><p>Look at the second node to verify that replication is working:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql -u root -p -e <span class="s1">&#39;SELECT * FROM playground.equipment;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Output
+</span></span><span class="line"><span class="cl">+----+-------+-------+-------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> id <span class="p">|</span> <span class="nb">type</span>  <span class="p">|</span> quant <span class="p">|</span> color <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----+-------+-------+-------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  <span class="m">1</span> <span class="p">|</span> slide <span class="p">|</span>     <span class="m">2</span> <span class="p">|</span> blue  <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----+-------+-------+-------+
+</span></span></code></pre></div><p>On the second node insert test data:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql -u root -p -e <span class="s1">&#39;INSERT INTO playground.equipment (type, quant, color) VALUES (&#34;swing&#34;, 10, &#34;yellow&#34;);&#39;</span>
+</span></span></code></pre></div><p>From the third node, you can read all of this data by querying the table again:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Output
+</span></span><span class="line"><span class="cl">+----+-------+-------+--------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> id <span class="p">|</span> <span class="nb">type</span>  <span class="p">|</span> quant <span class="p">|</span> color  <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----+-------+-------+--------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  <span class="m">1</span> <span class="p">|</span> slide <span class="p">|</span>     <span class="m">2</span> <span class="p">|</span> blue   <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  <span class="m">2</span> <span class="p">|</span> swing <span class="p">|</span>    <span class="m">10</span> <span class="p">|</span> yellow <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----+-------+-------+--------+
+</span></span></code></pre></div><p>Again, you can add another value from this node:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql -u root -p -e <span class="s1">&#39;INSERT INTO playground.equipment (type, quant, color) VALUES (&#34;seesaw&#34;, 3, &#34;green&#34;);&#39;</span>
+</span></span></code></pre></div><p>Back on the first node, you can verify that your data is available everywhere:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysql -u root -p -e <span class="s1">&#39;SELECT * FROM playground.equipment;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Output
+</span></span><span class="line"><span class="cl">+----+--------+-------+--------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span> id <span class="p">|</span> <span class="nb">type</span>   <span class="p">|</span> quant <span class="p">|</span> color  <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----+--------+-------+--------+
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  <span class="m">1</span> <span class="p">|</span> slide  <span class="p">|</span>     <span class="m">2</span> <span class="p">|</span> blue   <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  <span class="m">2</span> <span class="p">|</span> swing  <span class="p">|</span>    <span class="m">10</span> <span class="p">|</span> yellow <span class="p">|</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>  <span class="m">3</span> <span class="p">|</span> seesaw <span class="p">|</span>     <span class="m">3</span> <span class="p">|</span> green  <span class="p">|</span>
+</span></span><span class="line"><span class="cl">+----+--------+-------+--------+
+</span></span></code></pre></div><blockquote>
+<p>Note</p>
+<p>Always start Galera Cluster on the node where mariadb service was the last stopped.<br>
+If the last time you stopped mariadb service in the following order galera3 &ndash;&gt; galera2 &ndash;&gt; galera1, you should initiate Galera Cluster
+on galera1 node.</p>
+</blockquote>
+<h3 id="mariadb-backup-and-restore">MariaDB Backup and Restore</h3>
+<p>On each node install MariaDB backup package:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get install mariadb-backup
+</span></span></code></pre></div><p>On the third node create backup directory:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir -p /var/mariadb/backup/
+</span></span></code></pre></div><p>On the third node make a backup of MariaDB database:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo mariabackup --backup --target-dir<span class="o">=</span>/var/mariadb/backup/ --user<span class="o">=</span>root --password<span class="o">=</span>linux!2345
+</span></span></code></pre></div><p>On the third node check the backed up content:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ls -l /var/mariadb/backup/
+</span></span></code></pre></div><p>On the third node stop mariadb service:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl stop mariadb
+</span></span></code></pre></div><p>On the third node first prepare backup in order to restore it:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo mariabackup --prepare --target-dir<span class="o">=</span>/var/mariadb/backup/
+</span></span></code></pre></div><p>On the third node remove the content from the MariaDB data directory (<code>/var/lib/mysql/</code>):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo rm -rf /var/lib/mysql/*
+</span></span></code></pre></div><p>On the third node start MariaDB restore:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo mariabackup --copy-back --target-dir<span class="o">=</span>/var/mariadb/backup/
+</span></span></code></pre></div><p>On the third node fix the file permissions for the restored data:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo chown -R mysql:mysql /var/lib/mysql/
+</span></span></code></pre></div><p>On the third node start mariadb service, join the existing Galera Cluster and sync the restored data:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl start mariadb
+</span></span></code></pre></div><p>On the third node check the restored and synced data.</p>
+<h2 id="5-open-ejbca-administration-page"><code>5. Open EJBCA Administration page</code></h2>
+<p>Download each <code>superadmin.p12</code> file.</p>
+<p>On node1:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /opt/ejbca/p12/
+</span></span><span class="line"><span class="cl">cp superadmin.p12 /tmp
+</span></span><span class="line"><span class="cl">scp vukilis@172.10.0.65:/tmp/superadmin.p12 /tmp/superadminca1.p12
+</span></span></code></pre></div><p>On node2:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /opt/ejbca/p12/
+</span></span><span class="line"><span class="cl">cp superadmin.p12 /tmp
+</span></span><span class="line"><span class="cl">scp vukilis@172.10.0.66:/tmp/superadmin.p12 /tmp/superadminca2.p12
+</span></span></code></pre></div><p>On node3:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /opt/ejbca/p12/
+</span></span><span class="line"><span class="cl">cp superadmin.p12 /tmp
+</span></span><span class="line"><span class="cl">scp vukilis@172.10.0.67:/tmp/superadmin.p12 /tmp/superadminca3.p12
+</span></span></code></pre></div><p>Import each <code>superadmin.p12</code> into browser and restart web browser in order to reload its cert store.<br>
+You need to open private browser window for each cert store of specific node.
+When you are asked to identify yourself, you need to choose the certificate of said node.</p>
+<a class="lightgallery" href="https://vukilis.com/images/2024/How_to_install_EJBCA_with_Apache_proxy_and_galera_with_HSM_module/certificate_identify.PNG" title="certificate" data-thumbnail="/images/2024/How_to_install_EJBCA_with_Apache_proxy_and_galera_with_HSM_module/certificate_identify.PNG">
+        <img
+            class="lazyload"
+            src="https://vukilis.com/svg/loading.min.svg"
+            data-src="certificate"
+            data-srcset="https://vukilis.com/images/2024/How_to_install_EJBCA_with_Apache_proxy_and_galera_with_HSM_module/certificate_identify.PNG, certificate 1.5x, https://vukilis.com/images/2024/How_to_install_EJBCA_with_Apache_proxy_and_galera_with_HSM_module/certificate_identify.PNG 2x"
+            data-sizes="auto"
+            alt="certificate" width="100%" />
+    </a>
+<h2 id="references">References</h2>
+<p><a href="https://doc.primekey.com/ejbca/tutorials-and-guides" target="_blank" rel="noopener noreffer ">https://doc.primekey.com/ejbca/tutorials-and-guides</a></p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-05-03</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://vukilis.com/How-to-install-and-setup-EJBCA-with-galera-and-HSM-module/" data-title="How to install and setup EJBCA 8.2 with galera and HSM module" data-hashtags="debian,crtificates,security"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://vukilis.com/How-to-install-and-setup-EJBCA-with-galera-and-HSM-module/" data-hashtag="debian"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://vukilis.com/How-to-install-and-setup-EJBCA-with-galera-and-HSM-module/" data-title="How to install and setup EJBCA 8.2 with galera and HSM module"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Reddit" data-sharer="reddit" data-url="https://vukilis.com/How-to-install-and-setup-EJBCA-with-galera-and-HSM-module/"><i class="fab fa-reddit fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on VK" data-sharer="vk" data-url="https://vukilis.com/How-to-install-and-setup-EJBCA-with-galera-and-HSM-module/" data-title="How to install and setup EJBCA 8.2 with galera and HSM module" data-caption="In this tutorial I will show how to install and setup EJBCA 8.2 with Hardware security module (HSM)...."><i class="fab fa-vk fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="https://vukilis.com/tags/debian/">debian</a>,&nbsp;<a href="https://vukilis.com/tags/crtificates/">crtificates</a>,&nbsp;<a href="https://vukilis.com/tags/security/">security</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://vukilis.com/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://vukilis.com/how-to-find-latest-modified-files-recursively/" class="prev" rel="prev" title="How to Find Last Modified Files Recursively"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>How to Find Last Modified Files Recursively</a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://vukilis.com/about/">Vuk1lis</a></span>&nbsp;|&nbsp;<span class="license"><a href="https://vukilis.com/privacy">Privacy</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://vukilis.com/terms-conditions">Terms and Conditions</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"url","label":"comment","lightTheme":"github-dark","repo":"vukilis/website"}},"lightgallery":true,"search":{"algoliaAppID":"DAENWQCI5B","algoliaIndex":"website","algoliaSearchKey":"3a87729afa43d11594394f5b86df56f8","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="https://vukilis.com/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-BPK5CT0MGQ', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-BPK5CT0MGQ" async></script><script type="text/javascript" >
+           (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+           m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+           (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+           ym("97163691", "init", {
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true
+           });
+        </script>
+        <noscript><div><img src="https://mc.yandex.ru/watch/97163691" style="position:absolute; left:-9999px;" alt="" /></div></noscript></body>
+</html>

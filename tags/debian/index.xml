@@ -5,10 +5,10 @@
         <description>debian - Tag - V For Vuk1lis</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 03 May 2024 17:10:17 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/tags/debian/" rel="self" type="application/rss+xml" /><item>
     <title>How to install and setup EJBCA 8.2 with galera and HSM module</title>
-    <link>https://vukilis.com/How-to-install-and-setup-EJBCA-8.2-with-galera-and-HSM-module</link>
+    <link>https://vukilis.com/How-to-install-and-setup-EJBCA-with-galera-and-HSM-module/</link>
     <pubDate>Fri, 03 May 2024 17:10:17 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.com/How-to-install-and-setup-EJBCA-8.2-with-galera-and-HSM-module</guid>
+    <guid>https://vukilis.com/How-to-install-and-setup-EJBCA-with-galera-and-HSM-module/</guid>
     <description><![CDATA[In this tutorial I will show how to install and setup EJBCA 8.2 with Hardware security module (HSM)....]]></description>
 </item>
 </channel>
