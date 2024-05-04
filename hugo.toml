@@ -62,7 +62,7 @@ canonifyurls = true
         title = ""
 
 [outputs]
-    home = ["HTML", "RSS", "JSON"]
+    home = ["HTML", "RSS", "JSON", "AMP"]
 
 [params.search]
     enable = true
@@ -77,6 +77,9 @@ canonifyurls = true
         index = "website"
         appID = "DAENWQCI5B"
         searchKey = "3a87729afa43d11594394f5b86df56f8"
+
+google_tag_manager = "GTM-K7KG6MT7"
+googleAnalytics = "G-BPK5CT0MGQ"
 
 [params]
     defaultTheme = "dark"
