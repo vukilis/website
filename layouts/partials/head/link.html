@@ -14,6 +14,8 @@
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="{{ . }}">
     {{- end -}}
     <!-- <link rel="manifest" href="/site.webmanifest"> -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7134772077337777"
+     crossorigin="anonymous"></script>
 {{- end -}}
 
 <link rel="canonical" href="{{ .Permalink }}" />
@@ -44,5 +46,3 @@
 {{- $source := $cdn.animateCSS | default "lib/animate/animate.min.css" -}}
 {{- $options := dict "Source" $source "Fingerprint" $fingerprint "Preload" true -}}
 {{- partial "plugin/style.html" $options -}}
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7134772077337777"
-    crossorigin="anonymous"></script>
