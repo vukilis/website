@@ -2,7 +2,7 @@
 title: "How to install and setup EJBCA 8.2 with galera and HSM module"
 url: /How-to-install-and-setup-EJBCA-with-galera-and-HSM-module
 date: 2024-05-03T17:10:17+02:00
-lastmod: 2024-05-03T17:10:17+02:00
+lastmod: 2024-05-07T17:10:17+02:00
 draft: false
 license: ""
 
@@ -13,8 +13,8 @@ description: "In this tutorial I will show how to install and setup EJBCA 8.2 wi
 featuredImagePreview: "images/2024/How_to_install_EJBCA_with_Apache_proxy_and_galera_with_HSM_module/How_to_install_EJBCA_8.2_with_and_galera_with_HSM_module.png"
 
 
-hiddenFromHomePage: false
-hiddenFromSearch: false
+hiddenFromHomePage: true
+hiddenFromSearch: true
 twemoji: false
 lightgallery: true
 ruby: true
@@ -772,7 +772,7 @@ Logging = 0
 Logpath = /tmp
 
 [CryptoServer]
-Device     = 172.30.1.34
+Device     = 172.10.0.34
 Timeout    = 600000
 AppTimeout = 172800
 SlotCount  = 2
