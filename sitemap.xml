@@ -2,18 +2,20 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://vukilis.com/categories/</loc><lastmod>2024-05-07T17:10:17&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/tags/crtificates/</loc><lastmod>2024-05-07T17:10:17&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/tags/debian/</loc><lastmod>2024-05-07T17:10:17&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/How-to-install-and-setup-EJBCA-with-galera-and-HSM-module/</loc><lastmod>2024-05-07T17:10:17&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/categories/linux/</loc><lastmod>2024-05-07T17:10:17&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/posts/</loc><lastmod>2024-05-07T17:10:17&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/tags/security/</loc><lastmod>2024-05-07T17:10:17&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/tags/</loc><lastmod>2024-05-07T17:10:17&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/</loc><lastmod>2024-05-07T17:10:17&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/tags/automation/</loc><lastmod>2024-05-07T23:54:16&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/categories/</loc><lastmod>2024-05-07T23:54:16&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/tags/debloat/</loc><lastmod>2024-05-07T23:54:16&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/posts/</loc><lastmod>2024-05-07T23:54:16&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/tags/scripts/</loc><lastmod>2024-05-07T23:54:16&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/tags/</loc><lastmod>2024-05-07T23:54:16&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/</loc><lastmod>2024-05-07T23:54:16&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/tags/windows/</loc><lastmod>2024-05-07T23:54:16&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/categories/windows/</loc><lastmod>2024-05-07T23:54:16&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/Windows_11_Optimizer_Debloater/</loc><lastmod>2024-05-07T23:54:16&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/tags/winget/</loc><lastmod>2024-05-07T23:54:16&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.com/tags/bash/</loc><lastmod>2023-11-06T22:55:36&#43;01:00</lastmod></url><url>
             <loc>https://vukilis.com/how-to-find-latest-modified-files-recursively/</loc><lastmod>2023-11-06T22:55:36&#43;01:00</lastmod></url><url>
-            <loc>https://vukilis.com/tags/scripts/</loc><lastmod>2023-11-06T22:55:36&#43;01:00</lastmod></url><url>
+            <loc>https://vukilis.com/categories/linux/</loc><lastmod>2023-11-06T22:55:36&#43;01:00</lastmod></url><url>
             <loc>https://vukilis.com/tags/arch/</loc><lastmod>2023-09-17T19:28:33&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.com/tags/audio/</loc><lastmod>2023-09-17T19:28:33&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.com/tags/fedora/</loc><lastmod>2023-09-17T19:28:33&#43;02:00</lastmod></url><url>
@@ -26,9 +28,6 @@
             <loc>https://vukilis.com/tags/ansible/</loc><lastmod>2023-07-22T18:19:15&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.com/deploy-docker-with-ansible-on-ubuntu/</loc><lastmod>2023-07-22T18:19:15&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.com/automate-app-packaging-using-winget/</loc><lastmod>2023-07-16T14:25:21&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/tags/automation/</loc><lastmod>2023-07-16T14:25:21&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/categories/windows/</loc><lastmod>2023-07-16T14:25:21&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/tags/winget/</loc><lastmod>2023-07-16T14:25:21&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.com/tags/cli/</loc><lastmod>2023-07-14T20:30:58&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.com/categories/database/</loc><lastmod>2023-07-14T20:30:58&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.com/tags/postgresql/</loc><lastmod>2023-07-14T20:30:58&#43;02:00</lastmod></url><url>

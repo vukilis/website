@@ -3,15 +3,15 @@
         <title>V For Vuk1lis</title>
         <link>https://vukilis.com/</link>
         <description>Happy Coding</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 03 May 2024 17:10:17 &#43;0200</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 07 May 2024 23:54:16 &#43;0200</lastBuildDate>
             <atom:link href="https://vukilis.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>How to install and setup EJBCA 8.2 with galera and HSM module</title>
-    <link>https://vukilis.com/How-to-install-and-setup-EJBCA-with-galera-and-HSM-module/</link>
-    <pubDate>Fri, 03 May 2024 17:10:17 &#43;0200</pubDate>
+    <title>Windows 10/11 Optimizer &amp; Debloater</title>
+    <link>https://vukilis.com/Windows_11_Optimizer_Debloater/</link>
+    <pubDate>Tue, 07 May 2024 23:54:16 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.com/How-to-install-and-setup-EJBCA-with-galera-and-HSM-module/</guid>
-    <description><![CDATA[In this tutorial I will show how to install and setup EJBCA 8.2 with Hardware security module (HSM)....]]></description>
+    <guid>https://vukilis.com/Windows_11_Optimizer_Debloater/</guid>
+    <description><![CDATA[This Utility show basic system information, install programs, debloat and optimize Windows...]]></description>
 </item>
 <item>
     <title>How to Find Last Modified Files Recursively</title>
