@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Hugo Static Site Guide - V For Vuk1lis</title>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-7134772077337777",
+        enable_page_level_ads: true,
+        overlays: {bottom: true}
+    });
+</script><meta name="Description" content="In this guide I want to show how I setup my website..."><meta property="og:title" content="Hugo Static Site Guide" />
+<meta property="og:description" content="In this guide I want to show how I setup my website..." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://vukilis.com/hugo_static_site_guide/" /><meta property="og:image" content="https://vukilis.com/images/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-07-10T18:59:13+02:00" />
+<meta property="article:modified_time" content="2024-07-10T18:59:13+02:00" /><meta property="og:site_name" content="V For Vuk1lis" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://vukilis.com/images/logo.png"/>
+
+<meta name="twitter:title" content="Hugo Static Site Guide"/>
+<meta name="twitter:description" content="In this guide I want to show how I setup my website..."/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K7KG6MT7');</script>
+<link rel="icon" href="https://vukilis.com/images/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="https://vukilis.com/apple-touch-icon.png"><link rel="mask-icon" href="https://vukilis.com/safari-pinned-tab.svg" color="#5bbad5">
+    
+    
+    
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K7KG6MT7"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+
+<link rel="canonical" href="https://vukilis.com/hugo_static_site_guide/" /><link rel="prev" href="https://vukilis.com/Windows_11_Optimizer_Debloater/" /><link rel="stylesheet" href="https://vukilis.com/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Hugo Static Site Guide",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/vukilis.com\/hugo_static_site_guide\/"
+        },"genre": "posts","keywords": "linux, homelab, website","wordcount":  539 ,
+        "url": "https:\/\/vukilis.com\/hugo_static_site_guide\/","datePublished": "2024-07-10T18:59:13+02:00","dateModified": "2024-07-10T18:59:13+02:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Vuk1lis"
+            },"description": "In this guide I want to show how I setup my website..."
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="https://vukilis.com/" title="V For Vuk1lis"><img
+        class="lazyload logo"
+        src="https://vukilis.com/svg/loading.min.svg"
+        data-src="https://vukilis.com/images/logo.png"
+        data-srcset="https://vukilis.com/images/logo.png, https://vukilis.com/images/logo.png 1.5x, https://vukilis.com/images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="https://vukilis.com/posts/"> Posts </a><a class="menu-item" href="https://vukilis.com/tags/"> Tags </a><a class="menu-item" href="https://vukilis.com/categories/"> Categories </a><a class="menu-item" href="https://vukilis.com/about/"> About </a><a class="menu-item" href="https://vukilis.com/design/"> Design </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="search" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="https://vukilis.com/" title="V For Vuk1lis"><img
+        class="lazyload logo"
+        src="https://vukilis.com/svg/loading.min.svg"
+        data-src="https://vukilis.com/images/logo.png"
+        data-srcset="https://vukilis.com/images/logo.png, https://vukilis.com/images/logo.png 1.5x, https://vukilis.com/images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="search" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="https://vukilis.com/posts/" title="">Posts</a><a class="menu-item" href="https://vukilis.com/tags/" title="">Tags</a><a class="menu-item" href="https://vukilis.com/categories/" title="">Categories</a><a class="menu-item" href="https://vukilis.com/about/" title="">About</a><a class="menu-item" href="https://vukilis.com/design/" title="">Design</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Hugo Static Site Guide</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://vukilis.com/about/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Vuk1lis</a></span>&nbsp;<span class="post-category">included in <a href="https://vukilis.com/categories/linux/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux</a>&nbsp;<a href="https://vukilis.com/categories/homelab/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Homelab</a>&nbsp;<a href="https://vukilis.com/categories/website/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Website</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-07-10">2024-07-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;539 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#setup-my-linux-distribution">Setup My Linux Distribution</a></li>
+    <li><a href="#using-nix-package-manager">Using Nix Package Manager</a>
+      <ul>
+        <li><a href="#usage">Usage</a></li>
+        <li><a href="#troubleshooting">Troubleshooting</a></li>
+      </ul>
+    </li>
+    <li><a href="#install-hugo">Install Hugo</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>In this guide I want to show how I setup my website using Hugo static site generator. As a fan of Markdown language Hugo is a perfect solution for my needs.<br>
+Bellow I will show steps how I setup my website to work.</p>
+<h2 id="setup-my-linux-distribution">Setup My Linux Distribution</h2>
+<p>I&rsquo;m using Arch distribution, link to download: <a href="https://archlinux.org/download/" target="_blank" rel="noopener noreffer ">https://archlinux.org/download/</a></p>
+<p>After download and run .iso file we can use <strong>archinstall</strong> script provide by Arch for easly installation of process.<br>
+Run next command and follow the procedute to finish installation:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">archinstall
+</span></span></code></pre></div><hr>
+<p>After installation is finished reboot PC and ready to setup Arch for basic usage.<br>
+I&rsquo;m using my script to do that.</p>
+<p>First, I like to use script from Chris Titus Tech <strong>linxutil</strong> to install some basic packages:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -fsSL https://christitus.com/linux <span class="p">|</span> sh
+</span></span></code></pre></div><hr>
+<p>After that I&rsquo;m using my <strong>dotfiles</strong> to setup configs for packages, and copy all to <strong>~/.confing/</strong> location.<br>
+My <strong>dotfiles</strong> <a href="https://github.com/vukilis/vukilis-dotfiles" target="_blank" rel="noopener noreffer ">https://github.com/vukilis/vukilis-dotfiles</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> Desktop
+</span></span><span class="line"><span class="cl">git@github.com:vukilis/vukilis-dotfiles.git
+</span></span><span class="line"><span class="cl">cp -r vukilis-dotfiles/* ~/.config/
+</span></span></code></pre></div><hr>
+<p>When all packages that I need have their configuration, I will proceed with installation of shell and terminal that I&rsquo;m using:<br>
+Depend what shell you are using, if you are already on zsh run <strong>terminal-setup-zsh.sh</strong>. After installation run kitty.<br>
+My <strong>terminal_zsh_script</strong> <a href="https://github.com/vukilis/terminal_zsh_script" target="_blank" rel="noopener noreffer ">https://github.com/vukilis/terminal_zsh_script</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> Desktop
+</span></span><span class="line"><span class="cl">git@github.com:vukilis/terminal_zsh_script.git
+</span></span><span class="line"><span class="cl">sudo ./terminal-setup.sh
+</span></span></code></pre></div><hr>
+<p>Because I&rsquo;m using some custom command alias I will install required packages.
+I&rsquo;m using my <strong>ArchSetup</strong> project for that.<br>
+My <strong>ArchSetup</strong> <a href="https://github.com/vukilis/ArchSetup" target="_blank" rel="noopener noreffer ">https://github.com/vukilis/ArchSetup</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> Desktop
+</span></span><span class="line"><span class="cl">git@github.com:vukilis/ArchSetup.git
+</span></span><span class="line"><span class="cl">sudo ./setup.bash
+</span></span></code></pre></div><hr>
+<p>After all of this my Arch distribution is ready for making Hugo website.</p>
+<h2 id="using-nix-package-manager">Using Nix Package Manager</h2>
+<p>Nix package manager is amazing and very easy to use.<br>
+We are going to use Nix for install Hugo.</p>
+<blockquote>
+<p>Note: I’d recommend multi-user install if it prompts for it.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -L https://nixos.org/nix/install <span class="p">|</span> sh
+</span></span></code></pre></div><hr>
+<h3 id="usage">Usage</h3>
+<p>Here is the basic usage of nix, most revolve around the nix-env command. These are manually managed and require user intervention.</p>
+<ul>
+<li>List Installed packages <code>nix-env -q</code></li>
+<li>Install Packages <code>nix-env -iA nixpkgs.packagename</code></li>
+<li>Erase Packages <code>nix-env -e packagename</code></li>
+<li>Update All Packages <code>nix-env -u</code></li>
+<li>Update Specific Packages <code>nix-env -u packagename</code></li>
+<li>Hold Specific Package <code>nix-env --set-flag keep true packagename</code></li>
+<li>List Backups (Generations) <code>nix-env --list-generations</code></li>
+<li>Rollback to Last Backup <code>nix-env --rollback</code></li>
+<li>Rollback to Specific Generation <code>nix-env --switch-generation #</code></li>
+</ul>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<p>Programs not showing up in start menu.</p>
+<p>NIX stores all the .desktop files for the programs it installs <code>@ /home/$USER/.nix-profile/share/applications/</code> and a simple symlink will fix them not showing up in your start menu:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ln -s /home/<span class="nv">$USER</span>/.nix-profile/share/applications/* /home/<span class="nv">$USER</span>/.local/share/applications/
+</span></span></code></pre></div><h2 id="install-hugo">Install Hugo</h2>
+<p>We are using <a href="https://lazamar.co.uk/" target="_blank" rel="noopener noreffer ">https://lazamar.co.uk/</a> to find all versions of a package that were available in a channel and the revision.</p>
+<p>My website is run under 0.115.0 version and I will install that version:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nix-env -iA hugo -f https://github.com/NixOS/nixpkgs/archive/50a7139fbd1acd4a3d4cfa695e694c529dd26f3a.tar.gz
+</span></span></code></pre></div><hr>
+<p>After that I will download my website from github <a href="https://github.com/vukilis/website" target="_blank" rel="noopener noreffer ">https://github.com/vukilis/website</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> Desktop
+</span></span><span class="line"><span class="cl">git clone git@github.com:vukilis/website.git
+</span></span></code></pre></div><p>Im using <strong>LoveIt</strong> Hugo theme and I will update submodule as well:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> website/themes/LoveIt
+</span></span><span class="line"><span class="cl">git submodule update --init --recursive
+</span></span></code></pre></div><hr>
+<p>My website is ready and now I can continue my work on it.</p>
+<p>To run Hugo local in <strong>dev environment</strong> we can use next command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo server --noHTTPCache --disableFastRender --bind <span class="s2">&#34;IP server&#34;</span> --baseURL <span class="s2">&#34;IP server&#34;</span>
+</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
+<p>This is already builded website, you can just follow installation and after that use official documentation of <strong>Hugo</strong> <strong><a href="https://gohugo.io/documentation/" target="_blank" rel="noopener noreffer ">https://gohugo.io/documentation/</a></strong>.</p>
+<p>Choose you own theme and of course you can use latest version of <strong>Hugo</strong>.</p>
+<p>That&rsquo;s it for now!</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-07-10</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://vukilis.com/hugo_static_site_guide/" data-title="Hugo Static Site Guide" data-hashtags="linux,homelab,website"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://vukilis.com/hugo_static_site_guide/" data-hashtag="linux"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://vukilis.com/hugo_static_site_guide/" data-title="Hugo Static Site Guide"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Reddit" data-sharer="reddit" data-url="https://vukilis.com/hugo_static_site_guide/"><i class="fab fa-reddit fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on VK" data-sharer="vk" data-url="https://vukilis.com/hugo_static_site_guide/" data-title="Hugo Static Site Guide" data-caption="In this guide I want to show how I setup my website..."><i class="fab fa-vk fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="https://vukilis.com/tags/linux/">linux</a>,&nbsp;<a href="https://vukilis.com/tags/homelab/">homelab</a>,&nbsp;<a href="https://vukilis.com/tags/website/">website</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://vukilis.com/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://vukilis.com/Windows_11_Optimizer_Debloater/" class="prev" rel="prev" title="Windows 10/11 Optimizer &amp; Debloater"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Windows 10/11 Optimizer & Debloater</a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://vukilis.com/about/">Vuk1lis</a></span>&nbsp;|&nbsp;<span class="license"><a href="https://vukilis.com/privacy">Privacy</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://vukilis.com/terms-conditions">Terms and Conditions</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"url","label":"comment","lightTheme":"github-dark","repo":"vukilis/website"}},"lightgallery":true,"search":{"algoliaAppID":"DAENWQCI5B","algoliaIndex":"website","algoliaSearchKey":"3a87729afa43d11594394f5b86df56f8","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="https://vukilis.com/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-BPK5CT0MGQ', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-BPK5CT0MGQ" async></script><script type="text/javascript" >
+           (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+           m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+           (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+           ym("97163691", "init", {
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true
+           });
+        </script>
+        <noscript><div><img src="https://mc.yandex.ru/watch/97163691" style="position:absolute; left:-9999px;" alt="" /></div></noscript></body>
+</html>

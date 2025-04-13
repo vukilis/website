@@ -3,9 +3,17 @@
         <title>V For Vuk1lis</title>
         <link>https://vukilis.com/</link>
         <description>Happy Coding</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 07 May 2024 23:54:16 &#43;0200</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 10 Jul 2024 18:59:13 &#43;0200</lastBuildDate>
             <atom:link href="https://vukilis.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Hugo Static Site Guide</title>
+    <link>https://vukilis.com/hugo_static_site_guide/</link>
+    <pubDate>Wed, 10 Jul 2024 18:59:13 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.com/hugo_static_site_guide/</guid>
+    <description><![CDATA[In this guide I want to show how I setup my website...]]></description>
+</item>
+<item>
     <title>Windows 10/11 Optimizer &amp; Debloater</title>
     <link>https://vukilis.com/Windows_11_Optimizer_Debloater/</link>
     <pubDate>Tue, 07 May 2024 23:54:16 &#43;0200</pubDate>
@@ -36,14 +44,6 @@
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/asdf-with-poetry/</guid>
     <description><![CDATA[In this guide I will show how to setup asdf tool with python poetry...]]></description>
-</item>
-<item>
-    <title>Deploy Docker With Ansible on Ubuntu</title>
-    <link>https://vukilis.com/deploy-docker-with-ansible-on-ubuntu/</link>
-    <pubDate>Sat, 22 Jul 2023 18:19:15 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.com/deploy-docker-with-ansible-on-ubuntu/</guid>
-    <description><![CDATA[In this guide I want to show how to install and deploy docker container...]]></description>
 </item>
 </channel>
 </rss>

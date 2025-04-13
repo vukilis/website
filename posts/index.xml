@@ -3,7 +3,15 @@
         <title>All Posts - V For Vuk1lis</title>
         <link>https://vukilis.com/posts/</link>
         <description>All Posts | V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 07 May 2024 23:54:16 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 10 Jul 2024 18:59:13 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Hugo Static Site Guide</title>
+    <link>https://vukilis.com/hugo_static_site_guide/</link>
+    <pubDate>Wed, 10 Jul 2024 18:59:13 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.com/hugo_static_site_guide/</guid>
+    <description><![CDATA[In this guide I want to show how I setup my website...]]></description>
+</item>
+<item>
     <title>Windows 10/11 Optimizer &amp; Debloater</title>
     <link>https://vukilis.com/Windows_11_Optimizer_Debloater/</link>
     <pubDate>Tue, 07 May 2024 23:54:16 &#43;0200</pubDate>
@@ -74,14 +82,6 @@
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/my-custom-windows-terminal/</guid>
     <description><![CDATA[I will show how I made my windows terminal look better and how made me more productive...]]></description>
-</item>
-<item>
-    <title>My Custom Linux Terminal</title>
-    <link>https://vukilis.com/my-custom-linux-terminal/</link>
-    <pubDate>Mon, 26 Jun 2023 01:57:12 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.com/my-custom-linux-terminal/</guid>
-    <description><![CDATA[In this article, I will show my 3 favourite terminal with implementation of ZSH shell...]]></description>
 </item>
 </channel>
 </rss>

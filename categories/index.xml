@@ -3,20 +3,36 @@
         <title>Categories - Category - V For Vuk1lis</title>
         <link>https://vukilis.com/categories/</link>
         <description>Categories - Category - V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 07 May 2024 23:54:16 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/categories/" rel="self" type="application/rss+xml" /><item>
-    <title>Windows</title>
-    <link>https://vukilis.com/categories/windows/</link>
-    <pubDate>Tue, 07 May 2024 23:54:16 &#43;0200</pubDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 10 Jul 2024 18:59:13 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>Homelab</title>
+    <link>https://vukilis.com/categories/homelab/</link>
+    <pubDate>Wed, 10 Jul 2024 18:59:13 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.com/categories/windows/</guid>
+    <guid>https://vukilis.com/categories/homelab/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Linux</title>
     <link>https://vukilis.com/categories/linux/</link>
-    <pubDate>Mon, 06 Nov 2023 22:55:36 &#43;0100</pubDate>
+    <pubDate>Wed, 10 Jul 2024 18:59:13 &#43;0200</pubDate>
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/categories/linux/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Website</title>
+    <link>https://vukilis.com/categories/website/</link>
+    <pubDate>Wed, 10 Jul 2024 18:59:13 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.com/categories/website/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Windows</title>
+    <link>https://vukilis.com/categories/windows/</link>
+    <pubDate>Tue, 07 May 2024 23:54:16 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.com/categories/windows/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>

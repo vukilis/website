@@ -3,7 +3,31 @@
         <title>Tags - Tag - V For Vuk1lis</title>
         <link>https://vukilis.com/tags/</link>
         <description>Tags - Tag - V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 07 May 2024 23:54:16 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/tags/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 10 Jul 2024 18:59:13 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>homelab</title>
+    <link>https://vukilis.com/tags/homelab/</link>
+    <pubDate>Wed, 10 Jul 2024 18:59:13 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.com/tags/homelab/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>linux</title>
+    <link>https://vukilis.com/tags/linux/</link>
+    <pubDate>Wed, 10 Jul 2024 18:59:13 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.com/tags/linux/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>website</title>
+    <link>https://vukilis.com/tags/website/</link>
+    <pubDate>Wed, 10 Jul 2024 18:59:13 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.com/tags/website/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
     <title>automation</title>
     <link>https://vukilis.com/tags/automation/</link>
     <pubDate>Tue, 07 May 2024 23:54:16 &#43;0200</pubDate>
@@ -57,30 +81,6 @@
     <pubDate>Sun, 17 Sep 2023 19:28:33 &#43;0200</pubDate>
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/tags/arch/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>audio</title>
-    <link>https://vukilis.com/tags/audio/</link>
-    <pubDate>Sun, 17 Sep 2023 19:28:33 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.com/tags/audio/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>fedora</title>
-    <link>https://vukilis.com/tags/fedora/</link>
-    <pubDate>Sun, 17 Sep 2023 19:28:33 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.com/tags/fedora/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>ubuntu</title>
-    <link>https://vukilis.com/tags/ubuntu/</link>
-    <pubDate>Sun, 17 Sep 2023 19:28:33 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.com/tags/ubuntu/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>
