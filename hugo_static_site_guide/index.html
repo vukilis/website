@@ -18,7 +18,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://vukilis.com/hugo_static_site_guide/" /><meta property="og:image" content="https://vukilis.com/images/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2024-07-10T18:59:13+02:00" />
-<meta property="article:modified_time" content="2024-07-10T18:59:13+02:00" /><meta property="og:site_name" content="V For Vuk1lis" />
+<meta property="article:modified_time" content="2024-07-14T14:24:00+02:00" /><meta property="og:site_name" content="V For Vuk1lis" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://vukilis.com/images/logo.png"/>
 
@@ -50,8 +50,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/vukilis.com\/hugo_static_site_guide\/"
-        },"genre": "posts","keywords": "linux, homelab, website","wordcount":  539 ,
-        "url": "https:\/\/vukilis.com\/hugo_static_site_guide\/","datePublished": "2024-07-10T18:59:13+02:00","dateModified": "2024-07-10T18:59:13+02:00","publisher": {
+        },"genre": "posts","keywords": "linux, homelab, website","wordcount":  586 ,
+        "url": "https:\/\/vukilis.com\/hugo_static_site_guide\/","datePublished": "2024-07-10T18:59:13+02:00","dateModified": "2024-07-14T14:24:00+02:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -136,7 +136,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Hugo Static Site Guide</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://vukilis.com/about/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Vuk1lis</a></span>&nbsp;<span class="post-category">included in <a href="https://vukilis.com/categories/linux/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux</a>&nbsp;<a href="https://vukilis.com/categories/homelab/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Homelab</a>&nbsp;<a href="https://vukilis.com/categories/website/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Website</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-07-10">2024-07-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;539 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-07-10">2024-07-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;586 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
@@ -230,6 +230,9 @@ We are going to use Nix for install Hugo.</p>
 <p>My website is ready and now I can continue my work on it.</p>
 <p>To run Hugo local in <strong>dev environment</strong> we can use next command:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo server --noHTTPCache --disableFastRender --bind <span class="s2">&#34;IP server&#34;</span> --baseURL <span class="s2">&#34;IP server&#34;</span>
+</span></span></code></pre></div><p>Im using <a href="https://github.com/junegunn/fzf" target="_blank" rel="noopener noreffer ">fzf</a> - command-line fuzzy finder package because I can choose what IP addres I can bind to server if I have more than one:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">ip</span><span class="o">=</span><span class="k">$(</span>ip -4 addr show <span class="p">|</span> grep -oP <span class="s1">&#39;(?&lt;=inet\s)\d+(\.\d+){3}&#39;</span> <span class="p">|</span> fzf --prompt<span class="o">=</span><span class="s2">&#34;Select IP: &#34;</span><span class="k">)</span>
+</span></span><span class="line"><span class="cl">hugo server --noHTTPCache --disableFastRender --bind <span class="s2">&#34;</span><span class="nv">$ip</span><span class="s2">&#34;</span> --baseURL <span class="s2">&#34;http://</span><span class="nv">$ip</span><span class="s2">&#34;</span>
 </span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
 <p>This is already builded website, you can just follow installation and after that use official documentation of <strong>Hugo</strong> <strong><a href="https://gohugo.io/documentation/" target="_blank" rel="noopener noreffer ">https://gohugo.io/documentation/</a></strong>.</p>
 <p>Choose you own theme and of course you can use latest version of <strong>Hugo</strong>.</p>
@@ -237,7 +240,7 @@ We are going to use Nix for install Hugo.</p>
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2024-07-10</span>
+                <span>Updated on 2024-07-14</span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"></div>
