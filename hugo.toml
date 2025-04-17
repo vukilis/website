@@ -117,11 +117,11 @@ googleAnalytics = "G-BPK5CT0MGQ"
         typeit = false
         social = true
         disclaimer = "Behind this mask there is more than just flesh. Beneath this mask there is an idea... and ideas are bulletproof"
-
+    
     [params.social]
         GitHub = "vukilis"
         Steam = "vuk1lis"
-        Linkedin = "vuklekic"
+        Linkedin = "vuk-lekic"
         Email = "vuk.lekic@vukilis.com"
     
     [params.page]
