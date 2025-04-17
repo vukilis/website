@@ -132,9 +132,9 @@
         alt="/images/logo.png" /></a></div><h1 class="home-title">V For Vuk1lis</h1><div class="home-subtitle">This site is made to document all my work, store a different guides and how-to articles.</div><div class="links"><a href="https://github.com/vukilis" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="https://linkedin.com/in/vuk-lekic" title="LinkedIn" target="_blank" rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://steamcommunity.com/id/vuk1lis" title="Steam" target="_blank" rel="noopener noreffer me"><i class="fab fa-steam fa-fw" aria-hidden="true"></i></a><a href="mailto:vuk.lekic@vukilis.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">
             "Behind this mask there is more than just flesh. Beneath this mask there is an idea... and ideas are bulletproof"
         </h3><a href="https://homepage.vukilis.com" target="_blank" style="text-decoration: none; margin-right: 3px;">
-    <div style="display: inline-flex; font-family: sans-serif; font-size: 14px; font-weight: bold; text-transform: uppercase; border-radius: 4px; overflow: hidden;">
+    <div style="display: inline-flex; font-family: sans-serif; font-size: 14px; font-weight: bold; border-radius: 4px; overflow: hidden;">
         <div style="background-color: #555; color: #a9a9b3; padding: 0px 5px; align-items: center;">
-            HOMELAB
+            ʜᴏᴍᴇʟᴀʙ
         </div>
         <div id="status-part" style="background-color: gray; color: white; padding: 0px 5px; transition: background-color 0.3s; align-items: center;">
             checking...
@@ -149,10 +149,10 @@ document.addEventListener("DOMContentLoaded", function () {
     function setStatus(isUp) {
         if (isUp) {
             statusPart.style.backgroundColor = "#2ECC71";
-            statusPart.textContent = "UP";
+            statusPart.textContent = "ᴜᴘ";
         } else {
             statusPart.style.backgroundColor = "#E74C3C";
-            statusPart.textContent = "DOWN";
+            statusPart.textContent = "ᴅᴏᴡɴ";
         }
     }
 
@@ -175,9 +175,9 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <a href="https://status.vukilis.com" target="_blank" style="text-decoration: none;">
-    <div style="display: inline-flex; font-family: sans-serif; font-size: 14px; font-weight: bold; text-transform: uppercase; border-radius: 4px; overflow: hidden;">
+    <div style="display: inline-flex; font-family: sans-serif; font-size: 14px; font-weight: bold; border-radius: 4px; overflow: hidden;">
         <div style="background-color: #555; color: #a9a9b3; padding: 0px 5px; align-items: center;">
-            status
+            sᴛᴀᴛᴜs
         </div>
         <div id="status-part-kuma" style="background-color: gray; color: white; padding: 0px 5px; transition: background-color 0.3s; align-items: center;">
             checking...
@@ -193,19 +193,19 @@ document.addEventListener("DOMContentLoaded", function () {
     
         function setStatus(upCount, downCount, totalCount) {
             if (downCount === totalCount) {
-                statusPartKuma.textContent = "DOWN";
+                statusPartKuma.textContent = "ᴅᴏᴡɴ";
                 statusPartKuma.style.backgroundColor = "#E74C3C"; 
             } else if (upCount === totalCount) {
-                statusPartKuma.textContent = "UP";
+                statusPartKuma.textContent = "ᴜᴘ";
                 statusPartKuma.style.backgroundColor = "#2ECC71"; 
             } else {
-                statusPartKuma.textContent = "PARTIAL";
+                statusPartKuma.textContent = "ᴘᴀʀᴛɪᴀʟ";
                 statusPartKuma.style.backgroundColor = "#F39C12"; 
             }
         }
 
         function setErrorStatus() {
-            statusPartKuma.textContent = "Error";
+            statusPartKuma.textContent = "ᴇʀʀᴏʀ";
             statusPartKuma.style.backgroundColor = "#E74C3C"; 
         }
     
