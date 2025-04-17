@@ -174,10 +174,10 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
-<a href="https://homepage.vukilis.com" target="_blank" style="text-decoration: none;">
+<a href="https://status.vukilis.com" target="_blank" style="text-decoration: none;">
     <div style="display: inline-flex; font-family: sans-serif; font-size: 14px; font-weight: bold; text-transform: uppercase; border-radius: 4px; overflow: hidden;">
         <div style="background-color: #555; color: #a9a9b3; padding: 0px 5px; align-items: center;">
-            services
+            status
         </div>
         <div id="status-part-kuma" style="background-color: gray; color: white; padding: 0px 5px; transition: background-color 0.3s; align-items: center;">
             checking...
@@ -193,13 +193,13 @@ document.addEventListener("DOMContentLoaded", function () {
     
         function setStatus(upCount, downCount, totalCount) {
             if (downCount === totalCount) {
-                statusPartKuma.textContent = `${totalCount}/${totalCount} DOWN`;
+                statusPartKuma.textContent = "DOWN";
                 statusPartKuma.style.backgroundColor = "#E74C3C"; 
             } else if (upCount === totalCount) {
-                statusPartKuma.textContent = `${totalCount}/${totalCount} UP`;
+                statusPartKuma.textContent = "UP";
                 statusPartKuma.style.backgroundColor = "#2ECC71"; 
             } else {
-                statusPartKuma.textContent = `${downCount}/${totalCount} PARTIAL`;
+                statusPartKuma.textContent = "PARTIAL";
                 statusPartKuma.style.backgroundColor = "#F39C12"; 
             }
         }
@@ -261,8 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
         checkUptimeKumaStatus();
         setInterval(checkUptimeKumaStatus, 60000);
     });
-    </script>
-    
+</script>
 </div>
 
 <div class="home-recent">
