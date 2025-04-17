@@ -2,7 +2,7 @@
 title: "Hugo Static Site Guide"
 url: /hugo_static_site_guide
 date: 2024-07-10T18:59:13+02:00
-lastmod: 2024-07-10T18:59:13+02:00
+lastmod: 2024-07-14T14:24:00+02:00
 draft: false
 license: ""
 
@@ -178,6 +178,13 @@ To run Hugo local in **dev environment** we can use next command:
 
 ```bash
 hugo server --noHTTPCache --disableFastRender --bind "IP server" --baseURL "IP server"
+```
+
+Im using [fzf](https://github.com/junegunn/fzf) - command-line fuzzy finder package because I can choose what IP addres I can bind to server if I have more than one:
+
+```bash
+ip=$(ip -4 addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | fzf --prompt="Select IP: ")
+hugo server --noHTTPCache --disableFastRender --bind "$ip" --baseURL "http://$ip"
 ```
 
 ## Conclusion
