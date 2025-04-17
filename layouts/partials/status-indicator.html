@@ -1,36 +1,42 @@
-<a href="https://homepage.vukilis.com" target="_blank"><span>ʜᴏᴍᴇʟᴀʙ: </span></a><span id="status-indicator" style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: gray;"></span>
-<span id="status-text">Checking...</span>
-
-<!-- <script src="/js/status-check.js"></script> -->
+<a href="https://homepage.vukilis.com" target="_blank" style="text-decoration: none;">
+    <div style="display: inline-flex; font-family: sans-serif; font-size: 14px; font-weight: bold; text-transform: uppercase; border-radius: 4px; overflow: hidden;">
+        <div style="background-color: #555; color: #a9a9b3; padding: 0px 5px; align-items: center;">
+            ʜᴏᴍᴇʟᴀʙ
+        </div>
+        <div id="status-part" style="background-color: gray; color: white; padding: 0px 5px; transition: background-color 0.3s; align-items: center; text-transform: lowercase;">
+            checking...
+        </div>
+    </div>
+</a>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const indicator = document.getElementById("status-indicator");
-        const text = document.getElementById("status-text");
-    
-        if (!indicator || !text) {
-            console.log("Missing status elements.")
-            return;
+document.addEventListener("DOMContentLoaded", function () {
+    const statusPart = document.getElementById("status-part");
+
+    function setStatus(isUp) {
+        if (isUp) {
+            statusPart.style.backgroundColor = "#2ECC71";
+            statusPart.textContent = "ᴜᴘ";
+        } else {
+            statusPart.style.backgroundColor = "#E74C3C";
+            statusPart.textContent = "ᴅᴏᴡɴ";
         }
-    
-        function checkStatus() {
-            const response = fetch("https://homepage.vukilis.com", {
-            method: "HEAD", mode: 'no-cors', 
-            })
-            .then(() => {
-                indicator.style.backgroundColor = "green";
-                text.textContent = "Online";
-                text.style.color = "green";
-            })
-            .catch((error) => {
-                console.log("Error checking status:", error);
-                indicator.style.backgroundColor = "red";
-                text.textContent = "Offline";
-                text.style.color = "red";
-            })
-        }
-    
-      checkStatus(); // initial check
-      setInterval(checkStatus, 30000); // repeat every 30 seconds
-    })
+    }
+
+    function checkStatus() {
+    fetch("https://homepage.vukilis.com", {
+            method: "HEAD",
+            mode: "no-cors"
+        })
+        .then(() => {
+            setStatus(true);
+        })
+        .catch(() => {
+            setStatus(false);
+        });
+    }
+
+    checkStatus();
+    setInterval(checkStatus, 30000);
+});
 </script>
