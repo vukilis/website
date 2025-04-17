@@ -131,7 +131,7 @@
         data-sizes="auto"
         alt="/images/logo.png" /></a></div><h1 class="home-title">V For Vuk1lis</h1><div class="home-subtitle">This site is made to document all my work, store a different guides and how-to articles.</div><div class="links"><a href="https://github.com/vukilis" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="https://linkedin.com/in/vuk-lekic" title="LinkedIn" target="_blank" rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://steamcommunity.com/id/vuk1lis" title="Steam" target="_blank" rel="noopener noreffer me"><i class="fab fa-steam fa-fw" aria-hidden="true"></i></a><a href="mailto:vuk.lekic@vukilis.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">
             "Behind this mask there is more than just flesh. Beneath this mask there is an idea... and ideas are bulletproof"
-        </h3><a href="https://homepage.vukilis.com" target="_blank" style="text-decoration: none;">
+        </h3><a href="https://homepage.vukilis.com" target="_blank" style="text-decoration: none; margin-right: 3px;">
     <div style="display: inline-flex; font-family: sans-serif; font-size: 14px; font-weight: bold; text-transform: uppercase; border-radius: 4px; overflow: hidden;">
         <div style="background-color: #555; color: #a9a9b3; padding: 0px 5px; align-items: center;">
             HOMELAB
@@ -203,6 +203,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 statusPartKuma.style.backgroundColor = "#F39C12"; 
             }
         }
+
+        function setErrorStatus() {
+            statusPartKuma.textContent = "Error";
+            statusPartKuma.style.backgroundColor = "#E74C3C"; 
+        }
     
         function checkUptimeKumaStatus() {
             
@@ -210,9 +215,8 @@ document.addEventListener("DOMContentLoaded", function () {
             controller = new AbortController(); 
     
             
+            const url = "https://api.allorigins.win/get?url=" + encodeURIComponent("https://status.vukilis.com/api/status-page/heartbeat/services") + "&_cache_buster=" + new Date().getTime();    
             
-            const url = "https://status.vukilis.com/api/status-page/heartbeat/services" + "&_cache_buster=" + new Date().getTime();
-    
             
             fetch(url, {
                 signal: controller.signal 
@@ -247,10 +251,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     setStatus(upCount, downCount, totalCount);
                 })
                 .catch((error) => {
-                    if (error.name !== 'AbortError') {
-                        console.error("Error fetching data:", error);
-                    }
-                    setStatus(0, 0, 0); 
+                    
+                    
+                    
+                    setErrorStatus(); 
                 });
         }
     
