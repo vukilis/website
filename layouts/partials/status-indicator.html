@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
             controller = new AbortController(); // create a new controller for the new fetch request
     
             // add a timestamp query parameter to force the browser to bypass cache
-            const url = "https://api.allorigins.win/get?url=" + encodeURIComponent("https://status.vukilis.com/api/status-page/heartbeat/services") + "&_cache_buster=" + new Date().getTime();    
+            const url = "https://api.allorigins.win/get?url=" + encodeURIComponent("https://status.vukilis.com/api/status-page/heartbeat/services");    
             
             // start a new fetch request with the new controller
             fetch(url, {
