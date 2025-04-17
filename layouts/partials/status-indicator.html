@@ -1,9 +1,9 @@
 <a href="https://homepage.vukilis.com" target="_blank" style="text-decoration: none;">
     <div style="display: inline-flex; font-family: sans-serif; font-size: 14px; font-weight: bold; text-transform: uppercase; border-radius: 4px; overflow: hidden;">
         <div style="background-color: #555; color: #a9a9b3; padding: 0px 5px; align-items: center;">
-            ʜᴏᴍᴇʟᴀʙ
+            HOMELAB
         </div>
-        <div id="status-part" style="background-color: gray; color: white; padding: 0px 5px; transition: background-color 0.3s; align-items: center; text-transform: lowercase;">
+        <div id="status-part" style="background-color: gray; color: white; padding: 0px 5px; transition: background-color 0.3s; align-items: center;">
             checking...
         </div>
     </div>
@@ -16,10 +16,10 @@ document.addEventListener("DOMContentLoaded", function () {
     function setStatus(isUp) {
         if (isUp) {
             statusPart.style.backgroundColor = "#2ECC71";
-            statusPart.textContent = "ᴜᴘ";
+            statusPart.textContent = "UP";
         } else {
             statusPart.style.backgroundColor = "#E74C3C";
-            statusPart.textContent = "ᴅᴏᴡɴ";
+            statusPart.textContent = "DOWN";
         }
     }
 
@@ -40,3 +40,89 @@ document.addEventListener("DOMContentLoaded", function () {
     setInterval(checkStatus, 30000);
 });
 </script>
+
+<a href="https://homepage.vukilis.com" target="_blank" style="text-decoration: none;">
+    <div style="display: inline-flex; font-family: sans-serif; font-size: 14px; font-weight: bold; text-transform: uppercase; border-radius: 4px; overflow: hidden;">
+        <div style="background-color: #555; color: #a9a9b3; padding: 0px 5px; align-items: center;">
+            services
+        </div>
+        <div id="status-part-kuma" style="background-color: gray; color: white; padding: 0px 5px; transition: background-color 0.3s; align-items: center;">
+            checking...
+        </div>
+    </div>
+</a>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const statusPartKuma = document.getElementById("status-part-kuma");
+    
+        let controller = new AbortController(); // create a new controller for aborting fetch requests
+    
+        function setStatus(upCount, downCount, totalCount) {
+            if (downCount === totalCount) {
+                statusPartKuma.textContent = `${totalCount}/${totalCount} DOWN`;
+                statusPartKuma.style.backgroundColor = "#E74C3C"; // red (all services are down)
+            } else if (upCount === totalCount) {
+                statusPartKuma.textContent = `${totalCount}/${totalCount} UP`;
+                statusPartKuma.style.backgroundColor = "#2ECC71"; // green (all services are up)
+            } else {
+                statusPartKuma.textContent = `${downCount}/${totalCount} PARTIAL`;
+                statusPartKuma.style.backgroundColor = "#F39C12"; // yellow (some services are down)
+            }
+        }
+    
+        function checkUptimeKumaStatus() {
+            // abort the previous fetch request if it exists
+            controller.abort();
+            controller = new AbortController(); // create a new controller for the new fetch request
+    
+            // add a timestamp query parameter to force the browser to bypass cache
+            // const url = "https://api.allorigins.win/get?url=" + encodeURIComponent("https://status.vukilis.com/api/status-page/heartbeat/services") + "&_cache_buster=" + new Date().getTime();
+            const url = "https://status.vukilis.com/api/status-page/heartbeat/services" + "&_cache_buster=" + new Date().getTime();
+    
+            // start a new fetch request with the new controller
+            fetch(url, {
+                signal: controller.signal // pass the signal to the fetch request
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const heartbeatList = JSON.parse(data.contents).heartbeatList;
+                    let upCount = 0;
+                    let downCount = 0;
+                    let totalCount = 0;
+    
+                    // loop through all services in the heartbeat list
+                    for (let serviceId in heartbeatList) {
+                        const monitorHeartbeats = heartbeatList[serviceId];
+    
+                        if (monitorHeartbeats && monitorHeartbeats.length > 0) {
+                            const latest = monitorHeartbeats[monitorHeartbeats.length - 1];
+                            // console.log('Latest status for service', serviceId, ':', latest.status); // debugging line
+    
+                            // count the number of services in each status
+                            if (latest.status === 1) { // service is "up"
+                                upCount++;
+                            } else if (latest.status === 0) { // service is "down"
+                                downCount++;
+                            }
+    
+                            totalCount++;
+                        }
+                    }
+    
+                    // Update the status with the counts
+                    setStatus(upCount, downCount, totalCount);
+                })
+                .catch((error) => {
+                    if (error.name !== 'AbortError') {
+                        console.error("Error fetching data:", error);
+                    }
+                    setStatus(0, 0, 0); // On fetch error, show 0/0 for all
+                });
+        }
+    
+        checkUptimeKumaStatus();
+        setInterval(checkUptimeKumaStatus, 60000);
+    });
+    </script>
+    
