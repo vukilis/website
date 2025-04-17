@@ -129,9 +129,45 @@
         data-src="https://vukilis.com/images/logo.png"
         data-srcset="https://vukilis.com/images/logo.png, https://vukilis.com/images/logo.png 1.5x, https://vukilis.com/images/logo.png 2x"
         data-sizes="auto"
-        alt="/images/logo.png" /></a></div><h1 class="home-title">V For Vuk1lis</h1><div class="home-subtitle">This site is made to document all my work, store a different guides and how-to articles.</div><div class="links"><a href="https://github.com/vukilis" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="https://linkedin.com/in/vuklekic" title="LinkedIn" target="_blank" rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://steamcommunity.com/id/vuk1lis" title="Steam" target="_blank" rel="noopener noreffer me"><i class="fab fa-steam fa-fw" aria-hidden="true"></i></a><a href="mailto:vuk.lekic@vukilis.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">
+        alt="/images/logo.png" /></a></div><h1 class="home-title">V For Vuk1lis</h1><div class="home-subtitle">This site is made to document all my work, store a different guides and how-to articles.</div><div class="links"><a href="https://github.com/vukilis" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="https://linkedin.com/in/vuk-lekic" title="LinkedIn" target="_blank" rel="noopener noreffer me"><i class="fab fa-linkedin fa-fw" aria-hidden="true"></i></a><a href="https://steamcommunity.com/id/vuk1lis" title="Steam" target="_blank" rel="noopener noreffer me"><i class="fab fa-steam fa-fw" aria-hidden="true"></i></a><a href="mailto:vuk.lekic@vukilis.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a></div><h3 class="home-disclaimer">
             "Behind this mask there is more than just flesh. Beneath this mask there is an idea... and ideas are bulletproof"
-        </h3></div>
+        </h3><a href="https://homepage.vukilis.com" target="_blank"><span>ʜᴏᴍᴇʟᴀʙ: </span></a><span id="status-indicator" style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: gray;"></span>
+<span id="status-text">Checking...</span>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const indicator = document.getElementById("status-indicator");
+        const text = document.getElementById("status-text");
+    
+        if (!indicator || !text) {
+            console.log("Missing status elements.")
+            return;
+        }
+    
+        function checkStatus() {
+            const response = fetch("https://homepage.vukilis.com", {
+            method: "HEAD", mode: 'no-cors', 
+            })
+            .then(() => {
+                indicator.style.backgroundColor = "green";
+                text.textContent = "Online";
+                text.style.color = "green";
+            })
+            .catch((error) => {
+                console.log("Error checking status:", error);
+                indicator.style.backgroundColor = "red";
+                text.textContent = "Offline";
+                text.style.color = "red";
+            })
+        }
+    
+      checkStatus(); 
+      setInterval(checkStatus, 30000); 
+    })
+</script>
+</div>
 
 <div class="home-recent">
     <h2>Recent Posts</h2>
