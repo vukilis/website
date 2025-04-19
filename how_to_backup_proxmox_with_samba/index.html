@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>How to Backup Proxmox With Samba - V For Vuk1lis</title>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-7134772077337777",
+        enable_page_level_ads: true,
+        overlays: {bottom: true}
+    });
+</script><meta name="Description" content="This is the guide how to make backup for proxmox using Samba Share (SMB) Protocol..."><meta property="og:title" content="How to Backup Proxmox With Samba" />
+<meta property="og:description" content="This is the guide how to make backup for proxmox using Samba Share (SMB) Protocol..." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://vukilis.com/how_to_backup_proxmox_with_samba/" /><meta property="og:image" content="https://vukilis.com/images/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-04-19T23:28:38+02:00" />
+<meta property="article:modified_time" content="2025-04-19T23:28:38+02:00" /><meta property="og:site_name" content="V For Vuk1lis" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://vukilis.com/images/logo.png"/>
+
+<meta name="twitter:title" content="How to Backup Proxmox With Samba"/>
+<meta name="twitter:description" content="This is the guide how to make backup for proxmox using Samba Share (SMB) Protocol..."/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K7KG6MT7');</script>
+<link rel="icon" href="https://vukilis.com/images/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="https://vukilis.com/apple-touch-icon.png"><link rel="mask-icon" href="https://vukilis.com/safari-pinned-tab.svg" color="#5bbad5">
+    
+    
+    
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K7KG6MT7"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+
+<link rel="canonical" href="https://vukilis.com/how_to_backup_proxmox_with_samba/" /><link rel="prev" href="https://vukilis.com/proxmox_migration_to_a_new_server/" /><link rel="stylesheet" href="https://vukilis.com/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "How to Backup Proxmox With Samba",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/vukilis.com\/how_to_backup_proxmox_with_samba\/"
+        },"genre": "posts","keywords": "homelab, linux, backup","wordcount":  768 ,
+        "url": "https:\/\/vukilis.com\/how_to_backup_proxmox_with_samba\/","datePublished": "2025-04-19T23:28:38+02:00","dateModified": "2025-04-19T23:28:38+02:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Vuk1lis"
+            },"description": "This is the guide how to make backup for proxmox using Samba Share (SMB) Protocol..."
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="https://vukilis.com/" title="V For Vuk1lis"><img
+        class="lazyload logo"
+        src="https://vukilis.com/svg/loading.min.svg"
+        data-src="https://vukilis.com/images/logo.png"
+        data-srcset="https://vukilis.com/images/logo.png, https://vukilis.com/images/logo.png 1.5x, https://vukilis.com/images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="https://vukilis.com/posts/"> Posts </a><a class="menu-item" href="https://vukilis.com/tags/"> Tags </a><a class="menu-item" href="https://vukilis.com/categories/"> Categories </a><a class="menu-item" href="https://vukilis.com/about/"> About </a><a class="menu-item" href="https://vukilis.com/design/"> Design </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="search" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="https://vukilis.com/" title="V For Vuk1lis"><img
+        class="lazyload logo"
+        src="https://vukilis.com/svg/loading.min.svg"
+        data-src="https://vukilis.com/images/logo.png"
+        data-srcset="https://vukilis.com/images/logo.png, https://vukilis.com/images/logo.png 1.5x, https://vukilis.com/images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="search" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="https://vukilis.com/posts/" title="">Posts</a><a class="menu-item" href="https://vukilis.com/tags/" title="">Tags</a><a class="menu-item" href="https://vukilis.com/categories/" title="">Categories</a><a class="menu-item" href="https://vukilis.com/about/" title="">About</a><a class="menu-item" href="https://vukilis.com/design/" title="">Design</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">How to Backup Proxmox With Samba</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://vukilis.com/about/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Vuk1lis</a></span>&nbsp;<span class="post-category">included in <a href="https://vukilis.com/categories/linux/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux</a>&nbsp;<a href="https://vukilis.com/categories/virtualization/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Virtualization</a>&nbsp;<a href="https://vukilis.com/categories/homelab/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Homelab</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-04-19">2025-04-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;768 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-proxmox-backup-server">Why Proxmox Backup Server</a></li>
+    <li><a href="#planing-and-creating-our-backup-directories">Planing And Creating Our Backup Directories</a></li>
+    <li><a href="#add-storage-to-proxmox">Add Storage To Proxmox</a></li>
+    <li><a href="#setup-proxmox-backup-server">Setup Proxmox Backup Server</a>
+      <ul>
+        <li><a href="#install-and-setup-smb-share">Install And Setup SMB Share</a></li>
+        <li><a href="#setup-user-and-datastore">Setup User and Datastore</a></li>
+        <li><a href="#add-storage-for-proxmox-backup-server">Add Storage for Proxmox Backup Server</a></li>
+        <li><a href="#create-backup-job">Create Backup Job</a></li>
+      </ul>
+    </li>
+    <li><a href="#additional">Additional</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>This is the guide how to make backup for proxmox using Samba Share (SMB) Protocol and store backup on windows machine.<br>
+We will use <strong>Proxmox Backup Server</strong> as our backup method and I highly recommend to use this method.</p>
+<h2 id="why-proxmox-backup-server">Why Proxmox Backup Server</h2>
+<p>Proxmox Backup Server is an enterprise backup solution, for backing up and restoring VMs, containers, and physical hosts. By supporting incremental, fully deduplicated backups, Proxmox Backup Server significantly reduces network load and saves valuable storage space. With strong encryption and methods of ensuring data integrity, you can feel safe when backing up data, even to targets which are not fully trusted.</p>
+<h2 id="planing-and-creating-our-backup-directories">Planing And Creating Our Backup Directories</h2>
+<p>For SMB share we need to configure Windows OS to share our directories to others on local network.
+Check official microsoft tutorial <a href="https://support.microsoft.com/en-us/windows/file-sharing-over-a-network-in-windows-b58704b2-f53a-4b82-7bc1-80f9994725bf" target="_blank" rel="noopener noreffer ">https://support.microsoft.com/en-us/windows/file-sharing-over-a-network-in-windows-b58704b2-f53a-4b82-7bc1-80f9994725bf</a></p>
+<p>We need to plan our backup location:</p>
+<blockquote>
+<p>This is my plan</p>
+</blockquote>
+<ul>
+<li>I will use a separate hard drive for my backup</li>
+<li>I will create next directories:
+<ol>
+<li><strong>proxmox-backup</strong> - storing my backup for CTs &amp; VMs</li>
+<li><strong>proxmox-backup-server</strong> - storing my manual backup for <em>Proxmox Backup Server</em> using for migration</li>
+<li><strong>proxmox-host</strong> - storing my backup for all proxmox node configuration using for migration</li>
+<li><strong>proxmox-shared</strong> - storing .iso and .templates</li>
+</ol>
+</li>
+</ul>
+<p>After this step we can proceed to creating and configuring your directories.<br>
+I will skip this step but most important thing is that we need share to <strong>@everyone with read &amp; write permissions</strong>.</p>
+<h2 id="add-storage-to-proxmox">Add Storage To Proxmox</h2>
+<p>For adding storage follow next steps:</p>
+<ul>
+<li>Go to Proxmox <strong>Web GUI</strong></li>
+<li>Select <strong>Datacenter</strong> and select <strong>Storage</strong></li>
+</ul>
+<blockquote>
+<p>This step we need to repeat for all storages</p>
+</blockquote>
+<ul>
+<li>
+<p>Select <strong>Add</strong> and select <strong>SMB/CIFS</strong></p>
+</li>
+<li>
+<p><strong>proxmox-backup</strong>:</p>
+<ul>
+<li><strong>ID</strong>: proxmox-backup</li>
+<li><strong>Server</strong>: [your-windows-ip-address]</li>
+<li><strong>Username</strong>: [your-windows-username]</li>
+<li><strong>Password</strong>: [your-windows-password]</li>
+<li><strong>Share</strong>: proxmox-backup</li>
+<li><strong>Nodes</strong>: [your-pve-node]</li>
+<li><strong>Enabled</strong>: yes</li>
+<li><strong>Content</strong>: Backup, Container, Snippets</li>
+</ul>
+</li>
+<li>
+<p><strong>proxmox-backup-server</strong>:</p>
+<ul>
+<li><strong>ID</strong>: proxmox-backup-server</li>
+<li><strong>Server</strong>: [your-windows-ip-address]</li>
+<li><strong>Username</strong>: [your-windows-username]</li>
+<li><strong>Password</strong>: [your-windows-password]</li>
+<li><strong>Share</strong>: proxmox-backup-server</li>
+<li><strong>Nodes</strong>: [your-pve-node]</li>
+<li><strong>Enabled</strong>: yes</li>
+<li><strong>Content</strong>: Backup, Container, Snippets</li>
+</ul>
+</li>
+<li>
+<p><strong>proxmox-host</strong>:</p>
+<ul>
+<li><strong>ID</strong>: proxmox-host</li>
+<li><strong>Server</strong>: [your-windows-ip-address]</li>
+<li><strong>Username</strong>: [your-windows-username]</li>
+<li><strong>Password</strong>: [your-windows-password]</li>
+<li><strong>Share</strong>: proxmox-host</li>
+<li><strong>Nodes</strong>: [your-pve-node]</li>
+<li><strong>Enabled</strong>: yes</li>
+<li><strong>Content</strong>: Backup</li>
+</ul>
+</li>
+<li>
+<p><strong>proxmox-shared</strong>:</p>
+<ul>
+<li><strong>ID</strong>: proxmox-shared*</li>
+<li><strong>Server</strong>: [your-windows-ip-address]</li>
+<li><strong>Username</strong>: [your-windows-username]</li>
+<li><strong>Password</strong>: [your-windows-password]</li>
+<li><strong>Share</strong>: proxmox-shared*</li>
+<li><strong>Nodes</strong>: [your-pve-node]</li>
+<li><strong>Enabled</strong>: yes</li>
+<li><strong>Content</strong>: ISO Image, Container Template</li>
+</ul>
+</li>
+</ul>
+<p>After finish click <strong>OK</strong>.</p>
+<h2 id="setup-proxmox-backup-server">Setup Proxmox Backup Server</h2>
+<p>We have 2 method how to install and setup our <strong>Proxmox Backup Server</strong>, download iso and install or using script from <strong>Proxmox VE Helper-Scripts</strong>.<br>
+I will use second method as LXC container, link to the script: <a href="https://community-scripts.github.io/ProxmoxVE/scripts?id=proxmox-backup-server" target="_blank" rel="noopener noreffer ">https://community-scripts.github.io/ProxmoxVE/scripts?id=proxmox-backup-server</a><br>
+Follow link instruction and install <strong>Proxmox Backup Server</strong></p>
+<h3 id="install-and-setup-smb-share">Install And Setup SMB Share</h3>
+<p>Login to _shell of <strong>proxmox-backup-server</strong> and install <strong>cifs</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt install cifs-utils
+</span></span></code></pre></div><p>Configurate fstab:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nano /etc/fstab
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">//192.168.0.152/proxmox-backup /mnt/proxmox-backup        cifs    credentials</span><span class="o">=</span><span class="s">/etc/.smb_creds,rw,noperm,uid=100000        0       0</span>
+</span></span></code></pre></div><p>Create samba credentials:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nano /etc/.smb_creds
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">username</span><span class="o">=</span><span class="s">[your-windows-username]</span>
+</span></span><span class="line"><span class="cl"><span class="na">password</span><span class="o">=</span><span class="s">[your-windows-password]</span>
+</span></span></code></pre></div><p>Create share directory:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir /mnt/proxmox-backup
+</span></span></code></pre></div><p>Mount and reload daemon:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mount -a
+</span></span><span class="line"><span class="cl">systemctl daemon-reload
+</span></span></code></pre></div><p>List shared directory:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls /mnt/proxmox-backup/
+</span></span></code></pre></div><h3 id="setup-user-and-datastore">Setup User and Datastore</h3>
+<p>Make a new user for backup:</p>
+<ul>
+<li>Go to Proxmox Backup Server <strong>Web GUI</strong></li>
+<li>Select <strong>Access Controll</strong> under <strong>Configuration</strong> and select <strong>Add</strong>:
+<ul>
+<li><strong>User name</strong>: name@proxmox-backup</li>
+<li><strong>Password</strong>: [your-password]</li>
+<li><strong>Confirm password</strong>: [your-password]</li>
+<li><strong>Expire</strong>: never</li>
+<li><strong>Enabled</strong>: yes</li>
+<li><strong>First name</strong>: [your-name]</li>
+<li><strong>E-Mail</strong>: [your-mail]</li>
+</ul>
+</li>
+</ul>
+<p>Add a new Datastore:</p>
+<ul>
+<li>Go to Proxmox Backup Server <strong>Web GUI</strong></li>
+<li>Select <strong>Add Datastore</strong> under <strong>Datastore</strong>:
+<ul>
+<li><strong>Name</strong>: backup</li>
+<li><strong>Backing path</strong>: /mnt/proxmox-backup</li>
+<li><strong>GC Schedule</strong>: Friday 21:00</li>
+<li><strong>Prune Schedule</strong>: Friday 21:00</li>
+</ul>
+</li>
+<li>For prune job keep last 2 backup</li>
+</ul>
+<h3 id="add-storage-for-proxmox-backup-server">Add Storage for Proxmox Backup Server</h3>
+<ul>
+<li>Go to Proxmox <strong>Web GUI</strong></li>
+<li>Select <strong>Datacenter</strong> and select <strong>Storage</strong></li>
+<li>Select <strong>Add</strong> and select <strong>Proxmox Backup Server</strong></li>
+<li><strong>pbs</strong>:
+<ul>
+<li><strong>ID</strong>: pbs</li>
+<li><strong>Server</strong>: [your-proxmox-backup-server-ip-address]</li>
+<li><strong>Username</strong>: root@pam</li>
+<li><strong>Password</strong>: [your-proxmox-backup-server-password]</li>
+<li><strong>Nodes</strong>: [your-pve-node]</li>
+<li><strong>Enabled</strong>: yes</li>
+<li><strong>Datastore</strong>: backup</li>
+<li><strong>Fingerprint</strong>: [your-proxmox-backup-server-fingerprint]</li>
+</ul>
+</li>
+</ul>
+<p>After finish click <strong>OK</strong>.</p>
+<blockquote>
+<p>To get fingerprint go to Proxmox Backup Server <strong>Web GUI</strong>, select <strong>backup</strong> under <strong>Datastore</strong> and select <strong>Show Connection Information</strong></p>
+</blockquote>
+<h3 id="create-backup-job">Create Backup Job</h3>
+<ul>
+<li>Go to Proxmox <strong>Web GUI</strong></li>
+<li>Select <strong>Datacenter</strong> and select <strong>Backup</strong></li>
+<li>Select <strong>Add</strong></li>
+<li><strong>pbs</strong>:
+<ul>
+<li><strong>Node</strong>: [your-pve-node]</li>
+<li><strong>Storage</strong>: pbs</li>
+<li><strong>Schedule</strong>: Friday 21:00</li>
+<li><strong>Selection mode</strong>: Exclude selected VMs</li>
+<li><strong>Notification mode</strong>: Notification system</li>
+<li><strong>Compression</strong>: ZSTD (Fast and good)</li>
+<li><strong>Mode</strong>: Snapshot</li>
+<li><strong>Enable</strong>: yes</li>
+</ul>
+</li>
+</ul>
+<h2 id="additional">Additional</h2>
+<p>In beginning we made <strong>proxmox-migrate</strong> directory where we will store our manually created backup for <strong>proxmox-backup-server</strong>.</p>
+<p><code>Why we will do this?</code><br>
+<em>Because for me this is a great way to migrate our proxmox server to a new server.</em><br>
+<code>How we can do this?</code><br>
+<em>After backup we can follow instruction to install our <strong>proxmox-backup-server</strong> on a new server and restore from backup.</em><br>
+<em>Use <strong>proxmox-backup-server</strong> to restore all our CTs &amp; VMs.</em></p>
+<hr>
+<p>Create manualy backup</p>
+<ul>
+<li>Go to Proxmox <strong>Web GUI</strong></li>
+<li>Select our container <strong>proxmox-backup-server</strong> and select <strong>Backup</strong></li>
+<li>Select <strong>Storage</strong> and select <strong>pbs</strong></li>
+<li>Run <strong>backup</strong></li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>After this our backup server is ready!<br>
+Proxmox Backup Server will backup our CTs &amp; VMs every Friday at 21:00. Backup will be stored on our windows machine in proxmox-backup directory.
+To see how to migrate our proxmox host to a new server check this <a href="https://vukilis.com/proxmox_migration_to_a_new_server/" target="_blank" rel="noopener noreffer ">post</a>.</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2025-04-19</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://vukilis.com/how_to_backup_proxmox_with_samba/" data-title="How to Backup Proxmox With Samba" data-hashtags="homelab,linux,backup"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://vukilis.com/how_to_backup_proxmox_with_samba/" data-hashtag="homelab"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://vukilis.com/how_to_backup_proxmox_with_samba/" data-title="How to Backup Proxmox With Samba"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Reddit" data-sharer="reddit" data-url="https://vukilis.com/how_to_backup_proxmox_with_samba/"><i class="fab fa-reddit fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on VK" data-sharer="vk" data-url="https://vukilis.com/how_to_backup_proxmox_with_samba/" data-title="How to Backup Proxmox With Samba" data-caption="This is the guide how to make backup for proxmox using Samba Share (SMB) Protocol..."><i class="fab fa-vk fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="https://vukilis.com/tags/homelab/">homelab</a>,&nbsp;<a href="https://vukilis.com/tags/linux/">linux</a>,&nbsp;<a href="https://vukilis.com/tags/backup/">backup</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://vukilis.com/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://vukilis.com/proxmox_migration_to_a_new_server/" class="prev" rel="prev" title="Proxmox Migration To A New Server"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Proxmox Migration To A New Server</a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://vukilis.com/about/">Vuk1lis</a></span>&nbsp;|&nbsp;<span class="license"><a href="https://vukilis.com/privacy">Privacy</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://vukilis.com/terms-conditions">Terms and Conditions</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"url","label":"comment","lightTheme":"github-dark","repo":"vukilis/website"}},"lightgallery":true,"search":{"algoliaAppID":"DAENWQCI5B","algoliaIndex":"website","algoliaSearchKey":"3a87729afa43d11594394f5b86df56f8","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="https://vukilis.com/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-BPK5CT0MGQ', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-BPK5CT0MGQ" async></script><script type="text/javascript" >
+           (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+           m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+           (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+           ym("97163691", "init", {
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true
+           });
+        </script>
+        <noscript><div><img src="https://mc.yandex.ru/watch/97163691" style="position:absolute; left:-9999px;" alt="" /></div></noscript></body>
+</html>
