@@ -50,7 +50,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/vukilis.com\/proxmox_migration_to_a_new_server\/"
-        },"genre": "posts","keywords": "homelab, linux, backup","wordcount":  337 ,
+        },"genre": "posts","keywords": "homelab, linux, backup","wordcount":  339 ,
         "url": "https:\/\/vukilis.com\/proxmox_migration_to_a_new_server\/","datePublished": "2025-01-20T20:16:14+02:00","dateModified": "2025-01-20T20:16:14+02:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -136,7 +136,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Proxmox Migration To A New Server</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://vukilis.com/about/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Vuk1lis</a></span>&nbsp;<span class="post-category">included in <a href="https://vukilis.com/categories/linux/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux</a>&nbsp;<a href="https://vukilis.com/categories/virtualization/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Virtualization</a>&nbsp;<a href="https://vukilis.com/categories/homelab/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Homelab</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-01-20">2025-01-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;337 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-01-20">2025-01-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;339 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
@@ -152,7 +152,7 @@
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>This is the guide how to migrate existing proxmox host to a new server with all confinguration and prepare for backup LXC containers and VM machines.<br>
-Before continue reading this post first check the post <a href="https://vukilis.com/how_to_backup_proxmox/" target="_blank" rel="noopener noreffer ">how to backup proxmox.</a></p>
+Before continue reading this post first check the post <a href="https://vukilis.com/how_to_backup_proxmox-with-samba/" target="_blank" rel="noopener noreffer ">how to backup proxmox with samba.</a></p>
 <h2 id="proxmox-pve-host-backup">Proxmox PVE Host Backup</h2>
 <p>Create PVE host backup script, for more information check <a href="https://gist.github.com/mrpeardotnet/6bdc4b504f43ce57fa7eaee96d376edf" target="_blank" rel="noopener noreffer ">https://gist.github.com/mrpeardotnet/6bdc4b504f43ce57fa7eaee96d376edf</a></p>
 <p>To create backup script that will be executed every day we can create backup script in /etc/cron.daily/ folder. We need to make it writeable by root (creator) only, but readable and executable by everyone:</p>
