@@ -44,7 +44,7 @@ share:
 <!--more-->
 
 This is the guide how to migrate existing proxmox host to a new server with all confinguration and prepare for backup LXC containers and VM machines.  
-Before continue reading this post first check the post [how to backup proxmox with samba.](https://vukilis.com/how_to_backup_proxmox-with-samba/)
+Before continue reading this post first check the post [how to backup proxmox with samba.](https://vukilis.com/how_to_backup_proxmox_with_samba/)
 
 ## Proxmox PVE Host Backup
 
