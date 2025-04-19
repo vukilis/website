@@ -1,8 +1,8 @@
 ---
 title: "Proxmox Migration To A New Server"
 url: /proxmox_migration_to_a_new_server
-date: 2025-04-19T22:16:14+02:00
-lastmod: 2025-04-19T22:16:14+02:00
+date: 2025-01-20T20:16:14+02:00
+lastmod: 2025-01-20T20:16:14+02:00
 draft: false
 license: ""
 
