@@ -1,5 +1,5 @@
 ---
-title: "{{ replace .Name "-" " " | title }}"
+title: "{{ replace .Name "-" " " | title | humanize | strings.Title }}"
 url: /{{ .Name }}
 date: {{ .Date }}
 lastmod: {{ .Date }}
