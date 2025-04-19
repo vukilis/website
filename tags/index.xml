@@ -3,10 +3,18 @@
         <title>Tags - Tag - V For Vuk1lis</title>
         <link>https://vukilis.com/tags/</link>
         <description>Tags - Tag - V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 10 Jul 2024 18:59:13 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/tags/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 19 Apr 2025 22:16:14 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>backup</title>
+    <link>https://vukilis.com/tags/backup/</link>
+    <pubDate>Sat, 19 Apr 2025 22:16:14 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.com/tags/backup/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
     <title>homelab</title>
     <link>https://vukilis.com/tags/homelab/</link>
-    <pubDate>Wed, 10 Jul 2024 18:59:13 &#43;0200</pubDate>
+    <pubDate>Sat, 19 Apr 2025 22:16:14 &#43;0200</pubDate>
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/tags/homelab/</guid>
     <description><![CDATA[]]></description>
@@ -14,7 +22,7 @@
 <item>
     <title>linux</title>
     <link>https://vukilis.com/tags/linux/</link>
-    <pubDate>Wed, 10 Jul 2024 18:59:13 &#43;0200</pubDate>
+    <pubDate>Sat, 19 Apr 2025 22:16:14 &#43;0200</pubDate>
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/tags/linux/</guid>
     <description><![CDATA[]]></description>
@@ -73,14 +81,6 @@
     <pubDate>Mon, 06 Nov 2023 22:55:36 &#43;0100</pubDate>
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/tags/bash/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>arch</title>
-    <link>https://vukilis.com/tags/arch/</link>
-    <pubDate>Sun, 17 Sep 2023 19:28:33 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.com/tags/arch/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>

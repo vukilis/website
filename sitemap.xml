@@ -2,15 +2,18 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://vukilis.com/categories/</loc><lastmod>2024-07-14T14:24:00&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/tags/homelab/</loc><lastmod>2024-07-14T14:24:00&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/categories/homelab/</loc><lastmod>2024-07-14T14:24:00&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/tags/backup/</loc><lastmod>2025-04-19T22:16:14&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/categories/</loc><lastmod>2025-04-19T22:16:14&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/tags/homelab/</loc><lastmod>2025-04-19T22:16:14&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/categories/homelab/</loc><lastmod>2025-04-19T22:16:14&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/tags/linux/</loc><lastmod>2025-04-19T22:16:14&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/categories/linux/</loc><lastmod>2025-04-19T22:16:14&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/posts/</loc><lastmod>2025-04-19T22:16:14&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/proxmox_migration_to_a_new_server/</loc><lastmod>2025-04-19T22:16:14&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/tags/</loc><lastmod>2025-04-19T22:16:14&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/</loc><lastmod>2025-04-19T22:16:14&#43;02:00</lastmod></url><url>
+            <loc>https://vukilis.com/categories/virtualization/</loc><lastmod>2025-04-19T22:16:14&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.com/hugo_static_site_guide/</loc><lastmod>2024-07-14T14:24:00&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/tags/linux/</loc><lastmod>2024-07-14T14:24:00&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/categories/linux/</loc><lastmod>2024-07-14T14:24:00&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/posts/</loc><lastmod>2024-07-14T14:24:00&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/tags/</loc><lastmod>2024-07-14T14:24:00&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/</loc><lastmod>2024-07-14T14:24:00&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.com/tags/website/</loc><lastmod>2024-07-14T14:24:00&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.com/categories/website/</loc><lastmod>2024-07-14T14:24:00&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.com/tags/automation/</loc><lastmod>2024-05-07T23:54:16&#43;02:00</lastmod></url><url>
@@ -53,7 +56,6 @@
             <loc>https://vukilis.com/tags/zsh/</loc><lastmod>2023-06-26T01:57:12&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.com/vbox-uuid/</loc><lastmod>2023-06-21T01:48:51&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.com/tags/vbox/</loc><lastmod>2023-06-21T01:48:51&#43;02:00</lastmod></url><url>
-            <loc>https://vukilis.com/categories/virtualization/</loc><lastmod>2023-06-21T01:48:51&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.com/about/</loc><lastmod>2023-06-20T02:49:39&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.com/design/</loc><lastmod>2023-06-20T02:49:39&#43;02:00</lastmod></url><url>
             <loc>https://vukilis.com/homelab_diagram/</loc></url></urlset>

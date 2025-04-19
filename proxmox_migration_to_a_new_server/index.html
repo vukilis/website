@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Proxmox Migration To A New Server - V For Vuk1lis</title>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-7134772077337777",
+        enable_page_level_ads: true,
+        overlays: {bottom: true}
+    });
+</script><meta name="Description" content="This is the guide how to migrate existing proxmox host to a new server..."><meta property="og:title" content="Proxmox Migration To A New Server" />
+<meta property="og:description" content="This is the guide how to migrate existing proxmox host to a new server..." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://vukilis.com/proxmox_migration_to_a_new_server/" /><meta property="og:image" content="https://vukilis.com/images/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-04-19T22:16:14+02:00" />
+<meta property="article:modified_time" content="2025-04-19T22:16:14+02:00" /><meta property="og:site_name" content="V For Vuk1lis" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://vukilis.com/images/logo.png"/>
+
+<meta name="twitter:title" content="Proxmox Migration To A New Server"/>
+<meta name="twitter:description" content="This is the guide how to migrate existing proxmox host to a new server..."/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K7KG6MT7');</script>
+<link rel="icon" href="https://vukilis.com/images/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="https://vukilis.com/apple-touch-icon.png"><link rel="mask-icon" href="https://vukilis.com/safari-pinned-tab.svg" color="#5bbad5">
+    
+    
+    
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K7KG6MT7"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+
+<link rel="canonical" href="https://vukilis.com/proxmox_migration_to_a_new_server/" /><link rel="prev" href="https://vukilis.com/hugo_static_site_guide/" /><link rel="stylesheet" href="https://vukilis.com/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Proxmox Migration To A New Server",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/vukilis.com\/proxmox_migration_to_a_new_server\/"
+        },"genre": "posts","keywords": "homelab, linux, backup","wordcount":  337 ,
+        "url": "https:\/\/vukilis.com\/proxmox_migration_to_a_new_server\/","datePublished": "2025-04-19T22:16:14+02:00","dateModified": "2025-04-19T22:16:14+02:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Vuk1lis"
+            },"description": "This is the guide how to migrate existing proxmox host to a new server..."
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="https://vukilis.com/" title="V For Vuk1lis"><img
+        class="lazyload logo"
+        src="https://vukilis.com/svg/loading.min.svg"
+        data-src="https://vukilis.com/images/logo.png"
+        data-srcset="https://vukilis.com/images/logo.png, https://vukilis.com/images/logo.png 1.5x, https://vukilis.com/images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="https://vukilis.com/posts/"> Posts </a><a class="menu-item" href="https://vukilis.com/tags/"> Tags </a><a class="menu-item" href="https://vukilis.com/categories/"> Categories </a><a class="menu-item" href="https://vukilis.com/about/"> About </a><a class="menu-item" href="https://vukilis.com/design/"> Design </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="search" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="https://vukilis.com/" title="V For Vuk1lis"><img
+        class="lazyload logo"
+        src="https://vukilis.com/svg/loading.min.svg"
+        data-src="https://vukilis.com/images/logo.png"
+        data-srcset="https://vukilis.com/images/logo.png, https://vukilis.com/images/logo.png 1.5x, https://vukilis.com/images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="search" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="https://vukilis.com/posts/" title="">Posts</a><a class="menu-item" href="https://vukilis.com/tags/" title="">Tags</a><a class="menu-item" href="https://vukilis.com/categories/" title="">Categories</a><a class="menu-item" href="https://vukilis.com/about/" title="">About</a><a class="menu-item" href="https://vukilis.com/design/" title="">Design</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Proxmox Migration To A New Server</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://vukilis.com/about/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Vuk1lis</a></span>&nbsp;<span class="post-category">included in <a href="https://vukilis.com/categories/linux/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux</a>&nbsp;<a href="https://vukilis.com/categories/virtualization/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Virtualization</a>&nbsp;<a href="https://vukilis.com/categories/homelab/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Homelab</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-04-19">2025-04-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;337 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#proxmox-pve-host-backup">Proxmox PVE Host Backup</a></li>
+    <li><a href="#recover-backup-on-new-pve-host">Recover Backup On New PVE Host</a></li>
+    <li><a href="#potential-problems">Potential Problems</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>This is the guide how to migrate existing proxmox host to a new server with all confinguration and prepare for backup LXC containers and VM machines.<br>
+Before continue reading this post first check the post <a href="https://vukilis.com/how_to_backup_proxmox/" target="_blank" rel="noopener noreffer ">how to backup proxmox.</a></p>
+<h2 id="proxmox-pve-host-backup">Proxmox PVE Host Backup</h2>
+<p>Create PVE host backup script, for more information check <a href="https://gist.github.com/mrpeardotnet/6bdc4b504f43ce57fa7eaee96d376edf" target="_blank" rel="noopener noreffer ">https://gist.github.com/mrpeardotnet/6bdc4b504f43ce57fa7eaee96d376edf</a></p>
+<p>To create backup script that will be executed every day we can create backup script in /etc/cron.daily/ folder. We need to make it writeable by root (creator) only, but readable and executable by everyone:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">touch /etc/cron.daily/pvehost-backup
+</span></span><span class="line"><span class="cl">chmod <span class="m">755</span> /etc/cron.daily/pvehost-backup
+</span></span></code></pre></div><p>Copy and paste following script into the created file:</p>
+<blockquote>
+<p>This is my configuration</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/sh
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nv">BACKUP_PATH</span><span class="o">=</span><span class="s2">&#34;/mnt/pve/proxmox-host/dump&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">BACKUP_FILE</span><span class="o">=</span><span class="s2">&#34;pve-host&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">KEEP_DAYS</span><span class="o">=</span><span class="m">2</span>
+</span></span><span class="line"><span class="cl"><span class="nv">PVE_BACKUP_SET</span><span class="o">=</span><span class="s2">&#34;/etc/pve/ /etc/lvm/ /etc/modprobe.d/ /etc/network/interfaces /etc/vzdump.conf /etc/sysctl.conf /etc/resolv conf /etc/ksmtuned.conf /etc/host&gt;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">PVE_CUSTOM_BACKUP_SET</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">tar -czf <span class="nv">$BACKUP_PATH$BACKUP_FILE</span>-<span class="k">$(</span>date +%Y_%m_%d-%H_%M_%S<span class="k">)</span>.tar.gz --absolute-names <span class="nv">$PVE_BACKUP_SET</span> <span class="nv">$PVE_CUSTOM_BACKUP_SET</span>
+</span></span><span class="line"><span class="cl">find <span class="nv">$BACKUP_PATH$BACKUP_FILE</span>-* -mindepth <span class="m">0</span> -maxdepth <span class="m">0</span> -depth -mtime +<span class="nv">$KEEP_DAYS</span> -delete
+</span></span></code></pre></div><hr>
+<p>You can modify variables to fit backups for your individual hosts:</p>
+<ul>
+<li>BACKUP_PATH to specifiy where to store backups,</li>
+<li>BACKUP_FILE to specify backups file prefix,</li>
+<li>KEEP_DAYS to specify how many old backups to keep (in days)</li>
+<li>PVE_CUSTOM_BACKUP_SET to add your installation specific folders and/or files,</li>
+<li>PVE_BACKUP_SET defines standard set of folders and config files for generic PVE host.</li>
+</ul>
+<p>Run test:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">run-parts /etc/cron.daily/
+</span></span></code></pre></div><h2 id="recover-backup-on-new-pve-host">Recover Backup On New PVE Host</h2>
+<p>Copy backup to new pve host:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">scp -r <span class="o">[</span>name<span class="o">]</span>.tar.gz root@<span class="o">[</span>IP_ADDRESS<span class="o">]</span>:/tmp
+</span></span></code></pre></div><p>To avoid having more then one node, best solution is to remove existing default node:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rm -rf /etc/pve/nodes/*
+</span></span></code></pre></div><p>Now we can restore backup:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /tmp
+</span></span><span class="line"><span class="cl">tar --overwrite -xzf /tmp/dumppve-host-2025_04_19-18_11_58.tar.gz -C /
+</span></span></code></pre></div><p>Reboot proxmox:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">reboot
+</span></span></code></pre></div><h2 id="potential-problems">Potential Problems</h2>
+<p>Network configuration may be different on the new server or if we testing this solution on virtual machine.<br>
+If we want to change some network configuration we can start from here:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nano /etc/network/interfaces
+</span></span><span class="line"><span class="cl">systemctl restart networking.service
+</span></span></code></pre></div><p>Also check network configuration under the node.</p>
+<hr>
+<p>We may face the problem that the logical volume is missing, we have to create it manually, but this process is explained in this <a href="https://vukilis.com/how_to_restore_proxmox/" target="_blank" rel="noopener noreffer ">post</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>After this process we will have all our configuration on the new proxmox server.</p>
+<p>That&rsquo;s it for now!</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2025-04-19</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://vukilis.com/proxmox_migration_to_a_new_server/" data-title="Proxmox Migration To A New Server" data-hashtags="homelab,linux,backup"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://vukilis.com/proxmox_migration_to_a_new_server/" data-hashtag="homelab"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://vukilis.com/proxmox_migration_to_a_new_server/" data-title="Proxmox Migration To A New Server"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Reddit" data-sharer="reddit" data-url="https://vukilis.com/proxmox_migration_to_a_new_server/"><i class="fab fa-reddit fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on VK" data-sharer="vk" data-url="https://vukilis.com/proxmox_migration_to_a_new_server/" data-title="Proxmox Migration To A New Server" data-caption="This is the guide how to migrate existing proxmox host to a new server..."><i class="fab fa-vk fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="https://vukilis.com/tags/homelab/">homelab</a>,&nbsp;<a href="https://vukilis.com/tags/linux/">linux</a>,&nbsp;<a href="https://vukilis.com/tags/backup/">backup</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://vukilis.com/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://vukilis.com/hugo_static_site_guide/" class="prev" rel="prev" title="Hugo Static Site Guide"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Hugo Static Site Guide</a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://vukilis.com/about/">Vuk1lis</a></span>&nbsp;|&nbsp;<span class="license"><a href="https://vukilis.com/privacy">Privacy</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://vukilis.com/terms-conditions">Terms and Conditions</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"url","label":"comment","lightTheme":"github-dark","repo":"vukilis/website"}},"lightgallery":true,"search":{"algoliaAppID":"DAENWQCI5B","algoliaIndex":"website","algoliaSearchKey":"3a87729afa43d11594394f5b86df56f8","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="https://vukilis.com/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-BPK5CT0MGQ', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-BPK5CT0MGQ" async></script><script type="text/javascript" >
+           (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+           m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+           (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+           ym("97163691", "init", {
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true
+           });
+        </script>
+        <noscript><div><img src="https://mc.yandex.ru/watch/97163691" style="position:absolute; left:-9999px;" alt="" /></div></noscript></body>
+</html>
