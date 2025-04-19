@@ -3,10 +3,10 @@
         <title>homelab - Tag - V For Vuk1lis</title>
         <link>https://vukilis.com/tags/homelab/</link>
         <description>homelab - Tag - V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 19 Apr 2025 22:16:14 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/tags/homelab/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 20 Jan 2025 20:16:14 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/tags/homelab/" rel="self" type="application/rss+xml" /><item>
     <title>Proxmox Migration To A New Server</title>
     <link>https://vukilis.com/proxmox_migration_to_a_new_server/</link>
-    <pubDate>Sat, 19 Apr 2025 22:16:14 &#43;0200</pubDate>
+    <pubDate>Mon, 20 Jan 2025 20:16:14 &#43;0200</pubDate>
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/proxmox_migration_to_a_new_server/</guid>
     <description><![CDATA[This is the guide how to migrate existing proxmox host to a new server...]]></description>
