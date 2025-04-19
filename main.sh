@@ -30,12 +30,12 @@ createPost(){
     dirName=$title
     titleConvert=$(echo $dirName | sed 's/-/_/g')
     
-    if ! hugo new "posts/$subfolder/$title.md" 2>/dev/null; then
+    if ! hugo new "posts/$subfolder/$titleConvert.md" 2>/dev/null; then
         echo -e "${RED}❌ Error: 'hugo' command not found or failed to create post!${DFC}"
         return 1
     fi
     
-    if ! mkdir "static/images/$subfolder/$titleConvert"; then
+    if ! mkdir -p "static/images/$subfolder/$titleConvert"; then
         echo -e "${RED}❌ Failed to create directory: static/images/$year/$subfolder${DFC}"
         return 1
     fi
@@ -47,12 +47,12 @@ deletePost() {
     dirName=$title
     titleConvert=$(echo $dirName | sed 's/-/_/g')  # Convert hyphens to underscores for folder name
 
-    if ! [ -f "content/posts/$subfolder/$title.md" ]; then
+    if ! [ -f "content/posts/$subfolder/$titleConvert.md" ]; then
         echo -e "${RED}❌ Error: Post content/posts/$subfolder/$title.md does not exist!${DFC}"
         return 1
     fi
 
-    if ! rm -rf "content/posts/$subfolder/$title.md"; then
+    if ! rm -rf "content/posts/$subfolder/$titleConvert.md"; then
         echo -e "${RED}❌ Error: Failed to delete post content/posts/$subfolder/$title.md!${DFC}"
         return 1  
     fi
