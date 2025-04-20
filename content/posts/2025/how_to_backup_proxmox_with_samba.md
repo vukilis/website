@@ -1,8 +1,8 @@
 ---
 title: "How to Backup Proxmox With Samba"
 url: /how_to_backup_proxmox_with_samba
-date: 2025-04-19T23:28:38+02:00
-lastmod: 2025-04-19T23:28:38+02:00
+date: 2025-04-15T20:28:38+02:00
+lastmod: 2025-04-15T20:28:38+02:00
 draft: false
 license: ""
 

@@ -43,7 +43,8 @@ share:
 ---
 <!--more-->
 
-This is the guide how to migrate existing proxmox host to a new server with all confinguration and prepare for backup LXC containers and VM machines.  
+This is the guide how to migrate existing proxmox host to a new server with all confinguration and prepare for backup LXC containers and VM machines. 
+ 
 Before continue reading this post first check the post [how to backup proxmox with samba.](https://vukilis.com/how_to_backup_proxmox_with_samba/)
 
 ## Proxmox PVE Host Backup
@@ -68,7 +69,7 @@ Copy and paste following script into the created file:
 BACKUP_PATH="/mnt/pve/proxmox-host/dump"
 BACKUP_FILE="pve-host"
 KEEP_DAYS=2
-PVE_BACKUP_SET="/etc/pve/ /etc/lvm/ /etc/modprobe.d/ /etc/network/interfaces /etc/vzdump.conf /etc/sysctl.conf /etc/resolv conf /etc/ksmtuned.conf /etc/host>"
+PVE_BACKUP_SET="/etc/pve/ /etc/lvm/ /etc/modprobe.d/ /etc/network/interfaces /etc/vzdump.conf /etc/sysctl.conf /etc/resolv conf /etc/ksmtuned.conf /etc/host /etc/hostname /etc/cron* /etc/aliases"
 PVE_CUSTOM_BACKUP_SET=""
 
 tar -czf $BACKUP_PATH$BACKUP_FILE-$(date +%Y_%m_%d-%H_%M_%S).tar.gz --absolute-names $PVE_BACKUP_SET $PVE_CUSTOM_BACKUP_SET
@@ -121,10 +122,34 @@ reboot
 ## Potential Problems
 
 Network configuration may be different on the new server or if we testing this solution on virtual machine.  
-If we want to change some network configuration we can start from here:
+If we have a problem, the best way to solve it is to restore the configuration to its default state:
 
 ```bash
-nano /etc/network/interfaces
+# nano /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto ens33
+iface ens33 inet manual
+
+auto vmbr0
+iface vmbr0 inet static
+        address 192.168.0.90/24
+        gateway 192.168.0.1
+        bridge-ports ens33
+        bridge-stp off
+        bridge-fd 0
+        bridge-vlan-aware yes
+        bridge-vids 2-4094
+
+source /etc/network/interfaces.d/*
+```
+
+> Change interface and IP Address for your need!
+
+Restart network services:
+
+```bash
 systemctl restart networking.service
 ```
 
