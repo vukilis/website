@@ -3,12 +3,20 @@
         <title>V For Vuk1lis</title>
         <link>https://vukilis.com/</link>
         <description>Happy Coding</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 19 Apr 2025 23:28:38 &#43;0200</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 20 Apr 2025 01:59:30 &#43;0200</lastBuildDate>
             <atom:link href="https://vukilis.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>How to Restore Proxmox</title>
+    <link>https://vukilis.com/how_to_restore_proxmox/</link>
+    <pubDate>Sun, 20 Apr 2025 01:59:30 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.com/how_to_restore_proxmox/</guid>
+    <description><![CDATA[This is the guide how to migrate our proxmox server to a new server, this process...]]></description>
+</item>
+<item>
     <title>How to Backup Proxmox With Samba</title>
     <link>https://vukilis.com/how_to_backup_proxmox_with_samba/</link>
-    <pubDate>Sat, 19 Apr 2025 23:28:38 &#43;0200</pubDate>
+    <pubDate>Tue, 15 Apr 2025 20:28:38 &#43;0200</pubDate>
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/how_to_backup_proxmox_with_samba/</guid>
     <description><![CDATA[This is the guide how to make backup for proxmox using Samba Share (SMB) Protocol...]]></description>
@@ -36,14 +44,6 @@
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/Windows_11_Optimizer_Debloater/</guid>
     <description><![CDATA[This Utility show basic system information, install programs, debloat and optimize Windows...]]></description>
-</item>
-<item>
-    <title>How to Find Last Modified Files Recursively</title>
-    <link>https://vukilis.com/how-to-find-latest-modified-files-recursively/</link>
-    <pubDate>Mon, 06 Nov 2023 22:55:36 &#43;0100</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.com/how-to-find-latest-modified-files-recursively/</guid>
-    <description><![CDATA[In this post I will show a bash script which show how to find most recent modified files recursively...]]></description>
 </item>
 </channel>
 </rss>

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>Proxmox Migration To A New Server - V For Vuk1lis</title>
+        <title>How to Restore Proxmox - V For Vuk1lis</title>
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
@@ -13,17 +13,17 @@
         enable_page_level_ads: true,
         overlays: {bottom: true}
     });
-</script><meta name="Description" content="This is the guide how to migrate existing proxmox host to a new server..."><meta property="og:title" content="Proxmox Migration To A New Server" />
-<meta property="og:description" content="This is the guide how to migrate existing proxmox host to a new server..." />
+</script><meta name="Description" content="This is the guide how to migrate our proxmox server to a new server, this process..."><meta property="og:title" content="How to Restore Proxmox" />
+<meta property="og:description" content="This is the guide how to migrate our proxmox server to a new server, this process..." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://vukilis.com/proxmox_migration_to_a_new_server/" /><meta property="og:image" content="https://vukilis.com/images/logo.png"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2025-01-20T20:16:14+02:00" />
-<meta property="article:modified_time" content="2025-01-20T20:16:14+02:00" /><meta property="og:site_name" content="V For Vuk1lis" />
+<meta property="og:url" content="https://vukilis.com/how_to_restore_proxmox/" /><meta property="og:image" content="https://vukilis.com/images/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-04-20T01:59:30+02:00" />
+<meta property="article:modified_time" content="2025-04-20T01:59:30+02:00" /><meta property="og:site_name" content="V For Vuk1lis" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://vukilis.com/images/logo.png"/>
 
-<meta name="twitter:title" content="Proxmox Migration To A New Server"/>
-<meta name="twitter:description" content="This is the guide how to migrate existing proxmox host to a new server..."/>
+<meta name="twitter:title" content="How to Restore Proxmox"/>
+<meta name="twitter:description" content="This is the guide how to migrate our proxmox server to a new server, this process..."/>
 <meta name="application-name" content="My cool site">
 <meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c">
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -39,24 +39,24 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
-<link rel="canonical" href="https://vukilis.com/proxmox_migration_to_a_new_server/" /><link rel="prev" href="https://vukilis.com/hugo_static_site_guide/" /><link rel="next" href="https://vukilis.com/how_to_backup_proxmox_with_samba/" /><link rel="stylesheet" href="https://vukilis.com/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="canonical" href="https://vukilis.com/how_to_restore_proxmox/" /><link rel="prev" href="https://vukilis.com/how_to_backup_proxmox_with_samba/" /><link rel="stylesheet" href="https://vukilis.com/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Proxmox Migration To A New Server",
+        "headline": "How to Restore Proxmox",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/vukilis.com\/proxmox_migration_to_a_new_server\/"
-        },"genre": "posts","keywords": "homelab, linux, backup","wordcount":  395 ,
-        "url": "https:\/\/vukilis.com\/proxmox_migration_to_a_new_server\/","datePublished": "2025-01-20T20:16:14+02:00","dateModified": "2025-01-20T20:16:14+02:00","publisher": {
+            "@id": "https:\/\/vukilis.com\/how_to_restore_proxmox\/"
+        },"genre": "posts","keywords": "homelab, linux, backup","wordcount":  468 ,
+        "url": "https:\/\/vukilis.com\/how_to_restore_proxmox\/","datePublished": "2025-04-20T01:59:30+02:00","dateModified": "2025-04-20T01:59:30+02:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "Vuk1lis"
-            },"description": "This is the guide how to migrate existing proxmox host to a new server..."
+            },"description": "This is the guide how to migrate our proxmox server to a new server, this process..."
     }
     </script></head>
     <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -134,10 +134,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Proxmox Migration To A New Server</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">How to Restore Proxmox</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://vukilis.com/about/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Vuk1lis</a></span>&nbsp;<span class="post-category">included in <a href="https://vukilis.com/categories/linux/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux</a>&nbsp;<a href="https://vukilis.com/categories/virtualization/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Virtualization</a>&nbsp;<a href="https://vukilis.com/categories/homelab/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Homelab</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-01-20">2025-01-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;395 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-04-20">2025-04-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;468 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -145,94 +145,89 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#proxmox-pve-host-backup">Proxmox PVE Host Backup</a></li>
-    <li><a href="#recover-backup-on-new-pve-host">Recover Backup On New PVE Host</a></li>
-    <li><a href="#potential-problems">Potential Problems</a></li>
+    <li><a href="#check-for-missing-logical-volume-and-configuration">Check For Missing Logical Volume And Configuration</a></li>
+    <li><a href="#create-missing-logical-volumes-and-configuration">Create Missing Logical Volumes and Configuration</a></li>
+    <li><a href="#using-script">Using Script</a></li>
+    <li><a href="#restore-proxmox-backup-server">Restore Proxmox Backup Server</a></li>
+    <li><a href="#restore-our-lxc-container-from-backup">Restore Our LXC Container From Backup</a></li>
+    <li><a href="#addtional">Addtional</a></li>
     <li><a href="#conclusion">Conclusion</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p>This is the guide how to migrate existing proxmox host to a new server with all confinguration and prepare for backup LXC containers and VM machines.</p>
-<p>Before continue reading this post first check the post <a href="https://vukilis.com/how_to_backup_proxmox_with_samba/" target="_blank" rel="noopener noreffer ">how to backup proxmox with samba.</a></p>
-<h2 id="proxmox-pve-host-backup">Proxmox PVE Host Backup</h2>
-<p>Create PVE host backup script, for more information check <a href="https://gist.github.com/mrpeardotnet/6bdc4b504f43ce57fa7eaee96d376edf" target="_blank" rel="noopener noreffer ">https://gist.github.com/mrpeardotnet/6bdc4b504f43ce57fa7eaee96d376edf</a></p>
-<p>To create backup script that will be executed every day we can create backup script in /etc/cron.daily/ folder. We need to make it writeable by root (creator) only, but readable and executable by everyone:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">touch /etc/cron.daily/pvehost-backup
-</span></span><span class="line"><span class="cl">chmod <span class="m">755</span> /etc/cron.daily/pvehost-backup
-</span></span></code></pre></div><p>Copy and paste following script into the created file:</p>
-<blockquote>
-<p>This is my configuration</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/sh
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nv">BACKUP_PATH</span><span class="o">=</span><span class="s2">&#34;/mnt/pve/proxmox-host/dump&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">BACKUP_FILE</span><span class="o">=</span><span class="s2">&#34;pve-host&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">KEEP_DAYS</span><span class="o">=</span><span class="m">2</span>
-</span></span><span class="line"><span class="cl"><span class="nv">PVE_BACKUP_SET</span><span class="o">=</span><span class="s2">&#34;/etc/pve/ /etc/lvm/ /etc/modprobe.d/ /etc/network/interfaces /etc/vzdump.conf /etc/sysctl.conf /etc/resolv conf /etc/ksmtuned.conf /etc/host /etc/hostname /etc/cron* /etc/aliases&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">PVE_CUSTOM_BACKUP_SET</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">tar -czf <span class="nv">$BACKUP_PATH$BACKUP_FILE</span>-<span class="k">$(</span>date +%Y_%m_%d-%H_%M_%S<span class="k">)</span>.tar.gz --absolute-names <span class="nv">$PVE_BACKUP_SET</span> <span class="nv">$PVE_CUSTOM_BACKUP_SET</span>
-</span></span><span class="line"><span class="cl">find <span class="nv">$BACKUP_PATH$BACKUP_FILE</span>-* -mindepth <span class="m">0</span> -maxdepth <span class="m">0</span> -depth -mtime +<span class="nv">$KEEP_DAYS</span> -delete
-</span></span></code></pre></div><hr>
-<p>You can modify variables to fit backups for your individual hosts:</p>
-<ul>
-<li>BACKUP_PATH to specifiy where to store backups,</li>
-<li>BACKUP_FILE to specify backups file prefix,</li>
-<li>KEEP_DAYS to specify how many old backups to keep (in days)</li>
-<li>PVE_CUSTOM_BACKUP_SET to add your installation specific folders and/or files,</li>
-<li>PVE_BACKUP_SET defines standard set of folders and config files for generic PVE host.</li>
-</ul>
-<p>Run test:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">run-parts /etc/cron.daily/
-</span></span></code></pre></div><h2 id="recover-backup-on-new-pve-host">Recover Backup On New PVE Host</h2>
-<p>Copy backup to new pve host:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">scp -r <span class="o">[</span>name<span class="o">]</span>.tar.gz root@<span class="o">[</span>IP_ADDRESS<span class="o">]</span>:/tmp
-</span></span></code></pre></div><p>To avoid having more then one node, best solution is to remove existing default node:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rm -rf /etc/pve/nodes/*
-</span></span></code></pre></div><p>Now we can restore backup:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /tmp
-</span></span><span class="line"><span class="cl">tar --overwrite -xzf /tmp/dumppve-host-2025_04_19-18_11_58.tar.gz -C /
-</span></span></code></pre></div><p>Reboot proxmox:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">reboot
-</span></span></code></pre></div><h2 id="potential-problems">Potential Problems</h2>
-<p>Network configuration may be different on the new server or if we testing this solution on virtual machine.<br>
-If we have a problem, the best way to solve it is to restore the configuration to its default state:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># nano /etc/network/interfaces</span>
-</span></span><span class="line"><span class="cl">auto lo
-</span></span><span class="line"><span class="cl">iface lo inet loopback
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">auto ens33
-</span></span><span class="line"><span class="cl">iface ens33 inet manual
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">auto vmbr0
-</span></span><span class="line"><span class="cl">iface vmbr0 inet static
-</span></span><span class="line"><span class="cl">        address 192.168.0.90/24
-</span></span><span class="line"><span class="cl">        gateway 192.168.0.1
-</span></span><span class="line"><span class="cl">        bridge-ports ens33
-</span></span><span class="line"><span class="cl">        bridge-stp off
-</span></span><span class="line"><span class="cl">        bridge-fd <span class="m">0</span>
-</span></span><span class="line"><span class="cl">        bridge-vlan-aware yes
-</span></span><span class="line"><span class="cl">        bridge-vids 2-4094
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">source</span> /etc/network/interfaces.d/*
+            </div><div class="content" id="content"><p>This is the guide how to migrate our proxmox server to a new server, this process can be a very tricky.</p>
+<p>Before continue reading this post first check the post <a href="https://vukilis.com/how_to_backup_proxmox_with_samba/" target="_blank" rel="noopener noreffer ">how to backup proxmox with samba</a> and to see how to migrate our proxmox host to a new server check the post <a href="https://vukilis.com/proxmox_migration_to_a_new_server/" target="_blank" rel="noopener noreffer ">proxmox migration to a new server</a>.</p>
+<h2 id="check-for-missing-logical-volume-and-configuration">Check For Missing Logical Volume And Configuration</h2>
+<p>Problem we are facing after migration our proxmox host to a new server is that we don&rsquo;t have created logical volumes for our LXC containers. We can list all logical volumes from our LXC containers with next commands:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lvs
+</span></span></code></pre></div><p>We can list all congif files from our LXC containers with next command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls /etc/pve/lxc/
+</span></span></code></pre></div><h2 id="create-missing-logical-volumes-and-configuration">Create Missing Logical Volumes and Configuration</h2>
+<p>To create our missing logical volume we can run next command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lvcreate -n vm-204-disk-0 -L 1M pve
 </span></span></code></pre></div><blockquote>
-<p>Change interface and IP Address for your need!</p>
+<p>We can give only 1M to our LXC container because after we backup LXC will have anyway same as before, example 20GB</p>
 </blockquote>
-<p>Restart network services:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">systemctl restart networking.service
-</span></span></code></pre></div><p>Also check network configuration under the node.</p>
-<hr>
-<p>We may face the problem that the logical volume is missing, we have to create it manually, but this process is explained in this <a href="https://vukilis.com/how_to_restore_proxmox/" target="_blank" rel="noopener noreffer ">post</a>.</p>
-<h2 id="conclusion">Conclusion</h2>
-<p>After this process we will have all our configuration on the new proxmox server.</p>
-<p>That&rsquo;s it for now!</p></div><div class="post-footer" id="post-footer">
+<h2 id="using-script">Using Script</h2>
+<p>But, we can make it even more easily and better using script for creating LVS:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tee create_lvs.sh <span class="s">&lt;&lt; &#39;EOF&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">conf_dir=&#34;/etc/pve/lxc&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">for conf_file in &#34;$conf_dir&#34;/*.conf; do
+</span></span></span><span class="line"><span class="cl"><span class="s">    vm_id=$(basename &#34;$conf_file&#34; .conf)
+</span></span></span><span class="line"><span class="cl"><span class="s">    lvcreate -n &#34;vm-${vm_id}-disk-0&#34; -L 1M pve
+</span></span></span><span class="line"><span class="cl"><span class="s">    echo &#34;Created LV for vm-${vm_id}-disk-0&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">done
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span><span class="line"><span class="cl">sudo chmod +x /path/to/your/script/create_lvs.sh
+</span></span></code></pre></div><p>Make script executable:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chmod +x create_lvs.sh
+</span></span></code></pre></div><p>Now, we can run our script and make all LVS we need:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./create_lvs.sh
+</span></span></code></pre></div><p><em><strong>All this steps is only to get LXC working and prepared for restoring.</strong></em></p>
+<h2 id="restore-proxmox-backup-server">Restore Proxmox Backup Server</h2>
+<p>In the post <a href="https://vukilis.com/how_to_backup_proxmox_with_samba/" target="_blank" rel="noopener noreffer ">how to backup proxmox with samba</a> we created proxmox-backup-server that we can manualy backup our Proxmox Backup Server.</p>
+<p>First we want to restore Proxmox Backup Server:</p>
+<ul>
+<li>Go to Proxmox <strong>Web GUI</strong></li>
+<li>Select our <strong>container</strong> and select <strong>Backup</strong></li>
+<li>Select <strong>storage</strong> and select <strong>proxmox-backup-server</strong></li>
+<li>Select our last backup and select <strong>Backup now</strong></li>
+</ul>
+<p>Our Proxmox Backup Server is ready and we can now procces to next step to restore our LXC containers.</p>
+<h2 id="restore-our-lxc-container-from-backup">Restore Our LXC Container From Backup</h2>
+<ul>
+<li>Go to Proxmox <strong>Web GUI</strong></li>
+<li>Select our <strong>container</strong> and select <strong>Backup</strong></li>
+<li>Select <strong>storage</strong> and select <strong>pbs</strong></li>
+<li>Select our last backup and select <strong>Backup now</strong></li>
+</ul>
+<p>After the backup is finished, we have our LXC container restored!</p>
+<blockquote>
+<p>Potential bug can be that we need to wait some time to appear our bash console, this is only when we restore our container</p>
+</blockquote>
+<blockquote>
+<p>We can use pve host to try connect to our container console: <code>pct console 204</code></p>
+</blockquote>
+<h2 id="addtional">Addtional</h2>
+<p>If we want to remove created volume we can use next command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lvremove -y /dev/pve/vm-204-disk-1
+</span></span></code></pre></div><p>or delete all exsiting, example:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="o">{</span>201..214<span class="o">}</span> <span class="p">|</span> tr <span class="s1">&#39; &#39;</span> <span class="s1">&#39;\n&#39;</span> <span class="p">|</span> xargs -I <span class="o">{}</span> pct destroy <span class="o">{}</span> --force
+</span></span></code></pre></div><p>If we want to list all mounted volumes run next command:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ls /dev/pve/
+</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
+<p>For me this is very good way to migrate our proxmox to another server and restore our backup.</p></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2025-01-20</span>
+                <span>Updated on 2025-04-20</span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://vukilis.com/proxmox_migration_to_a_new_server/" data-title="Proxmox Migration To A New Server" data-hashtags="homelab,linux,backup"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://vukilis.com/proxmox_migration_to_a_new_server/" data-hashtag="homelab"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://vukilis.com/proxmox_migration_to_a_new_server/" data-title="Proxmox Migration To A New Server"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Reddit" data-sharer="reddit" data-url="https://vukilis.com/proxmox_migration_to_a_new_server/"><i class="fab fa-reddit fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on VK" data-sharer="vk" data-url="https://vukilis.com/proxmox_migration_to_a_new_server/" data-title="Proxmox Migration To A New Server" data-caption="This is the guide how to migrate existing proxmox host to a new server..."><i class="fab fa-vk fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://vukilis.com/how_to_restore_proxmox/" data-title="How to Restore Proxmox" data-hashtags="homelab,linux,backup"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://vukilis.com/how_to_restore_proxmox/" data-hashtag="homelab"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://vukilis.com/how_to_restore_proxmox/" data-title="How to Restore Proxmox"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Reddit" data-sharer="reddit" data-url="https://vukilis.com/how_to_restore_proxmox/"><i class="fab fa-reddit fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on VK" data-sharer="vk" data-url="https://vukilis.com/how_to_restore_proxmox/" data-title="How to Restore Proxmox" data-caption="This is the guide how to migrate our proxmox server to a new server, this process..."><i class="fab fa-vk fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
@@ -244,8 +239,7 @@ If we have a problem, the best way to solve it is to restore the configuration t
         </section>
     </div>
 
-    <div class="post-nav"><a href="https://vukilis.com/hugo_static_site_guide/" class="prev" rel="prev" title="Hugo Static Site Guide"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Hugo Static Site Guide</a>
-            <a href="https://vukilis.com/how_to_backup_proxmox_with_samba/" class="next" rel="next" title="How to Backup Proxmox With Samba">How to Backup Proxmox With Samba<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+    <div class="post-nav"><a href="https://vukilis.com/how_to_backup_proxmox_with_samba/" class="prev" rel="prev" title="How to Backup Proxmox With Samba"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>How to Backup Proxmox With Samba</a></div>
 </div>
 <div id="comments"><div id="utterances" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
