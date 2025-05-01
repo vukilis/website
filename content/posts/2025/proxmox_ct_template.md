@@ -254,5 +254,4 @@ Our container is now ready to be converted to template.
 ## Conclusion
 
 This is how I made my template for my containers.  
-When I want to create a new container I can use this template and create as a linked or full clone with all preinstalled packages I want and setted up with my ssh key.  
-Also, my new created container have some basic security properties.
+When I want to create a new container I can use this template and create as a linked or full clone with all preinstalled packages I want and also have some basic security properties.
