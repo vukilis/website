@@ -6,7 +6,7 @@ lastmod: 2025-04-20T01:59:30+02:00
 draft: false
 license: ""
 
-tags: [homelab, linux, backup]
+tags: [homelab, linux, backup, proxmox]
 categories: [Linux, Virtualization, Homelab]
 description: "This is the guide how to migrate our proxmox server to a new server, this process..."
 

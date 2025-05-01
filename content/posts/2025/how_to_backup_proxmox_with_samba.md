@@ -6,7 +6,7 @@ lastmod: 2025-04-15T20:28:38+02:00
 draft: false
 license: ""
 
-tags: [homelab, linux, backup]
+tags: [homelab, linux, backup, proxmox]
 categories: [Linux, Virtualization, Homelab]
 description: "This is the guide how to make backup for proxmox using Samba Share (SMB) Protocol..."
 
