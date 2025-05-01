@@ -3,18 +3,18 @@
         <title>Tags - Tag - V For Vuk1lis</title>
         <link>https://vukilis.com/tags/</link>
         <description>Tags - Tag - V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 20 Apr 2025 01:59:30 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/tags/" rel="self" type="application/rss+xml" /><item>
-    <title>backup</title>
-    <link>https://vukilis.com/tags/backup/</link>
-    <pubDate>Sun, 20 Apr 2025 01:59:30 &#43;0200</pubDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 01 May 2025 22:11:34 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>debian</title>
+    <link>https://vukilis.com/tags/debian/</link>
+    <pubDate>Thu, 01 May 2025 22:11:34 &#43;0200</pubDate>
     <author>Vuk1lis</author>
-    <guid>https://vukilis.com/tags/backup/</guid>
+    <guid>https://vukilis.com/tags/debian/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>homelab</title>
     <link>https://vukilis.com/tags/homelab/</link>
-    <pubDate>Sun, 20 Apr 2025 01:59:30 &#43;0200</pubDate>
+    <pubDate>Thu, 01 May 2025 22:11:34 &#43;0200</pubDate>
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/tags/homelab/</guid>
     <description><![CDATA[]]></description>
@@ -22,9 +22,33 @@
 <item>
     <title>linux</title>
     <link>https://vukilis.com/tags/linux/</link>
-    <pubDate>Sun, 20 Apr 2025 01:59:30 &#43;0200</pubDate>
+    <pubDate>Thu, 01 May 2025 22:11:34 &#43;0200</pubDate>
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/tags/linux/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>proxmox</title>
+    <link>https://vukilis.com/tags/proxmox/</link>
+    <pubDate>Thu, 01 May 2025 22:11:34 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.com/tags/proxmox/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>template</title>
+    <link>https://vukilis.com/tags/template/</link>
+    <pubDate>Thu, 01 May 2025 22:11:34 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.com/tags/template/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>backup</title>
+    <link>https://vukilis.com/tags/backup/</link>
+    <pubDate>Sun, 20 Apr 2025 01:59:30 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.com/tags/backup/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
@@ -57,30 +81,6 @@
     <pubDate>Tue, 07 May 2024 23:54:16 &#43;0200</pubDate>
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/tags/scripts/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>windows</title>
-    <link>https://vukilis.com/tags/windows/</link>
-    <pubDate>Tue, 07 May 2024 23:54:16 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.com/tags/windows/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>winget</title>
-    <link>https://vukilis.com/tags/winget/</link>
-    <pubDate>Tue, 07 May 2024 23:54:16 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.com/tags/winget/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>bash</title>
-    <link>https://vukilis.com/tags/bash/</link>
-    <pubDate>Mon, 06 Nov 2023 22:55:36 &#43;0100</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.com/tags/bash/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>

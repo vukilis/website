@@ -1,9 +1,9 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Virtualization - Category - V For Vuk1lis</title>
-        <link>https://vukilis.com/categories/virtualization/</link>
-        <description>Virtualization - Category - V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 01 May 2025 22:11:34 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/categories/virtualization/" rel="self" type="application/rss+xml" /><item>
+        <title>proxmox - Tag - V For Vuk1lis</title>
+        <link>https://vukilis.com/tags/proxmox/</link>
+        <description>proxmox - Tag - V For Vuk1lis</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 01 May 2025 22:11:34 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/tags/proxmox/" rel="self" type="application/rss+xml" /><item>
     <title>Proxmox CT Template</title>
     <link>https://vukilis.com/proxmox_ct_template/</link>
     <pubDate>Thu, 01 May 2025 22:11:34 &#43;0200</pubDate>
@@ -34,14 +34,6 @@
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/proxmox_migration_to_a_new_server/</guid>
     <description><![CDATA[This is the guide how to migrate existing proxmox host to a new server...]]></description>
-</item>
-<item>
-    <title>Changing UUID for VirtualBox VMs</title>
-    <link>https://vukilis.com/vbox-uuid/</link>
-    <pubDate>Wed, 21 Jun 2023 01:48:51 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.com/vbox-uuid/</guid>
-    <description><![CDATA[When I want to copy existing VMs to create a new project / VM, my new created VM have...]]></description>
 </item>
 </channel>
 </rss>

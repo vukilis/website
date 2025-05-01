@@ -3,7 +3,15 @@
         <title>All Posts - V For Vuk1lis</title>
         <link>https://vukilis.com/posts/</link>
         <description>All Posts | V For Vuk1lis</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 20 Apr 2025 01:59:30 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 01 May 2025 22:11:34 &#43;0200</lastBuildDate><atom:link href="https://vukilis.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Proxmox CT Template</title>
+    <link>https://vukilis.com/proxmox_ct_template/</link>
+    <pubDate>Thu, 01 May 2025 22:11:34 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.com/proxmox_ct_template/</guid>
+    <description><![CDATA[This guide will show how I made my container (CT) template on proxmox...]]></description>
+</item>
+<item>
     <title>How to Restore Proxmox</title>
     <link>https://vukilis.com/how_to_restore_proxmox/</link>
     <pubDate>Sun, 20 Apr 2025 01:59:30 &#43;0200</pubDate>
@@ -74,14 +82,6 @@
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/deploy-docker-with-ansible-on-ubuntu/</guid>
     <description><![CDATA[In this guide I want to show how to install and deploy docker container...]]></description>
-</item>
-<item>
-    <title>Automate App Packaging Using Winget</title>
-    <link>https://vukilis.com/automate-app-packaging-using-winget/</link>
-    <pubDate>Sun, 16 Jul 2023 14:25:21 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.com/automate-app-packaging-using-winget/</guid>
-    <description><![CDATA[I want to show my simple script that automates the installation of...]]></description>
 </item>
 </channel>
 </rss>

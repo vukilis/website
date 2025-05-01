@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Proxmox CT Template - V For Vuk1lis</title>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-7134772077337777",
+        enable_page_level_ads: true,
+        overlays: {bottom: true}
+    });
+</script><meta name="Description" content="This guide will show how I made my container (CT) template on proxmox..."><meta property="og:title" content="Proxmox CT Template" />
+<meta property="og:description" content="This guide will show how I made my container (CT) template on proxmox..." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://vukilis.com/proxmox_ct_template/" /><meta property="og:image" content="https://vukilis.com/images/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-05-01T22:11:34+02:00" />
+<meta property="article:modified_time" content="2025-05-01T22:11:34+02:00" /><meta property="og:site_name" content="V For Vuk1lis" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://vukilis.com/images/logo.png"/>
+
+<meta name="twitter:title" content="Proxmox CT Template"/>
+<meta name="twitter:description" content="This guide will show how I made my container (CT) template on proxmox..."/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K7KG6MT7');</script>
+<link rel="icon" href="https://vukilis.com/images/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="https://vukilis.com/apple-touch-icon.png"><link rel="mask-icon" href="https://vukilis.com/safari-pinned-tab.svg" color="#5bbad5">
+    
+    
+    
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K7KG6MT7"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+
+<link rel="canonical" href="https://vukilis.com/proxmox_ct_template/" /><link rel="prev" href="https://vukilis.com/how_to_restore_proxmox/" /><link rel="stylesheet" href="https://vukilis.com/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Proxmox CT Template",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/vukilis.com\/proxmox_ct_template\/"
+        },"genre": "posts","keywords": "homelab, linux, debian, template, proxmox","wordcount":  595 ,
+        "url": "https:\/\/vukilis.com\/proxmox_ct_template\/","datePublished": "2025-05-01T22:11:34+02:00","dateModified": "2025-05-01T22:11:34+02:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Vuk1lis"
+            },"description": "This guide will show how I made my container (CT) template on proxmox..."
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="https://vukilis.com/" title="V For Vuk1lis"><img
+        class="lazyload logo"
+        src="https://vukilis.com/svg/loading.min.svg"
+        data-src="https://vukilis.com/images/logo.png"
+        data-srcset="https://vukilis.com/images/logo.png, https://vukilis.com/images/logo.png 1.5x, https://vukilis.com/images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="https://vukilis.com/posts/"> Posts </a><a class="menu-item" href="https://vukilis.com/tags/"> Tags </a><a class="menu-item" href="https://vukilis.com/categories/"> Categories </a><a class="menu-item" href="https://vukilis.com/about/"> About </a><a class="menu-item" href="https://vukilis.com/design/"> Design </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="search" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="https://vukilis.com/" title="V For Vuk1lis"><img
+        class="lazyload logo"
+        src="https://vukilis.com/svg/loading.min.svg"
+        data-src="https://vukilis.com/images/logo.png"
+        data-srcset="https://vukilis.com/images/logo.png, https://vukilis.com/images/logo.png 1.5x, https://vukilis.com/images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="search" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="https://vukilis.com/posts/" title="">Posts</a><a class="menu-item" href="https://vukilis.com/tags/" title="">Tags</a><a class="menu-item" href="https://vukilis.com/categories/" title="">Categories</a><a class="menu-item" href="https://vukilis.com/about/" title="">About</a><a class="menu-item" href="https://vukilis.com/design/" title="">Design</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Proxmox CT Template</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://vukilis.com/about/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Vuk1lis</a></span>&nbsp;<span class="post-category">included in <a href="https://vukilis.com/categories/linux/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux</a>&nbsp;<a href="https://vukilis.com/categories/virtualization/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Virtualization</a>&nbsp;<a href="https://vukilis.com/categories/homelab/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Homelab</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-05-01">2025-05-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;595 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#choose-and-create-container-ct">Choose And Create Container (CT)</a></li>
+    <li><a href="#prepare-our-container-for-template">Prepare Our Container For Template</a>
+      <ul>
+        <li><a href="#create-template-ct">Create Template (CT)</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>This guide will show how I made my container (CT) template on proxmox. This template is based on debian 12 bookworm version.
+For more information about proxmox linux containers check this link: <a href="https://pve.proxmox.com/wiki/Linux_Container" target="_blank" rel="noopener noreffer ">https://pve.proxmox.com/wiki/Linux_Container</a></p>
+<h2 id="choose-and-create-container-ct">Choose And Create Container (CT)</h2>
+<p>I like to use <strong>Debian</strong> as a most stable linux distributions for my servers, but can be used any other, I recommend: Debian, Ubuntu, Rocky Linux and AlmaLinux.</p>
+<p>First we need to download our distribution, we have 3 ways to do that:</p>
+<ul>
+<li>download <strong>.iso</strong> file and upload to proxmox storage</li>
+<li>download from <strong>URL</strong></li>
+<li>using <strong>templates</strong> provided by Proxmox</li>
+</ul>
+<p>I will use template to download my debian distribution.</p>
+<p>Create CT:</p>
+<ul>
+<li>General:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Node</td>
+<td>your-node-name</td>
+</tr>
+<tr>
+<td>CT ID</td>
+<td>enter-id</td>
+</tr>
+<tr>
+<td>Unprivileged container</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Nesting</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Password</td>
+<td>your-password</td>
+</tr>
+<tr>
+<td>Confirm password</td>
+<td>your-password</td>
+</tr>
+<tr>
+<td>SSH public key(s)</td>
+<td>upload or paste your public SSH key</td>
+</tr>
+<tr>
+<td>Tags</td>
+<td>template</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Template:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Storage</td>
+<td>local</td>
+</tr>
+<tr>
+<td>template</td>
+<td>debian-12-standard_12.7-1_amd64.tar.zst</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Disks &amp; CPU &amp; Memory:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Storage</td>
+<td>local-lvm</td>
+</tr>
+<tr>
+<td>Disk Size(GiB)</td>
+<td>20</td>
+</tr>
+<tr>
+<td>ACLs</td>
+<td>Default</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Cores</td>
+<td>2</td>
+</tr>
+<tr>
+<td>CPU limit</td>
+<td>default</td>
+</tr>
+<tr>
+<td>CPU units</td>
+<td>Default</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Memory (MiB)</td>
+<td>2048</td>
+</tr>
+<tr>
+<td>Swap (MiB)</td>
+<td>512</td>
+</tr>
+<tr>
+<td>CPU units</td>
+<td>Default</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Network &amp; DNS:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name:</td>
+<td>eth0</td>
+</tr>
+<tr>
+<td>Bridge</td>
+<td>vmbr0</td>
+</tr>
+<tr>
+<td>CPU units</td>
+<td>Default</td>
+</tr>
+<tr>
+<td>IPv4</td>
+<td>Static</td>
+</tr>
+<tr>
+<td>IPv4/CIDR</td>
+<td>192.168.0.200</td>
+</tr>
+<tr>
+<td>Gateway (IPv4)</td>
+<td>192.168.0.1</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>DNS domain</td>
+<td>adblock.local</td>
+</tr>
+<tr>
+<td>DNS servers</td>
+<td>192.168.0.202</td>
+</tr>
+</tbody>
+</table>
+<p>After the container is created we can procced to next step.</p>
+<h2 id="prepare-our-container-for-template">Prepare Our Container For Template</h2>
+<p>Update debian to the latest version:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt update <span class="o">&amp;&amp;</span> apt upgrade
+</span></span></code></pre></div><p>Install usefull packages:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt install -y curl iotop bash-completion tcpdump net-tools elinks bind9-dnsutils netcat-traditional wget unzip zip zstd lsof dos2unix traceroute iptraf acpid plocate vim lshw sysstat ltrace strace pciutils ethtool telnet tmux rsync nano sudo molly-guard pydf ncdu atop atop lsof iperf3 htop
+</span></span></code></pre></div><p>Set-up Default Editor, I like to use nano <code>:)</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">update-alternatives --config editor
+</span></span><span class="line"><span class="cl"><span class="m">1</span>
+</span></span></code></pre></div><p>Create new user and add to sudo group:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">adduser homelab
+</span></span><span class="line"><span class="cl">usermod -aG sudo homelab
+</span></span></code></pre></div><p>Deletes the local repository of downloaded and remove packages that were installed as dependencies for other packages but are no longer needed:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt clean
+</span></span><span class="line"><span class="cl">apt autoremove
+</span></span></code></pre></div><p>Allow our user <code>homelab</code> to run any command using sudo without being prompted for his password:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">visudo
+</span></span><span class="line"><span class="cl">%sudo   <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD: ALL
+</span></span></code></pre></div><p>Login to our created <code>homelab</code> user and add your ssh key:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir -p .ssh
+</span></span><span class="line"><span class="cl">chmod <span class="m">700</span> .ssh
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;your public ssh key&#34;</span> &gt; .ssh/authorized_keys
+</span></span><span class="line"><span class="cl">chmod <span class="m">600</span> .ssh/authorized_keys
+</span></span></code></pre></div><p>Remove shell history for <code>homelab</code> user:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">history</span> -c
+</span></span><span class="line"><span class="cl">&gt; ~/.bash_history
+</span></span></code></pre></div><p>Login as root again:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo su -
+</span></span></code></pre></div><p>Regenerate ssh host keys, first we can create a one-time systemd service in the template that generates host keys at first boot:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat <span class="s">&lt;&lt;EOF &gt; /etc/systemd/system/regen-ssh-hostkeys.service
+</span></span></span><span class="line"><span class="cl"><span class="s">[Unit]
+</span></span></span><span class="line"><span class="cl"><span class="s">Description=Regenerate SSH host keys
+</span></span></span><span class="line"><span class="cl"><span class="s">Before=ssh.service
+</span></span></span><span class="line"><span class="cl"><span class="s">ConditionPathExists=!/etc/ssh/ssh_host_rsa_key
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">[Service]
+</span></span></span><span class="line"><span class="cl"><span class="s">Type=oneshot
+</span></span></span><span class="line"><span class="cl"><span class="s">ExecStart=/usr/bin/ssh-keygen -A
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">[Install]
+</span></span></span><span class="line"><span class="cl"><span class="s">WantedBy=multi-user.target
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span></code></pre></div><p>Enable our one-time service:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">systemctl <span class="nb">enable</span> regen-ssh-hostkeys.service
+</span></span></code></pre></div><p>Remove existing host keys in the template:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">rm -rf /etc/ssh/ssh_host_*
+</span></span></code></pre></div><p>Disable root login via SSH and disable password login:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sed -i <span class="s1">&#39;s/^#\?PermitRootLogin.*/PermitRootLogin no/&#39;</span> /etc/ssh/sshd_config
+</span></span><span class="line"><span class="cl">sed -i <span class="s1">&#39;s/^#\?PasswordAuthentication.*/PasswordAuthentication no/&#39;</span> /etc/ssh/sshd_config
+</span></span></code></pre></div><p>Clean machine-id and D-Bus ID:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">truncate -s <span class="m">0</span> /etc/machine-id
+</span></span><span class="line"><span class="cl">rm /var/lib/dbus/machine-id
+</span></span><span class="line"><span class="cl">ln -s /etc/machine-id /var/lib/dbus/machine-id
+</span></span></code></pre></div><p>Clear logs and temporary files:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">journalctl --rotate
+</span></span><span class="line"><span class="cl">journalctl --vacuum-time<span class="o">=</span>1s
+</span></span><span class="line"><span class="cl">rm -rf /tmp/*
+</span></span><span class="line"><span class="cl">rm -rf /var/tmp/*
+</span></span></code></pre></div><p>Disable root logins via shell:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">usermod -s /usr/sbin/nologin root
+</span></span></code></pre></div><p>Remove shell history <code>root</code> user:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">history</span> -c
+</span></span><span class="line"><span class="cl">&gt; ~/.bash_history
+</span></span></code></pre></div><blockquote>
+<p>After finish shutdown our container</p>
+</blockquote>
+<h3 id="create-template-ct">Create Template (CT)</h3>
+<p>Our container is now ready to be converted to template.</p>
+<ul>
+<li>Right click to container and select <strong>Convert to template</strong>.</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>This is how I made my template for my containers.<br>
+When I want to create a new container I can use this template and create as a linked or full clone with preinstalled all packages I want and setted up with my ssh key.<br>
+Also, my new created container have some basic security properties.</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2025-05-01</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://vukilis.com/proxmox_ct_template/" data-title="Proxmox CT Template" data-hashtags="homelab,linux,debian,template,proxmox"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://vukilis.com/proxmox_ct_template/" data-hashtag="homelab"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://vukilis.com/proxmox_ct_template/" data-title="Proxmox CT Template"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Reddit" data-sharer="reddit" data-url="https://vukilis.com/proxmox_ct_template/"><i class="fab fa-reddit fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on VK" data-sharer="vk" data-url="https://vukilis.com/proxmox_ct_template/" data-title="Proxmox CT Template" data-caption="This guide will show how I made my container (CT) template on proxmox..."><i class="fab fa-vk fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="https://vukilis.com/tags/homelab/">homelab</a>,&nbsp;<a href="https://vukilis.com/tags/linux/">linux</a>,&nbsp;<a href="https://vukilis.com/tags/debian/">debian</a>,&nbsp;<a href="https://vukilis.com/tags/template/">template</a>,&nbsp;<a href="https://vukilis.com/tags/proxmox/">proxmox</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://vukilis.com/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://vukilis.com/how_to_restore_proxmox/" class="prev" rel="prev" title="How to Restore Proxmox"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>How to Restore Proxmox</a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://vukilis.com/about/">Vuk1lis</a></span>&nbsp;|&nbsp;<span class="license"><a href="https://vukilis.com/privacy">Privacy</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://vukilis.com/terms-conditions">Terms and Conditions</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"url","label":"comment","lightTheme":"github-dark","repo":"vukilis/website"}},"lightgallery":true,"search":{"algoliaAppID":"DAENWQCI5B","algoliaIndex":"website","algoliaSearchKey":"3a87729afa43d11594394f5b86df56f8","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="https://vukilis.com/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-BPK5CT0MGQ', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-BPK5CT0MGQ" async></script><script type="text/javascript" >
+           (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+           m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+           (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+           ym("97163691", "init", {
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true
+           });
+        </script>
+        <noscript><div><img src="https://mc.yandex.ru/watch/97163691" style="position:absolute; left:-9999px;" alt="" /></div></noscript></body>
+</html>

@@ -3,9 +3,17 @@
         <title>V For Vuk1lis</title>
         <link>https://vukilis.com/</link>
         <description>Happy Coding</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 20 Apr 2025 01:59:30 &#43;0200</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 01 May 2025 22:11:34 &#43;0200</lastBuildDate>
             <atom:link href="https://vukilis.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Proxmox CT Template</title>
+    <link>https://vukilis.com/proxmox_ct_template/</link>
+    <pubDate>Thu, 01 May 2025 22:11:34 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.com/proxmox_ct_template/</guid>
+    <description><![CDATA[This guide will show how I made my container (CT) template on proxmox...]]></description>
+</item>
+<item>
     <title>How to Restore Proxmox</title>
     <link>https://vukilis.com/how_to_restore_proxmox/</link>
     <pubDate>Sun, 20 Apr 2025 01:59:30 &#43;0200</pubDate>
@@ -36,14 +44,6 @@
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/hugo_static_site_guide/</guid>
     <description><![CDATA[In this guide I want to show how I setup my website...]]></description>
-</item>
-<item>
-    <title>Windows 10/11 Optimizer &amp; Debloater</title>
-    <link>https://vukilis.com/Windows_11_Optimizer_Debloater/</link>
-    <pubDate>Tue, 07 May 2024 23:54:16 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.com/Windows_11_Optimizer_Debloater/</guid>
-    <description><![CDATA[This Utility show basic system information, install programs, debloat and optimize Windows...]]></description>
 </item>
 </channel>
 </rss>
