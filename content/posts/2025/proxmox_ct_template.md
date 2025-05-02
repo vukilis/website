@@ -242,7 +242,7 @@ history -c
 > ~/.bash_history
 ```
 
-> After finish shutdown our container
+> After finish shutdown the container
 
 ### Create Template (CT)
 
