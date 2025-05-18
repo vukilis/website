@@ -3,9 +3,17 @@
         <title>V For Vuk1lis</title>
         <link>https://vukilis.com/</link>
         <description>Happy Coding</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 01 May 2025 22:11:34 &#43;0200</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 18 May 2025 00:23:40 &#43;0200</lastBuildDate>
             <atom:link href="https://vukilis.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Proxmox VM Template</title>
+    <link>https://vukilis.com/proxmox_vm_template/</link>
+    <pubDate>Sun, 18 May 2025 00:23:40 &#43;0200</pubDate>
+    <author>Vuk1lis</author>
+    <guid>https://vukilis.com/proxmox_vm_template/</guid>
+    <description><![CDATA[This guide will show how I made my virtual machine (VM) template on proxmox...]]></description>
+</item>
+<item>
     <title>Proxmox CT Template</title>
     <link>https://vukilis.com/proxmox_ct_template/</link>
     <pubDate>Thu, 01 May 2025 22:11:34 &#43;0200</pubDate>
@@ -36,14 +44,6 @@
     <author>Vuk1lis</author>
     <guid>https://vukilis.com/proxmox_migration_to_a_new_server/</guid>
     <description><![CDATA[This is the guide how to migrate existing proxmox host to a new server...]]></description>
-</item>
-<item>
-    <title>Hugo Static Site Guide</title>
-    <link>https://vukilis.com/hugo_static_site_guide/</link>
-    <pubDate>Wed, 10 Jul 2024 18:59:13 &#43;0200</pubDate>
-    <author>Vuk1lis</author>
-    <guid>https://vukilis.com/hugo_static_site_guide/</guid>
-    <description><![CDATA[In this guide I want to show how I setup my website...]]></description>
 </item>
 </channel>
 </rss>

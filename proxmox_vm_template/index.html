@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Proxmox VM Template - V For Vuk1lis</title>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-7134772077337777",
+        enable_page_level_ads: true,
+        overlays: {bottom: true}
+    });
+</script><meta name="Description" content="This guide will show how I made my virtual machine (VM) template on proxmox..."><meta property="og:title" content="Proxmox VM Template" />
+<meta property="og:description" content="This guide will show how I made my virtual machine (VM) template on proxmox..." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://vukilis.com/proxmox_vm_template/" /><meta property="og:image" content="https://vukilis.com/images/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-05-18T00:23:40+02:00" />
+<meta property="article:modified_time" content="2025-05-18T00:23:40+02:00" /><meta property="og:site_name" content="V For Vuk1lis" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://vukilis.com/images/logo.png"/>
+
+<meta name="twitter:title" content="Proxmox VM Template"/>
+<meta name="twitter:description" content="This guide will show how I made my virtual machine (VM) template on proxmox..."/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K7KG6MT7');</script>
+<link rel="icon" href="https://vukilis.com/images/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="https://vukilis.com/apple-touch-icon.png"><link rel="mask-icon" href="https://vukilis.com/safari-pinned-tab.svg" color="#5bbad5">
+    
+    
+    
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K7KG6MT7"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+
+<link rel="canonical" href="https://vukilis.com/proxmox_vm_template/" /><link rel="prev" href="https://vukilis.com/proxmox_ct_template/" /><link rel="stylesheet" href="https://vukilis.com/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Proxmox VM Template",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/vukilis.com\/proxmox_vm_template\/"
+        },"genre": "posts","keywords": "homelab, linux, debian, template, proxmox","wordcount":  1109 ,
+        "url": "https:\/\/vukilis.com\/proxmox_vm_template\/","datePublished": "2025-05-18T00:23:40+02:00","dateModified": "2025-05-18T00:23:40+02:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Vuk1lis"
+            },"description": "This guide will show how I made my virtual machine (VM) template on proxmox..."
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="https://vukilis.com/" title="V For Vuk1lis"><img
+        class="lazyload logo"
+        src="https://vukilis.com/svg/loading.min.svg"
+        data-src="https://vukilis.com/images/logo.png"
+        data-srcset="https://vukilis.com/images/logo.png, https://vukilis.com/images/logo.png 1.5x, https://vukilis.com/images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="https://vukilis.com/posts/"> Posts </a><a class="menu-item" href="https://vukilis.com/tags/"> Tags </a><a class="menu-item" href="https://vukilis.com/categories/"> Categories </a><a class="menu-item" href="https://vukilis.com/about/"> About </a><a class="menu-item" href="https://vukilis.com/design/"> Design </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="search" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="https://vukilis.com/" title="V For Vuk1lis"><img
+        class="lazyload logo"
+        src="https://vukilis.com/svg/loading.min.svg"
+        data-src="https://vukilis.com/images/logo.png"
+        data-srcset="https://vukilis.com/images/logo.png, https://vukilis.com/images/logo.png 1.5x, https://vukilis.com/images/logo.png 2x"
+        data-sizes="auto"
+        alt="/images/logo.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="search" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="https://vukilis.com/posts/" title="">Posts</a><a class="menu-item" href="https://vukilis.com/tags/" title="">Tags</a><a class="menu-item" href="https://vukilis.com/categories/" title="">Categories</a><a class="menu-item" href="https://vukilis.com/about/" title="">About</a><a class="menu-item" href="https://vukilis.com/design/" title="">Design</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Proxmox VM Template</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://vukilis.com/about/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Vuk1lis</a></span>&nbsp;<span class="post-category">included in <a href="https://vukilis.com/categories/linux/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux</a>&nbsp;<a href="https://vukilis.com/categories/virtualization/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Virtualization</a>&nbsp;<a href="https://vukilis.com/categories/homelab/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Homelab</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-05-18">2025-05-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1109 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#step-1-acquire-cloud-image">Step 1. Acquire Cloud Image</a></li>
+        <li><a href="#step-2-customize-image">Step 2. Customize Image</a></li>
+        <li><a href="#step-3-create-a-vm">Step 3. Create a VM</a></li>
+        <li><a href="#step-4-attach-qcow2-image-to-vm">Step 4. Attach qcow2 image to VM</a></li>
+        <li><a href="#step-5-template-tweaks">Step 5. Template Tweaks</a></li>
+        <li><a href="#step-6-create-template-vm">Step 6. Create Template (VM)</a></li>
+        <li><a href="#additional">Additional</a></li>
+        <li><a href="#bugs">Bugs</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>This guide will show how I made my virtual machine (VM) template on proxmox. This template is based on Debian (bookworm) Cloud Images.</p>
+<p>These, are special images provided, which includes support for cloud-init. For this example, we will specifically be leveraging the &ldquo;genericcloud&rdquo; image, which is suitable for our VMs.</p>
+<p>This- image does not include many bare metal hardware drivers, which aren&rsquo;t needed, since the focus of this post is creating a VM template.</p>
+<p>For more information about proxmox virtual machines check this link: <a href="https://pve.proxmox.com/wiki/QEMU/KVM_Virtual_Machines" target="_blank" rel="noopener noreffer ">https://pve.proxmox.com/wiki/QEMU/KVM_Virtual_Machines</a></p>
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="step-1-acquire-cloud-image">Step 1. Acquire Cloud Image</h3>
+<p>From Debian Official Cloud Images <a href="https://cloud.debian.org/images/cloud/" target="_blank" rel="noopener noreffer ">https://cloud.debian.org/images/cloud/</a>, we want to select the Bookworm/Latest folder at the bottom of the page.</p>
+<p>Inside of this folder we want, the <code>genericcloud</code>-<code>amd64</code>.qcow2 image. Its name is <code>debian-12-genericcloud-amd64.qcow2</code>.<br>
+Can be downloaded directly from this link: <a href="https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2" target="_blank" rel="noopener noreffer ">https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2</a></p>
+<p>We will now store this image on one of our Proxmox nodes or Windows/Linux machine in a temporary location:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wget https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2
+</span></span></code></pre></div><hr>
+<h3 id="step-2-customize-image">Step 2. Customize Image</h3>
+<p>I like to customize my images, to install a few basic tools. First, we need to install the <code>libguestfs-tools</code> package for that, via your package manager.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get install libguestfs-tools
+</span></span></code></pre></div><p>Install packages into the base image:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-12-genericcloud-amd64.qcow2 --install qemu-guest-agent,curl,iotop,bash-completion,tcpdump,net-tools,elinks,bind9-dnsutils,netcat-traditional,wget,unzip,zip,zstd,lsof,dos2unix,traceroute,iptraf,acpid,plocate,vim,lshw,sysstat,ltrace,strace,pciutils,ethtool,telnet,tmux,rsync,nano,sudo,molly-guard,pydf,ncdu,atop,atop,lsof,iperf3,htop
+</span></span></code></pre></div><p>(Optional) Fix DHCP Issue:</p>
+<p>By default, cloud images use the hostname as the DHCP identifier. This works fine, unless it sends the default template name for every cloned image.</p>
+<p>A simple fix is to update the logic to use the hardware/MAC address instead.&quot;</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-12-genericcloud-amd64.qcow2 --run-command <span class="s2">&#34;sed -i &#39;s|send host-name = gethostname();|send dhcp-client-identifier = hardware;|&#39; /etc/dhcp/dhclient.conf&#34;</span>
+</span></span></code></pre></div><p>Reset machine-id:</p>
+<p>If this step is left out, machines will each acquire the same IP address when using DHCP (Regardless if your MAC is different)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-12-genericcloud-amd64.qcow2 --run-command <span class="s2">&#34;echo -n &gt; /etc/machine-id&#34;</span>
+</span></span></code></pre></div><p>Disable root login via SSH and disable password login:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-12-genericcloud-amd64.qcow2 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;sed -i &#39;s/^#\?PermitRootLogin.*/PermitRootLogin no/&#39; /etc/ssh/sshd_config&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;sed -i &#39;s/^#\?PasswordAuthentication.*/PasswordAuthentication no/&#39; /etc/ssh/sshd_config&#34;</span>
+</span></span></code></pre></div><p>Clear logs and temporary files:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-12-genericcloud-amd64.qcow2 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;journalctl --vacuum-time=1s&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;rm -rf /tmp/*&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;rm -rf /var/tmp/*&#34;</span>
+</span></span></code></pre></div><p>Allow our sudo user to run any command using sudo without being prompted for his password:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-12-genericcloud-amd64.qcow2 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;sed -i &#39;s|^%sudo[[:space:]]\+ALL=(ALL:ALL) ALL|%sudo ALL=(ALL) NOPASSWD: ALL|&#39; /etc/sudoers&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;visudo -c&#34;</span>
+</span></span></code></pre></div><p>Disable root logins via shell and remove shell history:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-12-genericcloud-amd64.qcow2 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;usermod -s /usr/sbin/nologin root&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;sh -c &#39;&gt; /root/.bash_history&#39;&#34;</span>
+</span></span></code></pre></div><p>(Optional) Compress and shrink the image:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">qemu-img convert -O qcow2 -c -o <span class="nv">preallocation</span><span class="o">=</span>off debian-12-genericcloud-amd64.qcow2 debian-12-genericcloud-amd64-shrink.qcow2
+</span></span></code></pre></div><blockquote>
+<p>This saved around 300M, which is pretty impressive when you consider the file was only 700M originally.</p>
+</blockquote>
+<h3 id="step-3-create-a-vm">Step 3. Create a VM</h3>
+<p>Now that we have a suitable image, we need to build a base VM template. I will be doing this step through the GUI.</p>
+<p>Create CT:</p>
+<ul>
+<li>General:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Node</td>
+<td>your-node-name</td>
+</tr>
+<tr>
+<td>VM ID</td>
+<td>enter-id</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>vm-name</td>
+</tr>
+<tr>
+<td>Tags</td>
+<td>template</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>OS:</li>
+</ul>
+<p>For the OS Tab- click <code>don't use any media</code>. No other changes are needed here.</p>
+<ul>
+<li>System:</li>
+</ul>
+<p>On the system tab, I enabled the checkbox for Qemu-Agent.</p>
+<ul>
+<li>Disk:</li>
+</ul>
+<p>On the disks tab, you will want to REMOVE the default disks. We will add disks later.</p>
+<ul>
+<li>Disks &amp; CPU &amp; Memory:</li>
+</ul>
+<p>For CPU / Memory tab- just set whatever defaults you want.</p>
+<p>I chose 2 CPU cores, x86-64-v2-AES on the type as its easily compatible with all of my nodes.</p>
+<p>For memory, I allocated 2048G of ram, and disabled ballooning. Remember- we will clone this template for creating VMs, and adjust the CPU/RAM there.</p>
+<ul>
+<li>Network &amp; DNS:</li>
+</ul>
+<p>For network, I chose my default interface, where I typically create new nodes. I did select firewall.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bridge</td>
+<td>vmbr0</td>
+</tr>
+<tr>
+<td>Firewall</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>On the confirm tab don&rsquo;t select start after created.</p>
+</blockquote>
+<p>After the virtual machine is created and we can procced to next step.</p>
+<h3 id="step-4-attach-qcow2-image-to-vm">Step 4. Attach qcow2 image to VM</h3>
+<p>Next, we will attach the .qcow2 image we downloaded earlier.</p>
+<p>I&rsquo;m using samba share and I will copy from shared disk to pve host:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir template
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> template
+</span></span><span class="line"><span class="cl">cp /mnt/pve/proxmox-shared/images/debian-12-genericcloud-amd64-shrink.qcow2 .
+</span></span></code></pre></div><p>Next, attach it, using qm importdisk $VM_ID $IMAGEPATH $YOUR_STORAGE</p>
+<p>I want to store my template on default disk, which is named <code>local-lvm</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">qm importdisk <span class="m">100</span> debian-12-genericcloud-amd64-shrink.qcow2 local-lvm
+</span></span></code></pre></div><h3 id="step-5-template-tweaks">Step 5. Template Tweaks</h3>
+<p>Lets go back to the VM in the GUI now.</p>
+<p><strong>Hardware Tab</strong>:</p>
+<ul>
+<li>Remove the CD/DVD drive (Unless- you need one.)</li>
+<li>Attach the disk we created from the qcow2:
+<ol>
+<li>Click on the unused disk, then click edit. Set Bus/Device to &ldquo;VirtIO Block&rdquo; as position 0</li>
+<li>Click Add.</li>
+</ol>
+</li>
+<li>Next- Click Add -&gt; CloudInit Device
+<ol>
+<li>Select your storage. I leave IDE selected as the default bus.</li>
+</ol>
+</li>
+<li>Edit the network interface on your template. Ensure its MAC Address to 00:00:00:00:00:00 (This will cause a random MAC address to be generated for every new clone)</li>
+</ul>
+<p><strong>Cloud Init Tab</strong></p>
+<ul>
+<li>Now we can customize the cloud init tab, with a default user, password (if desired), dns, ip, and ssh information.</li>
+<li>For the IP Config, I set dhcp as the default.</li>
+</ul>
+<p><strong>Options Tab</strong></p>
+<ul>
+<li>Boot order:
+<ol>
+<li>I always uncheck network boot, since I don&rsquo;t use it. As well, make sure to unselect the cloudinit drive.</li>
+<li>We only want the primary disk, containing our cloned qcow2 selected here</li>
+</ol>
+</li>
+</ul>
+<p><strong>Firewall</strong></p>
+<ul>
+<li>I have a firewall rule defined for only allowing ssh access, for known, good hosts.</li>
+<li>If you do plan on including firewall rules, make sure to enable &ldquo;Firewall&rdquo; under Firewall -&gt; Options. It is not enabled by default.</li>
+</ul>
+<h3 id="step-6-create-template-vm">Step 6. Create Template (VM)</h3>
+<p>To convert this to a template go Right click on the VM, and select, Convert to template.</p>
+<h3 id="additional">Additional</h3>
+<p>To add disk-space after cloning you can do this via proxmox console or GUI:</p>
+<p>Using the Command Line (CLI):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">qm resize &lt;VMID&gt; &lt;disk-id&gt; +&lt;size&gt;
+</span></span></code></pre></div><p>Using the Proxmox Web UI:</p>
+<ul>
+<li>Shut Down the VM (if necessary)</li>
+<li>Resize the Virtual Disk
+<ol>
+<li>Go to Proxmox Web UI</li>
+<li>Select your VM from the left panel</li>
+<li>Go to the Hardware tab</li>
+<li>Select the disk you want to resize (e.g., scsi0, virtio0, etc.)</li>
+<li>Click Resize Disk at the top</li>
+<li>Enter the amount to add (example, &ldquo;10G&rdquo; to add 10 GB)</li>
+<li>Click Resize Disk to apply</li>
+</ol>
+</li>
+</ul>
+<h3 id="bugs">Bugs</h3>
+<p>When we boot for first time we can get error message <code>kernel panic not syncing: attempted to kill init!</code>.</p>
+<p>Beacuse of this error we cant normally poweroff our machine, to solve this go to pve host console and kill the proccess of machine:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ps aux <span class="p">|</span> grep kvm <span class="p">|</span> grep <span class="m">351</span>
+</span></span><span class="line"><span class="cl"><span class="nb">kill</span> -9 <span class="m">2928598</span>
+</span></span></code></pre></div><p>Once the machine is powered on, everything should work as expected.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>This is how I made my template for my virtual machines.<br>
+When I want to create a new VM I can use this template and create as a linked or full clone with all preinstalled packages I want and also have some basic security properties.</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2025-05-18</span>
+            </div><div class="post-info-license">
+                <span>MIT</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://vukilis.com/proxmox_vm_template/" data-title="Proxmox VM Template" data-hashtags="homelab,linux,debian,template,proxmox"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://vukilis.com/proxmox_vm_template/" data-hashtag="homelab"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://vukilis.com/proxmox_vm_template/" data-title="Proxmox VM Template"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Reddit" data-sharer="reddit" data-url="https://vukilis.com/proxmox_vm_template/"><i class="fab fa-reddit fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on VK" data-sharer="vk" data-url="https://vukilis.com/proxmox_vm_template/" data-title="Proxmox VM Template" data-caption="This guide will show how I made my virtual machine (VM) template on proxmox..."><i class="fab fa-vk fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="https://vukilis.com/tags/homelab/">homelab</a>,&nbsp;<a href="https://vukilis.com/tags/linux/">linux</a>,&nbsp;<a href="https://vukilis.com/tags/debian/">debian</a>,&nbsp;<a href="https://vukilis.com/tags/template/">template</a>,&nbsp;<a href="https://vukilis.com/tags/proxmox/">proxmox</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="https://vukilis.com/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="https://vukilis.com/proxmox_ct_template/" class="prev" rel="prev" title="Proxmox CT Template"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Proxmox CT Template</a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://vukilis.com/about/">Vuk1lis</a></span>&nbsp;|&nbsp;<span class="license"><a href="https://vukilis.com/privacy">Privacy</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://vukilis.com/terms-conditions">Terms and Conditions</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"url","label":"comment","lightTheme":"github-dark","repo":"vukilis/website"}},"lightgallery":true,"search":{"algoliaAppID":"DAENWQCI5B","algoliaIndex":"website","algoliaSearchKey":"3a87729afa43d11594394f5b86df56f8","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="https://vukilis.com/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-BPK5CT0MGQ', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-BPK5CT0MGQ" async></script><script type="text/javascript" >
+           (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+           m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+           (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+           ym("97163691", "init", {
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true
+           });
+        </script>
+        <noscript><div><img src="https://mc.yandex.ru/watch/97163691" style="position:absolute; left:-9999px;" alt="" /></div></noscript></body>
+</html>
