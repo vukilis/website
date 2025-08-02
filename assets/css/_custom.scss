@@ -91,6 +91,11 @@ details summary{
     #bmc-wbtn {
         margin: 0 -20px 0 0;
     }
+    #bmc-iframe{
+        height: 569px!important;
+        min-height: 569px!important;
+        max-height: 569px!important;
+    }
 }
 
 @media only screen and (max-width: 768px) {
