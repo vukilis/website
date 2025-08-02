@@ -285,7 +285,7 @@ document.addEventListener("DOMContentLoaded", function () {
     <h2>Recent Posts</h2>
 </div>
 
-<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="vukilis" data-description="Support me on Buy me a coffee!" data-color="#FF813F" data-position="Right" data-x_margin="100" data-y_margin="18"></script>
+<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="vukilis" data-description="Support me on Buy me a coffee!" data-color="#FF813F" data-position="Left" data-x_margin="100" data-y_margin="18"></script>
 <script>
     
     const messageExpirationTime = 30 * 60 * 1000; 
@@ -305,8 +305,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const bmcScript = document.querySelector('[data-name="BMC-Widget"]');
         if (bmcScript) {
-        bmcScript.setAttribute('data-message', 'Thank you for visiting. You can now buy me a beer!');
-        }
+                if (window.innerWidth <= 768) {
+                    bmcScript.removeAttribute('data-message');
+                } else {
+                    bmcScript.setAttribute('data-message', 'Thank you for visiting. You can now buy me a beer!');
+                }
+            }
     }
 </script><article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
             <a href="https://vukilis.com/Windows_11_Optimizer_Debloater/"><img
