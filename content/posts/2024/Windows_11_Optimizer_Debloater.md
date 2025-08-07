@@ -2,7 +2,7 @@
 title: "Windows 10/11 Optimizer & Debloater"
 url: /Windows_11_Optimizer_Debloater
 date: 2024-05-07T23:54:16+02:00
-lastmod: 2024-05-07T23:54:16+02:00
+lastmod: 2025-08-07T19:38:00+02:00
 draft: false
 license: ""
 
@@ -42,6 +42,14 @@ share:
     Weibo: false
 ---
 <!--more-->
+
+![GitHub Release](https://img.shields.io/github/v/release/vukilis/Windows11-Optimizer-Debloater?style=flat&logo=futurelearn&logoColor=%2332a850&label=LATEST%20RELEASE&color=%2332a850)
+[![changelog](https://img.shields.io/badge/📋-RELEASE%20NOTES-00B2EE.svg)](https://github.com/vukilis/Windows11-Optimizer-Debloater/blob/dev/CHANGELOG.md) 
+[![Total number of downloads](https://img.shields.io/github/downloads/vukilis/Windows11-Optimizer-Debloater/total?style=flat&label=TOTAL%20DOWNLOADS&labelColor=444&logo=hack-the-box&logoColor=white&cacheSeconds=600)](https://github.com/ungive/discord-music-presence/releases)
+[![Number of downloads of the latest version](https://img.shields.io/github/downloads/vukilis/Windows11-Optimizer-Debloater/latest/total?style=flat&label=Downloads%20%40latest&labelColor=444&logo=hack-the-box&logoColor=white&cacheSeconds=600)](https://github.com/ungive/discord-music-presence/releases/latest)
+[![Number of GitHub stars](https://img.shields.io/github/stars/vukilis/Windows11-Optimizer-Debloater?style=flat&label=STARS&logo=github&labelColor=444&color=DAAA3F&cacheSeconds=3600)](https://star-history.com/#ungive/discord-music-presence&Date)
+[![Buy me a beer](https://img.shields.io/badge/BUY%20ME%20A%20BEER-black?style=flat&logo=buymeacoffee&logoColor=black&color=FFDD00)](https://buymeacoffee.com/vukilis)
+[![ko-fi](https://shields.io/badge/KO--FI-BEER-ff5f5f?logo=ko-fi&style=for-the-badgeKo-fi)](https://ko-fi.com/vukilis)
 
 For a long time I wanted to create a script that would automate various settings after a new Windows installation. Following the channel @ChrisTitusTech who made a very good utillity I got the inspiration to make my own utillity with my personal settings. Over time it evolved into a much bigger utillity that is useful for other people. I recommend that this script be used after a fresh installation of Windows and occasionally used for optimization.
 
