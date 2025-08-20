@@ -2,7 +2,7 @@
 title: "Windows 10/11 Optimizer & Debloater"
 url: /Windows_11_Optimizer_Debloater
 date: 2024-05-07T23:54:16+02:00
-lastmod: 2025-08-07T19:38:00+02:00
+lastmod: 2025-20-08T17:05:00+02:00
 draft: false
 license: ""
 
