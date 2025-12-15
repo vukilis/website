@@ -2,7 +2,7 @@
 title: "How to Backup Proxmox With Samba"
 url: /how_to_backup_proxmox_with_samba
 date: 2025-04-15T20:28:38+02:00
-lastmod: 2025-04-15T20:28:38+02:00
+lastmod: 2025-12-15T16:30:00+02:00
 draft: false
 license: ""
 
@@ -143,7 +143,7 @@ nano /etc/fstab
 ```
 
 ```ini
-//192.168.0.152/proxmox-backup /mnt/proxmox-backup        cifs    credentials=/etc/.smb_creds,rw,noperm,uid=100000        0       0
+//192.168.0.152/proxmox-backup /mnt/proxmox-backup        cifs    credentials=/etc/.smb_creds,rw,noperm,uid=100000,**soft**,iocharset=utf8        0       0
 ```
 
 Create samba credentials:
