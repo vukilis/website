@@ -2,7 +2,7 @@
 title: "Proxmox Migration To A New Server"
 url: /proxmox_migration_to_a_new_server
 date: 2025-01-20T20:16:14+02:00
-lastmod: 2025-01-20T20:16:14+02:00
+lastmod: 2025-12-16T23:00:00+02:00
 draft: false
 license: ""
 
@@ -66,7 +66,7 @@ Copy and paste following script into the created file:
 
 ```bash
 #!/bin/sh
-BACKUP_PATH="/mnt/pve/proxmox-host/dump"
+BACKUP_PATH="/mnt/pve/proxmox-host/dump/"
 BACKUP_FILE="pve-host"
 KEEP_DAYS=2
 PVE_BACKUP_SET="/etc/pve/ /etc/lvm/ /etc/modprobe.d/ /etc/network/interfaces /etc/vzdump.conf /etc/sysctl.conf /etc/resolv conf /etc/ksmtuned.conf /etc/host /etc/hostname /etc/cron* /etc/aliases"
