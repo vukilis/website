@@ -1,7 +1,11 @@
 header .logo {
     // min-height: 1.5em;
-    height: 3.33em;
+    height: 3em;
     // vertical-align: text-bottom;
+}
+
+.home[data-home=posts] .home-avatar img {
+    width: 10rem;
 }
 
 #header-desktop {
@@ -42,7 +46,7 @@ header .logo {
 
 #header-desktop .header-wrapper .header-title {
     font-size: var(--header-title-font-size);
-    height: 3.34em;
+    height: 3em;
 }
 
 .single-title, .single .single-title {
