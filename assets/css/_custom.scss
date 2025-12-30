@@ -53,6 +53,16 @@ header .logo {
     margin: 3rem 0 .5rem;
 }
 
+.title-with-update{
+    display: flex;
+    justify-content: space-between;
+}
+
+.title-with-update time{
+    margin: 0.4rem 0;
+    font-size: small;
+}
+
 #header-desktop .header-wrapper .menu .menu-item:nth-child(5) {
     margin-left: 2rem !important;
     color: blueviolet;

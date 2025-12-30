@@ -1,8 +1,8 @@
 ---
-title: "Proxmox VM Template"
+title: "Proxmox VM Template - Debian 12&13"
 url: /proxmox_vm_template
 date: 2025-05-18T00:23:40+02:00
-lastmod: 2025-05-18T00:23:40+02:00
+lastmod: 2025-12-30T00:05:40+02:00
 draft: false
 license: "MIT"
 
@@ -43,7 +43,7 @@ share:
 ---
 <!--more-->
 
-This guide will show how I made my virtual machine (VM) template on proxmox. This template is based on Debian (bookworm) Cloud Images.
+This guide will show how I made my virtual machine (VM) template on proxmox. This template is based on Debian 13 (trixie) Cloud Images.
 
 These, are special images provided, which includes support for cloud-init. For this example, we will specifically be leveraging the "genericcloud" image, which is suitable for our VMs.
 
@@ -56,15 +56,15 @@ For more information about proxmox virtual machines check this link: https://pve
 
 ### Step 1. Acquire Cloud Image
 
-From Debian Official Cloud Images https://cloud.debian.org/images/cloud/, we want to select the Bookworm/Latest folder at the bottom of the page.
+From Debian Official Cloud Images https://cloud.debian.org/images/cloud/, we want to select the trixie/latest folder at the bottom of the page.
 
-Inside of this folder we want, the `genericcloud`-`amd64`.qcow2 image. Its name is `debian-12-genericcloud-amd64.qcow2`.  
-Can be downloaded directly from this link: https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2
+Inside of this folder we want, the `genericcloud`-`amd64`.qcow2 image. Its name is `debian-13-genericcloud-amd64.qcow2`.  
+Can be downloaded directly from this link: https://cloud.debian.org/images/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2
 
 We will now store this image on one of our Proxmox nodes or Windows/Linux machine in a temporary location:
 
 ```bash
-wget https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2
+wget https://cloud.debian.org/images/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2
 ```
 
 ---
@@ -80,7 +80,7 @@ sudo apt-get install libguestfs-tools
 Install packages into the base image:
 
 ```bash
-virt-customize -a debian-12-genericcloud-amd64.qcow2 --install qemu-guest-agent,curl,iotop,bash-completion,tcpdump,net-tools,elinks,bind9-dnsutils,netcat-traditional,wget,unzip,zip,zstd,lsof,dos2unix,traceroute,iptraf,acpid,plocate,vim,lshw,sysstat,ltrace,strace,pciutils,ethtool,telnet,tmux,rsync,nano,sudo,molly-guard,pydf,ncdu,atop,atop,lsof,iperf3,htop
+virt-customize -a debian-13-genericcloud-amd64.qcow2 --install qemu-guest-agent,curl,iotop,bash-completion,tcpdump,net-tools,elinks,bind9-dnsutils,netcat-traditional,wget,unzip,zip,zstd,lsof,dos2unix,traceroute,iptraf,acpid,plocate,vim,lshw,sysstat,ltrace,strace,pciutils,ethtool,telnet,tmux,rsync,nano,sudo,molly-guard,pydf,ncdu,atop,atop,lsof,iperf3,htop
 ```
 
 (Optional) Fix DHCP Issue:
@@ -89,22 +89,30 @@ By default, cloud images use the hostname as the DHCP identifier. This works fin
 
 A simple fix is to update the logic to use the hardware/MAC address instead."
 
+> Debian 13 has officially moved isc-dhcp-client to a lower priority, often excluding it from the "genericcloud" image to save space.
+
 ```bash
-virt-customize -a debian-12-genericcloud-amd64.qcow2 --run-command "sed -i 's|send host-name = gethostname();|send dhcp-client-identifier = hardware;|' /etc/dhcp/dhclient.conf"
+virt-customize -a debian-13-genericcloud-amd64.qcow2 \
+  --run-command "mkdir -p /etc/systemd/network/99-dhcp-hw.network.d" \
+  --run-command "echo -e '[Network]\nClientIdentifier=mac' > /etc/systemd/network/99-dhcp-hw.network.d/forced-hw-id.conf"
 ```
+
+> For Debian 12 (bookworm) version use next command:  
+> **virt-customize -a debian-12-genericcloud-amd64.qcow2 --run-command "sed -i 's|send host-name = gethostname();|send dhcp-client-identifier = hardware;|' /etc/dhcp/dhclient.conf"**
+
 
 Reset machine-id:
 
 If this step is left out, machines will each acquire the same IP address when using DHCP (Regardless if your MAC is different)
 
 ```bash
-virt-customize -a debian-12-genericcloud-amd64.qcow2 --run-command "echo -n > /etc/machine-id"
+virt-customize -a debian-13-genericcloud-amd64.qcow2 --run-command "echo -n > /etc/machine-id"
 ```
 
 Disable root login via SSH and disable password login:
 
 ```bash
-virt-customize -a debian-12-genericcloud-amd64.qcow2 \
+virt-customize -a debian-13-genericcloud-amd64.qcow2 \
   --run-command "sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config" \
   --run-command "sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config"
 ```
@@ -112,7 +120,7 @@ virt-customize -a debian-12-genericcloud-amd64.qcow2 \
 Clear logs and temporary files:
 
 ```bash
-virt-customize -a debian-12-genericcloud-amd64.qcow2 \
+virt-customize -a debian-13-genericcloud-amd64.qcow2 \
   --run-command "journalctl --vacuum-time=1s" \
   --run-command "rm -rf /tmp/*" \
   --run-command "rm -rf /var/tmp/*"
@@ -121,7 +129,7 @@ virt-customize -a debian-12-genericcloud-amd64.qcow2 \
 Allow our sudo user to run any command using sudo without being prompted for his password:
 
 ```bash
-virt-customize -a debian-12-genericcloud-amd64.qcow2 \
+virt-customize -a debian-13-genericcloud-amd64.qcow2 \
   --run-command "sed -i 's|^%sudo[[:space:]]\+ALL=(ALL:ALL) ALL|%sudo ALL=(ALL) NOPASSWD: ALL|' /etc/sudoers" \
   --run-command "visudo -c"
 ```
@@ -129,7 +137,7 @@ virt-customize -a debian-12-genericcloud-amd64.qcow2 \
 Disable root logins via shell and remove shell history:
 
 ```bash
-virt-customize -a debian-12-genericcloud-amd64.qcow2 \
+virt-customize -a debian-13-genericcloud-amd64.qcow2 \
   --run-command "usermod -s /usr/sbin/nologin root" \
   --run-command "sh -c '> /root/.bash_history'"
 ```
@@ -137,7 +145,7 @@ virt-customize -a debian-12-genericcloud-amd64.qcow2 \
 (Optional) Compress and shrink the image:
 
 ```bash
-qemu-img convert -O qcow2 -c -o preallocation=off debian-12-genericcloud-amd64.qcow2 debian-12-genericcloud-amd64-shrink.qcow2
+qemu-img convert -O qcow2 -c -o preallocation=off debian-13-genericcloud-amd64.qcow2 debian-13-genericcloud-amd64-shrink.qcow2
 ```
 
 > This saved around 300M, which is pretty impressive when you consider the file was only 700M originally.
@@ -199,7 +207,7 @@ I'm using samba share and I will copy from shared disk to pve host:
 ```bash
 mkdir template
 cd template
-cp /mnt/pve/proxmox-shared/images/debian-12-genericcloud-amd64-shrink.qcow2 .
+cp /mnt/pve/proxmox-shared/images/debian-13-genericcloud-amd64-shrink.qcow2 .
 ```
 
 Next, attach it, using qm importdisk $VM_ID $IMAGEPATH $YOUR_STORAGE
@@ -207,7 +215,7 @@ Next, attach it, using qm importdisk $VM_ID $IMAGEPATH $YOUR_STORAGE
 I want to store my template on default disk, which is named `local-lvm`:
 
 ```bash
-qm importdisk 100 debian-12-genericcloud-amd64-shrink.qcow2 local-lvm
+qm importdisk 100 debian-13-genericcloud-amd64-shrink.qcow2 local-lvm
 ```
 
 ### Step 5. Template Tweaks
@@ -218,7 +226,7 @@ Lets go back to the VM in the GUI now.
 
 * Remove the CD/DVD drive (Unless- you need one.)
 * Attach the disk we created from the qcow2:
-  1. Click on the unused disk, then click edit. Set Bus/Device to "VirtIO Block" as position 0
+  1. Click on the unused disk, then click edit. Set Bus/Device to "scsi0" as position 0
   2. Click Add.
 * Next- Click Add -> CloudInit Device
   1. Select your storage. I leave IDE selected as the default bus.
@@ -268,7 +276,7 @@ Using the Proxmox Web UI:
   6. Enter the amount to add (example, "10G" to add 10 GB)
   7. Click Resize Disk to apply
 
-### Bugs
+### Potential Bugs
 
 When we boot for first time we can get error message `kernel panic not syncing: attempted to kill init!`.  
 
