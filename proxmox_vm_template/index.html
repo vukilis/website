@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>Proxmox VM Template - V For Vuk1lis</title>
+        <title>Proxmox VM Template - Debian 12&amp;13 - V For Vuk1lis</title>
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
@@ -13,16 +13,16 @@
         enable_page_level_ads: true,
         overlays: {bottom: true}
     });
-</script><meta name="Description" content="This guide will show how I made my virtual machine (VM) template on proxmox..."><meta property="og:title" content="Proxmox VM Template" />
+</script><meta name="Description" content="This guide will show how I made my virtual machine (VM) template on proxmox..."><meta property="og:title" content="Proxmox VM Template - Debian 12&amp;13" />
 <meta property="og:description" content="This guide will show how I made my virtual machine (VM) template on proxmox..." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://vukilis.com/proxmox_vm_template/" /><meta property="og:image" content="https://vukilis.com/images/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2025-05-18T00:23:40+02:00" />
-<meta property="article:modified_time" content="2025-05-18T00:23:40+02:00" /><meta property="og:site_name" content="V For Vuk1lis" />
+<meta property="article:modified_time" content="2025-12-30T00:05:40+02:00" /><meta property="og:site_name" content="V For Vuk1lis" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://vukilis.com/images/logo.png"/>
 
-<meta name="twitter:title" content="Proxmox VM Template"/>
+<meta name="twitter:title" content="Proxmox VM Template - Debian 12&amp;13"/>
 <meta name="twitter:description" content="This guide will show how I made my virtual machine (VM) template on proxmox..."/>
 <meta name="application-name" content="My cool site">
 <meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c">
@@ -45,13 +45,13 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Proxmox VM Template",
+        "headline": "Proxmox VM Template - Debian 12\u002613",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/vukilis.com\/proxmox_vm_template\/"
-        },"genre": "posts","keywords": "homelab, linux, debian, template, proxmox","wordcount":  1109 ,
-        "url": "https:\/\/vukilis.com\/proxmox_vm_template\/","datePublished": "2025-05-18T00:23:40+02:00","dateModified": "2025-05-18T00:23:40+02:00","publisher": {
+        },"genre": "posts","keywords": "homelab, linux, debian, template, proxmox","wordcount":  1153 ,
+        "url": "https:\/\/vukilis.com\/proxmox_vm_template\/","datePublished": "2025-05-18T00:23:40+02:00","dateModified": "2025-12-30T00:05:40+02:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -134,9 +134,9 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Proxmox VM Template</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Proxmox VM Template - Debian 12&13</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://vukilis.com/about/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Vuk1lis</a></span>&nbsp;<span class="post-category">included in <a href="https://vukilis.com/categories/linux/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux</a>&nbsp;<a href="https://vukilis.com/categories/virtualization/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Virtualization</a>&nbsp;<a href="https://vukilis.com/categories/homelab/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Homelab</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-05-18">2025-05-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1109 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-05-18">2025-05-18</time>&nbsp;<i class="fa-solid fa-arrows-rotate"></i>&nbsp;<time datetime="2025-12-30">2025-12-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1153 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
@@ -154,55 +154,64 @@
         <li><a href="#step-5-template-tweaks">Step 5. Template Tweaks</a></li>
         <li><a href="#step-6-create-template-vm">Step 6. Create Template (VM)</a></li>
         <li><a href="#additional">Additional</a></li>
-        <li><a href="#bugs">Bugs</a></li>
+        <li><a href="#potential-bugs">Potential Bugs</a></li>
       </ul>
     </li>
     <li><a href="#conclusion">Conclusion</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p>This guide will show how I made my virtual machine (VM) template on proxmox. This template is based on Debian (bookworm) Cloud Images.</p>
+            </div><div class="content" id="content"><p>This guide will show how I made my virtual machine (VM) template on proxmox. This template is based on Debian 13 (trixie) Cloud Images.</p>
 <p>These, are special images provided, which includes support for cloud-init. For this example, we will specifically be leveraging the &ldquo;genericcloud&rdquo; image, which is suitable for our VMs.</p>
 <p>This- image does not include many bare metal hardware drivers, which aren&rsquo;t needed, since the focus of this post is creating a VM template.</p>
 <p>For more information about proxmox virtual machines check this link: <a href="https://pve.proxmox.com/wiki/QEMU/KVM_Virtual_Machines" target="_blank" rel="noopener noreffer ">https://pve.proxmox.com/wiki/QEMU/KVM_Virtual_Machines</a></p>
 <h2 id="getting-started">Getting Started</h2>
 <h3 id="step-1-acquire-cloud-image">Step 1. Acquire Cloud Image</h3>
-<p>From Debian Official Cloud Images <a href="https://cloud.debian.org/images/cloud/" target="_blank" rel="noopener noreffer ">https://cloud.debian.org/images/cloud/</a>, we want to select the Bookworm/Latest folder at the bottom of the page.</p>
-<p>Inside of this folder we want, the <code>genericcloud</code>-<code>amd64</code>.qcow2 image. Its name is <code>debian-12-genericcloud-amd64.qcow2</code>.<br>
-Can be downloaded directly from this link: <a href="https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2" target="_blank" rel="noopener noreffer ">https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2</a></p>
+<p>From Debian Official Cloud Images <a href="https://cloud.debian.org/images/cloud/" target="_blank" rel="noopener noreffer ">https://cloud.debian.org/images/cloud/</a>, we want to select the trixie/latest folder at the bottom of the page.</p>
+<p>Inside of this folder we want, the <code>genericcloud</code>-<code>amd64</code>.qcow2 image. Its name is <code>debian-13-genericcloud-amd64.qcow2</code>.<br>
+Can be downloaded directly from this link: <a href="https://cloud.debian.org/images/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2" target="_blank" rel="noopener noreffer ">https://cloud.debian.org/images/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2</a></p>
 <p>We will now store this image on one of our Proxmox nodes or Windows/Linux machine in a temporary location:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wget https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wget https://cloud.debian.org/images/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2
 </span></span></code></pre></div><hr>
 <h3 id="step-2-customize-image">Step 2. Customize Image</h3>
 <p>I like to customize my images, to install a few basic tools. First, we need to install the <code>libguestfs-tools</code> package for that, via your package manager.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get install libguestfs-tools
 </span></span></code></pre></div><p>Install packages into the base image:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-12-genericcloud-amd64.qcow2 --install qemu-guest-agent,curl,iotop,bash-completion,tcpdump,net-tools,elinks,bind9-dnsutils,netcat-traditional,wget,unzip,zip,zstd,lsof,dos2unix,traceroute,iptraf,acpid,plocate,vim,lshw,sysstat,ltrace,strace,pciutils,ethtool,telnet,tmux,rsync,nano,sudo,molly-guard,pydf,ncdu,atop,atop,lsof,iperf3,htop
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-13-genericcloud-amd64.qcow2 --install qemu-guest-agent,curl,iotop,bash-completion,tcpdump,net-tools,elinks,bind9-dnsutils,netcat-traditional,wget,unzip,zip,zstd,lsof,dos2unix,traceroute,iptraf,acpid,plocate,vim,lshw,sysstat,ltrace,strace,pciutils,ethtool,telnet,tmux,rsync,nano,sudo,molly-guard,pydf,ncdu,atop,atop,lsof,iperf3,htop
 </span></span></code></pre></div><p>(Optional) Fix DHCP Issue:</p>
 <p>By default, cloud images use the hostname as the DHCP identifier. This works fine, unless it sends the default template name for every cloned image.</p>
 <p>A simple fix is to update the logic to use the hardware/MAC address instead.&quot;</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-12-genericcloud-amd64.qcow2 --run-command <span class="s2">&#34;sed -i &#39;s|send host-name = gethostname();|send dhcp-client-identifier = hardware;|&#39; /etc/dhcp/dhclient.conf&#34;</span>
-</span></span></code></pre></div><p>Reset machine-id:</p>
+<blockquote>
+<p>Debian 13 has officially moved isc-dhcp-client to a lower priority, often excluding it from the &ldquo;genericcloud&rdquo; image to save space.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-13-genericcloud-amd64.qcow2 <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;mkdir -p /etc/systemd/network/99-dhcp-hw.network.d&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;echo -e &#39;[Network]\nClientIdentifier=mac&#39; &gt; /etc/systemd/network/99-dhcp-hw.network.d/forced-hw-id.conf&#34;</span>
+</span></span></code></pre></div><blockquote>
+<p>For Debian 12 (bookworm) version use next command:<br>
+<strong>virt-customize -a debian-12-genericcloud-amd64.qcow2 &ndash;run-command &ldquo;sed -i &rsquo;s|send host-name = gethostname();|send dhcp-client-identifier = hardware;|&rsquo; /etc/dhcp/dhclient.conf&rdquo;</strong></p>
+</blockquote>
+<p>Reset machine-id:</p>
 <p>If this step is left out, machines will each acquire the same IP address when using DHCP (Regardless if your MAC is different)</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-12-genericcloud-amd64.qcow2 --run-command <span class="s2">&#34;echo -n &gt; /etc/machine-id&#34;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-13-genericcloud-amd64.qcow2 --run-command <span class="s2">&#34;echo -n &gt; /etc/machine-id&#34;</span>
 </span></span></code></pre></div><p>Disable root login via SSH and disable password login:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-12-genericcloud-amd64.qcow2 <span class="se">\
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-13-genericcloud-amd64.qcow2 <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;sed -i &#39;s/^#\?PermitRootLogin.*/PermitRootLogin no/&#39; /etc/ssh/sshd_config&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;sed -i &#39;s/^#\?PasswordAuthentication.*/PasswordAuthentication no/&#39; /etc/ssh/sshd_config&#34;</span>
 </span></span></code></pre></div><p>Clear logs and temporary files:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-12-genericcloud-amd64.qcow2 <span class="se">\
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-13-genericcloud-amd64.qcow2 <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;journalctl --vacuum-time=1s&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;rm -rf /tmp/*&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;rm -rf /var/tmp/*&#34;</span>
 </span></span></code></pre></div><p>Allow our sudo user to run any command using sudo without being prompted for his password:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-12-genericcloud-amd64.qcow2 <span class="se">\
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-13-genericcloud-amd64.qcow2 <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;sed -i &#39;s|^%sudo[[:space:]]\+ALL=(ALL:ALL) ALL|%sudo ALL=(ALL) NOPASSWD: ALL|&#39; /etc/sudoers&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;visudo -c&#34;</span>
 </span></span></code></pre></div><p>Disable root logins via shell and remove shell history:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-12-genericcloud-amd64.qcow2 <span class="se">\
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">virt-customize -a debian-13-genericcloud-amd64.qcow2 <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;usermod -s /usr/sbin/nologin root&#34;</span> <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  --run-command <span class="s2">&#34;sh -c &#39;&gt; /root/.bash_history&#39;&#34;</span>
 </span></span></code></pre></div><p>(Optional) Compress and shrink the image:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">qemu-img convert -O qcow2 -c -o <span class="nv">preallocation</span><span class="o">=</span>off debian-12-genericcloud-amd64.qcow2 debian-12-genericcloud-amd64-shrink.qcow2
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">qemu-img convert -O qcow2 -c -o <span class="nv">preallocation</span><span class="o">=</span>off debian-13-genericcloud-amd64.qcow2 debian-13-genericcloud-amd64-shrink.qcow2
 </span></span></code></pre></div><blockquote>
 <p>This saved around 300M, which is pretty impressive when you consider the file was only 700M originally.</p>
 </blockquote>
@@ -287,10 +296,10 @@ Can be downloaded directly from this link: <a href="https://cloud.debian.org/ima
 <p>I&rsquo;m using samba share and I will copy from shared disk to pve host:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir template
 </span></span><span class="line"><span class="cl"><span class="nb">cd</span> template
-</span></span><span class="line"><span class="cl">cp /mnt/pve/proxmox-shared/images/debian-12-genericcloud-amd64-shrink.qcow2 .
+</span></span><span class="line"><span class="cl">cp /mnt/pve/proxmox-shared/images/debian-13-genericcloud-amd64-shrink.qcow2 .
 </span></span></code></pre></div><p>Next, attach it, using qm importdisk $VM_ID $IMAGEPATH $YOUR_STORAGE</p>
 <p>I want to store my template on default disk, which is named <code>local-lvm</code>:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">qm importdisk <span class="m">100</span> debian-12-genericcloud-amd64-shrink.qcow2 local-lvm
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">qm importdisk <span class="m">100</span> debian-13-genericcloud-amd64-shrink.qcow2 local-lvm
 </span></span></code></pre></div><h3 id="step-5-template-tweaks">Step 5. Template Tweaks</h3>
 <p>Lets go back to the VM in the GUI now.</p>
 <p><strong>Hardware Tab</strong>:</p>
@@ -298,7 +307,7 @@ Can be downloaded directly from this link: <a href="https://cloud.debian.org/ima
 <li>Remove the CD/DVD drive (Unless- you need one.)</li>
 <li>Attach the disk we created from the qcow2:
 <ol>
-<li>Click on the unused disk, then click edit. Set Bus/Device to &ldquo;VirtIO Block&rdquo; as position 0</li>
+<li>Click on the unused disk, then click edit. Set Bus/Device to &ldquo;scsi0&rdquo; as position 0</li>
 <li>Click Add.</li>
 </ol>
 </li>
@@ -349,7 +358,7 @@ Can be downloaded directly from this link: <a href="https://cloud.debian.org/ima
 </ol>
 </li>
 </ul>
-<h3 id="bugs">Bugs</h3>
+<h3 id="potential-bugs">Potential Bugs</h3>
 <p>When we boot for first time we can get error message <code>kernel panic not syncing: attempted to kill init!</code>.</p>
 <p>Beacuse of this error we cant normally poweroff our machine, to solve this go to pve host console and kill the proccess of machine:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ps aux <span class="p">|</span> grep kvm <span class="p">|</span> grep <span class="m">351</span>
@@ -361,14 +370,14 @@ When I want to create a new VM I can use this template and create as a linked or
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2025-05-18</span>
+                <span>Updated on 2025-12-30</span>
             </div><div class="post-info-license">
                 <span>MIT</span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://vukilis.com/proxmox_vm_template/" data-title="Proxmox VM Template" data-hashtags="homelab,linux,debian,template,proxmox"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://vukilis.com/proxmox_vm_template/" data-hashtag="homelab"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://vukilis.com/proxmox_vm_template/" data-title="Proxmox VM Template"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Reddit" data-sharer="reddit" data-url="https://vukilis.com/proxmox_vm_template/"><i class="fab fa-reddit fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on VK" data-sharer="vk" data-url="https://vukilis.com/proxmox_vm_template/" data-title="Proxmox VM Template" data-caption="This guide will show how I made my virtual machine (VM) template on proxmox..."><i class="fab fa-vk fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://vukilis.com/proxmox_vm_template/" data-title="Proxmox VM Template - Debian 12&amp;13" data-hashtags="homelab,linux,debian,template,proxmox"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://vukilis.com/proxmox_vm_template/" data-hashtag="homelab"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://vukilis.com/proxmox_vm_template/" data-title="Proxmox VM Template - Debian 12&amp;13"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Reddit" data-sharer="reddit" data-url="https://vukilis.com/proxmox_vm_template/"><i class="fab fa-reddit fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on VK" data-sharer="vk" data-url="https://vukilis.com/proxmox_vm_template/" data-title="Proxmox VM Template - Debian 12&amp;13" data-caption="This guide will show how I made my virtual machine (VM) template on proxmox..."><i class="fab fa-vk fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
