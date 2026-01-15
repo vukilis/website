@@ -80,6 +80,24 @@ header .logo {
     color: gold;
 }
 
+.hugo-spinner-ring {
+        width: 48px;
+        height: 48px;
+        border: 5px solid #222;
+        border-bottom-color: #5eff00;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: hugo-rotation 1s linear infinite;
+    }
+@keyframes hugo-rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@media only screen and (min-width: 1440px) {
+    .page { max-width: 100% !important; }
+}
+
 details summary{
     cursor: pointer;
     font-size: 1.3em;

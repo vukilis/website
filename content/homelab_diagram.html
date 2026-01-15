@@ -37,34 +37,54 @@ share:
 <script type="text/javascript" src="https://viewer.diagrams.net/embed2.js?&fetch=https%3A%2F%2Fraw.githubusercontent.com%2Fvukilis%2Fhomelab%2Fmain%2Fhomelab_diagram.drawio"></script> -->
 
 
-<div class="mxgraph" 
-    style="width: 100%!important; height: 100%!important; border: 1px solid transparent; overflow: hidden;" 
-    data-mxgraph="{
-        &quot;highlight&quot;:&quot;#0000ff&quot;,
-        &quot;nav&quot;:true,
-        &quot;resize&quot;:true,
-        &quot;dark-mode&quot;:&quot;dark&quot;,
-        &quot;toolbar&quot;:&quot;zoom layers tags lightbox&quot;,
-        &quot;edit&quot;:&quot;_blank&quot;,
-        &quot;url&quot;:&quot;https://raw.githubusercontent.com/vukilis/homelab/main/homelab_diagram.drawio&quot;,
-        &quot;auto-fit&quot;:true,
-        &quot;allow-zoom-in&quot;:true
-    }">
+<div id="hugo-diagram-container" style="position: relative; width: 100%!important; overflow: hidden;">
+    
+    <div id="hugo-loader-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #1a1a1a; z-index: 9999; transition: opacity 0.6s ease;">
+        <div class="hugo-spinner-ring"></div>
+        <span style="color: #5eff00; font-family: sans-serif; margin-top: 15px; font-size: 13px; font-weight: bold; letter-spacing: 2px;">LOADING HOMELAB DIAGRAM...</span>
+    </div>
+
+    <div class="mxgraph" 
+        style="width: 100%!important; height: 100%!important; border: 1px solid transparent; overflow: hidden; min-height: 600px;" 
+        data-mxgraph="{
+            &quot;highlight&quot;:&quot;#0000ff&quot;,
+            &quot;nav&quot;:true,
+            &quot;resize&quot;:true,
+            &quot;dark-mode&quot;:&quot;dark&quot;,
+            &quot;toolbar&quot;:&quot;zoom layers tags lightbox&quot;,
+            &quot;edit&quot;:&quot;_blank&quot;,
+            &quot;url&quot;:&quot;https://raw.githubusercontent.com/vukilis/homelab/main/homelab_diagram.drawio&quot;,
+            &quot;auto-fit&quot;:true,
+            &quot;allow-zoom-in&quot;:true
+        }">
+    </div>
 </div>
 
-<style>
-    @media only screen and (min-width: 1440px) {
-        .page {
-            max-width: 100% !important;
-        }
-    }
-</style>
-
 <script>
-    setTimeout(function() {
+    (function() {
+        const overlay = document.getElementById('hugo-loader-overlay');
+
+        function hideOverlay() {
+            if (overlay) {
+                overlay.style.opacity = '0';
+                setTimeout(() => { 
+                    overlay.style.display = 'none'; 
+                }, 600);
+            }
+        }
+        window.addEventListener('message', function(event) {
+            try {
+                const data = JSON.parse(event.data);
+                if (data.event === 'init' || data.event === 'render') {
+                    hideOverlay();
+                }
+            } catch (e) {}
+        });
+        setTimeout(hideOverlay, 3000);
+
         const script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = 'https://viewer.diagrams.net/embed2.js?&fetch=https%3A%2F%2Fraw.githubusercontent.com%2Fvukilis%2Fhomelab%2Fmain%2Fhomelab_diagram.drawio';
+        script.src = 'https://viewer.diagrams.net/embed2.js';
+        script.async = true;
         document.body.appendChild(script);
-    }, 500);
+    })();
 </script>
