@@ -53,81 +53,103 @@ document.addEventListener("DOMContentLoaded", function () {
 </a>
 
 <script>
+(function() {
     document.addEventListener("DOMContentLoaded", function () {
         const statusPartKuma = document.getElementById("status-part-kuma");
-    
-        let controller = new AbortController(); // create a new controller for aborting fetch requests
-    
+        if (!statusPartKuma) return;
+
+        let controller = new AbortController();
+
         function setStatus(upCount, downCount, totalCount) {
+            if (totalCount === 0) {
+                statusPartKuma.textContent = "ɴᴏ ᴅᴀᴛᴀ";
+                statusPartKuma.style.backgroundColor = "#95A5A6";
+                return;
+            }
+
             if (downCount === totalCount) {
                 statusPartKuma.textContent = "ᴅᴏᴡɴ";
-                statusPartKuma.style.backgroundColor = "#E74C3C"; // red (all services are down)
-            } else if (upCount === totalCount) {
-                statusPartKuma.textContent = "ᴜᴘ";
-                statusPartKuma.style.backgroundColor = "#2ECC71"; // green (all services are up)
+                statusPartKuma.style.backgroundColor = "#E74C3C"; 
+            } else if (downCount > 0) {
+                statusPartKuma.textContent = `ᴘᴀʀᴛɪᴀʟ (${downCount})`;
+                statusPartKuma.style.backgroundColor = "#F39C12"; 
             } else {
-                statusPartKuma.textContent = "ᴘᴀʀᴛɪᴀʟ";
-                statusPartKuma.style.backgroundColor = "#F39C12"; // yellow (some services are down)
+                statusPartKuma.textContent = "ᴜᴘ";
+                statusPartKuma.style.backgroundColor = "#2ECC71"; 
             }
         }
 
-        function setErrorStatus() {
-            statusPartKuma.textContent = "ᴇʀʀᴏʀ";
-            statusPartKuma.style.backgroundColor = "#E74C3C"; // red (Error)
-        }
-    
-        function checkUptimeKumaStatus() {
-            // abort the previous fetch request if it exists
+        async function checkUptimeKumaStatus() {
             controller.abort();
-            controller = new AbortController(); // create a new controller for the new fetch request
-    
-            // add a timestamp query parameter to force the browser to bypass cache
-            const url = "https://api.allorigins.win/get?url=" + encodeURIComponent("https://status.vukilis.com/api/status-page/heartbeat/services");    
-            
-            // start a new fetch request with the new controller
-            fetch(url, {
-                signal: controller.signal // pass the signal to the fetch request
-            })
-                .then(response => response.json())
-                .then(data => {
-                    const heartbeatList = JSON.parse(data.contents).heartbeatList;
-                    let upCount = 0;
-                    let downCount = 0;
-                    let totalCount = 0;
-    
-                    // loop through all services in the heartbeat list
-                    for (let serviceId in heartbeatList) {
-                        const monitorHeartbeats = heartbeatList[serviceId];
-    
-                        if (monitorHeartbeats && monitorHeartbeats.length > 0) {
-                            const latest = monitorHeartbeats[monitorHeartbeats.length - 1];
-                            // console.log('Latest status for service', serviceId, ':', latest.status); // debugging line
-    
-                            // count the number of services in each status
-                            if (latest.status === 1) { // service is "up"
-                                upCount++;
-                            } else if (latest.status === 0) { // service is "down"
-                                downCount++;
-                            }
-    
-                            totalCount++;
-                        }
-                    }
-    
-                    // update the status with the counts
-                    setStatus(upCount, downCount, totalCount);
-                })
-                .catch((error) => {
-                    // if (error.name !== 'AbortError') {
-                    //     console.error("Error fetching data:", error);
-                    // }
-                    setErrorStatus(); // on fetch error or no data, show "Error"
+            controller = new AbortController();
+
+            // FIX: Added timestamp (?t=) to bypass corsproxy.io cache
+            const targetUrl = "https://status.vukilis.com/api/status-page/heartbeat/services?t=" + Date.now();
+            const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(targetUrl);
+
+            try {
+                const response = await fetch(proxyUrl, { 
+                    signal: controller.signal,
+                    cache: "no-cache" // Tell the browser not to cache
                 });
+                const data = await response.json();
+                
+                // --- Fix Monitor Name Mapping ---
+                let nameMap = {};
+                if (data.publicGroupList) {
+                    data.publicGroupList.forEach(group => {
+                        group.monitorList.forEach(m => {
+                            nameMap[m.id] = m.name;
+                        });
+                    });
+                }
+
+                const heartbeats = data.heartbeatList || {};
+                let upCount = 0;
+                let downCount = 0;
+                let totalCount = 0;
+                let debugData = [];
+
+                for (let id in heartbeats) {
+                    const pulses = heartbeats[id];
+                    if (Array.isArray(pulses) && pulses.length > 0) {
+                        const latest = pulses[pulses.length - 1];
+                        const monitorName = nameMap[id] || `ID: ${id}`;
+                        
+                        if (latest.status === 1) {
+                            upCount++;
+                        } else {
+                            downCount++;
+                        }
+                        totalCount++;
+
+                        debugData.push({
+                            "Server Name": monitorName,
+                            "Status": latest.status === 1 ? "✅ UP" : "❌ DOWN",
+                            "Time": latest.time
+                        });
+                    }
+                }
+                
+                // console.clear();
+                // console.log("%cUptime Kuma Dashboard (LIVE)", "color: #3498db; font-weight: bold;");
+                // console.table(debugData); 
+                
+                setStatus(upCount, downCount, totalCount);
+
+            } catch (err) {
+                if (err.name !== 'AbortError') {
+                    // console.error("Fetch Error:", err);
+                    statusPartKuma.textContent = "ᴇʀʀᴏʀ";
+                    statusPartKuma.style.backgroundColor = "#E74C3C";
+                }
+            }
         }
-    
-        checkUptimeKumaStatus();
+
+        setTimeout(checkUptimeKumaStatus, 200);
         setInterval(checkUptimeKumaStatus, 60000);
     });
+})();
 </script>
 
 <a href="https://vukilis.com/homelab_diagram" target="_blank" style="text-decoration: none; margin-left: 3px;">
