@@ -192,81 +192,103 @@ document.addEventListener("DOMContentLoaded", function () {
 </a>
 
 <script>
+(function() {
     document.addEventListener("DOMContentLoaded", function () {
         const statusPartKuma = document.getElementById("status-part-kuma");
-    
-        let controller = new AbortController(); 
-    
+        if (!statusPartKuma) return;
+
+        let controller = new AbortController();
+
         function setStatus(upCount, downCount, totalCount) {
+            if (totalCount === 0) {
+                statusPartKuma.textContent = "ɴᴏ ᴅᴀᴛᴀ";
+                statusPartKuma.style.backgroundColor = "#95A5A6";
+                return;
+            }
+
             if (downCount === totalCount) {
                 statusPartKuma.textContent = "ᴅᴏᴡɴ";
                 statusPartKuma.style.backgroundColor = "#E74C3C"; 
-            } else if (upCount === totalCount) {
+            } else if (downCount > 0) {
+                statusPartKuma.textContent = `ᴘᴀʀᴛɪᴀʟ (${downCount})`;
+                statusPartKuma.style.backgroundColor = "#F39C12"; 
+            } else {
                 statusPartKuma.textContent = "ᴜᴘ";
                 statusPartKuma.style.backgroundColor = "#2ECC71"; 
-            } else {
-                statusPartKuma.textContent = "ᴘᴀʀᴛɪᴀʟ";
-                statusPartKuma.style.backgroundColor = "#F39C12"; 
             }
         }
 
-        function setErrorStatus() {
-            statusPartKuma.textContent = "ᴇʀʀᴏʀ";
-            statusPartKuma.style.backgroundColor = "#E74C3C"; 
-        }
-    
-        function checkUptimeKumaStatus() {
-            
+        async function checkUptimeKumaStatus() {
             controller.abort();
-            controller = new AbortController(); 
-    
+            controller = new AbortController();
+
             
-            const url = "https://api.allorigins.win/get?url=" + encodeURIComponent("https://status.vukilis.com/api/status-page/heartbeat/services");    
-            
-            
-            fetch(url, {
-                signal: controller.signal 
-            })
-                .then(response => response.json())
-                .then(data => {
-                    const heartbeatList = JSON.parse(data.contents).heartbeatList;
-                    let upCount = 0;
-                    let downCount = 0;
-                    let totalCount = 0;
-    
-                    
-                    for (let serviceId in heartbeatList) {
-                        const monitorHeartbeats = heartbeatList[serviceId];
-    
-                        if (monitorHeartbeats && monitorHeartbeats.length > 0) {
-                            const latest = monitorHeartbeats[monitorHeartbeats.length - 1];
-                            
-    
-                            
-                            if (latest.status === 1) { 
-                                upCount++;
-                            } else if (latest.status === 0) { 
-                                downCount++;
-                            }
-    
-                            totalCount++;
-                        }
-                    }
-    
-                    
-                    setStatus(upCount, downCount, totalCount);
-                })
-                .catch((error) => {
-                    
-                    
-                    
-                    setErrorStatus(); 
+            const targetUrl = "https://status.vukilis.com/api/status-page/heartbeat/services?t=" + Date.now();
+            const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(targetUrl);
+
+            try {
+                const response = await fetch(proxyUrl, { 
+                    signal: controller.signal,
+                    cache: "no-cache" 
                 });
+                const data = await response.json();
+                
+                
+                let nameMap = {};
+                if (data.publicGroupList) {
+                    data.publicGroupList.forEach(group => {
+                        group.monitorList.forEach(m => {
+                            nameMap[m.id] = m.name;
+                        });
+                    });
+                }
+
+                const heartbeats = data.heartbeatList || {};
+                let upCount = 0;
+                let downCount = 0;
+                let totalCount = 0;
+                let debugData = [];
+
+                for (let id in heartbeats) {
+                    const pulses = heartbeats[id];
+                    if (Array.isArray(pulses) && pulses.length > 0) {
+                        const latest = pulses[pulses.length - 1];
+                        const monitorName = nameMap[id] || `ID: ${id}`;
+                        
+                        if (latest.status === 1) {
+                            upCount++;
+                        } else {
+                            downCount++;
+                        }
+                        totalCount++;
+
+                        debugData.push({
+                            "Server Name": monitorName,
+                            "Status": latest.status === 1 ? "✅ UP" : "❌ DOWN",
+                            "Time": latest.time
+                        });
+                    }
+                }
+                
+                
+                
+                
+                
+                setStatus(upCount, downCount, totalCount);
+
+            } catch (err) {
+                if (err.name !== 'AbortError') {
+                    
+                    statusPartKuma.textContent = "ᴇʀʀᴏʀ";
+                    statusPartKuma.style.backgroundColor = "#E74C3C";
+                }
+            }
         }
-    
-        checkUptimeKumaStatus();
+
+        setTimeout(checkUptimeKumaStatus, 200);
         setInterval(checkUptimeKumaStatus, 60000);
     });
+})();
 </script>
 
 <a href="https://vukilis.com/homelab_diagram" target="_blank" style="text-decoration: none; margin-left: 3px;">
