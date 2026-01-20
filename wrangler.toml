@@ -8,6 +8,9 @@ command = "./build.sh"
 directory = "./public"
 not_found_handling = "404-page"
 
+[placement]
+mode = "smart"
+
 [observability]
 enabled = false
 head_sampling_rate = 1
