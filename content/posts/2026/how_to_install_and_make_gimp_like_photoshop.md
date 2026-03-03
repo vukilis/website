@@ -124,6 +124,8 @@ flatpak install org.gimp.GIMP.Plugin.GMic
 
 - GEGL
 
+Official github url: https://github.com/linuxbeaver
+
 [Download all plugins for Linux here](https://github.com/LinuxBeaver/LinuxBeaver/releases/download/Gimp_GEGL_Plugin_download_page/LinuxBinaries_all_plugins.zip)
 
 > Includes Linux binaries and Source Code
