@@ -84,8 +84,11 @@ document.addEventListener("DOMContentLoaded", function () {
             controller = new AbortController();
 
             // FIX: Added timestamp (?t=) to bypass corsproxy.io cache
-            const targetUrl = "https://status.vukilis.com/api/status-page/heartbeat/services?t=" + Date.now();
-            const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(targetUrl);
+            // const targetUrl = "https://status.vukilis.com/api/status-page/heartbeat/services?t=" + Date.now();
+            // const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(targetUrl);
+            
+            // Using a custom Cloudflare Worker as a proxy to handle CORS and caching issues
+            const proxyUrl = "https://vukilis.com/status-api";
 
             try {
                 const response = await fetch(proxyUrl, { 
