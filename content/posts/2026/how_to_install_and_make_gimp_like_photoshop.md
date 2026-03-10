@@ -8,7 +8,7 @@ license: ""
 
 tags: [debian, arch, ubuntu, fedora, customization, apps]
 categories: [Linux]
-description: ""
+description: "This guide is all about how I set up GIMP to stop it from driving me crazy. I have spent years..."
 
 featuredImagePreview: "/images/2026/how_to_install_and_make_gimp_like_photoshop/how_to_install_and_make_gimp_like_photoshop.png"
 
