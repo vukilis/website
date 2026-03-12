@@ -33,6 +33,14 @@ share:
 ---
 <!-- more -->
 
+<div style="text-align: center;">
+    <img src="/images/logo.png" alt="Vuk1lis Logo" width="150" height="auto">
+</div>
+
+<div class="gradient-border left teal" style="font-size: large; margin:50px auto;">
+    I love Information Technology, especially playing with Linux and learn about Networking. You can usually find me deep in my homelab, where I spend my time practicing DevOps skills and experimenting with the many open source tools I integrate into my daily life. My ultimate goal is to become an amazing and reliable DevOps Engineer. I am fully dedicated to mastering automation, CI/CD pipelines and infrastructure management. In my free time, I like to play video games, basketball with friends, and write songs.
+</div>
+
 <div id="github-readme">Loading my profile...</div>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
