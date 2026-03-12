@@ -154,5 +154,8 @@ googleAnalytics = "G-BPK5CT0MGQ"
     [markup.highlight]
         # false is a necessary configuration (https://github.com/dillonzq/LoveIt/issues/158)
         noClasses = false
+    [markup.goldmark]
+        [markup.goldmark.renderer]
+            unsafe = true
 
 custom_css = ["css/_custom.scss"]
