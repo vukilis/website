@@ -7,7 +7,7 @@ draft: false
 license: ""
 
 tags: [ubuntu]
-categories: [Linux, Windows, Networking, Virtualization, Hacking]
+categories: [Linux, Windows, Networking, Virtualization, Hacking, Homelab, Database, Website]
 description: ""
 
 featuredImagePreview: "/images{{ replace .File.Dir "posts" ""}}{{ replace .Name "-" "_" }}/{{ replace .Name "-" "_" }}.png"
