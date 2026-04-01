@@ -7,7 +7,7 @@ draft: false
 license: ""
 
 tags: [nmap, forensics]
-categories: [Networking, Hacking]
+categories: [Networking, CyberSecurity]
 description: "How to scan and find Network Vulnerabilities with nmap tool. With just one command..."
 
 featuredImagePreview: "/images/2023/scan_your_network_with_nmap/scan_your_network_with_nmap.png"
