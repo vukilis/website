@@ -134,7 +134,7 @@ By keeping both classes, Authentik will intelligently offer the WebAuthn prompt 
 
 6. Not configured action: `Force the user to configure an authenticator`.
 
-<div style="width: 100%; margin: 10px auto; text-align: center; text-align: center;">
+<div style="width: 100%; margin: 10px auto; text-align: center;">
     {{< image 
         src="/images/2026/integrating_yubikey_fido2_with_authentik/configured_action.png" 
         alt="Configured action"
