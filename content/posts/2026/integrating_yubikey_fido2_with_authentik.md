@@ -63,7 +63,7 @@ This guide covers the implementation of hardware-backed authentication by integr
 
 ## Getting Started
 
-<div style="width: 30%; margin: 10px auto;">
+<div style="width: 30%; margin: 10px auto; text-align: center;">
     {{< image 
         src="/images/2026/integrating_yubikey_fido2_with_authentik/yubico.png" 
         alt="Yubico" 
@@ -78,7 +78,7 @@ The first step is to register the hardware key to your user profile. This ensure
 
 ### Step 1: Enrolling Your Device
 
-<div style="width: 100%; margin: 10px auto;">
+<div style="width: 100%; margin: 10px auto; text-align: center;">
     {{< image 
         src="/images/2026/integrating_yubikey_fido2_with_authentik/webauth.png" 
         alt="Enrolling Your Device"
@@ -101,7 +101,7 @@ Instead of building a new flow from scratch, we will modify the default-authenti
 
 By keeping both classes, Authentik will intelligently offer the WebAuthn prompt first if a key is detected, but still allow you to **"Switch to another method"** to use TOTP if you do not have your **Yubikey**. This provides the perfect balance of high security and a fallback safety net.
 
-<div style="width: 100%; margin: 10px auto;">
+<div style="width: 100%; margin: 10px auto; text-align: center;">
     {{< image 
         src="/images/2026/integrating_yubikey_fido2_with_authentik/default-authentication-flow.png" 
         alt="Configuring the Authentication Flow"
@@ -125,7 +125,7 @@ By keeping both classes, Authentik will intelligently offer the WebAuthn prompt 
     - `WebAuthn Authenticator (This enables your Yubikey)`
     - `TOTP Authenticator (This keeps your mobile app as a backup)`
 
-<div style="width: 100%; margin: 10px auto;">
+<div style="width: 100%; margin: 10px auto; text-align: center;">
     {{< image 
         src="/images/2026/integrating_yubikey_fido2_with_authentik/devices_slasses.png" 
         alt="Devices slasses"
@@ -134,7 +134,7 @@ By keeping both classes, Authentik will intelligently offer the WebAuthn prompt 
 
 6. Not configured action: `Force the user to configure an authenticator`.
 
-<div style="width: 100%; margin: 10px auto;">
+<div style="width: 100%; margin: 10px auto; text-align: center; text-align: center;">
     {{< image 
         src="/images/2026/integrating_yubikey_fido2_with_authentik/configured_action.png" 
         alt="Configured action"
@@ -145,7 +145,7 @@ By keeping both classes, Authentik will intelligently offer the WebAuthn prompt 
     - `default-authenticator-webauthn-setup (WebAuthn Authenticator Setup Stage)`
     - `default-authenticator-totp-setup (TOTP Authenticator Setup Stage)`
 
-<div style="width: 100%; margin: 10px auto;">
+<div style="width: 100%; margin: 10px auto; text-align: center;">
     {{< image 
         src="/images/2026/integrating_yubikey_fido2_with_authentik/configuration_stages.png" 
         alt="Configuration stages"
@@ -154,7 +154,7 @@ By keeping both classes, Authentik will intelligently offer the WebAuthn prompt 
 
 8. WebAuthn User verification: Select `User verification must occur`.
 
-<div style="width: 100%; margin: 10px auto;">
+<div style="width: 100%; margin: 10px auto; text-align: center;">
     {{< image 
         src="/images/2026/integrating_yubikey_fido2_with_authentik/user_verification.png" 
         alt="WebAuthn User verification"
@@ -163,7 +163,7 @@ By keeping both classes, Authentik will intelligently offer the WebAuthn prompt 
 
 ### Step 3: Testing the Login Flow
 
-<div style="width: 100%; margin: 10px auto;">
+<div style="width: 100%; margin: 10px auto; text-align: center;">
     {{< image 
         src="/images/2026/integrating_yubikey_fido2_with_authentik/login.png" 
         alt="Testing the Login Flow"
