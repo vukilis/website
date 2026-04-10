@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - SESSION_INTERRUPTED</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-yellow: #fcee0a;
+            --cyber-red: #ff003c;
+            --cyber-blue: #00f0ff;
+            --cyber-black: #0a0a0a;
+            --cyber-grey: #1a1a1a;
+        }
+
+        body, html {
+            background-color: var(--cyber-black);
+            color: var(--cyber-yellow);
+            font-family: 'Rajdhani', sans-serif;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Ambient subtle scanlines */
+        .glitch-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(0, 0, 0, 0.2) 50%,
+                transparent 100%
+            );
+            background-size: 100% 4px;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        /* The Main Industrial Frame */
+        .cyber-frame {
+            width: 90vw;
+            height: 85vh;
+            border: 1px solid rgba(252, 238, 10, 0.3);
+            position: relative;
+            padding: 40px;
+            background: radial-gradient(circle at center, var(--cyber-grey) 0%, var(--cyber-black) 100%);
+            clip-path: polygon(0 0, 97% 0, 100% 3%, 100% 100%, 3% 100%, 0 97%);
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.9);
+        }
+
+        .cyber-frame::before {
+            content: "NETWORK_STATUS: DISCONNECTED // UID: VUKILIS";
+            position: absolute;
+            top: 15px; left: 20px;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            opacity: 0.6;
+        }
+
+        /* Center Content - Eye Friendly Style */
+        .content-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+        }
+
+        .error-num {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18vw;
+            font-weight: 900;
+            line-height: 0.8;
+            margin: 0;
+            color: transparent;
+            -webkit-text-stroke: 2px var(--cyber-blue);
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+            letter-spacing: 10px;
+            animation: softPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes softPulse {
+            0%, 100% { opacity: 0.8; filter: blur(0px); transform: scale(1); }
+            50% { opacity: 1; filter: blur(1px); transform: scale(1.02); }
+        }
+
+        .warning-label {
+            border: 1px solid var(--cyber-red);
+            color: var(--cyber-red);
+            padding: 8px 40px;
+            font-size: 1.4rem;
+            display: inline-block;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            background: rgba(255, 0, 60, 0.05);
+        }
+
+        /* System Info Details */
+        .bottom-info {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            font-family: monospace;
+            color: var(--cyber-blue);
+            font-size: 0.8rem;
+            line-height: 1.6;
+            opacity: 0.7;
+        }
+
+        /* Sleek Cyber Button */
+        .back-link {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            color: var(--cyber-black);
+            background: var(--cyber-yellow);
+            padding: 18px 45px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            clip-path: polygon(0 0, 100% 0, 100% 75%, 85% 100%, 0 100%);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .back-link:hover {
+            background: var(--cyber-blue);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Subtle Data Stream Decor */
+        .decor-line {
+            position: absolute;
+            background: var(--cyber-blue);
+            opacity: 0.1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glitch-bg"></div>
+
+    <div class="cyber-frame">
+        <div class="decor-line" style="top: 15%; left: 0; width: 100px; height: 1px;"></div>
+        <div class="decor-line" style="bottom: 15%; right: 0; width: 150px; height: 1px;"></div>
+
+        <div class="content-wrapper">
+            <h1 class="error-num">404</h1>
+            <div class="warning-label">Location Purged</div>
+            <p style="margin-top: 30px; font-size: 1.2rem; letter-spacing: 4px; color: #fff; opacity: 0.8;">
+                SUDO_ERROR: REQUESTED_DATA_FLATLINED
+            </p>
+        </div>
+
+        <div class="bottom-info">
+            [SYS_LOG]: Attempting to locate packet... FAILED<br>
+            [SYS_LOG]: Trace result: 0x00000404<br>
+            [SYS_LOG]: Connection timed out. Root permissions revoked.<br>
+            [SYS_LOG]: Redirect recommended.
+        </div>
+
+        <a href="https://vukilis.com" class="back-link">Reload System</a>
+    </div>
+
+    <script>
+        setInterval(() => {
+            if(Math.random() > 0.98) {
+                document.querySelector('.error-num').style.transform = 'translateX(2px)';
+                setTimeout(() => {
+                    document.querySelector('.error-num').style.transform = 'translateX(0)';
+                }, 50);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
