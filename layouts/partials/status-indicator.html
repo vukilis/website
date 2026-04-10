@@ -12,32 +12,33 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const statusPart = document.getElementById("status-part");
+    if (!statusPart) return;
 
-    function setStatus(isUp) {
-        if (isUp) {
-            statusPart.style.backgroundColor = "#2ECC71";
-            statusPart.textContent = "ᴜᴘ";
-        } else {
+    async function checkHomelabStatus() {
+        const proxyUrl = "https://vukilis.com/status-api";
+
+        try {
+            // We fetch through your worker
+            const response = await fetch(proxyUrl, { 
+                method: "GET",
+                cache: "no-store" 
+            });
+
+            if (response.ok) {
+                statusPart.style.backgroundColor = "#2ECC71";
+                statusPart.textContent = "ᴜᴘ";
+            } else {
+                statusPart.style.backgroundColor = "#E74C3C";
+                statusPart.textContent = "ᴅᴏᴡɴ";
+            }
+        } catch (err) {
             statusPart.style.backgroundColor = "#E74C3C";
             statusPart.textContent = "ᴅᴏᴡɴ";
         }
     }
 
-    function checkStatus() {
-    fetch("https://homepage.vukilis.com", {
-            method: "HEAD",
-            mode: "no-cors"
-        })
-        .then(() => {
-            setStatus(true);
-        })
-        .catch(() => {
-            setStatus(false);
-        });
-    }
-
-    checkStatus();
-    setInterval(checkStatus, 30000);
+    checkHomelabStatus();
+    setInterval(checkHomelabStatus, 30000);
 });
 </script>
 
