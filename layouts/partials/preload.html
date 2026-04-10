@@ -1,0 +1,169 @@
+<script type="speculationrules">
+{
+  "prerender": [{
+    "source": "document",
+    "where": { "href_matches": "/*" },
+    "eagerness": "eager"
+  }]
+}
+</script>
+
+<style>
+  :root {
+    --cp-yellow: #fcee0a;
+    --cp-red: #ff003c;
+    --void-bg: #020202;
+  }
+
+  /* CRITICAL: Loader is visible by default */
+  #hologram-wrap {
+    position: fixed;
+    inset: 0;
+    background: var(--void-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    overflow: hidden;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+  }
+
+  /* Data stream and other decorative elements */
+  #data-stream {
+    position: absolute;
+    inset: 0;
+    font-family: monospace;
+    font-size: 10px;
+    color: rgba(0, 255, 65, 0.05);
+    z-index: 1;
+  }
+
+  #hologram-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(circle at center, transparent 0%, var(--void-bg) 90%),
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 20px),
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 20px);
+    z-index: 2;
+  }
+
+  .console-frame {
+    position: relative;
+    z-index: 10;
+    width: 700px;
+    height: 500px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--cp-yellow);
+    padding: 30px;
+    clip-path: polygon(5% 0%, 100% 0%, 100% 90%, 95% 100%, 0% 100%, 0% 10%);
+    display: flex;
+    flex-direction: column;
+    animation: float-ui 4s ease-in-out infinite;
+  }
+
+  @keyframes float-ui {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .arch-header { color: var(--cp-yellow); font-family: monospace; font-size: 10px; margin-bottom: 15px; }
+  .boot-text { flex: 1; font-family: monospace; font-size: 13px; color: #eee; }
+  .warning-banner { background: var(--cp-red); color: #fff; font-weight: 900; padding: 5px; text-align: center; margin: 15px 0; display: none; }
+  .progress-container { height: 4px; background: #111; width: 100%; position: relative; border: 1px solid rgba(252, 238, 10, 0.2); }
+  .progress-fill { height: 100%; width: 0%; background: var(--cp-yellow); box-shadow: 0 0 15px var(--cp-yellow); transition: width 0.1s linear; }
+  
+  /* The hidden state used ONLY when session is valid */
+  .force-hide { display: none !important; opacity: 0; }
+</style>
+
+<div id="hologram-wrap">
+  <script>
+    (function() {
+      const COOLDOWN = 3600000; // 1 hour
+      const lastBoot = localStorage.getItem('vukilis_last_boot');
+      const now = Date.now();
+
+      if (lastBoot && (now - lastBoot) < COOLDOWN) {
+        // If we are within cooldown, hide the loader before it even draws
+        document.getElementById('hologram-wrap').classList.add('force-hide');
+      } else {
+        // Otherwise, set the new timestamp
+        localStorage.setItem('vukilis_last_boot', now);
+      }
+    })();
+  </script>
+
+  <div id="data-stream"></div>
+  <div class="console-frame">
+    <div class="arch-header">
+      [ SYS_OVERRIDE_VUKILIS ]<br>
+      KERNEL: VUKILIS_LATEST<br>
+      AUTH: FIDO2_YUBIKEY_OK
+    </div>
+    <div id="log-list" class="boot-text">> [OK] Initializing Linux Kernel...</div>
+    <div id="warn-node" class="warning-banner">DECRYPTING_WEBSITE</div>
+    <div class="progress-container"><div id="fill-node" class="progress-fill"></div></div>
+    <div style="display:flex; justify-content:space-between; color: var(--cp-red); font-family:monospace; font-size:9px; margin-top:10px;">
+      <span>NIGHT_CITY_DATE_2026</span>
+      <span id="percent-node">00.0%</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const wrap = document.getElementById('hologram-wrap');
+    if (wrap.classList.contains('force-hide')) return;
+
+    const logs = document.getElementById('log-list');
+    const fill = document.getElementById('fill-node');
+    const warn = document.getElementById('warn-node');
+    const perc = document.getElementById('percent-node');
+
+    const logSequence = [
+      "Initializing Linux environment...",
+      "Initializing Yubikey NFC handshake...",
+      "Resolving NPM reverse proxy nodes...",
+      "Mounting /home/vukilis...",
+      "Generating static HTML nodes..."
+    ];
+
+    function runBreach() {
+      let step = 0;
+      const interval = setInterval(() => {
+        if(step < logSequence.length) {
+          const d = document.createElement('div');
+          d.innerHTML = `> [OK] ${logSequence[step]}`;
+          logs.appendChild(d);
+          step++;
+        } else {
+          clearInterval(interval);
+          warn.style.display = 'block';
+          startProgress();
+        }
+      }, 80); // Faster log scroll
+    }
+
+    function startProgress() {
+      let p = 0;
+      const t = setInterval(() => {
+        p += Math.random() * 25;
+        if(p >= 100) {
+          p = 100;
+          clearInterval(t);
+          setTimeout(() => wrap.style.opacity = '0', 400);
+          setTimeout(() => wrap.classList.add('force-hide'), 900);
+        }
+        fill.style.width = p + '%';
+        perc.innerText = p.toFixed(1) + '%';
+      }, 70);
+    }
+
+    // Start immediately since we already checked the session
+    runBreach();
+  })();
+</script>
