@@ -1,0 +1,130 @@
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  .home-avatar { position: relative; display: inline-block; }
+
+/* 2. The Button */
+#steam-toggle-btn {
+    position: absolute;
+    top: 10%; 
+    right: 10%;
+    
+    width: 30px; 
+    height: 30px;
+    background: #000;
+
+    --hud-color: #33ff33;
+    border: 2px solid var(--hud-color);
+    border-radius: 50%;
+    
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    cursor: pointer; 
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+/* The HUD Expansion Layer */
+#steam-toggle-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.95);
+    border: 2px dashed var(--hud-color);
+    transform: scale(0);
+    transition: transform 1s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Elastic feel */
+    z-index: -1;
+}
+
+#steam-toggle-btn.active::after {
+    transform: scale(1);
+}
+
+#steam-toggle-btn.active {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    border: none;
+    background: transparent;
+}
+
+  /* Steam Icon with Hover Animation */
+  .steam-icon { 
+    width: 30px; height: 30px; 
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+  }
+  
+  #steam-toggle-btn:hover .steam-icon { 
+    transform: scale(1.2); 
+    filter: drop-shadow(0 0 5px var(--hud-color));
+  }
+
+  #steam-toggle-btn.active .steam-icon { opacity: 0; display: none; }
+
+  #steam-info {
+    opacity: 0;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    transition: opacity 0.3s;
+    color: #33ff33;
+    display: flex; flex-direction: column; align-items: center;
+    line-height: 1.2;
+  }
+  #steam-toggle-btn.active #steam-info { opacity: 1; }
+</style>
+
+<button id="steam-toggle-btn" aria-label="Toggle Steam Status">
+  <img class="steam-icon" src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="Steam" width="30">
+  <div id="steam-info"></div>
+</button>
+
+<script>
+  const btn = document.getElementById('steam-toggle-btn');
+  const infoDiv = document.getElementById('steam-info');
+
+  // 1. Fetch data on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    updateSteamWidget();
+  });
+
+  // 2. Existing click event
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('active');
+    // Re-fetch on click to ensure fresh status
+    if (btn.classList.contains('active')) updateSteamWidget();
+    else infoDiv.innerHTML = "";
+  });
+
+  async function updateSteamWidget() {
+    try {
+      const response = await fetch('https://vukilis.com/status-steam');
+      const data = await response.json();
+
+      const statusMap = ["OFFLINE", "ONLINE", "BUSY", "AWAY", "SNOOZE", "TRADING", "PLAYING"];
+      const statusColors = { 0: "#888", 1: "#33ff33", 2: "#ff3333", 3: "#ffff33", 4: "#ffff33", 5: "#33ccff", 6: "#ff00ff" };
+
+      // Priority: If a game name exists, force "PLAYING"
+      const isPlaying = data.game && data.game.trim().length > 0;
+      const statusText = isPlaying ? "PLAYING" : (statusMap[data.status] || "OFFLINE");
+      const color = isPlaying ? "#ff00ff" : (statusColors[data.status] || "#33ff33");
+      
+      btn.style.setProperty('--hud-color', color);
+      
+      if (btn.classList.contains('active')) {
+        infoDiv.style.color = color;
+        infoDiv.innerHTML = `
+          <img src="${data.avatar}" style="width: 45px; border-radius: 50%; border: 2px solid ${color}; margin-bottom: 5px;">
+          <div style="font-weight:700; font-size: 0.85em; letter-spacing: 1px;">${statusText}</div>
+          <div style="font-size: 0.70em; margin-top: 4px; max-width: 95px; word-wrap: break-word; color: #ff00ff;">
+            ${data.game || ''}
+          </div>
+        `;
+      }
+    } catch (err) {
+      console.error("Steam status fetch failed:", err);
+    }
+  }
+</script>
