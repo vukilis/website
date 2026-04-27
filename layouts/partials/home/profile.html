@@ -7,7 +7,9 @@
     {{- end -}}
     {{- if $avatar -}}
         <div class="home-avatar">
+            {{- partial "status-yerbamate.html" . -}}
             {{- partial "status-steam.html" . -}}
+            <!-- {{- partial "status-yerbamate.html" . -}} -->
             {{- $menus := $.Site.Menus.main | default slice -}}
             {{- with index $menus 3 -}}
                 {{- $url := .URL | relLangURL -}}
