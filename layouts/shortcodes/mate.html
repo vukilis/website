@@ -1,0 +1,52 @@
+{{ $id := .Get "name" | urlize }}
+{{ $rating := int (.Get "rating") }}
+{{ $starColors := dict "1" "#ff4d4d" "2" "#ff9933" "3" "#ffcc00" "4" "#88cc00" "5" "#00ff41" }}
+{{ $starColor := index $starColors (string $rating) }}
+
+<div class="mate-card" onclick="document.getElementById('modal-{{ $id }}').showModal()">
+    <img src="{{ .Get "image" }}" alt="{{ .Get "name" }}">
+    <h3>{{ .Get "name" }}</h3>
+    <div class="rating">
+        {{ range seq 1 5 }}
+            <span class="star" style="color: {{ if le . $rating }}{{ $starColor }}{{ else }}#555{{ end }};">★</span>
+        {{ end }}
+    </div>
+</div>
+
+<dialog id="modal-{{ $id }}">
+    <button class="close-x" onclick="this.closest('dialog').close()"></button>
+    
+    <div class="modal-content">
+        <h2>{{ .Get "name" }}</h2>
+        
+        <div class="mate-stats">
+            <span class="stat-label">Type:</span> 
+            <span>{{ .Get "type" }}</span>
+
+            {{ range $key := slice "Complexity" "Body" "Durability" "Effect" }}
+                {{ $val := int ($.Get (lower $key)) }}
+                <span class="stat-label">{{ $key }}:</span>
+                <div class="pips">
+                    {{ range seq 1 3 }}
+                        <span class="pip {{ if le . $val }}filled{{ end }}"></span>
+                    {{ end }}
+                </div>
+            {{ end }}
+
+            <img class="modal-mate-img" src="{{ .Get "image" }}" alt="{{ .Get "name" }}">
+        </div>
+
+        <hr>
+        <div class="review-text">
+            <p>{{ .Inner }}</p>
+        </div>
+    </div>
+</dialog>
+
+<script>
+  document.addEventListener('click', (event) => {
+  if (event.target.tagName === 'DIALOG') {
+    event.target.close();
+  }
+});
+</script>
