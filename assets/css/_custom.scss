@@ -224,12 +224,11 @@ details summary{
 .star { font-size: 1.2rem; color: #d1b271; }
 
 .mate-intro {
-    max-width: 800px;
-    margin: 20px auto;
     padding: 20px;
-    border-left: 3px solid var(--accent);
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.03);;
+    border: 2px solid #8db600;
+    border-radius: 12px;
+    animation: border-glow 4s infinite ease-in-out;
 }
 
 .preference-note {
@@ -409,6 +408,7 @@ dialog::backdrop {
         display: block !important;
         position: fixed !important;
         top: var(--tooltip-top) !important;
+        
         /* Centers horizontally */
         left: 50% !important;
         transform: translateX(-50%) !important; 
@@ -428,4 +428,13 @@ dialog::backdrop {
         border-radius: 8px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
+}
+
+.review-image {
+    display: block;    
+    width: 100%;   
+    max-width: 100%; 
+    height: auto;   
+    margin-top: 15px;
+    border-radius: 8px;
 }

@@ -63,36 +63,36 @@
 </script>
 
 <script>
-(function() {
-    // 1. Target the modal container to prevent scope issues
-    const dialog = document.getElementById('modal-{{ $id }}');
+    (function() {
+        // 1. Target the modal container to prevent scope issues
+        const dialog = document.getElementById('modal-{{ $id }}');
 
-    // 2. Use 'touchstart' for mobile responsiveness
-    dialog.addEventListener('touchstart', function(e) {
-        if (e.target.classList.contains('info-icon')) {
-            e.preventDefault(); // Stop mobile ghost clicks
-            toggleTooltip(e.target);
-        }
-    }, {passive: false});
+        // 2. Use 'touchstart' for mobile responsiveness
+        dialog.addEventListener('touchstart', function(e) {
+            if (e.target.classList.contains('info-icon')) {
+                e.preventDefault(); // Stop mobile ghost clicks
+                toggleTooltip(e.target);
+            }
+        }, {passive: false});
 
-    // 3. Fallback for desktop clicks
-    dialog.addEventListener('click', function(e) {
-        const clickedIcon = e.target.closest('.info-icon');
-        if (clickedIcon) {
-            e.stopPropagation();
-            toggleTooltip(clickedIcon);
-        } else if (e.target.tagName !== 'BUTTON') {
-            // Close all if clicking elsewhere in the dialog
+        // 3. Fallback for desktop clicks
+        dialog.addEventListener('click', function(e) {
+            const clickedIcon = e.target.closest('.info-icon');
+            if (clickedIcon) {
+                e.stopPropagation();
+                toggleTooltip(clickedIcon);
+            } else if (e.target.tagName !== 'BUTTON') {
+                // Close all if clicking elsewhere in the dialog
+                document.querySelectorAll('.info-icon').forEach(i => i.classList.remove('active'));
+            }
+        });
+
+        function toggleTooltip(element) {
+            const isActive = element.classList.contains('active');
+            // Close others
             document.querySelectorAll('.info-icon').forEach(i => i.classList.remove('active'));
+            // Toggle this one
+            if (!isActive) element.classList.add('active');
         }
-    });
-
-    function toggleTooltip(element) {
-        const isActive = element.classList.contains('active');
-        // Close others
-        document.querySelectorAll('.info-icon').forEach(i => i.classList.remove('active'));
-        // Toggle this one
-        if (!isActive) element.classList.add('active');
-    }
-})();
+    })();
 </script>
