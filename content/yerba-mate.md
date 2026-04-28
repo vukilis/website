@@ -25,7 +25,7 @@ url: "/yerbamate-review/"
     durability="2" 
     effect="2" 
 >}}
-    <p>Very mild and balanced, it honestly feels like drinking a clean green tea. It is perfect if you are just starting out.It does not contain too much dust, making it very easy to prepare and enjoy. It gives me enough energy to get through a demanding day effectively, and it boosts my confidence. It is unsmoked, which is very important to me as I am not a smoker. I highly recommend this mate.</p>
+    <p>Very mild and balanced, it honestly feels like drinking a clean green tea. It is perfect if you are just starting out. It does not contain too much dust, making it very easy to prepare and enjoy. It gives me enough energy to get through a demanding day effectively, and it boosts my confidence. It is unsmoked, which is very important to me as I am not a smoker. I highly recommend this mate.</p>
     <p>Flavor-wise, it is great on its own, but a squeeze of lemon really takes it to the next level. I actually meant to try it as a Tereré, but I was enjoying it so much as a warm mate that I honestly forgot all about it.</p>
 {{< /mate >}}
 
