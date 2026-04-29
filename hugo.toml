@@ -53,7 +53,7 @@ canonifyurls = true
         title = ""
     [[menu.main]]
         weight = 5
-        identifier = "design.html"
+        identifier = "design"
         pre = ""
         post = ""
         name = "Design"

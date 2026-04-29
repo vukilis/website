@@ -1,11 +1,14 @@
 ---
-title: "My Design"
+title: "My Design Artworks"
 date: 2023-06-20T02:49:39+02:00
-lastmod: 2023-06-20T02:49:39+02:00
+lastmod: 2026-04-30T01:31:00+02:00
 draft: false
-license: ""
+license: "MIT"
 
-description: ""
+tags: [design, artowrks, music, steam, photoshop, aftereffect]
+description: "This guide will consist all my artworks that I made for steam community..."
+
+type: "posts"
 
 hiddenFromHomePage: true
 hiddenFromSearch: false
@@ -18,15 +21,22 @@ linkToMarkdown: true
 rssFullText: false
 
 toc:
-    enable: true
+    enable: false
     auto: true
+comment:
+    enable: true
 code:
-    copy: true
+    copy: false
     maxShownLines: 50
 math:
     enable: false
 share:
-    enable: false
+    enable: true
+    HackerNews: true
+    Reddit: true
+    VK: true
+    Line: false
+    Weibo: false
 ---
 <!-- more -->
 
@@ -86,7 +96,6 @@ share:
                 style="border: 0; width: 100%; height: 100%;" 
                 allowfullscreen sandbox="allow-scripts allow-same-origin"></iframe>
     </div>
-
     <div class="embed-item">
         <iframe src="https://www.behance.net/gallery/245712247/Personal-Music-Artworks?iframe=1&amp;ilo0=1" 
                 style="border: 0; width: 100%; height: 100%;" 

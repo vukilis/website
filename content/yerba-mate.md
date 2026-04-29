@@ -4,7 +4,7 @@ url: "/yerbamate-review/"
 date: 2026-04-29T23:01:31+02:00
 lastmod: 2026-04-30T00:25:00+02:00
 draft: false
-license: ""
+license: "MIT"
 
 tags: [argentina, mate, yerba, te, calabaza, yerbamate, bombilla]
 description: "Welcome to my personal archive of Yerba Mate reviews. As a European who has fallen in love with the vibrant culture of Argentina..."

@@ -1,11 +1,14 @@
 ---
 title: "Homelab Diagram"
-date: 2025-4-14T21:00:00+02:00
-lastmod:  2025-4-14T21:00:00+02:00
+date: 2025-04-14T21:00:00+02:00
+lastmod: 2026-04-30T01:40:00+02:00
 draft: false
-license: ""
+license: "MIT"
 
+tags: [homelab, diagram. selfhost, services]
 description: "My Homelab Diagram"
+
+type: "posts"
 
 hiddenFromHomePage: true
 hiddenFromSearch: false
@@ -18,17 +21,22 @@ linkToMarkdown: true
 rssFullText: false
 
 toc:
-    enable: true
+    enable: false
     auto: true
 comment:
-    enable: false
+    enable: true
 code:
-    copy: true
+    copy: false
     maxShownLines: 50
 math:
     enable: false
 share:
-    enable: false
+    enable: true
+    HackerNews: true
+    Reddit: true
+    VK: true
+    Line: false
+    Weibo: false
 ---
 <!-- more -->
 
@@ -44,12 +52,10 @@ share:
 </style>
 
 <div id="hugo-diagram-container" style="position: relative; width: 100%!important; overflow: hidden;">
-    
     <div id="hugo-loader-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #1a1a1a; z-index: 9999; transition: opacity 0.6s ease;">
         <div class="hugo-spinner-ring"></div>
         <span style="color: #5eff00; font-family: sans-serif; margin-top: 15px; font-size: 13px; font-weight: bold; letter-spacing: 2px;">LOADING HOMELAB DIAGRAM...</span>
     </div>
-
     <div class="mxgraph" 
         style="width: 100%!important; height: 100%!important; border: 1px solid transparent; overflow: hidden; min-height: 300px;" 
         data-mxgraph="{
