@@ -1,11 +1,48 @@
 ---
 title: "Yerba Mate Reviews 🧉"
 url: "/yerbamate-review/"
+date: 2026-04-29T23:01:31+02:00
+lastmod: 2026-04-30T00:25:00+02:00
+draft: false
+license: ""
+
+tags: [argentina, mate, yerba, te, calabaza, yerbamate, bombilla]
+description: "Welcome to my personal archive of Yerba Mate reviews. As a European who has fallen in love with the vibrant culture of Argentina..."
+
+type: "posts"
+
+hiddenFromHomePage: true
+hiddenFromSearch: false
+twemoji: false
+lightgallery: true
+ruby: true
+fraction: true
+fontawesome: true
+linkToMarkdown: true
+rssFullText: false
+
+toc:
+    enable: false
+    auto: true
+comment:
+    enable: true
+code:
+    copy: false
+    maxShownLines: 50
+math:
+    enable: false
+share:
+    enable: true
+    HackerNews: true
+    Reddit: true
+    VK: true
+    Line: false
+    Weibo: false
 ---
 
 <div class="mate-intro">
     <p>
-        Welcome to my personal archive of Yerba Mate reviews. As a European who has fallen in love with the vibrant culture of Argentina and the unique ritual of drinking mate 🧉, I want to share my honest impressions with you. 
+        Welcome to my personal archive of Yerba Mate reviews. As a European who has fallen in love with the vibrant culture of Argentina 🇦🇷 and the unique ritual of drinking mate 🧉, I want to share my honest impressions with you. 
         I am here to help you cut through all the options and find the mate that actually suits your taste, so you can just skip the guesswork and get straight to the good stuff. 
     </p>
     <p class="preference-note">
@@ -116,5 +153,4 @@ url: "/yerbamate-review/"
 
     <img src="/images/mates/calabaza_glass_2.webp" class="review-image" alt="Calabaza Glass with Carpincho Wide Mouth" />
 {{< /mate >}}
-
 </div>
