@@ -13,10 +13,13 @@ url: "/yerbamate-review/"
     </p>
 </div>
 
+{{< mate-filters >}}
+
 <div class="mate-grid">
 
 {{< mate 
     name="Mañanita" 
+    category="yerba"
     image="/images/mates/mananita.webp" 
     rating="5" 
     type="Argentine 🇦🇷" 
@@ -25,14 +28,15 @@ url: "/yerbamate-review/"
     durability="2" 
     effect="2" 
 >}}
-    <p>Very mild and balanced, it honestly feels like drinking a clean green tea. It is perfect if you are just starting out. It does not contain too much dust, making it very easy to prepare and enjoy. It gives me enough energy to get through a demanding day effectively, and it boosts my confidence. It is unsmoked, which is very important to me as I am not a smoker. I highly recommend this mate.</p>
-    <p>Flavor-wise, it is great on its own, but a squeeze of lemon really takes it to the next level. I actually meant to try it as a Tereré, but I was enjoying it so much as a warm mate that I honestly forgot all about it.</p>
+    <p>Very mild and balanced, it honestly feels like drinking a clean green tea. It's perfect if you are just starting out. It does not contain too much dust, making it very easy to prepare and enjoy. It gives me enough energy to get through a demanding day effectively, and it boosts my confidence. It's unsmoked, which is very important to me as I am not a smoker. I highly recommend this mate.</p>
+    <p>Flavor-wise, it's great on its own, but a squeeze of lemon really takes it to the next level. I actually meant to try it as a Tereré, but I was enjoying it so much as a warm mate that I honestly forgot all about it.</p>
 
     <img src="/images/mates/mate_2.webp" class="review-image" alt="Mañanita" />
 {{< /mate >}}
 
 {{< mate 
     name="Taragüi Sin Palo" 
+    category="yerba"
     image="/images/mates/taragui_sin_palo.webp" 
     rating="3" 
     type="Argentine 🇦🇷" 
@@ -41,7 +45,7 @@ url: "/yerbamate-review/"
     durability="2" 
     effect="3" 
 >}}
-    <p>This yerba mate is easy to recommend to people looking for something strong and energizing. It is a great healthy alternative to coffee and energy drinks for those who can handle it. For me personally, however, it is just too strong. After a while, I felt like it was bothering me, almost like my body was rejecting it. It is smoked, which is likely the root cause. I do not personally recommend it.</p>
+    <p>This yerba mate is easy to recommend to people looking for something strong and energizing. It's a great healthy alternative to coffee and energy drinks for those who can handle it. For me personally, however, it's just too strong. After a while, I felt like it was bothering me, almost like my body was rejecting it. It's smoked, which is likely the root cause. I do not personally recommend it.</p>
     <p>That said, I have given it 3 stars because I really enjoyed mixing it with lemon, and I even liked it prepared as Tereré with orange juice.</p>
     
     <img src="/images/mates/mate_1.webp" class="review-image" alt="Taragüi Sin Palo" />
@@ -49,6 +53,7 @@ url: "/yerbamate-review/"
 
 {{< mate 
     name="Suave Union" 
+    category="yerba"
     image="/images/mates/suave_union.jpg" 
     rating="4" 
     type="Argentine 🇦🇷" 
@@ -57,8 +62,59 @@ url: "/yerbamate-review/"
     durability="1" 
     effect="1" 
 >}}
-    <p>When I first opened the pack, I caught a subtle coffee scent, but it is actually quite sweet. The flavor is super mild, though it is definitely a bit more bitter than Mañanita, it honestly felt like I was drinking a light coffee the whole time. I did not really get much of an energy kick from it, so I think this would be a solid choice for beginners. In my experience, the flavor washes out pretty quickly and it really only held up for about 300ml of water. Compared to Mañanita, it is milder, but the smell is better.</p> 
+    <p>When I first opened the pack, I caught a subtle coffee scent, but it's actually quite sweet. The flavor is super mild, though it's definitely a bit more bitter than Mañanita, it honestly felt like I was drinking a light coffee the whole time. I did not really get much of an energy kick from it, so I think this would be a solid choice for beginners. In my experience, the flavor washes out pretty quickly and it really only held up for about 300ml of water. Compared to Mañanita, it's milder, but the smell is better.</p> 
     
     <p>That said, I still prefer Mañanita since it gives me enough energy to get through the day. I brew all my mate at 65-70°C. I am definitely going to try this as a Tereré, though.</p>
+
+    <img src="/images/mates/mate_3.webp" class="review-image" alt="Suave Union" />
 {{< /mate >}}
+
+{{< mate 
+    name="The Spoon Bombilla" 
+    category="bombilla"
+    image="/images/mates/bombilla_1.webp" 
+    rating="5"
+>}}
+    <p>The "spoon" filter bombilla (Filtro de Cuchara) has that classic flat, wide tip, looks just like a spoon with tiny holes or slits to keep the leaves out while you sip.</p>
+
+    <p><span class="bold">Best for:</span> Coarse cut yerba or blends with plenty of stems and big leaves. The spoon shape is perfect for this kind of cut since it keeps the flow smooth and does not clog up.</p>
+
+    <p>This was my first bombilla. I used it for my first mate when I was just starting out, it's got a super simple design that just works.</p>
+{{< /mate >}}
+
+{{< mate 
+    name="The Spring Bombilla"
+    category="bombilla"
+    image="/images/mates/bombilla_2.jpg" 
+    rating="5"
+>}}
+    <p>This bombilla (Filtro de Resorte) has a spring style filter wrapped around the bottom. It actually expands to fit against the sides of the mate, which does a great job of blocking any loose yerba from getting through. It's definitely a step up in terms of filtration compared to my first spoon bombilla. If you hate getting dust in your sips, this is the one to get.</p>
+
+    <p><span class="bold">Best for:</span> Fine cut yerba. The spring filter is super effective at catching those tiny particles, making it a top tier choice if you prefer a more powdery blend.</p>
+
+    <p><span class="bold">Cleaning tip:</span> Just slide the spring off</p>
+{{< /mate >}}
+
+{{< mate 
+    name="Calabaza Gourd Wooden"
+    category="calabaza"
+    image="/images/mates/calabaza_wood_1.webp" 
+    rating="5"
+>}}
+    <p>Using a wooden gourd is a unique sensory experience. When you pour the hot water, the wood releases a faint, sweet aroma that complements the earthiness of the yerba mate. It feels sturdy in the hand and provides excellent thermal insulation, keeping your water at the right temperature for longer.</p>
+
+    <p>This is my favorite calabaza 🧉</p>
+{{< /mate >}}
+
+{{< mate 
+    name="Calabaza Glass with Carpincho"
+    category="calabaza"
+    image="/images/mates/calabaza_glass_1.webp" 
+    rating="5"
+>}}
+    <p>This is a Glass Calabaza wrapped in Carpincho (Capybara) leather, featuring a Wide Mouth design. It combines the aesthetic of a traditional Argentine leather-wrapped gourd with the practicality of a glass interior.</p>
+
+    <img src="/images/mates/calabaza_glass_2.webp" class="review-image" alt="Calabaza Glass with Carpincho Wide Mouth" />
+{{< /mate >}}
+
 </div>

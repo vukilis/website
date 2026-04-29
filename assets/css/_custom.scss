@@ -1,3 +1,13 @@
+/* This class will be toggled by JS when the modal is active */
+body.no-scroll {
+    overflow: hidden;
+    scrollbar-gutter: stable; 
+}
+
+html:has(dialog[open]) {
+    overflow: hidden;
+}
+
 header .logo {
     // min-height: 1.5em;
     height: 3em;
@@ -205,20 +215,67 @@ details summary{
 }
 
 .mate-card {
-    border: 2px solid #e0dcd5;
-    background: #719400;
-    color: #000000;
+    position: relative;
+    background: #1a1a1a;
+    color: #e0e0e0;
     padding: 15px;
     cursor: pointer;
     text-align: center;
-    border-radius: 12px;
-    transition: 0.3s;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    font-size: 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 1px solid #333;
+    overflow: hidden;
 }
 
-.mate-card:hover { border-color: #8db600; transform: translateY(-5px); }
-.mate-card img { width: 100%; height: auto; border-radius: 4px; }
+.mate-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #8db600, #00ff41);
+    transition: 0.5s;
+}
+
+.mate-card:hover::after {
+    left: 100%;
+}
+
+.mate-card[data-visible="false"] {
+    display: none !important;
+}
+
+.mate-card img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 4px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mate-card:hover img {
+    filter: grayscale(0%) brightness(1);
+    transform: scale(1.03);
+}
+
+/* Title Glow Effect */
+.mate-card h3 {
+    transition: all 0.3s ease;
+    text-shadow: none;
+}
+
+.mate-card:hover h3 {
+    color: #00ff41;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.6);
+}
+
+/* Subtle background "pulse" */
+.mate-card:hover {
+    border-color: #8db600;
+    background: #222;
+    box-shadow: 0 0 20px rgba(141, 182, 0, 0.2);
+}
 
 /* --- Star Ratings --- */
 .star { font-size: 1.2rem; color: #d1b271; }
@@ -303,6 +360,16 @@ dialog::backdrop {
     gap: 8px 15px;
     align-items: start; 
     margin: 15px 0;
+}
+
+.mate-stats:not(:has(.stat-label)) {
+    display: block;
+    text-align: center;
+}
+
+.bold {
+    color: #2d5a27;
+    font-weight: 700;
 }
 
 .stat-label { font-weight: bold; font-size: 1rem; color: #2d5a27; }

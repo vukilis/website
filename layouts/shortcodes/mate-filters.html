@@ -1,0 +1,115 @@
+<div class="filter-section">
+    <div class="filter-group">
+        <label for="typeFilter">Category</label>
+        <select id="typeFilter">
+            <option value="all">All Items</option>
+            <option value="yerba">Yerba Mate</option>
+            <option value="bombilla">Bombillas</option>
+            <option value="calabaza">Calabazas</option>
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <label for="sortFilter">Sort Rating</label>
+        <select id="sortFilter">
+            <option value="none">Default</option>
+            <option value="high">High to Low</option>
+            <option value="low">Low to High</option>
+        </select>
+    </div>
+
+    <button id="resetFilters" class="reset-btn">Reset Filters</button>
+</div>
+
+<style>
+.filter-section {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding: 15px;
+    background: transparent;
+    justify-content: center;
+    margin: 10px;
+}
+.filter-group { display: flex; flex-direction: column; gap: 5px; }
+.filter-group label { font-weight: bold; font-size: 0.8rem; color: #777; text-transform: uppercase; }
+.filter-group select { 
+    padding: 8px 12px; 
+    border-radius: 6px; 
+    border: 1px solid #ddd; 
+    background: white; 
+    cursor: pointer;
+}
+body.no-scroll { overflow: hidden; height: 100vh; position: fixed; width: 100%; }
+
+.reset-btn {
+    align-self: flex-end;
+    padding: 8px 16px;
+    background: #1a1a1a;
+    color: #00ff41; /* Neon green text */
+    border: 1px solid #333;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    height: fit-content;
+    margin-bottom: 2px;
+}
+
+.reset-btn:hover {
+    background: #00ff41;
+    color: #1a1a1a;
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
+    border-color: #00ff41;
+}
+
+/* Ensure the layout stacks correctly on mobile */
+@media (max-width: 600px) {
+    .filter-section { flex-direction: column; align-items: stretch; }
+    .reset-btn { align-self: stretch; margin-top: 10px; }
+}
+
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const typeFilter = document.getElementById('typeFilter');
+    const sortFilter = document.getElementById('sortFilter');
+    const resetBtn = document.getElementById('resetFilters');
+    const grid = document.querySelector('.mate-grid');
+
+    const originalOrder = Array.from(document.querySelectorAll('.mate-card'));
+
+    function updateGrid() {
+        const typeValue = typeFilter.value;
+        const sortValue = sortFilter.value;
+        let cards = [...originalOrder];
+
+        cards.forEach(card => {
+            const cardType = card.getAttribute('data-type');
+            const isMatch = (typeValue === 'all' || cardType === typeValue);
+            card.dataset.visible = isMatch;
+        });
+
+        if (sortValue === 'high') {
+            cards.sort((a, b) => parseInt(b.dataset.rating) - parseInt(a.dataset.rating));
+        } else if (sortValue === 'low') {
+            cards.sort((a, b) => parseInt(a.dataset.rating) - parseInt(b.dataset.rating));
+        }
+
+        cards.forEach(card => grid.appendChild(card));
+    }
+
+    // NEW: Reset functionality
+    resetBtn.addEventListener('click', () => {
+        typeFilter.value = 'all';
+        sortFilter.value = 'none';
+        updateGrid();
+    });
+
+    typeFilter.addEventListener('change', updateGrid);
+    sortFilter.addEventListener('change', updateGrid);
+});
+</script>
