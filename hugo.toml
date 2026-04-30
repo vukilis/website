@@ -146,6 +146,7 @@ googleAnalytics = "G-BPK5CT0MGQ"
                 color = "00d1b2"
                 colorful = true
                 outline = true
+                dark = 1
     
     [params.analytics]
         enable = true
