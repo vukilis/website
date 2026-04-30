@@ -139,6 +139,14 @@ googleAnalytics = "G-BPK5CT0MGQ"
                 label = "comment"
                 lightTheme = "github-dark"
                 darkTheme = "github-dark"
+            [params.page.comment.telegram]
+                enable = true
+                siteID = "IDn-9QVS"
+                limit = 5
+                height = ""
+                color = "00d1b2"
+                colorful = true
+                outline = true
     
     [params.analytics]
         enable = true
