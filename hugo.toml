@@ -143,7 +143,6 @@ googleAnalytics = "G-BPK5CT0MGQ"
                 enable = true
                 siteID = "IDn-9QVS"
                 limit = 5
-                height = ""
                 color = "00d1b2"
                 colorful = true
                 outline = true

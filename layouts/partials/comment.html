@@ -5,52 +5,77 @@
 
 {{- if $comment.enable -}}
     <div id="comments">
-        {{- /* Tab Navigation - Only shows if both are enabled */ -}}
-        {{- if and $comment.telegram.enable $comment.utterances.enable -}}
-        <div class="comment-tabs" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid #333;">
-            <button class="tab-btn active" onclick="switchComment(event, 'telegram-box')" style="background:none; border:none; color:#888; padding:10px 20px; cursor:pointer; font-family:inherit; transition: 0.3s;">
-                <i class="fa-brands fa-telegram"></i> Telegram
-            </button>
-            <button class="tab-btn" onclick="switchComment(event, 'utterances-box')" style="background:none; border:none; color:#888; padding:10px 20px; cursor:pointer; font-family:inherit; transition: 0.3s;">
-                <i class="fa-brands fa-github"></i> Utterances
-            </button>
+        {{- /* 1. Tab Navigation Generator */ -}}
+        {{- $enabledSystems := slice -}}
+        {{- if $comment.disqus.enable }}{{ $enabledSystems = $enabledSystems | append "disqus" }}{{ end -}}
+        {{- if $comment.gitalk.enable }}{{ $enabledSystems = $enabledSystems | append "gitalk" }}{{ end -}}
+        {{- if $comment.valine.enable }}{{ $enabledSystems = $enabledSystems | append "valine" }}{{ end -}}
+        {{- if $comment.facebook.enable }}{{ $enabledSystems = $enabledSystems | append "facebook" }}{{ end -}}
+        {{- if $comment.utterances.enable }}{{ $enabledSystems = $enabledSystems | append "utterances" }}{{ end -}}
+        {{- if $comment.telegram.enable }}{{ $enabledSystems = $enabledSystems | append "telegram" }}{{ end -}}
+        {{- if $comment.commento.enable }}{{ $enabledSystems = $enabledSystems | append "commento" }}{{ end -}}
+        {{- if $comment.giscus.enable }}{{ $enabledSystems = $enabledSystems | append "giscus" }}{{ end -}}
+
+        {{- if gt (len $enabledSystems) 1 -}}
+        <div class="comment-tabs" style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; border-bottom: 1px solid #333;">
+            {{- range $index, $system := $enabledSystems -}}
+                <button class="tab-btn {{- if eq $index 0 }} active {{- end -}}" 
+                        onclick="switchComment(event, '{{ $system }}-box')" 
+                        style="background:none; border:none; color:#888; padding:10px 20px; cursor:pointer; font-family:inherit; transition: 0.3s; text-transform: capitalize;">
+                    {{- if eq $system "utterances" -}}<i class="fa-brands fa-github"></i> {{- end -}}
+                    {{- if eq $system "telegram" -}}<i class="fa-brands fa-telegram"></i> {{- end -}}
+                    {{ $system }}
+                </button>
+            {{- end -}}
         </div>
         {{- end -}}
 
-        {{- /* Telegram Comment System */ -}}
-        {{- $telegram := $comment.telegram | default dict -}}
-        <div id="telegram-box" class="comment-tab-content" {{- if and $telegram.enable $comment.utterances.enable }} style="display: block;" {{- end -}}>
-            {{- if $telegram.enable -}}
-                <div id="telegram-comments" class="comment">
-                    {{- $attr := dict "data-comments-app-js" $telegram.siteId -}}
-                    {{- if $telegram.limit -}}
-                        {{- $attr = dict "data-limit" $telegram.limit | merge $attr -}}
-                    {{- end -}}
-                    {{- if $telegram.color -}}
-                        {{- $attr = dict "data-color" $telegram.color | merge $attr -}}
-                    {{- end -}}
-                    {{- if $telegram.colorful -}}
-                        {{- $attr = dict "data-colorful" "1" | merge $attr -}}
-                    {{- end -}}
-                    {{- if $telegram.discussions -}}
-                        {{- $attr = dict "data-discussions" "1" | merge $attr -}}
-                    {{- end -}}
-                    {{- if $telegram.updates -}}
-                        {{- $attr = dict "data-updates" "1" | merge $attr -}}
-                    {{- end -}}
-                    <script async src="https://comments.app/js/widget.js?3"
-                        {{- range $k, $v := $attr }} {{ $k | safeHTMLAttr }}="{{ $v | safeHTMLAttr }}"{{ end -}}>
-                    </script>
-                </div>
-                <noscript>
-                    Please enable JavaScript to view the comments powered by <a href="https://comments.app/">Telegram Comments</a>.
-                </noscript>
+        {{- /* 2. Comment Content Wrapper Logic */ -}}
+        
+        {{- /* Disqus */ -}}
+        {{- $disqus := $comment.disqus | default dict -}}
+        <div id="disqus-box" class="comment-tab-content" style="display: {{ if eq (index $enabledSystems 0) "disqus" }}block{{ else }}none{{ end }};">
+            {{- if $disqus.enable -}}
+                <div id="disqus_thread" class="comment"></div>
+                {{- $source := printf "https://%v.disqus.com/embed.js" $disqus.shortname -}}
+                {{- dict "Source" $source "Defer" true | dict "Scratch" .Scratch "Data" | partial "scratch/script.html" -}}
             {{- end -}}
         </div>
 
-        {{- /* utterances Comment System */ -}}
+        {{- /* Gitalk */ -}}
+        {{- $gitalk := $comment.gitalk | default dict -}}
+        <div id="gitalk-box" class="comment-tab-content" style="display: {{ if eq (index $enabledSystems 0) "gitalk" }}block{{ else }}none{{ end }};">
+            {{- if $gitalk.enable -}}
+                <div id="gitalk" class="comment"></div>
+                {{- $source := $cdn.gitalkCSS | default "lib/gitalk/gitalk.css" -}}
+                {{- dict "Source" $source "Minify" true "Fingerprint" $fingerprint | dict "Scratch" .Scratch "Data" | partial "scratch/style.html" -}}
+                {{- $source := $cdn.gitalkJS | default "lib/gitalk/gitalk.min.js" -}}
+                {{- dict "Source" $source "Fingerprint" $fingerprint | dict "Scratch" .Scratch "Data" | partial "scratch/script.html" -}}
+                {{- $commentConfig = dict "id" .Date "title" .Title "clientID" $gitalk.clientId "clientSecret" $gitalk.clientSecret "repo" $gitalk.repo "owner" $gitalk.owner "admin" (slice $gitalk.owner) | dict "gitalk" | merge $commentConfig -}}
+            {{- end -}}
+        </div>
+
+        {{- /* Valine */ -}}
+        {{- $valine := $comment.valine | default dict -}}
+        <div id="valine-box" class="comment-tab-content" style="display: {{ if eq (index $enabledSystems 0) "valine" }}block{{ else }}none{{ end }};">
+            {{- if $valine.enable -}}
+                <div id="valine" class="comment"></div>
+                {{- $options := dict "targetPath" "lib/valine/valine.min.css" -}}
+                {{- dict "Source" "lib/valine/valine.scss" "ToCSS" $options | dict "Scratch" .Scratch "Data" | partial "scratch/style.html" -}}
+                {{- $source := $cdn.valineJS | default "lib/valine/Valine.min.js" -}}
+                {{- dict "Source" $source "Fingerprint" $fingerprint | dict "Scratch" .Scratch "Data" | partial "scratch/script.html" -}}
+                {{- $commentConfig = dict "el" "#valine" "appId" $valine.appId "appKey" $valine.appKey "lang" ($valine.lang | default (T "valineLang")) "visitor" $valine.visitor "recordIP" $valine.recordIP "placeholder" ($valine.placeholder | default (T "valinePlaceholder")) "highlight" (ne $valine.highlight false) "enableQQ" $valine.enableQQ | dict "valine" | merge $commentConfig -}}
+                {{- with $valine.avatar }}{{ $commentConfig = dict "avatar" . | dict "valine" | merge $commentConfig }}{{ end -}}
+                {{- with $valine.meta }}{{ $commentConfig = dict "meta" . | dict "valine" | merge $commentConfig }}{{ end -}}
+                {{- with $valine.pageSize }}{{ $commentConfig = dict "pageSize" . | dict "valine" | merge $commentConfig }}{{ end -}}
+                {{- with $valine.serverURLs }}{{ $commentConfig = dict "serverURLs" . | dict "valine" | merge $commentConfig }}{{ end -}}
+                {{- $commentConfig = $valine.emoji | default "google.yml" | printf "lib/valine/emoji/%v" | resources.Get | transform.Unmarshal | dict "valine" | merge $commentConfig -}}
+            {{- end -}}
+        </div>
+
+        {{- /* Utterances */ -}}
         {{- $utterances := $comment.utterances | default dict -}}
-        <div id="utterances-box" class="comment-tab-content" {{- if and $telegram.enable $utterances.enable }} style="display: none;" {{- end -}}>
+        <div id="utterances-box" class="comment-tab-content" style="display: {{ if eq (index $enabledSystems 0) "utterances" }}block{{ else }}none{{ end }};">
             {{- if $utterances.enable -}}
                 <div id="utterances" class="comment"></div>
                 {{- $commentConfig = dict "repo" $utterances.repo | dict "utterances" | merge $commentConfig -}}
@@ -58,16 +83,40 @@
                 {{- $commentConfig = dict "label" $utterances.label | dict "utterances" | merge $commentConfig -}}
                 {{- $commentConfig = $utterances.lightTheme | default "github-light" | dict "lightTheme" | dict "utterances" | merge $commentConfig -}}
                 {{- $commentConfig = $utterances.darkTheme | default "github-dark" | dict "darkTheme" | dict "utterances" | merge $commentConfig -}}
-                <noscript>
-                    Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
-                </noscript>
             {{- end -}}
         </div>
 
-        {{- /* Keeping your manual merge for config */ -}}
-        {{- if $telegram.enable -}}
-            {{- $commentConfig = dict "siteId" $telegram.siteId | dict "telegram" | merge $commentConfig -}}
-        {{- end -}}
+        {{- /* Telegram */ -}}
+        {{- $telegram := $comment.telegram | default dict -}}
+        <div id="telegram-box" class="comment-tab-content" style="display: {{ if eq (index $enabledSystems 0) "telegram" }}block{{ else }}none{{ end }};">
+            {{- if $telegram.enable -}}
+                <div id="telegram-comments" class="comment">
+                    {{- $attr := printf `data-comments-app-website="%v"` $telegram.siteID -}}
+                    {{- $attr = printf `%v data-limit="%v"` $attr ($telegram.limit | default 5) -}}
+                    {{- with $telegram.color }}{{ $attr = printf `%v data-color="%v"` $attr . }}{{ end -}}
+                    {{- if $telegram.colorful }}{{ $attr = printf `%v data-colorful="1"` $attr }}{{ end -}}
+                    {{- if $telegram.outlined }}{{ $attr = printf `%v data-outlined="1"` $attr }}{{ end -}}
+                    {{- dict "Source" "https://comments.app/js/widget.js?3" "Defer" true "Attr" $attr | partial "plugin/script.html" -}}
+                </div>
+            {{- end -}}
+        </div>
+
+        {{- /* Giscus */ -}}
+        {{- $giscus := $comment.giscus | default dict -}}
+        <div id="giscus-box" class="comment-tab-content" style="display: {{ if eq (index $enabledSystems 0) "giscus" }}block{{ else }}none{{ end }};">
+            {{- if $giscus.enable -}}
+                <div id="giscus" class="comment"></div>
+                {{- $commentConfig = dict "repo" $giscus.repo | dict "giscus" | merge $commentConfig -}}
+                {{- $commentConfig = dict "repoId" $giscus.repoId | dict "giscus" | merge $commentConfig -}}
+                {{- $commentConfig = dict "category" $giscus.category | dict "giscus" | merge $commentConfig -}}
+                {{- $commentConfig = dict "categoryId" $giscus.categoryId | dict "giscus" | merge $commentConfig -}}
+                {{- $commentConfig = $giscus.lang | default (T "valineLang") | dict "lang" | dict "giscus" | merge $commentConfig -}}
+                {{- $commentConfig = $giscus.mapping | default "pathname" | dict "mapping" | dict "giscus" | merge $commentConfig -}}
+                {{- $commentConfig = $giscus.reactionsEnabled | default "1" | dict "reactionsEnabled" | dict "giscus" | merge $commentConfig -}}
+                {{- $commentConfig = $giscus.lightTheme | default "github-light" | dict "lightTheme" | dict "giscus" | merge $commentConfig -}}
+                {{- $commentConfig = $giscus.darkTheme | default "github-dark" | dict "darkTheme" | dict "giscus" | merge $commentConfig -}}
+            {{- end -}}
+        </div>
     </div>
 {{- end -}}
 
@@ -76,6 +125,10 @@
         color: #00d1b2 !important; 
         border-bottom: 2px solid #00d1b2 !important;
     }
+    #telegram-comments {
+    min-height: 200px;
+    width: 100%;
+}
 </style>
 
 <script>
@@ -84,8 +137,6 @@
         document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
         document.getElementById(systemId).style.display = 'block';
         evt.currentTarget.classList.add('active');
-        
-        // Trigger resize for both systems to ensure widgets render correctly
         window.dispatchEvent(new Event('resize'));
     }
 </script>
