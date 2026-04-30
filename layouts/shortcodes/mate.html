@@ -8,7 +8,8 @@
     "Complexity" "The level of flavor evolution while drinking." 
     "Body" "The density and richness of the drink's texture." 
     "Durability" "How long the mate retains its flavor profile." 
-    "Effect" "The intensity of the caffeine's stimulating effect." 
+    "Effect" "The intensity of the caffeine's stimulating effect."
+    "Level" "The skill and tolerance required to enjoy this mate."
 }}
 
 <div class="mate-card" 
@@ -31,19 +32,33 @@
         <h2>{{ .Get "name" }}</h2>
         <div class="mate-stats">
             {{ with .Get "type" }}
-                <span class="stat-label">Type:</span> <span>{{ . }}</span>
+                <span class="stat-label">Origin:</span> <span class="stat-value">{{ . }}</span>
             {{ end }}
 
-            {{ range $key := slice "Complexity" "Body" "Durability" "Effect" }}
+            {{ $levelColors := dict "1" "#88cc00" "2" "#ffcc00" "3" "#00ff41" }}
+            {{ $levelNames := dict "1" "Beginner" "2" "Enthusiast" "3" "Master" }}
+
+            {{ range $key := slice "Complexity" "Body" "Durability" "Effect" "Level" }}
                 {{ if $.Get (lower $key) }}
                     {{ $val := int ($.Get (lower $key)) }}
                     <span class="stat-label">
                         {{ $key }}
                         <button class="info-icon" data-tooltip="{{ index $descriptions $key }}">i</button>
                     </span>
-                    <div class="pips">
-                        {{ range seq 1 3 }}
-                            <span class="pip {{ if le . $val }}filled{{ end }}"></span>
+                    
+                    <div class="stats-value">
+                        {{ if eq $key "Level" }}
+                            {{ $color := index $levelColors (string $val) }}
+                            {{ $name := index $levelNames (string $val) }}
+                            <span class="level-label" style="color: {{ $color }}; border-color: {{ $color }}; background: {{ $color }}1A;">
+                                {{ $name }}
+                            </span>
+                        {{ else }}
+                            <div class="pips">
+                                {{ range seq 1 3 }}
+                                    <span class="pip {{ if le . $val }}filled{{ end }}"></span>
+                                {{ end }}
+                            </div>
                         {{ end }}
                     </div>
                 {{ end }}

@@ -50,6 +50,44 @@ share:
     </p>
 </div>
 
+<div class="terminal-audio-player">
+    <div class="player-header" onclick="togglePlayer()" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <span class="status-light" id="yerba-song-status-icon">●</span> 
+            <span id="header-text">SONG: MATE (CLICK TO SHOW/HIDE)</span>
+        </div>
+        <span id="toggle-arrow" style="transition: transform 0.3s ease; display: inline-block;">▼</span>
+    </div>      
+    <div class="player-body" id="yt-container" style="display: none;">
+        <iframe 
+            src="https://www.youtube.com/embed/Z2r14PYyIr8?enablejsapi=1&autoplay=0&controls=1&modestbranding=1" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" 
+            allowfullscreen>
+        </iframe>
+    </div>
+</div>
+
+<script>
+    function togglePlayer() {
+        const container = document.getElementById('yt-container');
+        const icon = document.getElementById('yerba-song-status-icon');
+        const arrow = document.getElementById('toggle-arrow');
+        
+        if (!container || !icon || !arrow) return;
+
+        if (container.style.display === "none" || container.style.display === "") {
+            container.style.display = "block";
+            icon.style.color = "#ff4d4d";
+            arrow.style.transform = "rotate(180deg)";
+        } else {
+            container.style.display = "none";
+            icon.style.color = "#00ff41";
+            arrow.style.transform = "rotate(0deg)";
+        }
+    }
+</script>
+
 {{< mate-filters >}}
 
 <div class="mate-grid">
@@ -64,6 +102,7 @@ share:
     body="2" 
     durability="2" 
     effect="2" 
+    level="1"
 >}}
     <p>Very mild and balanced, it honestly feels like drinking a clean green tea. It's perfect if you are just starting out. It does not contain too much dust, making it very easy to prepare and enjoy. It gives me enough energy to get through a demanding day effectively, and it boosts my confidence. It's unsmoked, which is very important to me as I am not a smoker. I highly recommend this mate.</p>
     <p>Flavor-wise, it's great on its own, but a squeeze of lemon really takes it to the next level. I actually meant to try it as a Tereré, but I was enjoying it so much as a warm mate that I honestly forgot all about it.</p>
@@ -80,7 +119,8 @@ share:
     complexity="1" 
     body="1" 
     durability="2" 
-    effect="3" 
+    effect="3"
+    level="3"
 >}}
     <p>This yerba mate is easy to recommend to people looking for something strong and energizing. It's a great healthy alternative to coffee and energy drinks for those who can handle it. For me personally, however, it's just too strong. After a while, I felt like it was bothering me, almost like my body was rejecting it. It's smoked, which is likely the root cause. I do not personally recommend it.</p>
     <p>That said, I have given it 3 stars because I really enjoyed mixing it with lemon, and I even liked it prepared as Tereré with orange juice.</p>
@@ -97,7 +137,8 @@ share:
     complexity="2" 
     body="1" 
     durability="1" 
-    effect="1" 
+    effect="1"
+    level="1"
 >}}
     <p>When I first opened the pack, I caught a subtle coffee scent, but it's actually quite sweet. The flavor is super mild, though it's definitely a bit more bitter than Mañanita, it honestly felt like I was drinking a light coffee the whole time. I did not really get much of an energy kick from it, so I think this would be a solid choice for beginners. In my experience, the flavor washes out pretty quickly and it really only held up for about 300ml of water. Compared to Mañanita, it's milder, but the smell is better.</p> 
     
