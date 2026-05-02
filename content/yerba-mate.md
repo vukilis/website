@@ -2,7 +2,7 @@
 title: "Yerba Mate Reviews 🧉"
 url: "/yerbamate-review/"
 date: 2026-04-29T23:01:31+02:00
-lastmod: 2026-04-30T00:25:00+02:00
+lastmod: 2026-05-02 02:41:16.084 +0200
 draft: false
 license: "MIT"
 
