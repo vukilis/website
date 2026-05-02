@@ -182,6 +182,8 @@ share:
     <p>Using a wooden gourd is a unique sensory experience. When you pour the hot water, the wood releases a faint, sweet aroma that complements the earthiness of the yerba mate. It feels sturdy in the hand and provides excellent thermal insulation, keeping your water at the right temperature for longer.</p>
 
     <p>This is my favorite calabaza 🧉</p>
+
+    <img src="/images/mates/calabaza_wood_2.webp" class="review-image" alt="Calabaza Gourd Wooden" />
 {{< /mate >}}
 
 {{< mate 
