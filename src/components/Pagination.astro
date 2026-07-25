@@ -4,6 +4,7 @@ interface Props {
   baseUrl: string;
   showFirstLast?: boolean;
   maxVisible?: number;
+  queryString?: string;
 }
 
 const {
@@ -11,6 +12,7 @@ const {
   baseUrl,
   showFirstLast = false,
   maxVisible = 5,
+  queryString = '',
 } = Astro.props;
 
 const { currentPage, lastPage } = page;
@@ -42,11 +44,12 @@ function getPageNumbers(): (number | 'ellipsis')[] {
 
 const base = baseUrl.replace(/\/$/, '');
 const pageNumbers = getPageNumbers();
+const querySuffix = queryString ? `?${queryString}` : '';
 
-const prevHref = currentPage > 1 ? `${base}/${currentPage - 1}/` : '';
-const nextHref = currentPage < lastPage ? `${base}/${currentPage + 1}/` : '';
-const firstHref = `${base}/`;
-const lastHref = `${base}/${lastPage}/`;
+const prevHref = currentPage > 1 ? `${base}/${currentPage - 1}/${querySuffix}` : '';
+const nextHref = currentPage < lastPage ? `${base}/${currentPage + 1}/${querySuffix}` : '';
+const firstHref = `${base}/${querySuffix}`;
+const lastHref = `${base}/${lastPage}/${querySuffix}`;
 ---
 
 <nav aria-label="Pagination" class="pagination-nav">
@@ -100,7 +103,7 @@ const lastHref = `${base}/${lastPage}/`;
         return <span aria-current="page" class="pagination-current" key={`page-${p}`}>{p}</span>;
       }
 
-      const href = p === 1 ? `${base}/` : `${base}/${p}/`;
+      const href = p === 1 ? `${base}/${querySuffix}` : `${base}/${p}/${querySuffix}`;
 
       return (
         <a href={href} class="pagination-page" aria-label={`Page ${p}`} key={`page-${p}`}>

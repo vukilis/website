@@ -2,9 +2,9 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navigation from '../../components/Navigation.astro';
-import BlogCard from '../../components/BlogCard.astro';
-import BlogFilter from '../../components/BlogFilter.astro';
 import BlogSearch from '../../components/BlogSearch.astro';
+import BlogFilter from '../../components/BlogFilter.astro';
+import BlogSort from '../../components/BlogSort.astro';
 import Pagination from '../../components/Pagination.astro';
 
 export async function getStaticPaths({ paginate }: { paginate: (...args: any[]) => Promise<any[]> }) {
@@ -12,17 +12,19 @@ export async function getStaticPaths({ paginate }: { paginate: (...args: any[]) 
   const sorted = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
   return paginate(sorted, {
-    pageSize: 9,
+    pageSize: 12,
     format: (p) => `/blog/${!p || p === '/' ? '' : p}`
   });
 }
-
-type BlogPost = CollectionEntry<'blog'>;
 
 const { page } = Astro.props;
 
 const allPostsForSearch = await getCollection('blog', ({ data }) => !data.draft);
 const sortedAllPosts = allPostsForSearch.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const url = new URL(Astro.url);
+const sortParam = url.searchParams.get('sort');
+const queryString = sortParam ? `sort=${encodeURIComponent(sortParam)}` : '';
 ---
 
 <BaseLayout
@@ -42,31 +44,9 @@ const sortedAllPosts = allPostsForSearch.sort((a, b) => b.data.pubDate.valueOf()
 
       <BlogSearch allPosts={sortedAllPosts} />
       <BlogFilter allPosts={sortedAllPosts} activeCategory={undefined} />
+      <BlogSort allPosts={sortedAllPosts} currentPage={page.currentPage} />
 
-      <div class="blog-grid">
-        {page.data.length > 0 ? (
-          page.data.map((post: BlogPost) => (
-            <BlogCard
-              title={post.data.title}
-              description={post.data.description}
-              pubDate={post.data.pubDate}
-              slug={post.id}
-              tags={post.data.tags}
-              categories={post.data.categories}
-              activeTag={undefined}
-            />
-          ))
-        ) : (
-          <p class="no-results">No posts found.</p>
-        )}
-      </div>
-
-      <Pagination
-        page={page}
-        baseUrl="/blog"
-        showFirstLast={true}
-        maxVisible={5}
-      />
+      <Pagination page={page} baseUrl="/blog" showFirstLast={true} maxVisible={5} queryString={queryString} />
     </div>
   </main>
 </BaseLayout>

@@ -8,10 +8,18 @@ const blog = defineCollection({
     title: z.string(),
     description: z.string(),
     pubDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
+    lastmod: z.coerce.date().optional(),
     heroImage: z.string().optional(),
     tags: z.array(z.string()).optional(),
     categories: z.array(z.string()).optional(),
+    license: z.string().optional(),
+    draft: z.boolean().default(false),
+    share: z.object({
+      enable: z.boolean().default(false),
+      link: z.boolean().default(true),
+      twitter: z.boolean().default(true),
+      reddit: z.boolean().default(true),
+    }).optional(),
   }),
 });
 

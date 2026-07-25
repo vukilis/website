@@ -1,0 +1,123 @@
+---
+interface Props {
+  share?: {
+    enable?: boolean | undefined;
+    link?: boolean | undefined;
+    twitter?: boolean | undefined;
+    reddit?: boolean | undefined;
+  } | undefined;
+}
+
+const { share } = Astro.props;
+---
+
+<div class="post-share">
+  {share?.enable && (
+    <>
+      {share.link && (
+        <button class="share-btn share-link" title="Copy link" onclick="copyLink()">
+          <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </button>
+      )}
+      {share.twitter && (
+        <button class="share-btn share-twitter" title="Share on Twitter" onclick="shareOnTwitter()">
+          <svg class="meta-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </button>
+      )}
+      {share.reddit && (
+        <button class="share-btn share-reddit" title="Share on Reddit" onclick="shareOnReddit()">
+          <svg class="meta-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042 1.625c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.166.016-.33.046-.492a1.748 1.748 0 0 1-1.071-1.614c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.133-.847 2.678-1.39 4.476-1.488l.885-4.162a.342.342 0 0 1 .214-.216c.11-.04.243-.02.378.063l2.61.549a1.25 1.25 0 1 1 .837 1.241l-2.446 1.084c-.06.195-.075.464-.003.674.26.718.89 1.164 1.636 1.164.908 0 1.636-.728 1.636-1.626 0-.9-.728-1.626-1.636-1.626a1.748 1.748 0 0 1-1.053.302z"/></svg>
+        </button>
+      )}
+    </>
+  )}
+</div>
+
+<style>
+  .post-share {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .share-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem;
+    color: var(--color-text-dim);
+    display: inline-flex;
+    align-items: center;
+    border-radius: 0.25rem;
+    transition: all 0.2s ease;
+  }
+
+  .share-btn:hover {
+    color: var(--color-primary);
+    background: rgba(59, 130, 246, 0.1);
+  }
+
+  .share-btn svg {
+    width: 0.95em;
+    height: 0.95em;
+  }
+
+  .share-btn.copied {
+    color: #22c55e;
+    background: rgba(34, 197, 94, 0.1);
+    animation: sharePop 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes sharePop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.25); }
+    100% { transform: scale(1); }
+  }
+</style>
+
+<script>
+  window.copyLink = function() {
+    const url = window.location.href;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(() => {
+        const btn = document.querySelector('.share-link');
+        if (btn) {
+          btn.classList.add('copied');
+          setTimeout(() => btn.classList.remove('copied'), 1200);
+        }
+      }).catch(() => {
+        fallbackCopy(url);
+      });
+    } else {
+      fallbackCopy(url);
+    }
+  };
+
+  function fallbackCopy(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      const btn = document.querySelector('.share-link');
+      if (btn) {
+        btn.classList.add('copied');
+        setTimeout(() => btn.classList.remove('copied'), 1200);
+      }
+    } catch (e) {
+      console.error('Copy failed', e);
+    }
+    document.body.removeChild(textarea);
+  }
+
+  window.shareOnTwitter = function() {
+    window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`, '_blank');
+  };
+
+  window.shareOnReddit = function() {
+    window.open(`https://www.reddit.com/submit?url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent(document.title)}`, '_blank');
+  };
+</script>

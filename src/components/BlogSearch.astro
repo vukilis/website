@@ -1,6 +1,6 @@
 ---
 interface Props {
-  allPosts: { id: string; data: { title: string; tags?: string[]; categories?: string[] } }[];
+  allPosts: { id: string; data: { title: string; description?: string; tags?: string[]; categories?: string[] } }[];
 }
 
 const { allPosts } = Astro.props;
@@ -8,6 +8,7 @@ const { allPosts } = Astro.props;
 const globalPostIndex = allPosts.map(post => ({
   id: post.id,
   title: post.data.title,
+  description: post.data.description ?? '',
   url: `/blog/${post.id}/`,
   tags: post.data.tags ?? [],
   categories: post.data.categories ?? [],
@@ -32,7 +33,7 @@ const globalPostIndex = allPosts.map(post => ({
       aria-autocomplete="list"
       aria-expanded="false"
       aria-controls="blog-search-suggestions"
-      aria-label="Search blog posts by title"
+      aria-label="Search blog posts by title and description"
     />
     <button
       id="blog-search-clear"
@@ -46,6 +47,9 @@ const globalPostIndex = allPosts.map(post => ({
         <line x1="6" x2="18" y1="6" y2="18" />
       </svg>
     </button>
+    <span class="search-shortcut" aria-hidden="true">
+      <kbd>⌘</kbd><kbd>K</kbd>
+    </span>
     <ul
       id="blog-search-suggestions"
       class="search-suggestions"
@@ -97,21 +101,34 @@ const globalPostIndex = allPosts.map(post => ({
         return text.replace(regex, '<mark class="search-highlight">$1</mark>');
       }
 
-      function createSuggestionItem(title, query, index) {
+      function createSuggestionItem(title, description, query, index) {
         var li = document.createElement('li');
         li.className = 'search-suggestion';
         li.setAttribute('role', 'option');
         li.setAttribute('aria-selected', 'false');
 
+        var textWrapper = document.createElement('span');
+        textWrapper.className = 'suggestion-text';
+
         var titleSpan = document.createElement('span');
         titleSpan.className = 'suggestion-title';
         titleSpan.innerHTML = highlightMatch(title, query);
+
+        textWrapper.appendChild(titleSpan);
+
+        if (description) {
+          var descSpan = document.createElement('span');
+          descSpan.className = 'suggestion-description';
+          descSpan.innerHTML = highlightMatch(description, query);
+          textWrapper.appendChild(descSpan);
+        }
+
+        li.appendChild(textWrapper);
 
         var arrow = document.createElement('span');
         arrow.className = 'suggestion-arrow';
         arrow.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
 
-        li.appendChild(titleSpan);
         li.appendChild(arrow);
 
         li.addEventListener('click', function () {
@@ -135,9 +152,9 @@ const globalPostIndex = allPosts.map(post => ({
         }
 
         var lowerQuery = query.toLowerCase();
-        var matches = postTitles
-          .map(function (title, idx) { return { title: title, idx: idx }; })
-          .filter(function (item) { return item.title.toLowerCase().indexOf(lowerQuery) !== -1; })
+        var matches = ALL_POSTS
+          .map(function (post, idx) { return { title: post.title, description: post.description || '', url: post.url, idx: idx }; })
+          .filter(function (item) { return item.title.toLowerCase().indexOf(lowerQuery) !== -1 || item.description.toLowerCase().indexOf(lowerQuery) !== -1; })
           .slice(0, 8);
 
         if (matches.length === 0) {
@@ -166,7 +183,7 @@ const globalPostIndex = allPosts.map(post => ({
         suggestionsList.appendChild(divider);
 
         matches.forEach(function (item, i) {
-          var li = createSuggestionItem(item.title, query, i);
+          var li = createSuggestionItem(item.title, item.description, query, i);
           suggestionsList.appendChild(li);
         });
 
@@ -290,5 +307,17 @@ const globalPostIndex = allPosts.map(post => ({
 
   scheduleInit('blog-search');
   document.addEventListener('astro:page-load', function () { scheduleInit('blog-search'); });
+
+  function focusSearchInput() {
+    var input = document.getElementById('blog-search-input');
+    if (input) input.focus();
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      focusSearchInput();
+    }
+  });
 })();
 </script>

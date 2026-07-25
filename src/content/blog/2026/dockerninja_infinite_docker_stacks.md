@@ -3,8 +3,14 @@ title: "DockerNinja - Your Infinite Stack for Containerized Applications"
 url: /dockerninja_infinite_docker_stacks
 pubDate: 2026-06-14T19:00:54+02:00
 lastmod: 2026-06-14T19:00:54+02:00
+share:
+    enable: true
+    link: true
+    twitter: true
+    reddit: true
+
 draft: false
-license: ""
+license: "MIT"
 
 tags: [linux, homelab, website, docker, docker-compose, selfhost]
 categories: [Homelab, Website]
@@ -23,7 +29,7 @@ description: "Let's be honest, containerization has fundamentally changed how we
 
 Containerization redefined my reality, yet I constantly hit a ceiling. I grew tired of the fragmented search for reliable infrastructure code and the endless scouring for inspiration. I built this universe to collapse the hurdles. Whether you are a student exploring the basics, a tinkerer building a homelab or a pro architecting a stack, this is the perfect place for you. Official link: https://dockerninja.org
 
-![DockerNinja Logo](https://dockerninja.org/page_preview.png)
+![Landing Page](https://dockerninja.org/page_preview.png)
 
 ## The Problem: Fragmented Container Discovery
 
@@ -53,7 +59,7 @@ No build tools, no context switching, no debugging someone else's poorly documen
 
 The application is built around a core set of features that make it genuinely useful for daily workflows:
 
-### 📦 Explore All Containers
+### Explore All Containers
 
 The dedicated **Containers page** presents the complete hub. Every application in the database is represented here, sortable alphabetically (A–Z / Z–A) or by global favorites. Pagination keeps the interface snappy regardless of hub size, and a real-time search bar lets you filter down to exactly what you need, all without leaving the page.
 

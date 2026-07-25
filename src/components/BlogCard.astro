@@ -3,16 +3,24 @@ interface Props {
   title: string;
   description: string;
   pubDate: Date;
+  lastmod?: Date | undefined;
   slug: string;
   tags?: string[] | undefined;
   categories?: string[] | undefined;
   activeTag?: string | undefined;
+  readingTime?: number | undefined;
 }
 
 const base = import.meta.env.BASE_URL;
-const { title, description, pubDate, slug, tags, categories, activeTag } = Astro.props;
+const { title, description, pubDate, lastmod, slug, tags, categories, activeTag, readingTime } = Astro.props;
 
 const formattedDate = pubDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+
+const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'short',
   day: 'numeric',
@@ -25,18 +33,33 @@ const categoriesJson = JSON.stringify(categories ?? []);
 <a
   href={`${base}blog/${slug}/`}
   class="blog-card"
+  data-pub-date={pubDate.toISOString()}
+  data-lastmod={lastmod?.toISOString() ?? ''}
+  data-reading-time={readingTime ?? ''}
+  data-title={title}
   data-tags={tagsJson}
   data-categories={categoriesJson}
 >
-  <time class="blog-date">
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-      <line x1="16" y1="2" x2="16" y2="6"></line>
-      <line x1="8" y1="2" x2="8" y2="6"></line>
-      <line x1="3" y1="10" x2="21" y2="10"></line>
-    </svg>
-    {formattedDate}
-  </time>
+  <div class="blog-meta-row">
+    <time class="blog-date">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="16" y1="2" x2="16" y2="6"></line>
+        <line x1="8" y1="2" x2="8" y2="6"></line>
+        <line x1="3" y1="10" x2="21" y2="10"></line>
+      </svg>
+      {formattedDate}
+    </time>
+    {formattedUpdatedDate && lastmod?.getTime() !== pubDate.getTime() && (
+      <span class="blog-updated">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+        </svg>
+        Updated: {formattedUpdatedDate}
+      </span>
+    )}
+  </div>
   <h3 class="blog-title">{title}</h3>
   <p class="blog-description">{description}</p>
   {tags && tags.length > 0 && (
@@ -47,11 +70,22 @@ const categoriesJson = JSON.stringify(categories ?? []);
     </div>
   )}
   <span class="read-more">
-    Read article
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="5" y1="12" x2="19" y2="12"></line>
-      <polyline points="12 5 19 12 12 19"></polyline>
-    </svg>
+    <span class="read-more-text">
+      Read article
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+        <polyline points="12 5 19 12 12 19"></polyline>
+      </svg>
+    </span>
+    {readingTime && (
+      <span class="blog-reading-time">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        {readingTime} min
+      </span>
+    )}
   </span>
 </a>
 
@@ -75,16 +109,38 @@ const categoriesJson = JSON.stringify(categories ?? []);
     box-shadow: 0 8px 30px rgba(59, 130, 246, 0.15);
   }
 
+  .blog-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
   .blog-date {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     font-size: 0.8rem;
-    color: var(--color-text-dim);
-    margin-bottom: 0.75rem;
+    color: var(--color-accent-purple);
+    font-weight: 600;
   }
 
   .blog-date svg {
+    opacity: 0.7;
+  }
+
+  .blog-updated {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.7rem;
+    color: var(--color-accent-cyan);
+    font-style: italic;
+    white-space: nowrap;
+  }
+
+  .blog-updated svg {
     opacity: 0.7;
   }
 
@@ -143,19 +199,43 @@ const categoriesJson = JSON.stringify(categories ?? []);
   .read-more {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: space-between;
+    width: 100%;
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--color-primary);
     margin-top: auto;
+    gap: 0.75rem;
   }
 
-  .read-more svg {
+  .read-more-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .read-more-text svg {
     transition: transform 0.2s ease;
   }
 
-  .blog-card:hover .read-more svg {
+  .blog-card:hover .read-more-text svg {
     transform: translateX(4px);
+  }
+
+  .read-more .blog-reading-time {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.7rem;
+    color: var(--color-text-dim);
+    font-weight: 600;
+    white-space: nowrap;
+    margin-left: auto;
+    padding-right: 0.5rem;
+  }
+
+  .read-more .blog-reading-time svg {
+    opacity: 0.7;
   }
 </style>
 

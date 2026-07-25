@@ -35,6 +35,12 @@ import IconArrowNarrowUp from "../assets/icons/IconArrowNarrowUp.svg";
     --btt-border: rgba(128, 128, 128, 0.25);
   }
 
+  :global([data-theme="light"]) {
+    --btt-accent: var(--color-primary, #2563EB);
+    --btt-background: #ffffff;
+    --btt-border: rgba(0, 0, 0, 0.08);
+  }
+
   .btt-container {
     position: fixed;
     right: 2rem;
@@ -89,6 +95,14 @@ import IconArrowNarrowUp from "../assets/icons/IconArrowNarrowUp.svg";
 
   .btt-button:active {
     transform: scale(0.95);
+  }
+
+  :global([data-theme="light"]) .btt-button {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  :global([data-theme="light"]) .btt-button:hover {
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
   }
 
   .progress-indicator {

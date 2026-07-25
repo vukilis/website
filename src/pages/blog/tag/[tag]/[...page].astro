@@ -2,9 +2,9 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import Navigation from '../../../../components/Navigation.astro';
-import BlogCard from '../../../../components/BlogCard.astro';
-import BlogFilter from '../../../../components/BlogFilter.astro';
 import BlogSearch from '../../../../components/BlogSearch.astro';
+import BlogFilter from '../../../../components/BlogFilter.astro';
+import BlogSort from '../../../../components/BlogSort.astro';
 import Pagination from '../../../../components/Pagination.astro';
 
 export async function getStaticPaths({ paginate }: { paginate: (...args: any[]) => Promise<any[]> }) {
@@ -20,14 +20,12 @@ export async function getStaticPaths({ paginate }: { paginate: (...args: any[]) 
       sorted.filter(p => (p.data.tags ?? []).map(t => t.toLowerCase()).includes(tag)),
       {
         params: { tag },
-        pageSize: 9,
+        pageSize: 12,
         format: (p) => `/blog/tag/${tag}${!p || p === '/' ? '' : '/' + p}`
       }
     )
   );
 }
-
-type BlogPost = CollectionEntry<'blog'>;
 
 const { page } = Astro.props;
 
@@ -37,6 +35,12 @@ const activeTag = tagMatch ? tagMatch[1] : 'unknown';
 
 const allPostsForSearch = await getCollection('blog', ({ data }) => !data.draft);
 const sortedAllPosts = allPostsForSearch.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const tagPosts = sortedAllPosts.filter(p => (p.data.tags ?? []).map(t => t.toLowerCase()).includes(activeTag));
+const url = new URL(Astro.url);
+const sortParam = url.searchParams.get('sort');
+const queryString = sortParam ? `sort=${encodeURIComponent(sortParam)}` : '';
+const initialPage = page?.currentPage || 1;
 ---
 
 <BaseLayout title="Blog - Vuk1lis" description="This blog is made to document all my work, store a different guides and how-to articles.">
@@ -53,33 +57,9 @@ const sortedAllPosts = allPostsForSearch.sort((a, b) => b.data.pubDate.valueOf()
 
       <BlogSearch allPosts={sortedAllPosts} />
       <BlogFilter allPosts={sortedAllPosts} />
+      <BlogSort allPosts={tagPosts} currentPage={page.currentPage} activeTag={activeTag} />
 
-      <div class="blog-grid">
-        {page.data.length > 0 ? (
-          page.data.map((post: BlogPost) => (
-            <BlogCard
-              title={post.data.title}
-              description={post.data.description}
-              pubDate={post.data.pubDate}
-              slug={post.id}
-              tags={post.data.tags}
-              categories={post.data.categories}
-              activeTag={activeTag}
-            />
-          ))
-        ) : (
-          <p class="no-results">
-            No posts found with this tag. <a href="/blog/">Show all posts</a>.
-          </p>
-        )}
-      </div>
-
-      <Pagination
-        page={page}
-        baseUrl={`/blog/tag/${activeTag}`}
-        showFirstLast={true}
-        maxVisible={5}
-      />
+      <Pagination page={page} baseUrl={`/blog/tag/${activeTag}`} showFirstLast={true} maxVisible={5} queryString={queryString} />
     </div>
   </main>
 </BaseLayout>
