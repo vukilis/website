@@ -45,10 +45,10 @@ function getReadingTime(post: BlogPost): number {
         type="button"
       >
         <span class="sort-text">A/Z</span>
-        <svg class="sort-icon sort-icon--up" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="sort-icon sort-icon--up" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="18 15 12 9 6 15"></polyline>
         </svg>
-        <svg class="sort-icon sort-icon--down" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="sort-icon sort-icon--down" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="6 9 12 15 18 9"></polyline>
         </svg>
       </button>
@@ -61,10 +61,10 @@ function getReadingTime(post: BlogPost): number {
         type="button"
       >
         <span class="sort-text">Date</span>
-        <svg class="sort-icon sort-icon--up" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="sort-icon sort-icon--up" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="18 15 12 9 6 15"></polyline>
         </svg>
-        <svg class="sort-icon sort-icon--down" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="sort-icon sort-icon--down" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="6 9 12 15 18 9"></polyline>
         </svg>
       </button>
@@ -77,10 +77,10 @@ function getReadingTime(post: BlogPost): number {
         type="button"
       >
         <span class="sort-text">Read time</span>
-        <svg class="sort-icon sort-icon--up" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="sort-icon sort-icon--up" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="18 15 12 9 6 15"></polyline>
         </svg>
-        <svg class="sort-icon sort-icon--down" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="sort-icon sort-icon--down" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="6 9 12 15 18 9"></polyline>
         </svg>
       </button>
@@ -386,10 +386,11 @@ function getReadingTime(post: BlogPost): number {
 
   .sort-controls {
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
+    gap: .75rem;
     margin-bottom: 1.5rem;
     flex-wrap: wrap;
+    flex-direction: column;
+    width: fit-content;
   }
 
   .sort-label {
@@ -405,7 +406,7 @@ function getReadingTime(post: BlogPost): number {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--sort-buttons-bg, rgba(255, 255, 255, 0.03));
     border: 1px solid var(--color-border, #334155);
     border-radius: 0.5rem;
     padding: 0.25rem;
@@ -433,7 +434,7 @@ function getReadingTime(post: BlogPost): number {
 
   .sort-btn:hover {
     color: var(--color-text, #E2E8F0);
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--sort-btn-hover-bg, rgba(255, 255, 255, 0.06));
   }
 
   .sort-btn.active {
@@ -475,14 +476,14 @@ function getReadingTime(post: BlogPost): number {
     gap: 0.35rem;
     padding: 0.4rem 0.75rem;
     margin-left: 0.25rem;
-    background: rgba(239, 68, 68, 0.12);
-    border: 1px solid rgba(239, 68, 68, 0.35);
+    background: var(--clear-sort-bg, rgba(239, 68, 68, 0.12));
+    border: 1px solid var(--clear-sort-border, rgba(239, 68, 68, 0.35));
     border-radius: 0.5rem;
     font-size: 0.75rem;
     font-weight: 600;
     font-family: var(--font-body, 'DM Sans', sans-serif);
     letter-spacing: 0.03em;
-    color: #fca5a5;
+    color: var(--clear-sort-color, #fca5a5);
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     outline: none;
@@ -493,9 +494,9 @@ function getReadingTime(post: BlogPost): number {
   }
 
   .clear-sort-btn:hover {
-    background: rgba(239, 68, 68, 0.2);
-    border-color: rgba(239, 68, 68, 0.6);
-    color: #fecaca;
+    background: var(--clear-sort-hover-bg, rgba(239, 68, 68, 0.2));
+    border-color: var(--clear-sort-hover-border, rgba(239, 68, 68, 0.6));
+    color: var(--clear-sort-hover-color, #fecaca);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
   }
@@ -506,7 +507,7 @@ function getReadingTime(post: BlogPost): number {
   }
 
   .clear-sort-btn:focus-visible {
-    outline: 2px solid #f87171;
+    outline: 2px solid var(--clear-sort-border, #f87171);
     outline-offset: 2px;
   }
 
@@ -537,16 +538,68 @@ function getReadingTime(post: BlogPost): number {
 
   @media (max-width: 768px) {
     .sort-controls {
-      gap: 0.5rem;
+      gap: 0.35rem;
     }
 
     .sort-buttons {
+      gap: 0.2rem;
       flex-wrap: wrap;
     }
 
     .sort-btn {
-      padding: 0.35rem 0.6rem;
+      padding: 0.25rem 0.5rem;
       font-size: 0.75rem;
+    }
+
+    .sort-text {
+      font-size: 0.75rem;
+    }
+
+    .sort-icon {
+      width: 14px;
+      height: 14px;
+    }
+
+    .clear-sort-btn {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+    }
+
+    .clear-sort-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .sort-buttons {
+      gap: 0.15rem;
+      padding: 0.15rem;
+    }
+
+    .sort-btn {
+      padding: 0.2rem 0.4rem;
+      font-size: 0.75rem;
+    }
+
+    .sort-text {
+      font-size: 0.75rem;
+    }
+
+    .sort-icon {
+      width: 12px;
+      height: 12px;
+    }
+
+    .clear-sort-btn {
+      padding: 0.2rem 0.4rem;
+      font-size: 0.75rem;
+      margin-left: 0.15rem;
+    }
+
+    .clear-sort-btn svg {
+      width: 12px;
+      height: 12px;
     }
   }
 

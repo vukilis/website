@@ -30,6 +30,16 @@
   --font-heading: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'DM Sans', system-ui, sans-serif;
   --nav-height: 80px;
+
+  --clear-sort-bg: rgba(239, 68, 68, 0.12);
+  --clear-sort-border: rgba(239, 68, 68, 0.35);
+  --clear-sort-color: #fca5a5;
+  --clear-sort-hover-bg: rgba(239, 68, 68, 0.2);
+  --clear-sort-hover-border: rgba(239, 68, 68, 0.6);
+  --clear-sort-hover-color: #fecaca;
+
+  --sort-btn-hover-bg: rgba(255, 255, 255, 0.06);
+  --sort-buttons-bg: rgba(255, 255, 255, 0.03);
 }
 
 [data-theme="light"] {
@@ -64,6 +74,16 @@
   --search-empty-icon-bg: rgba(0, 0, 0, 0.04);
   --search-status-bg: rgba(0, 0, 0, 0.03);
   --search-status-border: rgba(0, 0, 0, 0.06);
+
+  --clear-sort-bg: rgba(220, 38, 38, 0.08);
+  --clear-sort-border: rgba(220, 38, 38, 0.2);
+  --clear-sort-color: #DC2626;
+  --clear-sort-hover-bg: rgba(220, 38, 38, 0.12);
+  --clear-sort-hover-border: rgba(220, 38, 38, 0.35);
+  --clear-sort-hover-color: #991B1B;
+
+  --sort-btn-hover-bg: rgba(0, 0, 0, 0.06);
+  --sort-buttons-bg: rgba(0, 0, 0, 0.03);
 }
 
 * {
