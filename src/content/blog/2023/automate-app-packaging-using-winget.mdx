@@ -1,0 +1,61 @@
+---
+title: "Automate App Packaging Using Winget"
+url: /automate-app-packaging-using-winget
+pubDate: 2023-07-16T14:25:21+02:00
+lastmod: 2023-07-16T14:25:21+02:00
+share:
+    enable: true
+    link: true
+    twitter: true
+    reddit: true
+
+draft: false
+license: "MIT"
+
+tags: [winget, automation]
+categories: [Windows]
+description: "I want to show my simple script that automates the installation of..."
+
+---
+import { Image } from 'astro:assets';
+import packagesImg from '../../../assets/images/2023/automate_app_installation_using_winget/packages.png';
+import searchImg from '../../../assets/images/2023/automate_app_installation_using_winget/search.png';
+
+## Contents
+
+## How To Start
+
+* Download script from github https://github.com/vukilis/Windows10AppScript  
+or  
+run following command in terminal (**terminal must be run as Admin**):
+```powershell
+iex ((New-Object System.Net.WebClient).DownloadString('https://git.io/JDBpN'))
+```
+
+## Prepare App List
+
+* You have to create json file with your packages.
+
+* If you downloaded script from github you will have in directory example file **"package.json"**.  
+
+* In this file provide name of your apps.
+
+<Image src={packagesImg} alt="Font" />
+
+* App name can be found with next command (example):
+```powershell
+winget search sumatra
+```
+<Image src={searchImg} alt="Font" />
+
+## Install
+
+* When you run the script enter your json file. Location can be **local (absolute path)** or **url**.  
+* Proceed the installation.
+
+
+---
+
+## Conclusion
+
+Automating app installation with Winget and a simple JSON package list makes setting up a new Windows machine fast and repeatable.

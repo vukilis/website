@@ -1,0 +1,106 @@
+---
+title: "My Hesuvi Configuration on Linux"
+url: /my-hesuvi-configuration-on-linux
+pubDate: 2023-09-17T19:28:33+02:00
+lastmod: 2023-09-17T19:28:33+02:00
+share:
+    enable: true
+    link: true
+    twitter: true
+    reddit: true
+
+draft: false
+license: "MIT"
+
+tags: [ubuntu, fedora, arch, audio]
+categories: [Linux]
+description: "In this article I will show how to setup Hesuvi (Virtual 7.1 Surround Sound) in Linux using PipeWire..."
+---
+
+import { Image } from 'astro:assets';
+
+## Contents
+
+## Check your audio driver
+
+First, we need to check if we already running PipeWire as our audio driver. To do that we need to run next command:
+
+```bash
+pactl info | grep "Server Name"
+```
+
+If you already running PipeWire, then jump over installation process.
+
+## Ubuntu
+
+* Add the PipeWire PPA
+
+```bash
+sudo add-apt-repository ppa:pipewire-debian/pipewire-upstream
+```
+* Install the PipeWire
+
+```bash
+sudo apt update
+sudo apt install pipewire pipewire-audio-client-libraries
+```
+
+* It is also recommended that you install some additional libraries if you are using Bluetooth, GStreamer, or JACK
+
+```bash
+sudo apt install gstreamer1.0-pipewire libpipewire-0.3-{0,dev,modules} libspa-0.2-{bluetooth,dev,jack,modules} pipewire{,-{audio-client-libraries,pulse,media-session,bin,locales,tests}}
+```
+
+* Run the following command to reload the daemon in systemd, disable PulseAudio and enable PipeWire
+
+```bash
+systemctl --user daemon-reload
+systemctl --user --now disable pulseaudio.service pulseaudio.socket
+systemctl --user --now stop pulseaudio.service pulseaudio.socket
+systemctl --user --now enable pipewire.service pipewire-pulse.service
+systemctl --user --now start pipewire.service pipewire-pulse.service
+```
+
+## Arch
+
+* Install the PipeWire
+
+```bash
+sudo pacman -S pipewire
+```
+
+* It is also recommended that you install some additional libraries if you are using Bluetooth, GStreamer, or JACK, ALSA
+
+```bash
+sudo pacman -S pipewire-alsa pipewire-pulse wireplumber
+```
+
+* Run the following command to reload the daemon in systemd, disable PulseAudio and enable PipeWire
+
+```bash
+systemctl --user daemon-reload
+systemctl --user --now disable pulseaudio.service pulseaudio.socket
+systemctl --user --now stop pulseaudio.service pulseaudio.socket
+systemctl --user --now enable pipewire.service pipewire-pulse.service wireplumber
+systemctl --user --now start pipewire.service pipewire-pulse.service wireplumber
+```
+
+## Virtual surround sound configuration
+
+* In **$HOME/.config/** make pipewire directory
+* Copy **pipewire.conf** from **/usr/share/pipewire/** to **.config/**
+* Check HRTF Database  
+https://airtable.com/appayGNkn3nSuXkaz/shruimhjdSakUPg2m/tbloLjoZKWJDnLtTc
+Choose your favourite sound profile and download **.wav** in **.config/**
+* Check pipewire configuration  
+https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/Filter-Chain#draining
+
+
+### My configuration:
+https://github.com/vukilis/UltimateSetup/tree/main/dotfiles/.config/pipewire
+
+---
+
+## Conclusion
+
+Setting up virtual 7.1 surround sound on Linux with Hesuvi and PipeWire brings spatial audio to games, movies, and music without requiring proprietary drivers.

@@ -1,0 +1,191 @@
+---
+title: "DockerNinja - Your Infinite Stack for Containerized Applications"
+url: /dockerninja_infinite_docker_stacks
+pubDate: 2026-06-14T19:00:54+02:00
+lastmod: 2026-06-14T19:00:54+02:00
+share:
+    enable: true
+    link: true
+    twitter: true
+    reddit: true
+
+draft: false
+license: "MIT"
+
+tags: [linux, homelab, website, docker, docker-compose, selfhost]
+categories: [Homelab, Website]
+description: "Let's be honest, containerization has fundamentally changed how we ship software, but the experience..."
+---
+import { Image } from 'astro:assets';
+import containersImg from '../../../assets/images/2026/dockerninja_infinite_docker_stacks/containers.png';
+import categoriesImg from '../../../assets/images/2026/dockerninja_infinite_docker_stacks/categories.png';
+import searchImg from '../../../assets/images/2026/dockerninja_infinite_docker_stacks/search.png';
+import appModalImg from '../../../assets/images/2026/dockerninja_infinite_docker_stacks/app_modal.png';
+import recentlyImg from '../../../assets/images/2026/dockerninja_infinite_docker_stacks/recently.png';
+
+<div align="center">
+  <img src="https://dockerninja.org/apple-touch-icon.png" alt="Docker Ninja" />
+  <h1>Docker Ninja</h1>
+  <h3>The official frontend application for dockerninja.org 🚀</h3>
+  <p><strong>Master your container universe with perfectly crafted stacks for any application — all in one place</strong></p>
+</div>
+
+## Getting Started
+
+Containerization redefined my reality, yet I constantly hit a ceiling. I grew tired of the fragmented search for reliable infrastructure code and the endless scouring for inspiration. I built this universe to collapse the hurdles. Whether you are a student exploring the basics, a tinkerer building a homelab or a pro architecting a stack, this is the perfect place for you. Official link: https://dockerninja.org
+
+<img src="https://dockerninja.org/page_preview.png" alt="Landing Page" />
+
+## The Problem: Fragmented Container Discovery
+
+Container technology is mature, but **discovering reliable, production-ready configurations is not**. Whether you are a student setting up a homelab, a hobbyist experimenting with self-hosted services, or a professional architecting a multi-service stack, the journey typically looks the same:
+
+1. Search for an application + "Docker Compose example"
+2. Find 10 different configurations, each slightly different
+3. Spend hours debugging networking, volumes, and environment variables
+4. Wish there was a single source of truth
+
+Docker Ninja collapses that entire process into a few clicks.
+
+## What Docker Ninja Does
+
+Docker Ninja is an open-source, browser-based registry of **battle-tested Docker Compose configurations**, organized into a searchable, filterable, and community-driven interface. Users can browse containers by category, preview optimized configurations, copy them instantly, or download them as files, all without leaving the browser.
+
+The core user flow is intentionally simple:
+
+1. Search for the stack you want (e.g., "Home Assistant", "Nginx Proxy Manager")
+2. Open the application card and preview the compose file
+3. Copy it with one click or export it as a `compose.yaml`
+4. Run `docker compose up` on your server
+
+No build tools, no context switching, no debugging someone else's poorly documented config.
+
+## Key Features
+
+The application is built around a core set of features that make it genuinely useful for daily workflows:
+
+### Explore All Containers
+
+The dedicated **Containers page** presents the complete hub. Every application in the database is represented here, sortable alphabetically (A–Z / Z–A) or by global favorites. Pagination keeps the interface snappy regardless of hub size, and a real-time search bar lets you filter down to exactly what you need, all without leaving the page.
+
+<Image src={containersImg} alt="Containers" />
+
+### Browsing by Category
+
+Applications are organized into logical categories — from reverse proxies and media servers to databases and monitoring tools. The **Categories view** lets you explore stacks by architecture layer, making it easy to discover related tools. Each category shows its container count, and the active selection persists in the URL so you can share filtered views.
+
+<Image src={categoriesImg} alt="Categories" />
+
+### Instant Search
+
+A global search bar filters the entire registry in real-time. Whether you know the exact name or are casting around for inspiration, the search gets you there fast, without reloading the page.
+
+<Image src={searchImg} alt="Search Application" />
+
+### One-Click Copy & Export
+
+Every application card opens a modal with the full Docker Compose configuration. From there, you can:
+
+- **Copy** the compose file directly to your clipboard
+- **Download** it as a `.yaml` and `.env` file, ready to deploy
+- **Copy the CLI command** for `docker compose up` or `docekr run`
+
+<Image src={appModalImg} alt="App Modal" />
+
+### Favorites & Recently Viewed
+
+Users can like any container stack. Favorites are counted globally and sorted in a dedicated view. The app also tracks your **recently viewed** items locally, so you can jump back into a configuration you were just editing without hunting through your history.
+
+<Image src={recentlyImg} alt="Recently Activity" />
+
+### Dark & Light Theme
+
+The entire interface supports both dark and light modes.
+
+### Fully Responsive
+
+The layout is designed around a **collapsible sidebar** on desktop and a **slide-out overlay** on mobile.
+
+### Privacy by Design
+
+The project is built with privacy as a first-class concern:
+- No IP addresses are logged
+- Session identifiers are random, transient, and scoped to a single session
+- No persistent tracking across websites
+- The full codebase is open source and auditable
+
+This aligns with **GDPR / DSGVO** requirements.  
+Check more on official github repo: https://github.com/vukilis/docker-ninja
+
+## Technical Stack
+
+<div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 5px; padding: 20px 0;">
+  <img width="90px" src="https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=next.js&logoColor=white" />
+  <img width="81px" src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black" />
+  <img width="108px" src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white" />
+  <img width="128px" src="https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white" />
+  <img width="80px" src="https://img.shields.io/badge/Nix_Shell-5277C3?style=flat-square&logo=nixos&logoColor=white" />
+  <img width="70px" src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" />
+  <img width="86px" src="https://img.shields.io/badge/Cloudflare-F6821F?style=flat-square&logo=cloudflare&logoColor=white" />
+</div>
+
+## The Open-Source Model
+
+Docker Ninja is **community-driven**. The registry grows because users contribute:
+
+- **Request a new stack** via the in-app "Request" button, which opens a form to check against the database and trigger a pull request
+- **Report issues** on existing stacks — security updates, version bumps, misconfigurations
+- **Discuss** improvements in GitHub Discussions
+
+Maintainers require focused PRs (one change per PR), documented environment variables, and transparent commit messages. The entire project is MIT-licensed, free for personal and commercial use.
+
+## Fuel the Project 🚀
+
+<div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px;">
+  <a style="border-bottom: none" href="https://buymeacoffee.com/vukilis">
+    <img src="https://img.shields.io/badge/Support_on_buymeacoffee-FF5F5F?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Support on Ko-fi" />
+  </a>
+  <a style="border-bottom: none" href="https://ko-fi.com/vukilis">
+    <img src="https://img.shields.io/badge/Support_on_Ko--fi-FF2F5F?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Support on Ko-fi" />
+  </a>
+  <a style="border-bottom: none" href="https://dockerninja.org/sponsoring">
+    <img src="https://img.shields.io/badge/DockerNinja.org%2Fsponsoring-60a9fa?style=for-the-badge" alt="Donate via dockerninja.org" />
+  </a>
+</div>
+
+<br />
+
+<div align="left">
+  <p>
+    If these <span style="color: #60a5fa;">compose files</span> saved you hours of debugging or helped you learn something new, consider sending a one-time donation to keep the lights on and the registry growing.
+  </p>
+  <p>
+    Your support keeps the <span style="color: #f97316;">servers running</span> and the code open source.
+  </p>
+  
+  <blockquote>
+    <span style="color: #f472b6;"><i><b>"Individual contributions ensure a decentralized future for self-hosters."</b></i></span>
+  </blockquote>
+</div>
+
+## Project Activity
+
+<p align="center">
+  <img
+    src="https://repobeats.axiom.co/api/embed/5f464f4b23c29ab84d83edfe312c8baef8716162.svg"
+    alt="Repository activity"
+    width="700"
+  />
+</p>
+
+## Conclusion
+
+The goal is to make Docker Ninja the ultimate reference for containerized self-hosting. By expanding our registry, improving search relevance, and adding more stacks, we are on a mission to make your containerization life as seamless as possible.
+
+If you self-host anything, even one container, this project is for you. Star it, use it, and contribute a stack.
+
+---
+
+**Docker Ninja** is live at [dockerninja.org](https://dockerninja.org). The source code is available at [github.com/vukilis/docker-ninja](https://github.com/vukilis/docker-ninja).
+
+*"Individual contributions ensure a decentralized future for self-hosters."*

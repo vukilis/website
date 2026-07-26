@@ -1,0 +1,52 @@
+---
+title: "Changing UUID for VirtualBox VMs"
+url: /vbox-uuid
+pubDate: 2023-06-21T01:48:51+02:00
+lastmod: 2023-06-21T01:48:51+02:00
+share:
+    enable: true
+    link: true
+    twitter: true
+    reddit: true
+
+draft: false
+license: "MIT"
+
+tags: [vbox]
+categories: [Virtualization, Linux, Windows]
+description: "When I want to copy existing VMs to create a new project / VM, my new created VM have..."
+
+---
+
+## Contents
+
+## The Problem
+
+---
+
+When I want to copy existing VMs to create a new project / VM, my new created VM have the same UUID.   
+So, if I try to open newly copied VM, error message apear where says that I can't run VM because already existing one with same UUID.   
+
+---
+
+## The Solution
+
+1. Open Terminal and navigate to folder where you have installed Oracle Virtual Box. 
+
+2. Run next command twice to generate an UUID:
+
+```shell frame="terminal"
+$ VBoxManage internalcommands sethduuid "VDI/VMDK file location"
+```
+
+3. Open the **.vbox** file in a text editor
+
+4. Replace the **UUID** found in **Machine uuid=`"{...}"`** with **first** generated UUID
+
+5. replace the **UUID** found in **HardDisk uuid=`"{...}"`** and in **Image uuid=`"{}"`** *(located at the end of the file)* with **second** generated UUID
+
+---
+
+## Conclusion
+
+Changing the UUID for a copied VirtualBox VM eliminates the conflict that prevents the new VM from starting, allowing you to run multiple independent instances.

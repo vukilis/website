@@ -1,0 +1,96 @@
+---
+title: "Scan Your Network With Nmap"
+url: /scan-your-network-with-nmap
+pubDate: 2023-07-11T19:32:29+02:00
+lastmod: 2023-07-11T19:32:29+02:00
+share:
+    enable: true
+    link: true
+    twitter: true
+    reddit: true
+
+draft: false
+license: "MIT"
+
+tags: [nmap, forensics]
+categories: [Networking, CyberSecurity]
+description: "How to scan and find Network Vulnerabilities with nmap tool. With just one command..."
+
+---
+import { Image } from 'astro:assets';
+import cheatsheetImg from '../../../assets/images/2023/scan_your_network_with_nmap/cheatsheet.png';
+
+## Contents
+
+## Ping Scanning
+
+* **Scan your network to see active IP** 
+
+```bash
+nmap -sP 192.168.0.1/24
+```
+
+## Port Scanning
+
+* **Scan open ports in specific range**
+
+```bash
+nmap -p 1-999 192.168.0.113
+```
+* **Show what port is open/filtered with Xmas scan**
+
+```bash
+nmap -sX 192.168.0.113 -Pn -vv
+```
+
+* **Scan ports using tcp connection**
+
+```bash
+nmap -sT 192.168.0.113
+```
+
+* **Scan ports with stealth mode**
+
+```bash
+nmap -sS 192.168.0.113
+```
+
+## OS Scanning
+
+* **Detect system, one of the most powerful features of the tool**
+
+```bash
+nmap -O 192.168.0.113
+```
+
+* **Enable system detection, script scanning, version detection, and traceroute. (Aggressive mode)**
+
+```bash
+nmap -A 192.168.0.113
+```
+
+## Scripts
+
+* **Run set of scripts distributed with Nmap or write custom scripts**  
+https://nmap.org/nsedoc/scripts/
+
+```bash
+nmap --script vuln 192.168.0.113
+```
+
+## Example
+
+```bash
+nmap -Pn -sS -T2 -p- -vvv 192.168.0.113
+nmap -Pn -sV -A -p- -vvv 192.168.0.113
+nmap -sV -sT -p- --script safe 192.168.0.113
+```
+
+* **Cheatsheet**     
+<Image src={cheatsheetImg} alt="Nmap" />
+
+---
+
+## Conclusion
+
+Nmap is an essential tool for any sysadmin or security professional. Master these commands to quickly discover hosts, open ports, and potential vulnerabilities on any network.

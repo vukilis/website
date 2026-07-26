@@ -1,0 +1,90 @@
+---
+title: "Windows 10/11 Optimizer & Debloater"
+url: /Windows_11_Optimizer_Debloater
+pubDate: 2024-05-07T23:54:16+02:00
+lastmod: 2025-08-20T17:05:00+02:00
+share:
+    enable: true
+    link: true
+    twitter: true
+    reddit: true
+
+draft: false
+license: "MIT"
+
+tags: [windows, automation, scripts, winget, debloat]
+categories: [Windows]
+description: "This Utility show basic system information, install programs, debloat and optimize Windows..."
+---
+
+import { Image } from 'astro:assets';
+import infoImg from '../../../assets/images/2024/Windows_11_Optimizer_Debloater/info.png';
+import installImg from '../../../assets/images/2024/Windows_11_Optimizer_Debloater/install.png';
+import debloatImg from '../../../assets/images/2024/Windows_11_Optimizer_Debloater/debloat.png';
+import optimizationImg from '../../../assets/images/2024/Windows_11_Optimizer_Debloater/optimization.png';
+import servicesImg from '../../../assets/images/2024/Windows_11_Optimizer_Debloater/services.png';
+import updatesImg from '../../../assets/images/2024/Windows_11_Optimizer_Debloater/updates.png';
+import configImg from '../../../assets/images/2024/Windows_11_Optimizer_Debloater/config.png';
+
+## Contents
+
+## One Command - Download and Usage
+
+Requires you to launch PowerShell or Windows Terminal As **ADMINISTRATOR!**
+
+Launch Command:
+
+```powershell
+iwr -useb vukilis.com/win11deb | iex
+```
+
+If you are having TLS 1.2 Issues or You cannot find or resolve `vukilis.com/win11deb` then run with the following command:
+
+```powershell
+[Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12;iex(New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/main/win11deb.ps1')
+```
+
+## Parts of Utility
+
+This utility show basic system information, install programs, debloat and optimize Windows with tweaks, troubleshoot with config, and fix Windows updates.
+
+It has 7 main tabs:
+
+* **INFO** - Show basic system information about OS and hardware.
+
+<Image src={infoImg} alt="info"/>
+
+* I**NSTALL** - Install/Uninstall/Upgrade winget, chocolatey and python packages
+
+<Image src={installImg} alt="install"/>
+
+* **DEBLOAT** - Removes all necessary pre-installed apps comes with Windows
+
+<Image src={debloatImg} alt="debloat"/>
+
+* **OPTIMIZATION** - Disable Telemetry, optimizes Windows and reduces running processes. 
+
+<Image src={optimizationImg} alt="optimization"/>
+
+* **SERVICES** - Shows services status and cut down on running background services.
+
+<Image src={servicesImg} alt="services"/>
+
+* **UPDATES** - Change Windows Update to only use Security Updates, Pause Updates for 5 weeks or Disable them altogether. Also, Fix Updates if you have problem and back to Default Settings.
+
+<Image src={updatesImg} alt="updates"/>
+
+* **CONFIG** - Configure your system and launch legacy Win7 Control Panels.
+
+<Image src={configImg} alt="config"/>
+
+## Conclusion
+
+Check *Windows11-Optimizer-Debloater* script on github:  
+https://github.com/vukilis/Windows11-Optimizer-Debloater
+
+If you encounter any challenges or problems with the script, submit them via the **"Issues"** tab on the GitHub repository. By filling out the provided template, you can provide specific details about the issue.
+
+To contribute new code, please ensure that it is submitted to the **DEV BRANCH**. Please note that merges will not be performed directly on the MAIN branch.
+
+When creating pull requests, it is essential to thoroughly **document** all changes made. Any code lacking sufficient documentation may also be denied.
