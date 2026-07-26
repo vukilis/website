@@ -3,7 +3,7 @@ import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 
 const blog = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -24,7 +24,7 @@ const blog = defineCollection({
 });
 
 const projectsIT = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/projects/it' }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects/it' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -38,7 +38,7 @@ const projectsIT = defineCollection({
 });
 
 const projectsDesign = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/projects/design' }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects/design' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -52,7 +52,7 @@ const projectsDesign = defineCollection({
 });
 
 const projectsMusic = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/projects/music' }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects/music' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),

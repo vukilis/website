@@ -1,6 +1,6 @@
 ---
 import SocialLinks from './SocialLinks.astro';
-import HomelabStatus from './HomelabStatus.astro';
+import Sponsoring from './Sponsoring.astro';
 
 interface Props {
   socialLinks?: {
@@ -19,20 +19,16 @@ const { socialLinks } = Astro.props;
     <div class="footer-main">
       <div class="footer-brand">
         <a href="/" class="footer-logo">
-          <img href="/" src="/logo.png" alt="Vuk1lis logo" class="footer-logo-img" />
+          <img href="/" src="/logo.png" alt="Vuk1lis logo" class="logo-img" />
         </a>
       </div>
 
-      <!-- Homelab status badges -->
       <div class="footer-sections">
         <div class="footer-social">
-          <h3 class="footer-heading">Homelab Status</h3>
-          <HomelabStatus />
+          <h3 class="footer-heading">Sponsoring</h3>
+          <Sponsoring />
         </div>
-      </div>
 
-      <!-- Social links -->
-      <div class="footer-sections">
         <div class="footer-social">
           <h3 class="footer-heading">Connect</h3>
           <SocialLinks links={socialLinks} />
@@ -68,12 +64,14 @@ const { socialLinks } = Astro.props;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 3rem;
-    margin-bottom: 3rem;
+    /* gap: 3rem; */
+    margin-bottom: 4rem;
+    position: relative;
   }
 
   .footer-brand {
     max-width: 320px;
+    flex-shrink: 0;
   }
 
   .footer-logo {
@@ -85,25 +83,11 @@ const { socialLinks } = Astro.props;
     letter-spacing: 0.05em;
   }
 
-  .footer-logo:hover {
-    color: var(--color-primary);
-  }
-
-  .footer-logo-img {
-    margin-top: 0.75rem;
-    height: 10rem;
-    width: auto;
-    display: block;
-    transition: transform 0.3s ease;
-  }
-
-  .footer-logo-img:hover {
-    transform: scale(1.02);
-  }
-
   .footer-sections {
     display: flex;
     gap: 4rem;
+    flex: 1;
+    justify-content: flex-end;
   }
 
   .footer-heading {
@@ -208,6 +192,7 @@ const { socialLinks } = Astro.props;
       width: 100%;
       flex-direction: column;
       gap: 2rem;
+      justify-content: center;
     }
 
     .footer-nav,
@@ -220,6 +205,10 @@ const { socialLinks } = Astro.props;
     }
 
     .footer-social :global(.social-links) {
+      justify-content: center;
+    }
+
+    :global(.sponsoring-links) {
       justify-content: center;
     }
 

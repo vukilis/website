@@ -156,14 +156,13 @@ const allPostsCount = allPosts.length;
       var base = href.split('?')[0];
       var linkParams = new URLSearchParams(href.split('?')[1] || '');
       linkParams.set('sort', sort);
-      link.setAttribute('href', base + '?' + linkParams.toString());
+      var newHref = base + '?' + linkParams.toString();
+      link.setAttribute('href', newHref);
     }
 
-    function init() {
+    function updateFilterPills() {
       var filter = document.querySelector('.blog-filter');
       if (!filter) return;
-
-      filter.addEventListener('click', preserveSortOnCategoryClick);
 
       var params = new URLSearchParams(window.location.search);
       var sort = params.get('sort');
@@ -183,11 +182,16 @@ const allPostsCount = allPosts.length;
       });
     }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
-    } else {
-      init();
+    if (!document.__blogFilterInitialized) {
+      document.__blogFilterInitialized = true;
+      document.addEventListener('click', preserveSortOnCategoryClick);
     }
-    document.addEventListener('astro:page-load', init);
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', updateFilterPills);
+    } else {
+      updateFilterPills();
+    }
+    document.addEventListener('astro:page-load', updateFilterPills);
   })();
 </script>

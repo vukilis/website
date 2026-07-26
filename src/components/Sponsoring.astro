@@ -1,52 +1,40 @@
 ---
-interface SocialLink {
+interface SponsoringLink {
   name: string;
   url: string;
   icon: string;
   color?: string;
 }
 
-const defaultLinks: SocialLink[] = [
+const defaultLinks: SponsoringLink[] = [
   {
-    name: 'GitHub',
-    url: 'https://github.com/kpab',
+    name: 'GitHub Sponsors',
+    url: 'https://github.com/sponsors/kpab',
     icon: 'github',
     color: '#ac51e0',
   },
   {
-    name: 'LinkedIn',
-    url: 'https://linkedin.com/in/kpab',
-    icon: 'linkedin',
-    color: '#0A66C2',
+    name: 'Ko-fi',
+    url: 'https://ko-fi.com/kpab',
+    icon: 'ko-fi',
+    color: '#FF5E5B',
   },
   {
-    name: 'Instagram',
-    url: 'https://instagram.com/kpab',
-    icon: 'instagram',
-    color: '#E4405F',
+    name: 'Buy Me a Coffee',
+    url: 'https://www.buymeacoffee.com/kpab',
+    icon: 'buymeacoffee',
+    color: '#FFDD00',
   },
   {
-    name: 'YouTube',
-    url: 'https://youtube.com/@kpab',
-    icon: 'youtube',
-    color: '#FF0000',
-  },
-  {
-    name: 'Steam',
-    url: 'https://steamcommunity.com/id/kpab',
-    icon: 'steam',
-    color: '#575757',
-  },
-  {
-    name: 'Email',
-    url: 'mailto:contact@kpab.dev',
-    icon: 'mail',
-    color: '#EA4335',
+    name: 'PayPal',
+    url: 'https://paypal.me/kpab',
+    icon: 'paypal',
+    color: '#003087',
   },
 ];
 
 interface Props {
-  links?: SocialLink[];
+  links?: SponsoringLink[];
   class?: string;
 }
 
@@ -54,21 +42,19 @@ const { links = defaultLinks, class: className = '' } = Astro.props;
 
 const iconClasses: Record<string, string> = {
   github: 'fa-brands fa-github',
-  linkedin: 'fa-brands fa-linkedin',
-  instagram: 'fa-brands fa-instagram',
-  youtube: 'fa-brands fa-youtube',
-  steam: 'fa-brands fa-steam',
-  mail: 'fa-solid fa-envelope',
+  buymeacoffee: 'fa-solid fa-mug-saucer',
+  'ko-fi': 'fa-brands fa-ko-fi',
+  paypal: 'fa-brands fa-paypal',
 };
 ---
 
-<div class:list={['social-links', className]} aria-label="Social links">
+<div class:list={['sponsoring-links', className]} aria-label="Sponsoring links">
   {links.map((link) => (
     <a
       href={link.url}
       target="_blank"
       rel="noopener noreferrer"
-      class="social-link"
+      class="sponsoring-link"
       aria-label={link.name}
       title={link.name}
     >
@@ -84,28 +70,28 @@ const iconClasses: Record<string, string> = {
 </div>
 
 <style>
-  .social-links {
+  .sponsoring-links {
     display: flex;
     gap: 0.625rem;
     align-items: center;
-    flex-wrap: wrap;
+    justify-content: flex-start;
   }
 
-  .social-link {
+  .sponsoring-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 2.25rem;
     height: 2.25rem;
     border-radius: 0.5rem;
-    background: rgba(59, 130, 246, 0.08);
+    background: rgba(139, 92, 246, 0.08);
     border: 1px solid var(--color-border);
     color: var(--color-text-dim);
     text-decoration: none;
     transition: all 0.2s ease;
   }
 
-  .social-link:hover {
+  .sponsoring-link:hover {
     border-color: var(--color-primary);
     background: rgba(59, 130, 246, 0.15);
     transform: translateY(-2px);
@@ -113,7 +99,7 @@ const iconClasses: Record<string, string> = {
     color: var(--color-text);
   }
 
-  .social-link i {
+  .sponsoring-link i {
     width: 18px;
     font-size: 18px;
     line-height: 1;
@@ -121,7 +107,7 @@ const iconClasses: Record<string, string> = {
   }
 
   @media (max-width: 768px) {
-    .social-links {
+    .sponsoring-links {
       justify-content: center;
     }
   }

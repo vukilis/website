@@ -401,37 +401,11 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
 
   .post-content :global(code) {
     background: rgba(168, 85, 247, 0.1);
-    padding: 0.2rem 0.4rem;
+    padding: 0.2rem 0rem;
     border-radius: 0.25rem;
     font-family: 'Courier New', monospace;
     font-size: 0.9em;
     color: var(--color-accent-purple);
-  }
-
-  .post-content :global(pre) {
-    background: var(--color-bg-darker);
-    border: 1px solid rgba(168, 85, 247, 0.3);
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    overflow-x: auto;
-    margin: 1.5rem 0;
-    position: relative;
-  }
-
-  .post-content :global(pre::before) {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.2), transparent);
-  }
-
-  .post-content :global(pre code) {
-    background: none;
-    padding: 0;
-    color: var(--color-text);
   }
 
   .post-content :global(ul),
@@ -477,10 +451,12 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
 
   .post-content :global(img) {
     display: block;
-    margin: 0 auto;
+    /* margin: 0 auto; */
+    justify-self: center;
     max-width: 100%;
+    height: auto;
     border-radius: 0.5rem;
-    border: 1px solid rgba(148, 163, 184, 0.08);
+    /* border: 1px solid rgba(148, 163, 184, 0.08); */
   }
 
   .post-content :global(table) {
@@ -600,5 +576,20 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
         list.remove();
       }
     }
+
+    document.querySelectorAll('.expressive-code .frame').forEach((frame) => {
+      const header = frame.querySelector('.header') || (() => {
+        const pre = frame.querySelector('pre');
+        const lang = pre ? (pre.getAttribute('data-language') || 'Code') : 'Code';
+        const fig = document.createElement('figcaption');
+        fig.className = 'header';
+        fig.innerHTML = `<span class="title">${lang}</span>`;
+        frame.insertBefore(fig, frame.firstChild);
+        return fig;
+      })();
+      header.addEventListener('click', () => {
+        frame.classList.toggle('collapsed');
+      });
+    });
   });
 </script>

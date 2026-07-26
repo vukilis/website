@@ -1,11 +1,11 @@
 import { defineConfig } from 'astro/config';
-import { unified } from '@astrojs/markdown-remark';
 import remarkToc from 'remark-toc';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import sitemap from '@astrojs/sitemap';
 import { visit } from 'unist-util-visit';
-import tailwindcss from '@tailwindcss/vite';
+import mdx from '@astrojs/mdx';
+import expressiveCode from 'astro-expressive-code';
 
 function rehypeLazyImages() {
   return (tree) => {
@@ -23,15 +23,10 @@ export default defineConfig({
   trailingSlash: 'always',
 
   markdown: {
-    processor: unified({
-      remarkPlugins: [[remarkToc, { heading: 'contents' }]],
-      rehypePlugins: [rehypeSlug, rehypeLazyImages, [rehypeAutolinkHeadings, { behavior: 'append' }]],
-    }),
+    remarkPlugins: [[remarkToc, { heading: 'contents' }]],
+    rehypePlugins: [rehypeSlug, rehypeLazyImages, [rehypeAutolinkHeadings, { behavior: 'append' }]],
   },
 
-  integrations: [sitemap()],
-
-  vite: {
-    plugins: [tailwindcss()],
-  },
+  // Note: Place expressiveCode() BEFORE mdx()
+  integrations: [expressiveCode(), sitemap(), mdx()],
 });

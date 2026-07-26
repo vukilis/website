@@ -120,13 +120,11 @@ function getReadingTime(post: BlogPost): number {
 <script is:inline>
   (function() {
     var currentSort = null;
-    var currentPage = 1;
     var allElements = [];
     var sortedElements = [];
     var buttons = [];
     var clearBtn = null;
     var container = null;
-    var lastPageUrl = '';
 
     function getReadingTimeFromCard(el) {
       var readingTime = parseInt(el.getAttribute('data-reading-time') || '0', 10);
@@ -179,8 +177,10 @@ function getReadingTime(post: BlogPost): number {
 
     function sortPostsByDate(elements, ascending) {
       return elements.slice().sort(function(a, b) {
-        var aTime = new Date(a.getAttribute('data-pub-date') || 0).getTime();
-        var bTime = new Date(b.getAttribute('data-pub-date') || 0).getTime();
+        var aMod = a.getAttribute('data-lastmod');
+        var bMod = b.getAttribute('data-lastmod');
+        var aTime = (aMod ? new Date(aMod).getTime() : new Date(a.getAttribute('data-pub-date') || 0).getTime());
+        var bTime = (bMod ? new Date(bMod).getTime() : new Date(b.getAttribute('data-pub-date') || 0).getTime());
         var diff = aTime - bTime;
         return ascending ? diff : -diff;
       });
@@ -272,7 +272,7 @@ function getReadingTime(post: BlogPost): number {
       } else {
         url.searchParams.set('sort', sortKey);
       }
-      history.pushState({ sort: sortKey }, '', url);
+      history.replaceState({ sort: sortKey }, '', url);
       
       var filter = document.querySelector('.blog-filter');
       if (filter) {
@@ -300,9 +300,13 @@ function getReadingTime(post: BlogPost): number {
     }
 
     function init() {
-      var currentUrl = window.location.href;
-      if (lastPageUrl === currentUrl) return;
-      lastPageUrl = currentUrl;
+      allElements = [];
+      sortedElements = [];
+      buttons = [];
+      clearBtn = null;
+      container = null;
+      currentSort = null;
+
       var allGrids = document.querySelectorAll('#blog-grid');
       var grid = allGrids.length > 0 ? allGrids[allGrids.length - 1] : document.getElementById('blog-grid');
       if (!grid) return;
@@ -337,38 +341,53 @@ function getReadingTime(post: BlogPost): number {
         updateClearButton();
       }
 
-      if (container && buttons.length) {
-        buttons.forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            var sort = btn.getAttribute('data-sort');
-            var sortDesc = btn.getAttribute('data-sort-desc');
-            if (!sort || !sortDesc) return;
-
-            var nextSort = currentSort === sort ? sortDesc : sort;
-            applySort(nextSort);
-            updateUrl(nextSort);
-          });
-        });
-      }
-
-      if (clearBtn) {
-        clearBtn.addEventListener('click', function() {
-          applySort(null);
-          updateUrl(null);
-          sessionStorage.removeItem('blogSort');
-        });
-      }
-
-      window.addEventListener('popstate', function(e) {
-        if (e.state && e.state.sort) {
-          currentSort = e.state.sort;
-        } else {
-          currentSort = null;
-        }
-        applySort(currentSort);
-        showCurrentPage();
-      });
+      updateButtonStates(currentSort);
     }
+
+    function handleSortClick(btn) {
+      if (!btn) return;
+      var sort = btn.getAttribute('data-sort');
+      var sortDesc = btn.getAttribute('data-sort-desc');
+      if (!sort || !sortDesc) return;
+
+      var nextSort = currentSort === sort ? sortDesc : sort;
+      applySort(nextSort);
+      updateUrl(nextSort);
+    }
+
+    function handleClearClick(btn) {
+      if (!btn) return;
+      applySort(null);
+      updateUrl(null);
+      sessionStorage.removeItem('blogSort');
+    }
+
+    document.addEventListener('click', function(e) {
+      var sortContainer = document.getElementById('blog-sort');
+      if (!sortContainer) return;
+      if (!sortContainer.contains(e.target)) return;
+
+      var sortBtn = e.target.closest('.sort-btn');
+      if (sortBtn) {
+        handleSortClick(sortBtn);
+        return;
+      }
+
+      var clearBtn = sortContainer.querySelector('.clear-sort-btn');
+      if (clearBtn && clearBtn.contains(e.target)) {
+        handleClearClick(clearBtn);
+      }
+    });
+
+    window.addEventListener('popstate', function(e) {
+      if (e.state && e.state.sort) {
+        currentSort = e.state.sort;
+      } else {
+        currentSort = null;
+      }
+      applySort(currentSort);
+      showCurrentPage();
+    });
 
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
@@ -488,8 +507,8 @@ function getReadingTime(post: BlogPost): number {
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     outline: none;
     white-space: nowrap;
-    backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
     animation: fadeIn 0.2s ease;
   }
 

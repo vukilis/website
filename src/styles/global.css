@@ -1,4 +1,4 @@
-@import "tailwindcss";
+/* @import "tailwindcss"; */
 
 /* Global styles - dark theme is the default */
 :root {
@@ -152,7 +152,8 @@ body {
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
@@ -160,12 +161,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--color-accent-purple), var(--color-accent-pink));
+  background: linear-gradient(120deg, var(--color-accent-purple), var(--color-accent-pink));
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--color-accent-pink), var(--color-primary));
+  background: linear-gradient(120deg, var(--color-accent-purple), var(--color-accent-pink));
 }
 
 /* Global animations */
@@ -194,9 +195,29 @@ body {
   50% {
     background-position: 100% 50%;
   }
-  100% {
-    background-position: 0% 50%;
-  }
+   100% {
+     background-position: 0% 50%;
+   }
+ }
+
+.logo-img {
+  height: 10rem;
+  width: auto;
+  display: block;
+  border-radius: 1.25rem;
+  cursor: pointer;
+  position: relative;
+  transition: filter 0.4s ease, transform 0.35s ease;
+  filter:
+    drop-shadow(0 4px 12px var(--color-shadow))
+    drop-shadow(0 2px 4px var(--color-shadow));
+}
+
+.logo-img:hover {
+  transform: scale(1.02);
+  filter:
+    drop-shadow(0 16px 36px var(--color-shadow))
+    drop-shadow(0 6px 14px var(--color-shadow));
 }
 
 .shimmer-text {
@@ -548,4 +569,164 @@ body {
     font-size: 0.75rem;
     padding: 0.4rem 0.7rem;
   }
+
+  .expressive-code .copy {
+    margin: -2px 0 !important;
+  }
+
+  .expressive-code .copy button {
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+    opacity: 1 !important;
+  }
+
+  .expressive-code .copy button::before {
+    margin: 0.3rem !important;
+  }
+
+  .expressive-code .frame .copy {
+    inset-block-start: 0 !important;
+    right: 0.25rem !important;
+  }
+
+  .expressive-code .frame,
+  .expressive-code .code {
+    font-size: 1rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .expressive-code .frame .header {
+    font-size: 0.78rem !important;
+  }
+
+  .expressive-code .frame .header arrow {
+    font-size: 0.78rem !important;
+  }
+  
+  .expressive-code .frame .header .title {
+    padding-left: 3rem !important;
+  }
+}
+
+.expressive-code .copy {
+  position: absolute !important;
+  top: 0.75rem !important;
+  right: 0.75rem !important;
+  inset-block-start: 0.75rem !important;
+  inset-inline-end: 0.75rem !important;
+  bottom: auto !important;
+  left: auto !important;
+}
+
+.expressive-code .copy button {
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: auto !important;
+  left: auto !important;
+  inset-block-start: 0 !important;
+  inset-inline-end: 0 !important;
+  width: 2rem !important;
+  height: 2rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 5 !important;
+  outline: none !important;
+  opacity: 1 !important;
+}
+
+.expressive-code .copy button:active {
+  transform: none !important;
+  transition-duration: 0s !important;
+}
+
+.expressive-code .copy button > div {
+  display: none !important;
+}
+
+.expressive-code .copy button::before {
+  border-color: transparent !important;
+  margin: 0.35rem !important;
+  transition: background-color 0.2s ease, transform 0.2s ease !important;
+  background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+[data-theme="light"] .expressive-code .copy button::before {
+  background-color: rgba(15, 23, 42, 0.90) !important;
+}
+
+.expressive-code .frame {
+  margin-top: 1.75rem !important;
+  margin-bottom: 1.75rem !important;
+  position: relative;
+}
+
+.expressive-code .frame .header {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  gap: 0.5rem;
+  padding-right: 2.5rem;
+}
+
+.expressive-code .frame .copy {
+  position: absolute !important;
+  inset-block-start: 0 !important;
+  right: 0.35rem !important;
+  z-index: 5;
+}
+
+.expressive-code .frame .header .title {
+  text-align: center;
+  padding-left: 3rem;
+}
+
+.expressive-code .frame.collapsed pre,
+.expressive-code .frame.collapsed .copy {
+  display: block !important;
+  max-height: 0 !important;
+  opacity: 0 !important;
+  overflow: hidden !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  border-width: 0 !important;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.25s ease,
+              padding 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              margin 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.expressive-code .frame pre,
+.expressive-code .frame .copy {
+  max-height: 5000px !important;
+  opacity: 1 !important;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s ease,
+              padding 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              margin 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              border-width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.expressive-code .copy button:hover {
+  transform: scale(1.1) !important;
+}
+
+.expressive-code .frame .header:hover {
+  background: rgba(59, 130, 246, 0.1) !important;
 }
