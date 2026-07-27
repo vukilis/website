@@ -1,107 +1,133 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Navigation from '../../../components/Navigation.astro';
+import DesignHeader from '../../../components/design/DesignHeader.astro';
+import DesignFilterBar from '../../../components/design/DesignFilterBar.astro';
+import DesignArtworkCard from '../../../components/design/DesignArtworkCard.astro';
+import ArtworkModal from '../../../components/design/ArtworkModal.astro';
+import '../../../styles/design.css';
+
+const items = [
+  { cat: "steam", type: "WEBP", year: 2024, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-jeepers-creepers-2024.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-jeepers-creepers-2024.png", title: "Jeepers Creepers" },
+  { cat: "steam", type: "WEBP", year: 2020, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-tony-montana.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-tony-montana.png", title: "Tony Montana" },
+  { cat: "steam", type: "WEBP", year: 2023, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-self-control-2023.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-self-control-2023.png", title: "Self Control" },
+  { cat: "steam", type: "WEBP", year: 2023, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-automatic-call-2023.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-automatic-call-2023.png", title: "Automatic Call" },
+  { cat: "steam", type: "WEBP", year: 2023, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-85-again-2023.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-85-again-2023.png", title: "85 Again" },
+  { cat: "steam", type: "WEBP", year: 2020, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-cyberpunk-2020.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-cyberpunk-2020.png", title: "Cyberpunk" },
+  { cat: "steam", type: "WEBP", year: 2021, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-nightcity-2021.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-nightcity-2021.png", title: "Nightcity" },
+  { cat: "steam", type: "WEBP", year: 2020, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-nightcall-2020.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-nightcall-2020.png", title: "Nightcall" },
+  { cat: "steam", type: "WEBP", year: 2020, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-dexter-2020.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-dexter-2020.png", title: "Dexter" },
+  { cat: "steam", type: "WEBP", year: 2020, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-twisted-fate-2020.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-twisted-fate-2020.png", title: "Twisted Fate" },
+  { cat: "steam", type: "WEBP", year: 2020, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-lee-sin-2020.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-lee-sin-2020.png", title: "Lee Sin" },
+  { cat: "steam", type: "WEBP", year: 2020, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-stranger-things-2020.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-stranger-things-2020.png", title: "Stranger Things" },
+  { cat: "steam", type: "WEBP", year: 2020, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-freddy-krueger-2020.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-freddy-krueger-2020.png", title: "Freddy Krueger" },
+  { cat: "steam", type: "WEBP", year: 2020, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-assassins-creed-origins-bayek-2020.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-assassins-creed-origins-bayek-2020.png", title: "Assassins Creed Origins Bayek" },
+  { cat: "steam", type: "WEBP", year: 2020, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-gtav-girl-2020.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-gtav-girl-2020.png", title: "GTAV Girl" },
+  { cat: "steam", type: "WEBP", year: 2020, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-retro-girl-v2-2020.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-retro-girl-v2-2020.png", title: "Retro Girl V2" },
+  { cat: "steam", type: "WEBP", year: 2020, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-retro-girl-v1-2020.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-retro-girl-v1-2020.png", title: "Retro Girl V1" },
+  { cat: "steam", type: "WEBP", year: 2019, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-back-to-the-future-2019.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-back-to-the-future-2019.png", title: "Back To The Future" },
+  { cat: "steam", type: "WEBP", year: 2020, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-assassins-creed-origins-aya-2020.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-assassins-creed-origins-aya-2020.png", title: "Assassins Creed Origins Aya" },
+  { cat: "steam", type: "WEBP", year: 2019, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-synthwave-2019.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-synthwave-2019.png", title: "Synthwave" },
+  { cat: "steam", type: "WEBP", year: 2019, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-newretrowave-2019.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-newretrowave-2019.png", title: "Newretrowave" },
+  { cat: "steam", type: "WEBP", year: 2019, src: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/steam-artwork-retro-2019.webp", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-steam-artwork-retro-2019.png", title: "Retro" },
+  { cat: "music", type: "VIDEO", year: 2026, id: "8tjNM8ygzcQ", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-music-argentina.png", title: "Argentina" },
+  { cat: "music", type: "VIDEO", year: 2026, id: "EgOsvd_5fh4", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-music-srbija-i-argentina.png", title: "Srbija & Argentina" },
+  { cat: "music", type: "VIDEO", year: 2026, id: "SVLKhXZovTQ", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-music-welcome-to-balkana.png", title: "Welcome To Balkana" },
+  { cat: "music", type: "VIDEO", year: 2026, id: "O4rP7nvTiZc", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-music-momenat-sa-tobom.png", title: "Momenat Sa Tobom" },
+  { cat: "music", type: "VIDEO", year: 2026, id: "CtO0w_t3n90", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-music-situacija.png", title: "Situacija" },
+  { cat: "music", type: "VIDEO", year: 2026, id: "XaT_M2I9MJo", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-music-mate.png", title: "MATE" },
+  { cat: "music", type: "VIDEO", year: 2026, id: "1_rwbrjW8MQ", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-music-blok-je-zakon.png", title: "Blok Je Zakon" },
+  { cat: "music", type: "VIDEO", year: 2026, id: "hNhAj44IypU", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-music-uno.png", title: "UNO" },
+  { cat: "music", type: "VIDEO", year: 2026, id: "d8JC6si9p4M", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-music-ona-je-boca.png", title: "Ona Je Boca" },
+  { cat: "music", type: "VIDEO", year: 2026, id: "pVF1A3mRRFY", cover: "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/cover/cover-music-crno-beli-romantizam.png", title: "Crno Beli Romantizam" },
+];
+
+const categories = [
+  { id: "all", label: "All Works" },
+  { id: "steam", label: "Steam Artworks" },
+  { id: "music", label: "Music Artworks" },
+];
 ---
 
 <BaseLayout
-  title="Design Projects - Vuk1lis"
-  description="Explore design projects, including motion design, animation and visual experiments projects."
+  title="My Design Artworks - Vuk1lis"
+  description="All my retro and motion design artworks made for the Steam community using Photoshop and After Effects."
 >
   <Navigation />
 
-  <main class="placeholder-page" id="main-content">
+  <main class="design-page" id="main-content">
     <div class="container">
-      <header class="placeholder-header">
-        <div class="placeholder-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <circle cx="12" cy="12" r="4"></circle>
-            <line x1="21.17" y1="8" x2="12" y2="8"></line>
-            <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
-            <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
-          </svg>
-        </div>
-        <h1 class="page-title">Design</h1>
-        <p class="page-subtitle">
-          Motion design, animation and visual experiments projects
-        </p>
-        <a href="/projects/" class="back-link">
-          &larr; Back to projects
-        </a>
-      </header>
+      <DesignHeader />
+
+      <DesignFilterBar categories={categories} />
+
+      <div class="gallery-grid" id="artGallery">
+        {items.map((item, index) => (
+          <DesignArtworkCard item={item} index={index} categories={categories} />
+        ))}
+      </div>
     </div>
   </main>
+
+  <ArtworkModal />
+
+  <script is:inline>
+    (function() {
+      function init() {
+        var cards = document.querySelectorAll('.art-card');
+        var filterChips = document.querySelectorAll('.filter-chip');
+        var listenersAttached = false;
+
+        cards.forEach(function(card) {
+          var img = card.querySelector('.art-thumb');
+          if (!img) return;
+
+          var hoverSrc = img.dataset.hoverSrc;
+          var staticSrc = img.dataset.staticSrc;
+
+          if (!hoverSrc) return;
+
+          var showAnimated = function() { img.src = hoverSrc; };
+          var stopAnimation = function() { img.src = staticSrc; };
+
+          if (!card.dataset.listenersAttached) {
+            card.dataset.listenersAttached = 'true';
+            card.addEventListener('mouseenter', showAnimated);
+            card.addEventListener('mouseleave', stopAnimation);
+            card.addEventListener('focus', showAnimated);
+            card.addEventListener('blur', stopAnimation);
+          }
+        });
+
+        filterChips.forEach(function(chip) {
+          if (!chip.dataset.filterAttached) {
+            chip.dataset.filterAttached = 'true';
+            chip.addEventListener('click', function() {
+              var filter = chip.dataset.filter;
+              if (!filter) return;
+
+              filterChips.forEach(function(c) {
+                c.classList.remove('active');
+                c.setAttribute('aria-selected', 'false');
+              });
+              chip.classList.add('active');
+              chip.setAttribute('aria-selected', 'true');
+
+              cards.forEach(function(card) {
+                var matches = filter === 'all' || card.dataset.category === filter;
+                card.style.display = matches ? 'flex' : 'none';
+              });
+            });
+          }
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+      document.addEventListener('astro:page-load', init);
+    })();
+  </script>
 </BaseLayout>
-
-<style>
-  .placeholder-page {
-    min-height: 100vh;
-    padding: calc(var(--nav-height) + 4rem) 2rem 5rem;
-  }
-
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .placeholder-header {
-    text-align: center;
-    padding: 4rem 0;
-  }
-
-  .placeholder-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 120px;
-    height: 120px;
-    border-radius: 2rem;
-    background: linear-gradient(135deg, rgba(240, 147, 251, 0.15) 0%, rgba(245, 87, 108, 0.15) 100%);
-    border: 1px solid rgba(240, 147, 251, 0.3);
-    margin-bottom: 2rem;
-    color: var(--color-text);
-  }
-
-  .page-title {
-    font-family: var(--font-heading);
-    font-size: clamp(2.5rem, 8vw, 4rem);
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: var(--color-text);
-  }
-
-  .page-subtitle {
-    font-size: 1.15rem;
-    color: var(--color-text-dim);
-    max-width: 500px;
-    margin: 0 auto 2rem;
-    line-height: 1.6;
-  }
-
-  .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--color-border);
-    border-radius: 0.5rem;
-    color: var(--color-text-dim);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-  }
-
-  .back-link:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-  }
-
-  @media (max-width: 768px) {
-    .placeholder-page {
-      padding-top: calc(var(--nav-height) + 2rem);
-    }
-  }
-</style>

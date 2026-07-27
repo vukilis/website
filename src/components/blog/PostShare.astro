@@ -33,48 +33,6 @@ const { share } = Astro.props;
   )}
 </div>
 
-<style>
-  .post-share {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-  }
-
-  .share-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.2rem;
-    color: var(--color-text-dim);
-    display: inline-flex;
-    align-items: center;
-    border-radius: 0.25rem;
-    transition: all 0.2s ease;
-  }
-
-  .share-btn:hover {
-    color: var(--color-primary);
-    background: rgba(59, 130, 246, 0.1);
-  }
-
-  .share-btn svg {
-    width: 0.95em;
-    height: 0.95em;
-  }
-
-  .share-btn.copied {
-    color: #22c55e;
-    background: rgba(34, 197, 94, 0.1);
-    animation: sharePop 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  @keyframes sharePop {
-    0% { transform: scale(1); }
-    40% { transform: scale(1.25); }
-    100% { transform: scale(1); }
-  }
-</style>
-
 <script>
   window.copyLink = function() {
     const url = window.location.href;

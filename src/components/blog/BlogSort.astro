@@ -1,0 +1,369 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BlogCard from './BlogCard.astro';
+
+interface Props {
+  allPosts: CollectionEntry<'blog'>[];
+  currentPage?: number;
+  pageSize?: number;
+  activeTag?: string | undefined;
+}
+
+const { allPosts, pageSize = 12, activeTag } = Astro.props;
+
+type BlogPost = CollectionEntry<'blog'>;
+
+function getReadingTime(post: BlogPost): number {
+  try {
+    const body = (post as any).body ?? '';
+    if (typeof body !== 'string' || body.trim().length === 0) return 1;
+    const words = body.replace(/<[^>]*>/g, ' ').replace(/[#*_`~\-\[\]\(\)!$|\\]/g, ' ').replace(/\s+/g, ' ').trim().split(' ').filter(Boolean).length;
+    return Math.max(1, Math.ceil(words / 200));
+  } catch {
+    return 1;
+  }
+}
+---
+
+<div class="blog-sort" id="blog-sort">
+  <div class="sort-controls">
+    <span class="sort-label">Sort by</span>
+    <div class="sort-buttons">
+      {[
+        { key: 'alpha-asc', label: 'A/Z', title: 'A to Z', aria: 'Sort alphabetically ascending' },
+        { key: 'date-asc', label: 'Date', title: 'Oldest first', aria: 'Sort by date ascending' },
+        { key: 'time-asc', label: 'Read time', title: 'Shortest read first', aria: 'Sort by reading time ascending' },
+      ].map(btn => (
+        <button class="sort-btn" data-sort={btn.key} data-sort-desc={btn.key.replace('-asc', '-desc')} aria-label={btn.aria} title={btn.title} type="button">
+          <span class="sort-text">{btn.label}</span>
+          <svg class="sort-icon sort-icon--up" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+          <svg class="sort-icon sort-icon--down" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+      ))}
+      <button class="clear-sort-btn" type="button" aria-label="Clear sort" title="Clear sort" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        Clear
+      </button>
+    </div>
+  </div>
+
+  <div class="blog-grid" id="blog-grid" data-page-size={pageSize}>
+    {allPosts.map((post: BlogPost) => (
+      <BlogCard
+        title={post.data.title}
+        description={post.data.description}
+        pubDate={post.data.pubDate}
+        lastmod={post.data.lastmod}
+        slug={post.id}
+        tags={post.data.tags}
+        categories={post.data.categories}
+        activeTag={activeTag}
+        readingTime={getReadingTime(post)}
+      />
+    ))}
+  </div>
+</div>
+
+<script is:inline>
+  (function() {
+    var currentSort = null;
+    var allElements = [];
+    var sortedElements = [];
+    var buttons = [];
+    var clearBtn = null;
+
+    function readingTime(el) {
+      var rt = parseInt(el.getAttribute('data-reading-time') || '0', 10);
+      if (rt > 0) return rt;
+      var t = ((el.querySelector('.blog-title')?.textContent || '') + ' ' + (el.querySelector('.blog-description')?.textContent || '')).trim().split(/\s+/).filter(Boolean).length;
+      return Math.max(1, Math.ceil(t / 200));
+    }
+
+    function currentPage() {
+      var m = window.location.pathname.match(/\/(\d+)\/?$/);
+      return m ? Math.max(1, parseInt(m[1], 10)) : 1;
+    }
+
+    function showPage() {
+      var grid = document.getElementById('blog-grid');
+      var size = grid ? parseInt(grid.getAttribute('data-page-size') || '12', 10) : 12;
+      var page = currentPage(), start = (page - 1) * size;
+      sortedElements.forEach(function(el, i) { el.classList.toggle('hidden', i < start || i >= start + size); });
+    }
+
+    var sorters = {
+      alpha: function(a, b) { var d = (a.getAttribute('data-title') || '').toLowerCase().localeCompare((b.getAttribute('data-title') || '').toLowerCase()); return currentSort === 'alpha-desc' ? -d : d; },
+      date: function(a, b) { var at = new Date(a.getAttribute('data-lastmod') || a.getAttribute('data-pub-date') || 0).getTime(); var bt = new Date(b.getAttribute('data-lastmod') || b.getAttribute('data-pub-date') || 0).getTime(); return currentSort === 'date-desc' ? bt - at : at - bt; },
+      time: function(a, b) { var d = readingTime(a) - readingTime(b); return currentSort === 'time-desc' ? -d : d; },
+    };
+
+    function applySort() {
+      var grid = document.getElementById('blog-grid');
+      if (!grid) return;
+      var type = currentSort ? currentSort.replace(/-(asc|desc)$/, '') : null;
+      sortedElements = type ? allElements.slice().sort(sorters[type]) : allElements.slice();
+      sortedElements.forEach(function(el) { grid.appendChild(el); });
+      showPage();
+      updateClear();
+      updateButtons();
+    }
+
+    function updateClear() {
+      if (clearBtn) clearBtn.toggleAttribute('hidden', !currentSort);
+    }
+
+    function updateButtons() {
+      buttons.forEach(function(btn) {
+        var base = btn.dataset.sort.replace(/-(asc|desc)$/, '');
+        var active = currentSort && currentSort.startsWith(base + '-');
+        btn.classList.toggle('active', !!active);
+        btn.querySelector('.sort-icon--up').style.display = active && currentSort.endsWith('-asc') ? '' : (!active ? '' : 'none');
+        btn.querySelector('.sort-icon--down').style.display = active && currentSort.endsWith('-desc') ? '' : 'none';
+      });
+    }
+
+    function syncUrl(key) {
+      var url = new URL(window.location);
+      key ? url.searchParams.set('sort', key) : url.searchParams.delete('sort');
+      history.replaceState({ sort: key }, '', url);
+      var filter = document.querySelector('.blog-filter');
+      if (filter) {
+        filter.querySelectorAll('.filter-pill[href]').forEach(function(link) {
+          var href = link.getAttribute('href'); if (!href) return;
+          var base = href.split('?')[0];
+          var params = new URLSearchParams(href.split('?')[1] || '');
+          key ? params.set('sort', key) : params.delete('sort');
+          link.setAttribute('href', base + (params.toString() ? '?' + params.toString() : ''));
+        });
+      }
+      key ? sessionStorage.setItem('blogSort', key) : sessionStorage.removeItem('blogSort');
+    }
+
+    function init() {
+      var grid = document.getElementById('blog-grid');
+      if (!grid) return;
+      allElements = Array.from(grid.querySelectorAll('.blog-card'));
+      sortedElements = allElements.slice();
+      var container = document.getElementById('blog-sort');
+      if (container) {
+        buttons = Array.from(container.querySelectorAll('.sort-btn'));
+        clearBtn = container.querySelector('.clear-sort-btn');
+      }
+      var params = new URLSearchParams(window.location.search);
+      var fromUrl = params.get('sort');
+      var valid = { 'alpha-asc':1, 'alpha-desc':1, 'date-asc':1, 'date-desc':1, 'time-asc':1, 'time-desc':1 };
+      var stored = sessionStorage.getItem('blogSort');
+      currentSort = valid[fromUrl] ? fromUrl : (!fromUrl && valid[stored] ? stored : null);
+      if (currentSort) { applySort(); syncUrl(currentSort); } else { showPage(); updateClear(); }
+      updateButtons();
+    }
+
+    document.addEventListener('click', function(e) {
+      var sortContainer = document.getElementById('blog-sort');
+      if (!sortContainer || !sortContainer.contains(e.target)) return;
+      var sortBtn = e.target.closest('.sort-btn');
+      if (sortBtn) {
+        var next = sortBtn.dataset.sort;
+        var desc = sortBtn.dataset.sortDesc;
+        if (!next || !desc) return;
+        currentSort = currentSort === next ? desc : next;
+        applySort();
+        syncUrl(currentSort);
+        return;
+      }
+      var clear = sortContainer.querySelector('.clear-sort-btn');
+      if (clear && clear.contains(e.target)) {
+        currentSort = null;
+        applySort();
+        syncUrl(null);
+        sessionStorage.removeItem('blogSort');
+      }
+    });
+
+    window.addEventListener('popstate', function() {
+      var params = new URLSearchParams(window.location.search);
+      currentSort = params.get('sort') || null;
+      applySort();
+      showPage();
+    });
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+    document.addEventListener('astro:page-load', init);
+  })();
+</script>
+
+<style>
+  .blog-sort {
+    margin-bottom: 2.5rem;
+  }
+
+  .sort-controls {
+    display: flex;
+    gap: .75rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: fit-content;
+  }
+
+  .sort-label {
+    font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-dim, #94A3B8);
+  }
+
+  .sort-buttons {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--sort-buttons-bg, rgba(255, 255, 255, 0.03));
+    border: 1px solid var(--color-border, #334155);
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+  }
+
+  .sort-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.75rem;
+    background: transparent;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-family: var(--font-body, 'DM Sans', sans-serif);
+    letter-spacing: 0.02em;
+    color: var(--color-text-dim, #94A3B8);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .sort-btn:hover {
+    color: var(--color-text, #E2E8F0);
+    background: var(--sort-btn-hover-bg, rgba(255, 255, 255, 0.06));
+  }
+
+  .sort-btn.active {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--color-accent-blue, #3B82F6);
+  }
+
+  .sort-text {
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+  }
+
+  .sort-icon {
+    flex-shrink: 0;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .sort-icon--up {
+    display: none;
+  }
+
+  .sort-btn.active .sort-icon--up,
+  .sort-btn.active .sort-icon--down {
+    display: block;
+  }
+
+  .sort-btn:not(.active) .sort-icon--up {
+    display: block;
+    opacity: 0.6;
+  }
+
+  .sort-btn:not(.active) .sort-icon--down {
+    display: none;
+  }
+
+  .clear-sort-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.75rem;
+    margin-left: 0.25rem;
+    background: var(--clear-sort-bg, rgba(239, 68, 68, 0.12));
+    border: 1px solid var(--clear-sort-border, rgba(239, 68, 68, 0.35));
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: var(--font-body, 'DM Sans', sans-serif);
+    letter-spacing: 0.03em;
+    color: var(--clear-sort-color, #fca5a5);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    white-space: nowrap;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.2s ease;
+  }
+
+  .clear-sort-btn:hover {
+    background: var(--clear-sort-hover-bg, rgba(239, 68, 68, 0.2));
+    border-color: var(--clear-sort-hover-border, rgba(239, 68, 68, 0.6));
+    color: var(--clear-sort-hover-color, #fecaca);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+  }
+
+  .clear-sort-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.15);
+  }
+
+  .clear-sort-btn:focus-visible {
+    outline: 2px solid var(--clear-sort-border, #f87171);
+    outline-offset: 2px;
+  }
+
+  .clear-sort-btn[hidden] {
+    display: none !important;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  :global(.blog-card.hidden) {
+    display: none !important;
+  }
+
+  @media (max-width: 768px) {
+    .sort-controls { gap: 0.35rem; }
+    .sort-buttons { gap: 0.2rem; flex-wrap: wrap; }
+    .sort-btn { padding: 0.25rem 0.5rem; font-size: 0.75rem; }
+    .sort-text { font-size: 0.75rem; }
+    .sort-icon { width: 14px; height: 14px; }
+    .clear-sort-btn { padding: 0.25rem 0.5rem; font-size: 0.75rem; }
+    .clear-sort-btn svg { width: 14px; height: 14px; }
+  }
+
+  @media (max-width: 480px) {
+    .sort-buttons { gap: 0.15rem; padding: 0.15rem; }
+    .sort-btn { padding: 0.2rem 0.4rem; font-size: 0.75rem; }
+    .sort-text { font-size: 0.75rem; }
+    .sort-icon { width: 12px; height: 12px; }
+    .clear-sort-btn { padding: 0.2rem 0.4rem; font-size: 0.75rem; margin-left: 0.15rem; }
+    .clear-sort-btn svg { width: 12px; height: 12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sort-btn, .clear-sort-btn, .sort-icon { transition: none; }
+  }
+</style>

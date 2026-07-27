@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Hero from '../components/Hero.astro';
 import Skills from '../components/Skills.astro';
-import BlogCard from '../components/BlogCard.astro';
+import BlogCard from '../components/blog/BlogCard.astro';
 
 const base = import.meta.env.BASE_URL;
 const allBlogPosts = await getCollection('blog', ({ data }) => !data.draft);

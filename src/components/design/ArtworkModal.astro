@@ -1,0 +1,253 @@
+---
+---
+
+<div class="modal-backdrop" id="mediaModal" aria-hidden="true">
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-label="Media preview">
+    <button class="modal-close" aria-label="Close media preview">&times;</button>
+    <button class="modal-nav modal-nav-prev" aria-label="Previous item">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button class="modal-nav modal-nav-next" aria-label="Next item">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+    <div class="modal-content" id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const modal = document.getElementById('mediaModal');
+    const modalContent = document.getElementById('modalContent');
+    const closeBtn = document.querySelector('.modal-close');
+    const prevBtn = document.querySelector('.modal-nav-prev');
+    const nextBtn = document.querySelector('.modal-nav-next');
+    const gallery = document.getElementById('artGallery');
+
+    if (!modal || !modalContent) return;
+
+    const cards = Array.from(document.querySelectorAll('.art-card'));
+    let currentIndex = -1;
+
+    const fitImageToScreen = (img) => {
+      const naturalWidth = img.naturalWidth || img.width;
+      const naturalHeight = img.naturalHeight || img.height;
+      if (!naturalWidth || !naturalHeight) return;
+
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      const maxWidth = viewportWidth * 0.9;
+      const maxHeight = viewportHeight * 0.85;
+
+      const aspectRatio = naturalWidth / naturalHeight;
+      let width, height;
+
+      if (maxWidth / maxHeight > aspectRatio) {
+        height = Math.min(maxHeight, naturalHeight);
+        width = height * aspectRatio;
+      } else {
+        width = Math.min(maxWidth, naturalWidth);
+        height = width / aspectRatio;
+      }
+
+      img.style.maxWidth = `${width}px`;
+      img.style.maxHeight = `${height}px`;
+      img.style.width = `${width}px`;
+      img.style.height = `${height}px`;
+      img.style.objectFit = 'contain';
+    };
+
+    const loadVideoIframe = (container) => {
+      if (container.dataset.loaded) return;
+      const src = container.dataset.videoSrc;
+      const videoClass = container.dataset.videoClass;
+      if (!src || !videoClass) return;
+      container.innerHTML = `<iframe src="${src}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen class="${videoClass}" loading="lazy"></iframe>`;
+      container.dataset.loaded = 'true';
+    };
+
+    const setupContent = (card) => {
+      const type = card.dataset.type;
+      const src = card.dataset.src;
+      const cover = card.dataset.cover || '';
+
+      if (type === 'video') {
+        const isShort = src?.includes('youtube.com/embed/');
+        const videoClass = isShort ? 'modal-video video-short' : 'modal-video video-landscape';
+        const container = modalContent.querySelector('.video-container');
+        if (container) {
+          container.dataset.videoSrc = src;
+          container.dataset.videoClass = videoClass;
+          setTimeout(() => loadVideoIframe(container), 150);
+        }
+      } else {
+        const img = modalContent.querySelector('.modal-image');
+        if (img) {
+          if (img.complete && img.naturalWidth) {
+            fitImageToScreen(img);
+          } else {
+            img.addEventListener('load', () => fitImageToScreen(img));
+          }
+        }
+      }
+    };
+
+    const updateModalContent = (card, direction = 0) => {
+      const type = card.dataset.type;
+      const src = card.dataset.src;
+      const cover = card.dataset.cover || '';
+
+      let contentHTML = '';
+
+      if (type === 'video') {
+        const isShort = src?.includes('youtube.com/embed/');
+        const videoClass = isShort ? 'modal-video video-short' : 'modal-video video-landscape';
+        contentHTML = `
+          <div class="video-container" data-video-src="${src}" data-video-class="${videoClass}">
+            <div class="video-poster" style="background-image: url('${cover}')">
+              <div class="video-poster-play">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="white">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+              </div>
+            </div>
+          </div>`;
+      } else {
+        contentHTML = `<img src="${src}" class="modal-image" alt="Artwork preview" />`;
+      }
+
+      if (direction !== 0) {
+        const currentWrapper = modalContent.querySelector('.modal-slide-wrapper');
+        if (currentWrapper) {
+          const exitClass = direction > 0 ? 'slide-exit-left' : 'slide-exit-right';
+          currentWrapper.classList.add(exitClass);
+
+          setTimeout(() => {
+            const enterClass = direction > 0 ? 'slide-enter-right' : 'slide-enter-left';
+            modalContent.innerHTML = `<div class="modal-slide-wrapper ${enterClass}">${contentHTML}</div>`;
+
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                const newWrapper = modalContent.querySelector('.modal-slide-wrapper');
+                if (newWrapper) {
+                  newWrapper.classList.remove(enterClass);
+                  setupContent(card);
+                }
+              });
+            });
+          }, 300);
+        } else {
+          modalContent.innerHTML = `<div class="modal-slide-wrapper">${contentHTML}</div>`;
+          setupContent(card);
+        }
+      } else {
+        modalContent.innerHTML = `<div class="modal-slide-wrapper">${contentHTML}</div>`;
+        setupContent(card);
+      }
+
+      currentIndex = parseInt(card.dataset.index, 10);
+      updateNavButtons();
+    };
+
+    const updateNavButtons = () => {
+      if (prevBtn) {
+        prevBtn.style.display = currentIndex > 0 ? 'flex' : 'none';
+      }
+      if (nextBtn) {
+        nextBtn.style.display = currentIndex < cards.length - 1 ? 'flex' : 'none';
+      }
+    };
+
+    const navigateTo = (direction) => {
+      const newIndex = currentIndex + direction;
+      if (newIndex < 0 || newIndex >= cards.length) return;
+      updateModalContent(cards[newIndex], direction);
+    };
+
+    const openModal = (card) => {
+      updateModalContent(card);
+
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+
+      modal.setAttribute('aria-hidden', 'false');
+      modal.classList.add('open');
+    };
+
+    const closeModal = () => {
+      modal.setAttribute('aria-hidden', 'true');
+      modal.classList.remove('open');
+      modalContent.innerHTML = '';
+
+      const scrollY = Math.abs(parseFloat(document.body.style.top || '0'));
+      const html = document.documentElement;
+      const previousScrollBehavior = html.style.scrollBehavior;
+
+      html.style.scrollBehavior = 'auto';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollY);
+      html.style.scrollBehavior = previousScrollBehavior;
+    };
+
+    if (gallery) {
+      if (!gallery.dataset.modalAttached) {
+        gallery.dataset.modalAttached = 'true';
+        gallery.addEventListener('click', (e) => {
+          const card = e.target.closest('.art-card');
+          if (card) openModal(card);
+        });
+
+        gallery.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            const card = e.target.closest('.art-card');
+            if (card) {
+              e.preventDefault();
+              openModal(card);
+            }
+          }
+        });
+      }
+    }
+
+    if (!document.body.dataset.modalListenersAttached) {
+      document.body.dataset.modalListenersAttached = 'true';
+      closeBtn?.addEventListener('click', closeModal);
+      prevBtn?.addEventListener('click', () => navigateTo(-1));
+      nextBtn?.addEventListener('click', () => navigateTo(1));
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowLeft') navigateTo(-1);
+        if (e.key === 'ArrowRight') navigateTo(1);
+      });
+
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      modal.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+      }, { passive: true });
+
+      modal.addEventListener('touchend', (e) => {
+        const touchEndX = e.changedTouches[0].screenX;
+        const touchEndY = e.changedTouches[0].screenY;
+        const diffX = touchStartX - touchEndX;
+        const diffY = touchStartY - touchEndY;
+
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+          if (diffX > 0) {
+            navigateTo(1);
+          } else {
+            navigateTo(-1);
+          }
+        }
+      }, { passive: true });
+    }
+  })();
+</script>

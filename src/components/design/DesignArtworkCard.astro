@@ -1,0 +1,67 @@
+---
+interface Props {
+  item: {
+    cat: string;
+    type: string;
+    year: number;
+    title: string;
+    cover: string;
+    src?: string;
+    id?: string;
+  };
+  index: number;
+  categories: { id: string; label: string }[];
+}
+
+const { item, index, categories } = Astro.props;
+const isVideo = item.type === 'VIDEO';
+const src = isVideo
+  ? `https://www.youtube.com/embed/${item.id}?autoplay=1&mute=1&controls=1&rel=0`
+  : item.src;
+const label = categories.find((c) => c.id === item.cat)?.label;
+---
+
+<div
+  class="art-card"
+  data-index={index}
+  data-category={item.cat}
+  data-type={isVideo ? "video" : "image"}
+  data-src={src}
+  data-cover={item.cover || ''}
+  tabindex="0"
+  role="button"
+  aria-label={`Open ${item.title}`}
+>
+  <div class="art-image">
+    <div class="ambient-glow"></div>
+    <img
+      src={item.cover}
+      data-hover-src={!isVideo ? item.src : ''}
+      data-static-src={item.cover}
+      alt={item.title}
+      loading="lazy"
+      decoding="async"
+      class="art-thumb"
+    />
+    {isVideo ? (
+      <div class="video-indicator" aria-hidden="true">
+        <div class="play-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+        </div>
+      </div>
+    ) : (
+      <div class="hover-overlay" aria-hidden="true">
+        <span><i class="fa-solid fa-expand"></i> Preview</span>
+      </div>
+    )}
+  </div>
+  <div class="art-footer">
+    <div class="art-meta">
+      <h3 class="art-title">{item.title}</h3>
+      <span class="art-category">{label}</span>
+    </div>
+    <span class={`art-type ${isVideo ? 'video' : 'image'}`}>{item.type}</span>
+  </div>
+</div>

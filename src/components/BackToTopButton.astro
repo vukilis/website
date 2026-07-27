@@ -1,8 +1,9 @@
 ---
 import IconArrowNarrowUp from "../assets/icons/IconArrowNarrowUp.svg";
+import "../styles/BackToTopButton.css";
 ---
 
-<div id="btt-btn-container" class="btt-container" aria-hidden="true">
+<div id="btt-btn-container" class="btt-container">
   <button
     id="back-to-top-button"
     class="btt-button"
@@ -26,146 +27,6 @@ import IconArrowNarrowUp from "../assets/icons/IconArrowNarrowUp.svg";
     <span class="sr-only">Go back to top</span>
   </button>
 </div>
-
-<style>
-  :root {
-    --btt-size: 64px;
-    --btt-accent: var(--accent, #8b5cf6);
-    --btt-background: var(--background, #020617);
-    --btt-border: rgba(128, 128, 128, 0.25);
-  }
-
-  :global([data-theme="light"]) {
-    --btt-accent: var(--color-primary, #2563EB);
-    --btt-background: #ffffff;
-    --btt-border: rgba(0, 0, 0, 0.08);
-  }
-
-  .btt-container {
-    position: fixed;
-    right: 2rem;
-    bottom: 2.5rem;
-    z-index: 50;
-    opacity: 0;
-    transform: translateY(32px);
-    pointer-events: none;
-    transition:
-      opacity 300ms ease,
-      transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  @media (max-width: 767px) {
-    .btt-container {
-      right: 1rem;
-      bottom: 2rem;
-    }
-  }
-
-  .btt-container.visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  .btt-button {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2px;
-    width: var(--btt-size);
-    height: var(--btt-size);
-    border: 1px solid var(--btt-border);
-    border-radius: 50%;
-    background: transparent;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
-    cursor: pointer;
-    overflow: hidden;
-    isolation: isolate;
-    transition:
-      transform 0.25s ease,
-      box-shadow 0.25s ease;
-  }
-
-  .btt-button:hover {
-    transform: scale(1.06);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
-  }
-
-  .btt-button:active {
-    transform: scale(0.95);
-  }
-
-  :global([data-theme="light"]) .btt-button {
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-  }
-
-  :global([data-theme="light"]) .btt-button:hover {
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
-  }
-
-  .progress-indicator {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    border-radius: 50%;
-    background: conic-gradient(var(--btt-accent) 0deg, transparent 0deg);
-    transition: background 0.25s linear;
-  }
-
-  .button-background {
-    position: absolute;
-    inset: 4px;
-    z-index: 1;
-    border-radius: 50%;
-    background: color-mix(in srgb, var(--btt-background) 92%, transparent);
-    backdrop-filter: blur(14px);
-  }
-
-  .arrow-icon {
-    position: relative;
-    z-index: 2;
-    width: 24px;
-    height: 24px;
-    color: var(--btt-accent);
-    transition: transform 0.2s ease;
-  }
-
-  .btt-button:hover .arrow-icon {
-    transform: translateY(-3px);
-  }
-
-  .button-label {
-    position: relative;
-    z-index: 2;
-    font-size: 10px;
-    font-weight: 700;
-    line-height: 1; /* Prevents vertical centering issues */
-    letter-spacing: 0.18em;
-    margin-left: 0.18em; /* Offsets the trailing space on the last letter */
-    text-transform: uppercase;
-    color: color-mix(in srgb, var(--btt-accent) 75%, transparent);
-  }
-
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .btt-container,
-    .btt-button,
-    .arrow-icon,
-    .progress-indicator {
-      transition: none !important;
-    }
-  }
-</style>
 
 <script>
   let backToTopCleanup: AbortController | null = null;
@@ -205,7 +66,6 @@ import IconArrowNarrowUp from "../assets/icons/IconArrowNarrowUp.svg";
 
       if (shouldShow !== visible) {
         container.classList.toggle("visible", shouldShow);
-        container.setAttribute("aria-hidden", String(!shouldShow));
         button.tabIndex = shouldShow ? 0 : -1;
         visible = shouldShow;
       }

@@ -1,0 +1,229 @@
+---
+interface TocItem {
+  id: string;
+  text: string;
+  depth: number;
+  children?: TocItem[];
+}
+
+interface Props {
+  items?: TocItem[];
+  layout?: 'sidebar' | 'card' | 'minimal';
+  maxDepth?: number;
+}
+
+const {
+  items = [],
+  layout = 'sidebar',
+  maxDepth = 3,
+} = Astro.props;
+---
+
+<div class="toc" data-layout={layout}>
+  <div class="toc-inner">
+    <header class="toc-header">
+      <div class="toc-header-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="4" y1="6" x2="20" y2="6"/>
+          <line x1="4" y1="10" x2="16" y2="10"/>
+          <line x1="4" y1="14" x2="14" y2="14"/>
+          <line x1="4" y1="18" x2="10" y2="18"/>
+          <circle cx="6" cy="6" r="1.5" fill="currentColor" stroke="none"/>
+          <circle cx="6" cy="10" r="1.5" fill="currentColor" stroke="none"/>
+          <circle cx="6" cy="14" r="1.5" fill="currentColor" stroke="none"/>
+          <circle cx="6" cy="18" r="1.5" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <span class="toc-label">On This Page</span>
+      <div class="toc-header-line" aria-hidden="true"></div>
+    </header>
+
+    <nav class="toc-nav" aria-label="Table of contents">
+      <ul class="toc-list" id="toc-list">
+        {(items.length > 0 ? items : []).map((item) => {
+          if (item.depth > maxDepth) return null;
+          return (
+            <li key={item.id}>
+              <a
+                href={`#${item.id}`}
+                class={`toc-link toc-depth-${item.depth > 2 ? 3 : 2}`}
+                data-toc-depth={item.depth}
+              >
+                <span class="toc-dot" aria-hidden="true"></span>
+                <span class="toc-text">{item.text}</span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+
+    <footer class="toc-footer">
+      <div class="toc-footer-line" aria-hidden="true"></div>
+      <span class="toc-scroll-hint">
+        <svg class="toc-scroll-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+        Scroll to navigate
+      </span>
+    </footer>
+  </div>
+</div>
+
+<script>
+  (function () {
+    'use strict';
+
+    function setupToc(tocEl) {
+      if (tocEl.dataset.tocInitialised === 'true') return;
+      tocEl.dataset.tocInitialised = 'true';
+
+      var tocList = tocEl.querySelector('.toc-list');
+      if (!tocList) return;
+
+      var contentRoot = tocEl.ownerDocument.querySelector('.post-content, article, main');
+      if (!contentRoot) return;
+
+      var headings = [].slice.call(
+        contentRoot.querySelectorAll('h2[id], h3[id], h4[id]')
+      );
+
+      if (!headings.length) return;
+
+      var existingIds = {};
+      [].slice.call(tocList.querySelectorAll('a[href^="#"]')).forEach(function (link) {
+        var href = link.getAttribute('href') || '';
+        existingIds[href.replace(/^#/, '')] = true;
+      });
+
+      var fragment = document.createDocumentFragment();
+      headings.forEach(function (heading) {
+        var id = heading.id;
+        if (existingIds[id]) return;
+        var text = (heading.textContent || '').trim();
+        if (!text) return;
+
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.href = '#' + id;
+        a.className = 'toc-link toc-depth-' +
+          (parseInt(heading.tagName.replace('H', ''), 10) > 2 ? '3' : '2');
+        a.dataset.tocDepth = heading.tagName.replace('H', '');
+
+        var dot = document.createElement('span');
+        dot.className = 'toc-dot';
+        dot.setAttribute('aria-hidden', 'true');
+
+        var span = document.createElement('span');
+        span.className = 'toc-text';
+        span.textContent = text;
+
+        a.appendChild(dot);
+        a.appendChild(span);
+        li.appendChild(a);
+        fragment.appendChild(li);
+      });
+
+      tocList.appendChild(fragment);
+
+      var links = [].slice.call(tocList.querySelectorAll('a[href^="#"]'));
+      if (!links.length) return;
+
+      var currentActiveId = null;
+
+      function setActive(id) {
+        if (currentActiveId === id) return;
+        currentActiveId = id;
+        links.forEach(function (link) {
+          var href = link.getAttribute('href') || '';
+          if (href === '#' + id) {
+            link.classList.add('toc-active');
+          } else {
+            link.classList.remove('toc-active');
+          }
+        });
+      }
+
+      var observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              setActive(entry.target.id);
+            }
+          });
+        },
+        { 
+          rootMargin: '-80px 0px -70% 0px', 
+          threshold: 0 
+        }
+      );
+
+      headings.forEach(function (heading) {
+        observer.observe(heading);
+      });
+
+      links.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          var href = link.getAttribute('href') || '';
+          if (href.startsWith('#')) {
+            var targetId = href.replace(/^#/, '');
+            var target = tocEl.ownerDocument.getElementById(targetId);
+            if (target) {
+              var navHeight = 80;
+              var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
+              
+              window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+              });
+              
+              setTimeout(function () {
+                setActive(targetId);
+              }, 150);
+            }
+          }
+        });
+      });
+
+      var scrollTimeout;
+      window.addEventListener('scroll', function () {
+        if (scrollTimeout) {
+          window.cancelAnimationFrame(scrollTimeout);
+        }
+        scrollTimeout = window.requestAnimationFrame(function () {
+          var scrollPos = window.scrollY + 100;
+          var activeHeading = null;
+          
+          headings.forEach(function (heading) {
+            var headingTop = heading.getBoundingClientRect().top + window.pageYOffset;
+            if (headingTop <= scrollPos) {
+              activeHeading = heading;
+            }
+          });
+          
+          if (activeHeading && activeHeading.id !== currentActiveId) {
+            setActive(activeHeading.id);
+          }
+        });
+      }, { passive: true });
+    }
+
+    function init() {
+      [].slice.call(document.querySelectorAll('.toc')).forEach(function (tocEl) {
+        setupToc(tocEl);
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+
+    document.addEventListener('astro:page-load', init);
+  })();
+</script>
+
+
+
