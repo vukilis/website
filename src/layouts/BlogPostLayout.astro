@@ -4,6 +4,7 @@ import Navigation from '../components/Navigation.astro';
 import TableOfContents from '../components/blog/TableOfContents.astro';
 import PostComments from "../components/blog/PostComments.astro";
 import PostShare from "../components/blog/PostShare.astro";
+import '../styles/blog/expressive-code.css';
 
 interface Props {
   title: string;
@@ -54,7 +55,7 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
   <article class="blog-post">
     <div class="container">
       <header class="post-header">
-        <a href={`${base}blog/`} class="back-link">← Back to Blog</a>
+         <a href={`${base}blog/`} class="back-link" id="back-to-blog">← Back to Blog</a>
         <h1 class="post-title">{title}</h1>
         <div class="post-meta">
           <time class="post-date">
@@ -592,4 +593,29 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
       });
     });
   });
-</script>
+  </script>
+
+  <script is:inline>
+    (function() {
+      const PATH_KEY = 'blog-list-path';
+
+      function updateBackLink() {
+        const backLink = document.getElementById('back-to-blog');
+        if (!backLink) return;
+        try {
+          const savedPath = sessionStorage.getItem(PATH_KEY);
+          if (savedPath) {
+            backLink.href = savedPath;
+          }
+        } catch (e) {}
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', updateBackLink);
+      } else {
+        updateBackLink();
+      }
+
+      document.addEventListener('astro:page-load', updateBackLink);
+    })();
+  </script>

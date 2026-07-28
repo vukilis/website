@@ -1,0 +1,304 @@
+---
+import '../../styles/music/modal.css';
+---
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Media viewer">
+  <div class="lightbox-backdrop"></div>
+  <div class="lightbox-content">
+    <button class="lightbox-close" aria-label="Close">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+
+    <button class="lightbox-nav lightbox-nav-prev" aria-label="Previous track">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6" />
+      </svg>
+    </button>
+
+    <button class="lightbox-nav lightbox-nav-next" aria-label="Next track">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="9 6 15 12 9 18" />
+      </svg>
+    </button>
+
+    <div class="lightbox-slide-wrapper" id="lightboxSlideWrapper">
+      <div class="lightbox-player" id="lightboxPlayer">
+        <iframe
+          id="lightbox-iframe"
+          src=""
+          title="Video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      <h3 class="lightbox-title" id="lightboxTitle"></h3>
+
+      <div class="lightbox-lyrics" id="lightboxLyrics">
+        <div class="lightbox-lyrics__header">
+          <h3 class="lightbox-lyrics__title" id="lightboxLyricsTitle"></h3>
+          <span class="lightbox-lyrics__badge">Lyrics</span>
+        </div>
+        <div class="lightbox-lyrics__body">
+          <pre class="lightbox-lyrics__text" id="lightboxLyricsText"></pre>
+        </div>
+      </div>
+
+      <div class="lightbox-swipe-hint" aria-hidden="true">
+        <span>Swipe to navigate</span>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  if (!window.__musicModalInitialized) {
+    window.__musicModalInitialized = true;
+
+    let currentCardIndex = -1;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let swipeHintShown = false;
+
+    function getCards() {
+      return Array.from(document.querySelectorAll('.music-card'));
+    }
+
+    function updateNavButtons() {
+      const cards = getCards();
+      const prevBtn = document.querySelector('.lightbox-nav-prev');
+      const nextBtn = document.querySelector('.lightbox-nav-next');
+      if (prevBtn) {
+        prevBtn.style.display = currentCardIndex > 0 ? 'flex' : 'none';
+      }
+      if (nextBtn) {
+        nextBtn.style.display = currentCardIndex < cards.length - 1 ? 'flex' : 'none';
+      }
+    }
+
+    function animateTransition(direction, updateFn) {
+      const wrapper = document.getElementById('lightboxSlideWrapper');
+      if (!wrapper) {
+        updateFn();
+        return;
+      }
+
+      const exitClass = direction > 0 ? 'slide-exit-left' : 'slide-exit-right';
+      const lightboxIframe = document.getElementById('lightbox-iframe');
+      if (lightboxIframe) {
+        lightboxIframe.src = '';
+      }
+
+      wrapper.classList.add(exitClass);
+
+      setTimeout(() => {
+        updateFn();
+
+        const enterClass = direction > 0 ? 'slide-enter-right' : 'slide-enter-left';
+
+        wrapper.style.transition = 'none';
+        wrapper.classList.remove(exitClass);
+        wrapper.classList.add(enterClass);
+        void wrapper.offsetHeight;
+        wrapper.style.transition = '';
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            wrapper.classList.remove(enterClass);
+          });
+        });
+      }, 350);
+    }
+
+    function navigateTo(direction) {
+      const cards = getCards();
+      const newIndex = currentCardIndex + direction;
+      if (newIndex < 0 || newIndex >= cards.length) return;
+      const nextCard = cards[newIndex];
+      if (!nextCard) return;
+
+      animateTransition(direction, () => {
+        const isLyricsMode = document.getElementById('lightbox').classList.contains('lyrics-mode');
+        if (isLyricsMode) {
+          const lyricsId = nextCard.querySelector('.lyrics-toggle')?.getAttribute('aria-controls');
+          const lyricsEl = lyricsId ? document.getElementById(lyricsId) : null;
+          const lyricsText = lyricsEl?.querySelector('.lyrics-text')?.textContent || '';
+          openLyrics(nextCard.dataset.videoTitle || '', lyricsText, nextCard);
+        } else {
+          openVideo(nextCard.dataset.videoId, nextCard.dataset.videoTitle || '');
+        }
+      });
+
+      currentCardIndex = newIndex;
+      updateNavButtons();
+    }
+
+    function openVideo(videoId, videoTitle) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxIframe = document.getElementById('lightbox-iframe');
+      const lightboxPlayer = document.getElementById('lightboxPlayer');
+      const lightboxTitle = document.getElementById('lightboxTitle');
+
+      lightboxIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+      lightboxTitle.textContent = videoTitle;
+      lightbox.classList.remove('lyrics-mode');
+      lightboxPlayer.style.display = 'block';
+      document.getElementById('lightboxLyrics').style.display = 'none';
+      lightboxTitle.style.display = 'block';
+      lightbox.classList.add('is-active');
+
+      if (!lightbox.dataset.scrollLocked) {
+        lightbox.dataset.scrollLocked = 'true';
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+        lightbox.dataset.scrollY = scrollY;
+        document.body.style.top = `-${scrollY}px`;
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+        swipeHintShown = true;
+        resetSwipeHint();
+      }
+
+      const cards = getCards();
+      const currentCard = cards.find(c => c.dataset.videoId === videoId);
+      currentCardIndex = currentCard ? cards.indexOf(currentCard) : 0;
+      updateNavButtons();
+    }
+
+    function openLyrics(title, lyricsText, card) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxLyrics = document.getElementById('lightboxLyrics');
+      const lightboxLyricsTitle = document.getElementById('lightboxLyricsTitle');
+      const lightboxLyricsText = document.getElementById('lightboxLyricsText');
+
+      lightboxLyricsTitle.textContent = title;
+      lightboxLyricsText.textContent = lyricsText;
+      lightbox.classList.add('lyrics-mode');
+      lightboxLyrics.style.display = 'block';
+      document.getElementById('lightboxPlayer').style.display = 'none';
+      lightboxTitle.style.display = 'none';
+      lightbox.classList.add('is-active');
+
+      if (!lightbox.dataset.scrollLocked) {
+        lightbox.dataset.scrollLocked = 'true';
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+        lightbox.dataset.scrollY = scrollY;
+        document.body.style.top = `-${scrollY}px`;
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+        swipeHintShown = true;
+        resetSwipeHint();
+      }
+
+      if (card) {
+        const cards = getCards();
+        currentCardIndex = cards.indexOf(card);
+        updateNavButtons();
+      }
+    }
+
+    function resetSwipeHint() {
+      const hint = document.querySelector('.lightbox-swipe-hint');
+      if (!hint) return;
+      hint.style.animation = 'none';
+      void hint.offsetHeight;
+      hint.style.animation = '';
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxIframe = document.getElementById('lightbox-iframe');
+
+      lightbox.classList.remove('is-active');
+      lightbox.classList.remove('lyrics-mode');
+      lightboxIframe.src = '';
+      currentCardIndex = -1;
+
+      const scrollY = parseInt(lightbox.dataset.scrollY || '0', 10);
+      const html = document.documentElement;
+      const previousScrollBehavior = html.style.scrollBehavior;
+
+      html.style.scrollBehavior = 'auto';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollY);
+      html.style.scrollBehavior = previousScrollBehavior;
+
+      delete lightbox.dataset.scrollLocked;
+      delete lightbox.dataset.scrollY;
+      swipeHintShown = false;
+    }
+
+    document.addEventListener('click', function(e) {
+      const card = e.target.closest('.music-card');
+
+      if (e.target.closest('.lyrics-toggle')) {
+        const btn = e.target.closest('.lyrics-toggle');
+        const title = card ? (card.dataset.videoTitle || '') : '';
+        const lyrics = document.getElementById(btn.getAttribute('aria-controls'))?.querySelector('.lyrics-text')?.textContent || '';
+        if (title && lyrics) openLyrics(title, lyrics, card);
+        return;
+      }
+
+      if (card) {
+        const id = card.dataset.videoId;
+        const title = card.dataset.videoTitle || '';
+        if (id) openVideo(id, title);
+      }
+
+      if (e.target.closest('.lightbox-close') || e.target.classList.contains('lightbox-backdrop')) {
+        closeLightbox();
+      }
+
+      if (e.target.closest('.lightbox-nav-prev')) {
+        navigateTo(-1);
+      }
+
+      if (e.target.closest('.lightbox-nav-next')) {
+        navigateTo(1);
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navigateTo(-1);
+      if (e.key === 'ArrowRight') navigateTo(1);
+    });
+
+    document.addEventListener('touchstart', (e) => {
+      const lightbox = document.getElementById('lightbox');
+      if (!lightbox || !lightbox.classList.contains('is-active')) return;
+      if (!lightbox.contains(e.target)) return;
+      const touch = e.changedTouches[0];
+      touchStartX = touch.screenX;
+      touchStartY = touch.screenY;
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+      const lightbox = document.getElementById('lightbox');
+      if (!lightbox || !lightbox.classList.contains('is-active')) return;
+      if (!lightbox.contains(e.target)) return;
+      const touch = e.changedTouches[0];
+      const touchEndX = touch.screenX;
+      const touchEndY = touch.screenY;
+      const diffX = touchStartX - touchEndX;
+      const diffY = touchStartY - touchEndY;
+
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+        if (diffX > 0) {
+          navigateTo(1);
+        } else {
+          navigateTo(-1);
+        }
+      }
+    }, { passive: true });
+  }
+</script>

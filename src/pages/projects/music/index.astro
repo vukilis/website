@@ -1,105 +1,87 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Navigation from '../../../components/Navigation.astro';
+import MusicHeader from '../../../components/music/MusicHeader.astro';
+import MusicFilterBar from '../../../components/music/MusicFilterBar.astro';
+import MusicCard from '../../../components/music/MusicCard.astro';
+import MusicModal from '../../../components/music/MusicModal.astro';
+import { getCollection } from 'astro:content';
+import '../../../styles/music/layout.css';
+
+const allTracks = await getCollection('projectsMusic');
+const tracks = allTracks.sort((a, b) => {
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+  return b.data.year - a.data.year;
+});
+
+const categories = [
+  { id: "all", label: "All Tracks" },
+  ...Array.from(new Set(tracks.flatMap(t => t.data.cat))).map(cat => ({
+    id: cat,
+    label: cat.charAt(0).toUpperCase() + cat.slice(1)
+  }))
+];
 ---
 
 <BaseLayout
-  title="Music Projects - Vuk1lis"
-  description="Explore music projects, including song writing, AI sound design, and other music experiments."
+  title="Music — Vukilis"
+  description="Explore the sound of Vukilis: AI sound design, songwriting, and music experiments."
 >
   <Navigation />
 
-  <main class="placeholder-page" id="main-content">
+  <main class="design-page" id="main-content">
     <div class="container">
-      <header class="placeholder-header">
-        <div class="placeholder-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 18V5l12-2v13"></path>
-            <circle cx="6" cy="18" r="3"></circle>
-            <circle cx="18" cy="16" r="3"></circle>
-          </svg>
-        </div>
-        <h1 class="page-title">Music</h1>
-        <p class="page-subtitle">
-          Song writing, AI sound design and music projects
-        </p>
-        <a href="/projects/" class="back-link">
-          &larr; Back to projects
-        </a>
-      </header>
+      <MusicHeader />
+
+      <MusicFilterBar categories={categories} />
+
+      <div class="gallery-grid" id="musicGallery">
+        {tracks.map((track, index) => (
+          <MusicCard item={track.data} index={index} />
+        ))}
+      </div>
     </div>
   </main>
+
+  <MusicModal />
+
+  <script is:inline>
+    (function() {
+      function init() {
+        var cards = document.querySelectorAll('.music-card');
+        var filterChips = document.querySelectorAll('.filter-chip');
+
+        filterChips.forEach(function(chip) {
+          if (!chip.dataset.filterAttached) {
+            chip.dataset.filterAttached = 'true';
+            chip.addEventListener('click', function() {
+              var filter = chip.dataset.filter;
+              if (!filter) return;
+
+              filterChips.forEach(function(c) {
+                c.classList.remove('active');
+                c.setAttribute('aria-selected', 'false');
+              });
+              chip.classList.add('active');
+              chip.setAttribute('aria-selected', 'true');
+
+               cards.forEach(function(card) {
+                 const cats = (card.dataset.category || '').split(',');
+                 var matches = filter === 'all' || cats.includes(filter);
+                 card.style.display = matches ? 'flex' : 'none';
+               });
+            });
+          }
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+      document.addEventListener('astro:page-load', init);
+    })();
+  </script>
 </BaseLayout>
-
-<style>
-  .placeholder-page {
-    min-height: 100vh;
-    padding: calc(var(--nav-height) + 4rem) 2rem 5rem;
-  }
-
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .placeholder-header {
-    text-align: center;
-    padding: 4rem 0;
-  }
-
-  .placeholder-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 120px;
-    height: 120px;
-    border-radius: 2rem;
-    background: linear-gradient(135deg, rgba(79, 172, 254, 0.15) 0%, rgba(0, 242, 254, 0.15) 100%);
-    border: 1px solid rgba(79, 172, 254, 0.3);
-    margin-bottom: 2rem;
-    color: var(--color-text);
-  }
-
-  .page-title {
-    font-family: var(--font-heading);
-    font-size: clamp(2.5rem, 8vw, 4rem);
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: var(--color-text);
-  }
-
-  .page-subtitle {
-    font-size: 1.15rem;
-    color: var(--color-text-dim);
-    max-width: 500px;
-    margin: 0 auto 2rem;
-    line-height: 1.6;
-  }
-
-  .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--color-border);
-    border-radius: 0.5rem;
-    color: var(--color-text-dim);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-  }
-
-  .back-link:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-  }
-
-  @media (max-width: 768px) {
-    .placeholder-page {
-      padding-top: calc(var(--nav-height) + 2rem);
-    }
-  }
-</style>

@@ -1,4 +1,5 @@
 ---
+import '../../styles/design/modal.css';
 ---
 
 <div class="modal-backdrop" id="mediaModal" aria-hidden="true">
@@ -16,17 +17,20 @@
 
 <script>
   (() => {
-    const modal = document.getElementById('mediaModal');
-    const modalContent = document.getElementById('modalContent');
-    const closeBtn = document.querySelector('.modal-close');
-    const prevBtn = document.querySelector('.modal-nav-prev');
-    const nextBtn = document.querySelector('.modal-nav-next');
-    const gallery = document.getElementById('artGallery');
+    if (window.__artworkModalInitialized) return;
+    window.__artworkModalInitialized = true;
 
-    if (!modal || !modalContent) return;
-
-    const cards = Array.from(document.querySelectorAll('.art-card'));
     let currentIndex = -1;
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    const getModal = () => document.getElementById('mediaModal');
+    const getModalContent = () => document.getElementById('modalContent');
+
+    const isModalOpen = () => {
+      const modal = getModal();
+      return modal ? modal.classList.contains('open') : false;
+    };
 
     const fitImageToScreen = (img) => {
       const naturalWidth = img.naturalWidth || img.width;
@@ -69,6 +73,8 @@
       const type = card.dataset.type;
       const src = card.dataset.src;
       const cover = card.dataset.cover || '';
+      const modalContent = getModalContent();
+      if (!modalContent) return;
 
       if (type === 'video') {
         const isShort = src?.includes('youtube.com/embed/');
@@ -95,6 +101,8 @@
       const type = card.dataset.type;
       const src = card.dataset.src;
       const cover = card.dataset.cover || '';
+      const modalContent = getModalContent();
+      if (!modalContent) return;
 
       let contentHTML = '';
 
@@ -149,6 +157,9 @@
     };
 
     const updateNavButtons = () => {
+      const prevBtn = document.querySelector('.modal-nav-prev');
+      const nextBtn = document.querySelector('.modal-nav-next');
+      const cards = Array.from(document.querySelectorAll('.art-card'));
       if (prevBtn) {
         prevBtn.style.display = currentIndex > 0 ? 'flex' : 'none';
       }
@@ -158,6 +169,7 @@
     };
 
     const navigateTo = (direction) => {
+      const cards = Array.from(document.querySelectorAll('.art-card'));
       const newIndex = currentIndex + direction;
       if (newIndex < 0 || newIndex >= cards.length) return;
       updateModalContent(cards[newIndex], direction);
@@ -171,11 +183,18 @@
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
 
-      modal.setAttribute('aria-hidden', 'false');
-      modal.classList.add('open');
+      const modal = getModal();
+      if (modal) {
+        modal.setAttribute('aria-hidden', 'false');
+        modal.classList.add('open');
+      }
     };
 
     const closeModal = () => {
+      const modal = getModal();
+      const modalContent = getModalContent();
+      if (!modal || !modalContent) return;
+
       modal.setAttribute('aria-hidden', 'true');
       modal.classList.remove('open');
       modalContent.innerHTML = '';
@@ -192,62 +211,67 @@
       html.style.scrollBehavior = previousScrollBehavior;
     };
 
-    if (gallery) {
-      if (!gallery.dataset.modalAttached) {
-        gallery.dataset.modalAttached = 'true';
-        gallery.addEventListener('click', (e) => {
-          const card = e.target.closest('.art-card');
-          if (card) openModal(card);
-        });
-
-        gallery.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            const card = e.target.closest('.art-card');
-            if (card) {
-              e.preventDefault();
-              openModal(card);
-            }
-          }
-        });
+    document.addEventListener('click', (e) => {
+      const card = e.target.closest('.art-card');
+      if (card) {
+        openModal(card);
+        return;
       }
-    }
 
-    if (!document.body.dataset.modalListenersAttached) {
-      document.body.dataset.modalListenersAttached = 'true';
-      closeBtn?.addEventListener('click', closeModal);
-      prevBtn?.addEventListener('click', () => navigateTo(-1));
-      nextBtn?.addEventListener('click', () => navigateTo(1));
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-      });
-      window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeModal();
-        if (e.key === 'ArrowLeft') navigateTo(-1);
-        if (e.key === 'ArrowRight') navigateTo(1);
-      });
+      if (!isModalOpen()) return;
 
-      let touchStartX = 0;
-      let touchStartY = 0;
+      if (e.target.closest('.modal-close')) {
+        closeModal();
+      } else if (e.target.closest('.modal-nav-prev')) {
+        navigateTo(-1);
+      } else if (e.target.closest('.modal-nav-next')) {
+        navigateTo(1);
+      } else if (e.target.closest('#mediaModal') === getModal()) {
+        closeModal();
+      }
+    });
 
-      modal.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-        touchStartY = e.changedTouches[0].screenY;
-      }, { passive: true });
+    document.addEventListener('keydown', (e) => {
+      const card = e.target.closest('.art-card');
+      if (card && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        openModal(card);
+        return;
+      }
 
-      modal.addEventListener('touchend', (e) => {
-        const touchEndX = e.changedTouches[0].screenX;
-        const touchEndY = e.changedTouches[0].screenY;
-        const diffX = touchStartX - touchEndX;
-        const diffY = touchStartY - touchEndY;
+      if (!isModalOpen()) return;
 
-        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
-          if (diffX > 0) {
-            navigateTo(1);
-          } else {
-            navigateTo(-1);
-          }
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowLeft') navigateTo(-1);
+      if (e.key === 'ArrowRight') navigateTo(1);
+    });
+
+    document.addEventListener('touchstart', (e) => {
+      if (!isModalOpen()) return;
+      const modal = getModal();
+      if (!modal || !modal.contains(e.target)) return;
+      const touch = e.changedTouches[0];
+      touchStartX = touch.screenX;
+      touchStartY = touch.screenY;
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+      if (!isModalOpen()) return;
+      const modal = getModal();
+      if (!modal || !modal.contains(e.target)) return;
+      const touch = e.changedTouches[0];
+      const touchEndX = touch.screenX;
+      const touchEndY = touch.screenY;
+      const diffX = touchStartX - touchEndX;
+      const diffY = touchStartY - touchEndY;
+
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+        if (diffX > 0) {
+          navigateTo(1);
+        } else {
+          navigateTo(-1);
         }
-      }, { passive: true });
-    }
+      }
+    }, { passive: true });
   })();
 </script>

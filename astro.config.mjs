@@ -6,6 +6,7 @@ import sitemap from '@astrojs/sitemap';
 import { visit } from 'unist-util-visit';
 import mdx from '@astrojs/mdx';
 import expressiveCode from 'astro-expressive-code';
+import { unified } from '@astrojs/markdown-remark';
 
 function rehypeLazyImages() {
   return (tree) => {
@@ -19,13 +20,13 @@ function rehypeLazyImages() {
 }
 
 export default defineConfig({
-  site: 'https://kpab.github.io',
+  site: 'https://vukilis.com',
   trailingSlash: 'always',
 
-  markdown: {
+  markdown: unified({
     remarkPlugins: [[remarkToc, { heading: 'contents' }]],
     rehypePlugins: [rehypeSlug, rehypeLazyImages, [rehypeAutolinkHeadings, { behavior: 'append' }]],
-  },
+  }),
 
   // Note: Place expressiveCode() BEFORE mdx()
   integrations: [expressiveCode(), sitemap(), mdx()],

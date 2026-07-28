@@ -1,0 +1,64 @@
+---
+import '../../styles/projects/filter.css';
+
+interface Props {
+  allProjects: { data: { categories?: string[] } }[];
+  activeCategory?: string;
+  baseUrl?: string;
+}
+
+const { allProjects, activeCategory, baseUrl = '/projects/it/' } = Astro.props;
+
+function slugify(str: string) {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '')
+    .replace(/-+/g, '-');
+}
+
+const categoryCounts = new Map(
+  [...new Set(allProjects.flatMap(p => p.data.categories ?? []))].map(category => [
+    category,
+    allProjects.filter(p => (p.data.categories ?? []).includes(category)).length,
+  ])
+);
+
+const allCategories = [...categoryCounts.entries()]
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+  .map(entry => entry[0]);
+
+function isActiveCategory(cat: string) {
+  return activeCategory ? slugify(activeCategory) === slugify(cat) : false;
+}
+
+const allProjectsCount = allProjects.length;
+---
+
+<div class="blog-filter">
+  {allCategories.length > 0 && (
+    <div class="filter-sections">
+      <div class="filter-section">
+        <span class="filter-label">Categories</span>
+        <div class="filter-pills">
+          <a
+            href={baseUrl}
+            class={`filter-pill${!activeCategory ? ' active' : ''}`}
+          >
+            All <span class="filter-pill-count">{allProjectsCount}</span>
+          </a>
+          {allCategories.map(category => (
+            <a
+              href={`${baseUrl}category/${slugify(category)}/`}
+              class={`filter-pill${isActiveCategory(category) ? ' active' : ''}`}
+            >
+              {category} <span class="filter-pill-count">{categoryCounts.get(category)}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  )}
+</div>
+

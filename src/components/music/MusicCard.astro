@@ -1,0 +1,73 @@
+---
+import '../../styles/music/card.css';
+
+interface Props {
+  item: {
+    cat: string[];
+    type: string;
+    year: number;
+    id: string;
+    cover: string;
+    title: string;
+    description: string;
+    tags: string[];
+    duration?: string;
+    lyrics: string;
+  };
+  index: number;
+}
+
+const { item, index } = Astro.props;
+---
+
+<article
+  class={`music-card ${index === 0 ? 'music-card--latest' : ''}`}
+  data-video-id={item.id}
+  data-video-title={item.title}
+  data-category={item.cat.join(',')}
+>
+  <div class="card-visual">
+    {index === 0 && <span class="latest-badge">Latest Release</span>}
+    <img
+      src={item.cover}
+      alt={`${item.title} thumbnail`}
+      class="card-thumb"
+      loading={index === 0 ? 'eager' : 'lazy'}
+      onerror={`this.src='https://img.youtube.com/vi/${item.id}/hqdefault.jpg'`}
+    />
+    <div class="card-overlay">
+      <button class="play-btn" aria-label={`Play ${item.title}`}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </button>
+    </div>
+    {item.duration && <span class="card-duration">{item.duration}</span>}
+  </div>
+  <div class="card-body">
+    <h3 class="card-title">{item.title}</h3>
+    <p class="card-desc">{item.description}</p>
+    <div class="card-tags">
+      {item.tags.map((tag) => (
+        <span class="card-tag">{tag}</span>
+      ))}
+    </div>
+
+    <button
+      class="lyrics-toggle"
+      aria-expanded="false"
+      aria-controls={`lyrics-${item.id}`}
+    >
+      <span class="lyrics-toggle__text">Show Lyrics</span>
+      <svg class="lyrics-toggle__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 3h6v6" />
+        <path d="M9 21H3v-6" />
+        <path d="M21 3l-7 7" />
+        <path d="M3 21l7-7" />
+      </svg>
+    </button>
+    <div id={`lyrics-${item.id}`} class="lyrics-panel" hidden>
+      <pre class="lyrics-text">{item.lyrics}</pre>
+    </div>
+  </div>
+</article>

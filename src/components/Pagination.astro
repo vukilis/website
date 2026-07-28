@@ -1,4 +1,6 @@
 ---
+import '../styles/blog/pagination.css';
+
 interface Props {
   page: Page<any>;
   baseUrl: string;
@@ -46,7 +48,7 @@ const base = baseUrl.replace(/\/$/, '');
 const pageNumbers = getPageNumbers();
 const querySuffix = queryString ? `?${queryString}` : '';
 
-const prevHref = currentPage > 1 ? `${base}/${currentPage - 1}/${querySuffix}` : '';
+const prevHref = currentPage > 1 ? `${base}/${currentPage - 1 === 1 ? '' : currentPage - 1}/${querySuffix}` : '';
 const nextHref = currentPage < lastPage ? `${base}/${currentPage + 1}/${querySuffix}` : '';
 const firstHref = `${base}/${querySuffix}`;
 const lastHref = `${base}/${lastPage}/${querySuffix}`;

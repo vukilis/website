@@ -1,0 +1,68 @@
+/* ============================================
+   BLOG SHARED LAYOUT & PAGE STYLES
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.blog-page {
+  min-height: 100vh;
+  padding: calc(var(--nav-height) + 2rem) 2rem 5rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.blog-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.page-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--color-text);
+}
+
+.page-subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-dim);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--color-text-dim);
+  font-size: 1.05rem;
+}
+
+.no-results a {
+  color: var(--color-accent-purple);
+  text-decoration: none;
+}
+
+.no-results a:hover {
+  text-decoration: underline;
+}
+

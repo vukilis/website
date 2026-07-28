@@ -1,7 +1,9 @@
 ---
+import '../../styles/design/gallery.css';
+
 interface Props {
   item: {
-    cat: string;
+    cat: string[];
     type: string;
     year: number;
     title: string;
@@ -18,13 +20,13 @@ const isVideo = item.type === 'VIDEO';
 const src = isVideo
   ? `https://www.youtube.com/embed/${item.id}?autoplay=1&mute=1&controls=1&rel=0`
   : item.src;
-const label = categories.find((c) => c.id === item.cat)?.label;
+const label = categories.find((c) => c.id === item.cat[0])?.label;
 ---
 
 <div
   class="art-card"
   data-index={index}
-  data-category={item.cat}
+  data-category={item.cat.join(',')}
   data-type={isVideo ? "video" : "image"}
   data-src={src}
   data-cover={item.cover || ''}

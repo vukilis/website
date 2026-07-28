@@ -1,0 +1,22 @@
+---
+import '../../styles/music/filter.css';
+
+interface Props {
+  categories: { id: string; label: string }[];
+}
+
+const { categories } = Astro.props;
+---
+
+<div class="filter-bar" role="tablist" aria-label="Filter by category">
+  {categories.map((c, i) => (
+    <button
+      class={`filter-chip${i === 0 ? ' active' : ''}`}
+      data-filter={c.id}
+      role="tab"
+      aria-selected={i === 0 ? 'true' : 'false'}
+    >
+      {c.label}
+    </button>
+  ))}
+</div>

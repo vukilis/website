@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css';
-import '../styles/blog.css';
 import { ClientRouter } from 'astro:transitions';
 import SiteBackdrop from '../components/SiteBackdrop.astro';
 import BackToTopButton from '../components/BackToTopButton.astro';
@@ -37,6 +36,12 @@ const {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.9.0/css/lg-pager.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.9.0/css/lg-share.min.css" />
     <title>{title}</title>
+    
+    <script is:inline>
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'auto';
+      }
+    </script>
     
     <script is:inline>
       (function() {
