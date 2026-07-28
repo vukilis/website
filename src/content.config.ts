@@ -61,6 +61,7 @@ const projectsMusic = defineCollection({
     cover: z.string(),
     title: z.string(),
     description: z.string(),
+    pubDate: z.coerce.date(),
     tags: z.array(z.string()).optional(),
     duration: z.string().optional(),
     lyrics: z.string(),

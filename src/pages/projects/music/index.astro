@@ -12,7 +12,7 @@ const allTracks = await getCollection('projectsMusic');
 const tracks = allTracks.sort((a, b) => {
   if (a.data.featured && !b.data.featured) return -1;
   if (!a.data.featured && b.data.featured) return 1;
-  return b.data.year - a.data.year;
+  return b.data.pubDate - a.data.pubDate;
 });
 
 const categories = [
