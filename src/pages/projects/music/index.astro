@@ -9,11 +9,7 @@ import { getCollection } from 'astro:content';
 import '../../../styles/music/layout.css';
 
 const allTracks = await getCollection('projectsMusic');
-const tracks = allTracks.sort((a, b) => {
-  if (a.data.featured && !b.data.featured) return -1;
-  if (!a.data.featured && b.data.featured) return 1;
-  return b.data.pubDate - a.data.pubDate;
-});
+const tracks = allTracks.sort((a, b) => b.data.pubDate - a.data.pubDate);
 
 const categories = [
   { id: "all", label: "All Tracks" },

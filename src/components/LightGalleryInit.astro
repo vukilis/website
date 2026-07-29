@@ -25,13 +25,8 @@
     }
   }
 
-  async function initLightGallery() {
-    const container = document.querySelector('.post-content, article');
-    if (!container) return;
-
+  function initForContainer(container) {
     destroyExisting(container);
-
-    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
 
     const imgs = container.querySelectorAll('img');
     if (!imgs.length) return;
@@ -111,6 +106,13 @@
 
     container.addEventListener('click', boundHandler);
     handlers.set(container, boundHandler);
+  }
+
+  async function initLightGallery() {
+    const containers = document.querySelectorAll('.post-content, article');
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+    containers.forEach(container => initForContainer(container));
   }
 
   if (document.readyState === 'loading') {

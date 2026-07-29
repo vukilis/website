@@ -1,10 +1,21 @@
 ---
 import { getCollection } from 'astro:content';
-import ITProjectsLayout from '../../../../../components/projects/ITProjectsLayout.astro';
+import ITProjectsLayout from '../../../../../layouts/ITProjectsLayout.astro';
 
 export async function getStaticPaths({ paginate }: { paginate: (...args: any[]) => Promise<any[]> }) {
   const allProjects = await getCollection('projectsIT', ({ data }) => !data.draft);
-  const sorted = allProjects.sort((a, b) => b.data.title.localeCompare(a.data.title));
+  const sorted = allProjects.sort((a, b) => {
+    const aFeatured = a.data.featured ? 1 : 0;
+    const bFeatured = b.data.featured ? 1 : 0;
+    if (bFeatured !== aFeatured) return bFeatured - aFeatured;
+
+    const statusOrder = { active: 0, normal: 1, archived: 2 };
+    const aStatus = statusOrder[a.data.status] ?? 1;
+    const bStatus = statusOrder[b.data.status] ?? 1;
+    if (aStatus !== bStatus) return aStatus - bStatus;
+
+    return b.data.title.localeCompare(a.data.title);
+  });
 
   const categories = [
     ...new Set(sorted.flatMap(p => p.data.categories ?? []))
@@ -39,7 +50,18 @@ const categoryMatch = urlStr.match(/\/projects\/it\/category\/([^\/]+)/);
 const categorySlug = categoryMatch ? categoryMatch[1] : 'unknown';
 
 const allProjectsForFilter = await getCollection('projectsIT', ({ data }) => !data.draft);
-const sortedAllProjects = allProjectsForFilter.sort((a, b) => b.data.title.localeCompare(a.data.title));
+const sortedAllProjects = allProjectsForFilter.sort((a, b) => {
+  const aFeatured = a.data.featured ? 1 : 0;
+  const bFeatured = b.data.featured ? 1 : 0;
+  if (bFeatured !== aFeatured) return bFeatured - aFeatured;
+
+  const statusOrder = { active: 0, normal: 1, archived: 2 };
+  const aStatus = statusOrder[a.data.status] ?? 1;
+  const bStatus = statusOrder[b.data.status] ?? 1;
+  if (aStatus !== bStatus) return aStatus - bStatus;
+
+  return b.data.title.localeCompare(a.data.title);
+});
 
 function slugify(str: string) {
   return str

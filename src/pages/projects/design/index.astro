@@ -14,7 +14,7 @@ const items = allItems.sort((a, b) => {
   const aType = typeOrder[a.data.type] ?? 2;
   const bType = typeOrder[b.data.type] ?? 2;
   if (aType !== bType) return aType - bType;
-  return b.data.year - a.data.year;
+  return b.data.pubDate - a.data.pubDate;
 });
 
 const categories = [

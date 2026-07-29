@@ -34,6 +34,9 @@ const projectsIT = defineCollection({
     tags: z.array(z.string()).optional(),
     categories: z.array(z.string()).optional(),
     featured: z.boolean().default(false),
+    draft: z.boolean().default(false),
+    status: z.enum(['normal', 'active', 'archived']).default('normal'),
+    license: z.string().optional(),
   }),
 });
 
@@ -47,6 +50,7 @@ const projectsDesign = defineCollection({
     id: z.string().optional(),
     cover: z.string(),
     title: z.string(),
+    pubDate: z.coerce.date(),
     draft: z.boolean().default(false),
   }),
 });
@@ -65,7 +69,6 @@ const projectsMusic = defineCollection({
     tags: z.array(z.string()).optional(),
     duration: z.string().optional(),
     lyrics: z.string(),
-    featured: z.boolean().default(false),
   }),
 });
 
