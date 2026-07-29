@@ -2,21 +2,30 @@
 import '../../styles/design/filter.css';
 
 interface Props {
-  categories: { id: string; label: string }[];
+  categories: { id: string; label: string; count?: number }[];
 }
 
 const { categories } = Astro.props;
 ---
 
-<div class="filter-bar" role="tablist" aria-label="Filter by category">
-  {categories.map((c, i) => (
-    <button
-      class={`filter-chip${i === 0 ? ' active' : ''}`}
-      data-filter={c.id}
-      role="tab"
-      aria-selected={i === 0 ? 'true' : 'false'}
-    >
-      {c.label}
-    </button>
-  ))}
+<div class="design-filter-bar" role="tablist" aria-label="Filter by category">
+  <div class="design-filter-row">
+    <span class="filter-label">Categories</span>
+    <div class="filter-pills">
+      {categories.map((c, i) => (
+        <button
+          class={`filter-chip${i === 0 ? ' active' : ''}`}
+          data-filter={c.id}
+          role="tab"
+          aria-selected={i === 0 ? 'true' : 'false'}
+          type="button"
+        >
+          {c.label}
+          {typeof c.count === 'number' && (
+            <span class="filter-chip-count">{c.count}</span>
+          )}
+        </button>
+      ))}
+    </div>
+  </div>
 </div>

@@ -13,6 +13,7 @@ interface Props {
     tags: string[];
     duration?: string;
     lyrics: string;
+    pubDate: number | Date;
   };
   index: number;
 }
@@ -25,6 +26,7 @@ const { item, index } = Astro.props;
   data-video-id={item.id}
   data-video-title={item.title}
   data-category={item.cat.join(',')}
+  data-pub-date={new Date(item.pubDate).toISOString()}
 >
   <div class="card-visual">
     {index === 0 && <span class="latest-badge">Latest Release</span>}

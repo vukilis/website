@@ -1,0 +1,91 @@
+---
+import '../../styles/mate/mate.css';
+
+interface Props {
+  name: string;
+  category?: string;
+  image?: string;
+  rating: string;
+  type: string;
+  complexity: string;
+  body: string;
+  durability: string;
+  effect: string;
+  level: string;
+}
+
+const {
+  name,
+  category = 'yerba',
+  image,
+  rating,
+  type,
+  complexity,
+  body: bodyScore,
+  durability,
+  effect: effectScore,
+  level,
+} = Astro.props;
+
+const levelConfig: Record<string, { name: string; color: string }> = {
+  '1': { name: 'Beginner', color: '#8db600' },
+  '2': { name: 'Intermediate', color: '#fbbf24' },
+  '3': { name: 'Advanced', color: '#f97316' },
+  '4': { name: 'Expert', color: '#ef4444' },
+  '5': { name: 'Master', color: '#a855f7' },
+};
+
+const levelInfo = levelConfig[level] || { name: level, color: '#94a3b8' };
+---
+
+<article class="mate-review">
+  {image && (
+    <header class="mate-header">
+      <div class="mate-image-wrap">
+        <img src={image} alt={name} class="mate-image" loading="lazy" />
+      </div>
+      <div class="mate-info">
+        <div class="mate-info-main">
+          <span class="mate-category">{category}</span>
+          <h2 class="mate-name">{name}</h2>
+          <span class="mate-type">{type}</span>
+          <div class="mate-rating" aria-label={`Rating: ${rating} out of 5`}>
+            {'★'.repeat(Number(rating))}{'☆'.repeat(5 - Number(rating))}
+          </div>
+        </div>
+        <dl class="mate-stats">
+          {[
+            { key: 'Complexity', value: complexity },
+            { key: 'Body', value: bodyScore },
+            { key: 'Durability', value: durability },
+            { key: 'Effect', value: effectScore },
+            { key: 'Level', value: level },
+          ].map(({ key, value }) => (
+            <div class="mate-stat">
+              <dt>{key}</dt>
+              <dd>
+                {key === 'Level' ? (
+                  <span
+                    class="level-label"
+                    style={`color: ${levelInfo.color}; border-color: ${levelInfo.color}; background: ${levelInfo.color}1A;`}
+                  >
+                    {levelInfo.name}
+                  </span>
+                ) : (
+                  <div class="pips">
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <span class={`pip ${i < Number(value) ? 'filled' : ''}`} />
+                    ))}
+                  </div>
+                )}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </header>
+  )}
+  <div class="mate-body">
+    <slot />
+  </div>
+</article>

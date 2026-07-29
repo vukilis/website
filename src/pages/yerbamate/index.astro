@@ -1,0 +1,190 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import MateCard from '../../components/mate/MateCard.astro';
+import MateFilterBar from '../../components/mate/MateFilterBar.astro';
+import '../../styles/mate/layout.css';
+import '../../styles/mate/filter.css';
+
+const entries = (await getCollection('yerbaMate', ({ data }) => !data.draft)).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const categoryCounts = new Map();
+for (const e of entries) {
+  categoryCounts.set(e.data.category, (categoryCounts.get(e.data.category) || 0) + 1);
+}
+
+const categories = [
+  { id: 'all', label: 'All', count: entries.length },
+  ...Array.from(new Set(entries.map(e => e.data.category))).map(cat => ({
+    id: cat,
+    label: cat.charAt(0).toUpperCase() + cat.slice(1),
+    count: categoryCounts.get(cat) ?? 0,
+  })),
+];
+
+const mateImages = import.meta.glob('/src/assets/images/mates/*.{webp,png,jpg}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
+
+function resolveMateImage(filename) {
+  if (!filename) return '/images/mates/placeholder.webp';
+  const basename = filename.split('/').pop();
+  return mateImages[`/src/assets/images/mates/${basename}`] || `/images/mates/${basename}`;
+}
+
+const rendered = await Promise.all(
+  entries.map(async (entry) => ({ entry, Content: (await render(entry)).Content }))
+);
+---
+
+<BaseLayout title="Yerba Mate Reviews - Vuk1lis" description="Reviews of various yerba mate brands and varieties.">
+  <Navigation />
+  <main class="yerba-review-page">
+    <div class="container">
+      <header class="page-header">
+        <h1 class="page-title">Yerba Mate Reviews</h1>
+        <p class="page-subtitle">From traditional gourd rituals to modern energy boosts.</p>
+      </header>
+      <MateFilterBar {categories} />
+      <div class="reviews-list" id="reviews-list">
+        {rendered.map(({ entry, Content }, i) => {
+          const image = resolveMateImage(entry.data.image);
+          return (
+            <MateCard
+              image={image}
+              name={entry.data.name}
+              type={entry.data.type}
+              rating={entry.data.rating}
+              complexity={entry.data.complexity}
+              body={entry.data.body}
+              durability={entry.data.durability}
+              effect={entry.data.effect}
+              level={entry.data.level}
+              category={entry.data.category}
+              slug={entry.id}
+              index={i}
+            />
+          );
+        })}
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<script is:inline>
+  (function() {
+    function init() {
+      var cards = Array.from(document.querySelectorAll('.mate-card'));
+      var filterChips = document.querySelectorAll('.filter-chip');
+      var sortBtn = document.getElementById('rating-sort-btn');
+      var clearSortBtn = document.getElementById('rating-clear-sort-btn');
+      var currentFilter = 'all';
+      var currentSort = null;
+      var originalOrder = cards.slice();
+
+      function showClearButton() {
+        if (clearSortBtn) clearSortBtn.hidden = false;
+      }
+
+      function hideClearButton() {
+        if (clearSortBtn) clearSortBtn.hidden = true;
+      }
+
+      function applyFilter() {
+        cards.forEach(function(card) {
+          var cat = (card.getAttribute('data-category') || '').toLowerCase();
+          var matches = currentFilter === 'all' || cat === currentFilter;
+          card.style.display = matches ? 'flex' : 'none';
+        });
+      }
+
+      function applySort() {
+        var grid = document.getElementById('reviews-list');
+        if (!grid) return;
+        var visible = cards.filter(function(c) { return c.style.display !== 'none'; });
+        visible.sort(function(a, b) {
+          var ra = parseInt(a.getAttribute('data-rating') || '0', 10);
+          var rb = parseInt(b.getAttribute('data-rating') || '0', 10);
+          return currentSort === 'rating-desc' ? rb - ra : ra - rb;
+        });
+        visible.forEach(function(card) { grid.appendChild(card); });
+      }
+
+      function restoreOriginalOrder() {
+        var grid = document.getElementById('reviews-list');
+        if (!grid) return;
+        originalOrder.forEach(function(card) { grid.appendChild(card); });
+      }
+
+      function updateSortUI() {
+        sortBtn.classList.toggle('active', !!currentSort);
+        if (currentSort === 'rating-asc') {
+          sortBtn.setAttribute('data-sort-direction', 'asc');
+        } else if (currentSort === 'rating-desc') {
+          sortBtn.setAttribute('data-sort-direction', 'desc');
+        } else {
+          sortBtn.removeAttribute('data-sort-direction');
+        }
+        if (currentSort) {
+          showClearButton();
+        } else {
+          hideClearButton();
+        }
+      }
+
+      function setSort(nextSort) {
+        currentSort = nextSort;
+        updateSortUI();
+        if (currentSort) {
+          applySort();
+        } else {
+          restoreOriginalOrder();
+        }
+      }
+
+      filterChips.forEach(function(chip) {
+        chip.addEventListener('click', function() {
+          var filter = chip.getAttribute('data-filter');
+          if (!filter) return;
+          currentFilter = filter;
+          filterChips.forEach(function(c) {
+            c.classList.remove('active');
+            c.setAttribute('aria-selected', 'false');
+          });
+          chip.classList.add('active');
+          chip.setAttribute('aria-selected', 'true');
+          applyFilter();
+          if (currentSort) applySort();
+        });
+      });
+
+      if (sortBtn) {
+        sortBtn.addEventListener('click', function() {
+          if (currentSort === 'rating-desc') {
+            setSort('rating-asc');
+          } else {
+            setSort('rating-desc');
+          }
+        });
+      }
+
+      if (clearSortBtn) {
+        clearSortBtn.addEventListener('click', function() {
+          setSort(null);
+        });
+      }
+
+      applyFilter();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+    document.addEventListener('astro:page-load', init);
+  })();
+</script>

@@ -1,0 +1,60 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Mate from '../../components/mate/Mate.astro';
+import '../../styles/mate/layout.css';
+
+const mateImages = import.meta.glob('/src/assets/images/mates/*.{webp,png,jpg}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
+
+function resolveMateImage(filename) {
+  if (!filename) return '/images/mates/placeholder.webp';
+  const basename = filename.split('/').pop();
+  return mateImages[`/src/assets/images/mates/${basename}`] || `/images/mates/${basename}`;
+}
+
+export async function getStaticPaths() {
+  const entries = await getCollection('yerbaMate', ({ data }) => !data.draft);
+  return entries.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const resolvedImage = resolveMateImage(entry.data.image);
+---
+
+<BaseLayout
+  title={`${entry.data.name} - Yerba Mate Review`}
+  description={`${entry.data.name} - ${entry.data.type}`}
+>
+  <Navigation />
+  <main class="yerba-review-page">
+    <div class="container">
+      <a href="/yerbamate/" class="back-link" id="back-to-mates">
+        ← All Reviews
+      </a>
+      <Mate
+        name={entry.data.name}
+        category={entry.data.category}
+        image={resolvedImage}
+        rating={entry.data.rating}
+        type={entry.data.type}
+        complexity={entry.data.complexity}
+        body={entry.data.body}
+        durability={entry.data.durability}
+        effect={entry.data.effect}
+        level={entry.data.level}
+      >
+        <Content />
+      </Mate>
+    </div>
+  </main>
+</BaseLayout>
+

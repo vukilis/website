@@ -2,286 +2,1244 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 
-const base = import.meta.env.BASE_URL;
+const games = [
+  { name: 'Euro Truck Simulator 2', color: '#ff6b00', icon: 'truck' },
+  { name: "No Man's Sky", color: '#00d4aa', icon: 'planet' },
+  { name: 'Left 4 Dead 2', color: '#4ade80', icon: 'bio' },
+  { name: 'Path of Exile', color: '#d97706', icon: 'orb' },
+  { name: 'GTA Vice City', color: '#ec4899', icon: 'palm' },
+  { name: 'Prototype 2', color: '#dc2626', icon: 'claw' },
+  { name: 'DOOM 2016', color: '#ff2200', icon: 'doom' },
+  { name: 'Rocket League', color: '#3b82f6', icon: 'rocket' },
+];
 ---
 
-<BaseLayout title="About - Vuk1lis" description="Vuk1lis is a DevOps engineer, Linux enthusiast, and VibeCoder. He shares his knowledge and experience through blog posts, tutorials, and open-source projects.">
+<BaseLayout title="Vuk1lis — About" description="DevOps engineer, Linux main, VibeCoder. Three worlds. One player.">
   <Navigation />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-  <main class="about-page">
-    <div class="container">
-      <h1 class="page-title">About Me</h1>
+  <!-- ═══════════════════════════════════════
+       SECTION 1 — V FOR VENDETTA
+       ═══════════════════════════════════════ -->
+  <section class="vendetta" id="about">
+    <div class="v-mask-bg" aria-hidden="true">
+      <svg viewBox="0 0 200 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 20 C60 20 30 60 30 110 C30 150 50 180 70 200 L70 240 L85 220 L100 240 L115 220 L130 240 L130 200 C150 180 170 150 170 110 C170 60 140 20 100 20Z" fill="currentColor"/>
+        <path d="M55 90 Q75 80 85 100 Q65 110 55 90Z" fill="#000"/>
+        <path d="M145 90 Q125 80 115 100 Q135 110 145 90Z" fill="#000"/>
+        <path d="M85 130 Q100 125 115 130 Q100 150 85 130Z" fill="#000"/>
+        <path d="M70 170 Q100 185 130 170" stroke="#000" stroke-width="3" fill="none"/>
+        <path d="M95 60 L100 50 L105 60" stroke="currentColor" stroke-width="2" fill="none"/>
+      </svg>
+    </div>
 
-      <div class="content-grid">
-        <section class="content-section intro-section">
-          <h2>Hello, I'm Vuk1lis</h2>
-          <p>
-            I'm a DevOps engineer, Linux enthusiast, and VibeCoder passionate about building immersive digital experiences.
-            My work sits at the intersection of art and technology, where I explore the possibilities of
-            modern web technologies to create visually striking, motion-rich interfaces.
-          </p>
-          <p>
-            With a deep love for dark aesthetics and smooth animations, I specialize in crafting websites
-            that aren't just functional—they're experiences that captivate and engage users from the moment
-            they land on the page.
-          </p>
-        </section>
+    <div class="v-rose v-rose-1" aria-hidden="true">
+      <svg viewBox="0 0 60 100" fill="none"><path d="M30 100 L30 60" stroke="#8b0000" stroke-width="2"/><path d="M30 60 C20 50 10 40 20 30 C30 20 40 30 30 60" fill="#a00000"/><path d="M30 60 C40 50 50 40 40 30 C30 20 20 30 30 60" fill="#c00000"/><circle cx="30" cy="25" r="12" fill="#ff1a1a"/></svg>
+    </div>
+    <div class="v-rose v-rose-2" aria-hidden="true">
+      <svg viewBox="0 0 60 100" fill="none"><path d="M30 100 L30 60" stroke="#8b0000" stroke-width="2"/><path d="M30 60 C20 50 10 40 20 30 C30 20 40 30 30 60" fill="#a00000"/><circle cx="30" cy="25" r="10" fill="#ff1a1a"/></svg>
+    </div>
 
-        <section class="content-section">
-          <h2>What I Do</h2>
-          <div class="what-i-do-grid">
-            <div class="service-card">
-              <div class="service-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <circle cx="12" cy="12" r="6"></circle>
-                  <circle cx="12" cy="12" r="2"></circle>
-                </svg>
-              </div>
-              <h3>Creative Development</h3>
-              <p>Building unique web experiences with Three.js, WebGL, and advanced CSS animations.</p>
-            </div>
-            <div class="service-card">
-              <div class="service-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                </svg>
-              </div>
-              <h3>Performance Optimization</h3>
-              <p>Ensuring smooth 60fps animations and optimal loading times with modern tooling.</p>
-            </div>
-            <div class="service-card">
-              <div class="service-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="2" y1="12" x2="22" y2="12"></line>
-                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                </svg>
-              </div>
-              <h3>3D Graphics</h3>
-              <p>Creating particle systems, geometric patterns, and interactive 3D elements for the web.</p>
-            </div>
-            <div class="service-card">
-              <div class="service-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                </svg>
-              </div>
-              <h3>Dark UI Design</h3>
-              <p>Designing beautiful dark-themed interfaces with carefully crafted color palettes.</p>
-            </div>
-          </div>
-        </section>
+    <div class="v-content">
+      <p class="v-pretitle">Remember, remember…</p>
+      <h1 class="v-title">The Developer<br/>Behind the Mask</h1>
 
-        <section class="content-section">
-          <h2>My Approach</h2>
-          <p>
-            I believe that motion is emotion. Every animation, every transition, every particle movement
-            should have a purpose—to guide, to delight, or to immerse. I'm constantly pushing the boundaries
-            of what's possible on the web, experimenting with new techniques and technologies.
-          </p>
-          <p>
-            Whether it's a personal blog, a portfolio site, or a complex web application, I approach each
-            project with the same goal: create something that stands out, performs well, and provides an
-            unforgettable user experience.
-          </p>
-        </section>
+      <div class="v-card">
+        <p class="v-lead">I'm <strong>Vuk1lis</strong> — a DevOps engineer, Linux enthusiast, and VibeCoder.</p>
+        <p>My work sits at the intersection of art and technology. I build immersive digital experiences where dark aesthetics meet surgical performance. Every deployment is a revolution. Every animation is a statement.</p>
+        <p>I don't just write code — I orchestrate infrastructure like a symphony, and craft interfaces that feel like they were pulled from another dimension.</p>
+      </div>
 
-        <section class="content-section cta-section">
-          <h2>Let's Connect</h2>
-          <p>Interested in working together or just want to chat about web animations and dark design?</p>
-          <div class="contact-buttons">
-            <a href={`${base}projects/`} class="btn btn-primary">
-              View My Work
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </a>
-            <a href={`${base}blog/`} class="btn btn-secondary">Read My Blog</a>
-          </div>
-        </section>
+      <blockquote class="v-quote">
+        <span class="q-mark">"</span>
+        Beneath this mask there is more than flesh. Beneath this mask there is an idea, and ideas are bulletproof.
+        <span class="q-mark">"</span>
+      </blockquote>
+
+      <div class="v-stats">
+        <div class="v-stat"><span class="v-num">5+</span><span class="v-label">Years in the shadows</span></div>
+        <div class="v-stat"><span class="v-num">40+</span><span class="v-label">Repos liberated</span></div>
+        <div class="v-stat"><span class="v-num">99.9%</span><span class="v-label">Uptime resistance</span></div>
       </div>
     </div>
-  </main>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 2 — NO MAN'S SKY UNIVERSE
+       ═══════════════════════════════════════ -->
+  <section class="nomanssky" id="universe">
+    <div class="nms-stars" aria-hidden="true"></div>
+    <div class="nms-scan" aria-hidden="true"></div>
+    <div class="nms-aurora" aria-hidden="true"></div>
+
+    <div class="nms-header">
+      <h2 class="nms-title">Vuk1lis Universe</h2>
+      <p class="nms-sub">Explore my projects, infrastructure &amp; interests</p>
+    </div>
+
+    <div class="nms-grid">
+
+      <!-- Homelab -->
+      <article class="nms-card nms-homelab">
+        <div class="nms-badge">HOMELAB</div>
+        <h3>Homelab Network Diagram</h3>
+        <a href="/homelab_diagram/" class="homelab-diagram">
+          <div class="h-preview">
+            <img src="https://raw.githubusercontent.com/vukilis/homelab/main/diagram.png" alt="Homelab Network Diagram Preview" class="h-preview-img" />
+            <span class="h-preview-badge">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+              PREVIEW
+            </span>
+          </div>
+        </a>
+        <p class="nms-desc">Self-hosted infrastructure. Proxmox cluster, Authentik for SSO, AdGuard Home for DNS and many more.</p>
+      </article>
+
+      <!-- GitHub Terminal -->
+      <article class="nms-card nms-github">
+        <div class="nms-badge">Github Info</div>
+        <h3>GitHub README</h3>
+        <div class="terminal" id="githubTerminal">
+          <div class="term-header">
+            <span class="term-btn"></span><span class="term-btn"></span><span class="term-btn"></span>
+            <span class="term-title">vukilis@github:~/README.md</span>
+            <button class="term-expand" id="termExpandBtn" aria-label="Expand README">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            </button>
+          </div>
+          <div class="term-body" id="readmeContent">
+            <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">curl -s https://raw.githubusercontent.com/vukilis/vukilis/main/README.md</span></div>
+            <div class="term-line term-loading">Establishing uplink<span class="term-blink">_</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Steam Status -->
+      <article class="nms-card nms-steam">
+        <div class="nms-badge">STEAM STATUS</div>
+        <h3>Steam Beacon</h3>
+        <a href="https://steamcommunity.com/id/vuk1lis/" target="_blank" rel="noopener" class="steam-diagram" aria-label="Open Steam profile">
+          <div class="s-preview">
+            <span class="home-avatar">
+              <img class="steam-icon" src="https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/steam.webp" alt="Steam" width="30" title="Steam Status">
+            </span>
+            <span class="s-preview-badge">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+              PREVIEW
+            </span>
+            <div class="steam-status-label" id="steamStatusLabel">OFFLINE</div>
+          </div>
+        </a>
+        <p class="nms-desc">
+          <span class="status-legend">
+            <span class="status-item"><span class="status-dot" style="--dot:#33ff33"></span>Online</span>
+            <span class="status-item"><span class="status-dot" style="--dot:#ff3333"></span>Busy</span>
+            <span class="status-item"><span class="status-dot" style="--dot:#ffff33"></span>Away</span>
+            <span class="status-item"><span class="status-dot" style="--dot:#33ccff"></span>Trading</span>
+            <span class="status-item"><span class="status-dot" style="--dot:#ff00ff"></span>Playing</span>
+            <span class="status-item"><span class="status-dot" style="--dot:#888"></span>Offline</span>
+          </span>
+        </p>
+      </article>
+
+      <!-- Yerba Mate -->
+      <a href="/yerbamate/" class="nms-card nms-yerba">
+        <div class="nms-badge">MATE REVIEW</div>
+        <h3>Yerba Mate Review</h3>
+        <div class="yerba-diagram">
+          <div class="y-preview">
+          <span class="yerba-emoji" aria-hidden="true">🧉</span>
+          <span class="y-preview-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            PREVIEW
+          </span>
+          <div class="yerba-status-label">MATE</div>
+          </div>
+        </div>
+        <p class="nms-desc">A full review about yerba mate - from traditional gourd rituals to modern energy boosts.</p>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 3 — GAMING ARCADE
+       ═══════════════════════════════════════ -->
+  <section class="arcade" id="gaming">
+    <div class="arcade-crt" aria-hidden="true">
+      <div class="crt-scan"></div>
+      <div class="crt-flicker"></div>
+    </div>
+    <div class="arcade-floor" aria-hidden="true"></div>
+
+    <div class="arcade-header">
+      <h2 class="arcade-title">SELECT YOUR GAME</h2>
+      <p class="arcade-sub">Player 1 — Insert Coin to Continue</p>
+      <div class="arcade-coin-slot">
+        <div class="coin-light"></div>
+        <span>CREDITS: ∞</span>
+      </div>
+    </div>
+
+    <div class="games-grid">
+      {games.map((game, i) => (
+        <div class="game-card" style={`--glow:${game.color};--i:${i}`}>
+          <div class="card-glitch" aria-hidden="true"></div>
+          <div class="card-number">{String(i + 1).padStart(2, '0')}</div>
+          
+          <div class="card-icon">
+            {game.icon === 'truck' && (
+              <svg viewBox="0 0 48 48" fill="none" stroke={game.color} stroke-width="2.5" stroke-linecap="round"><rect x="8" y="20" width="28" height="16" rx="2"/><circle cx="16" cy="36" r="3"/><circle cx="32" cy="36" r="3"/><path d="M36 28h4a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-6v8z"/><path d="M8 28H4v-4"/></svg>
+            )}
+            {game.icon === 'planet' && (
+              <svg viewBox="0 0 48 48" fill="none" stroke={game.color} stroke-width="2.5"><circle cx="24" cy="24" r="10"/><ellipse cx="24" cy="24" rx="18" ry="5" transform="rotate(-20 24 24)"/></svg>
+            )}
+            {game.icon === 'bio' && (
+              <svg viewBox="0 0 48 48" fill="none" stroke={game.color} stroke-width="2.5"><path d="M24 4 C12 4 8 14 8 20 C8 32 16 40 24 44 C32 40 40 32 40 20 C40 14 36 4 24 4Z"/><circle cx="24" cy="20" r="6"/></svg>
+            )}
+            {game.icon === 'orb' && (
+              <svg viewBox="0 0 48 48" fill="none" stroke={game.color} stroke-width="2.5"><circle cx="24" cy="24" r="12"/><path d="M24 12 L24 18 M24 30 L24 36 M12 24 L18 24 M30 24 L36 24"/></svg>
+            )}
+            {game.icon === 'palm' && (
+              <svg viewBox="0 0 48 48" fill="none" stroke={game.color} stroke-width="2.5"><path d="M24 44 L24 28"/><path d="M24 28 Q16 20 10 24"/><path d="M24 28 Q32 18 38 22"/><path d="M24 28 Q24 14 20 8"/><circle cx="36" cy="10" r="3" opacity="0.5"/></svg>
+            )}
+            {game.icon === 'claw' && (
+              <svg viewBox="0 0 48 48" fill="none" stroke={game.color} stroke-width="2.5"><path d="M16 40 L16 28 L12 20 L20 24 L24 16 L28 24 L36 20 L32 28 L32 40"/><path d="M24 16 L24 8"/></svg>
+            )}
+            {game.icon === 'doom' && (
+              <svg viewBox="0 0 48 48" fill="none" stroke={game.color} stroke-width="2.5"><path d="M14 12 L14 36 L24 40 L34 36 L34 12 L24 8 Z"/><path d="M18 20 L18 28 L24 30 L30 28 L30 20"/></svg>
+            )}
+            {game.icon === 'rocket' && (
+              <svg viewBox="0 0 48 48" fill="none" stroke={game.color} stroke-width="2.5"><circle cx="24" cy="24" r="8"/><path d="M10 38 Q24 28 38 38"/><rect x="22" y="10" width="4" height="8"/></svg>
+            )}
+          </div>
+          
+          <h3 class="card-name">{game.name}</h3>
+          <div class="card-bar"><div class="card-bar-fill"></div></div>
+          <div class="card-tag">FAVORITE</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+      <div class="term-lightbox" id="termLightbox">
+        <div class="term-lightbox-content">
+          <div class="term-lightbox-header">
+            <span class="term-title">vukilis@github:~/README.md — Full Size</span>
+            <button class="term-lightbox-close" id="termLightboxClose" aria-label="Close">✕</button>
+          </div>
+          <div class="term-body term-body-full" id="readmeContentFull"></div>
+        </div>
+      </div>
+
 </BaseLayout>
 
-<style>
-  .about-page {
+<style is:global>
+  /* ═══════════════════════════════════════
+     V FOR VENDETTA THEME
+     ═══════════════════════════════════════ */
+  .vendetta {
+    position: relative;
     min-height: 100vh;
-    padding: calc(var(--nav-height) + 2rem) 2rem 5rem;
-  }
-
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .page-title {
-    font-family: var(--font-heading);
-    font-size: clamp(2.5rem, 8vw, 4rem);
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 3rem;
     color: var(--color-text);
-  }
-
-  .content-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .content-section {
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    border-radius: 1rem;
-    padding: 2rem;
-  }
-
-  .content-section h2 {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: var(--color-primary);
-  }
-
-  .content-section p {
-    line-height: 1.7;
-    color: var(--color-text-dim);
-    margin-bottom: 1rem;
-  }
-
-  .content-section p:last-of-type {
-    margin-bottom: 0;
-  }
-
-  .what-i-do-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem;
-    margin-top: 1.5rem;
-  }
-
-  .service-card {
-    padding: 1.25rem;
-    background: rgba(59, 130, 246, 0.05);
-    border-radius: 0.75rem;
-    border: 1px solid var(--color-border);
-    transition: all 0.2s ease;
-  }
-
-  .service-card:hover {
-    border-color: var(--color-primary);
-    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1);
-  }
-
-  .service-icon {
-    width: 44px;
-    height: 44px;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(59, 130, 246, 0.1);
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
-    color: var(--color-primary);
+    padding: calc(var(--nav-height, 64px) + 4rem) 1.5rem 5rem;
+  }
+  .v-mask-bg {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff0000;
+    opacity: 0.04;
+    pointer-events: none;
+  }
+  .v-mask-bg svg { width: min(80vw, 600px); height: auto; }
+  
+  .v-rose {
+    position: absolute;
+    width: 50px;
+    opacity: 0.25;
+    pointer-events: none;
+    animation: roseFloat 8s ease-in-out infinite;
+  }
+  .v-rose-1 { top: 15%; left: 8%; animation-delay: 0s; }
+  .v-rose-2 { bottom: 20%; right: 10%; animation-delay: -4s; width: 40px; }
+  @keyframes roseFloat {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
   }
 
-  .service-card h3 {
-    font-family: var(--font-heading);
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--color-text);
-  }
-
-  .service-card p {
-    font-size: 0.875rem;
-    color: var(--color-text-dim);
-    margin: 0;
-    line-height: 1.5;
-  }
-
-  .cta-section {
+  .v-content {
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
     text-align: center;
   }
+  .v-pretitle {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #8b0000;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .v-title {
+    font-family: var(--font-heading, system-ui, sans-serif);
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    margin: 0 0 2rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-shadow: 0 0 60px rgba(139,0,0,0.4);
+  }
+  .v-card {
+    background: rgba(139,0,0,0.06);
+    border: 1px solid rgba(139,0,0,0.25);
+    border-left: 3px solid #8b0000;
+    border-radius: 4px;
+    padding: 2rem;
+    text-align: left;
+    margin-bottom: 2.5rem;
+    backdrop-filter: blur(4px);
+  }
+  .v-card p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #b0b0b0;
+    margin: 0 0 1rem;
+  }
+  .v-card p:last-child { margin-bottom: 0; }
+  .v-lead { font-size: 1.125rem !important; color: #e0e0e0 !important; }
+  .v-lead strong { color: #ff1a1a; font-weight: 700; }
 
-  .cta-section p {
-    margin-bottom: 1.5rem;
+  .v-quote {
+    position: relative;
+    font-style: italic;
+    font-size: 1.125rem;
+    color: #cc0000;
+    line-height: 1.6;
+    padding: 0 1.5rem;
+    margin: 0 0 2.5rem;
+  }
+  .q-mark {
+    color: #8b0000;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
   }
 
-  .contact-buttons {
+  .v-stats {
     display: flex;
-    gap: 1rem;
     justify-content: center;
+    gap: 2.5rem;
     flex-wrap: wrap;
   }
+  .v-stat { text-align: center; }
+  .v-num {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #ff1a1a;
+    font-family: var(--font-heading);
+    text-shadow: 0 0 20px rgba(255,26,26,0.3);
+  }
+  .v-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #666;
+    margin-top: 0.25rem;
+  }
 
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.875rem 1.75rem;
-    font-size: 1rem;
+  /* ═══════════════════════════════════════
+     NO MAN'S SKY THEME
+     ═══════════════════════════════════════ */
+  .nomanssky {
+    position: relative;
+    min-height: 100vh;
+    color: var(--color-text);
+    padding: 5rem 1.5rem 6rem;
+    overflow: hidden;
+  }
+  .nms-stars {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 20px 40px, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1.5px 1.5px at 60px 120px, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1px 1px at 120px 80px, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1.5px 1.5px at 180px 20px, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1px 1px at 240px 160px, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1.5px 1.5px at 300px 90px, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1px 1px at 340px 50px, rgba(255,255,255,0.4), transparent),
+      radial-gradient(1.5px 1.5px at 400px 140px, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1px 1px at 450px 30px, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1.5px 1.5px at 500px 110px, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1px 1px at 560px 70px, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1.5px 1.5px at 620px 150px, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1px 1px at 680px 40px, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1.5px 1.5px at 740px 130px, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1px 1px at 800px 60px, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1.5px 1.5px at 860px 170px, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1px 1px at 920px 90px, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1.5px 1.5px at 980px 20px, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1px 1px at 1040px 140px, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1.5px 1.5px at 1100px 80px, rgba(255,255,255,0.5), transparent);
+    background-size: 1200px 200px;
+    animation: starScroll 60s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes starScroll { to { transform: translateY(-200px); } }
+  
+  .nms-scan {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0,255,255,0.4), transparent);
+    animation: scanMove 5s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes scanMove { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+
+  .nms-aurora {
+    position: absolute;
+    top: 20%; left: -20%; right: -20%;
+    height: 300px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(0,212,170,0.08) 0%, transparent 60%);
+    filter: blur(60px);
+    pointer-events: none;
+    animation: auroraShift 10s ease-in-out infinite alternate;
+  }
+  @keyframes auroraShift { from { transform: translateX(-5%) rotate(-2deg); } to { transform: translateX(5%) rotate(2deg); } }
+
+  .nms-header { text-align: center; margin-bottom: 3rem; position: relative; z-index: 2; }
+  .nms-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 5vw, 3rem);
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    color: #00ffff;
+    text-shadow: 0 0 30px rgba(0,255,255,0.25);
+    letter-spacing: 0.02em;
+  }
+  .nms-sub { font-size: 1rem; color: #7aa; margin: 0; }
+  .nms-highlight { color: #00d4aa; font-weight: 600; }
+
+  .nms-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    max-width: 960px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  .nms-card {
+    position: relative;
+    border: 1px solid rgba(0,212,170,0.2);
+    border-radius: 14px;
+    background: rgba(6,10,20,0.65);
+    backdrop-filter: blur(12px);
+    padding: 1.5rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .nms-card:hover {
+    border-color: rgba(0,212,170,0.5);
+    box-shadow: 0 8px 40px rgba(0,212,170,0.1);
+    transform: translateY(-3px);
+  }
+  .nms-badge {
+    display: inline-block;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #00d4aa;
+    border: 1px solid rgba(0,212,170,0.3);
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+  }
+  .nms-card h3 {
+    font-size: 1.125rem;
     font-weight: 600;
-    font-family: var(--font-body);
+    margin: 0 0 1rem;
+    color: #e0f2f1;
+  }
+  .nms-desc {
+    font-size: 0.8125rem;
+    color: #7aa;
+    line-height: 1.6;
+    margin: 0.75rem 0 0;
+  }
+  .nms-link {
+    display: inline-flex;
+    margin-top: 0.875rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #00d4aa;
     text-decoration: none;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
     transition: all 0.2s ease;
   }
+  .nms-link:hover { color: #00ffff; text-shadow: 0 0 10px rgba(0,255,255,0.4); }
 
-  .btn-primary {
-    background: var(--color-primary);
-    color: white;
-    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+  /* Homelab diagram */
+  .homelab-diagram { width: 100%; position: relative; }
+  .h-preview { position: relative; width: 100%; border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,212,170,0.2); background: rgba(4,8,16,0.6); }
+  .h-preview-img { width: 100%; height: auto; display: block; opacity: 0.9; transition: opacity 0.2s ease; }
+  .h-preview:hover .h-preview-img { opacity: 1; }
+  .h-preview-badge {
+    position: absolute; top: 8px; right: 8px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.5625rem; font-weight: 700; letter-spacing: 0.1em;
+    color: #00d4aa; border: 1px solid rgba(0,212,170,0.4);
+    padding: 4px 10px; border-radius: 4px;
+    background: rgba(4,8,16,0.7); backdrop-filter: blur(4px);
+    z-index: 2;
   }
+  .h-preview-badge svg { width: 14px; height: 14px; flex-shrink: 0; }
 
-  .btn-primary:hover {
-    background: #2563EB;
-    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+  /* Terminal */
+  .terminal {
+    border: 1px solid rgba(0,212,170,0.25);
+    border-radius: 8px;
+    background: rgba(4,8,16,0.9);
+    overflow: hidden;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
   }
+  .term-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: rgba(0,212,170,0.08);
+    border-bottom: 1px solid rgba(0,212,170,0.15);
+  }
+  .term-btn { width: 8px; height: 8px; border-radius: 50%; background: #ff5f56; }
+  .term-btn:nth-child(2) { background: #ffbd2e; }
+  .term-btn:nth-child(3) { background: #27c93f; }
+  .term-title { margin-left: auto; color: #5a8; font-size: 0.6875rem; }
+  .term-body { padding: 12px; color: #8ab; line-height: 1.7; overflow-y: auto; }
+  .term-body::-webkit-scrollbar { width: 4px; }
+  .term-body::-webkit-scrollbar-thumb { background: rgba(0,212,170,0.3); border-radius: 2px; }
+  .term-prompt { color: #00d4aa; font-weight: 700; margin-right: 4px; }
+  .term-cmd { color: #5aa; }
+  .term-loading { color: #6a9; }
+  .term-blink { animation: blinkCursor 1s step-end infinite; }
+  .term-line { margin-bottom: 4px; }
+  .term-body h1, .term-body h2, .term-body h3 { color: #00ffff; font-size: 0.875rem; margin: 8px 0 4px; }
+  .term-body a { color: #00d4aa; text-decoration: underline; }
+  .term-body strong { color: #e0f2f1; }
+  .term-list-item { margin: 2px 0; line-height: 1.6; }
 
-  .btn-primary svg {
+  .nms-github .terminal { flex: 1; display: flex; flex-direction: column; min-height: 0; max-height: 360px; }
+  .nms-github .term-body { flex: 1; min-height: 0; }
+  .term-img { max-width: 100%; height: auto; border-radius: 4px; margin: 6px 0; display: block; place-self: center;}
+  .term-expand {
+    margin-left: auto; width: 28px; height: 28px; padding: 4px;
+    border: 1px solid rgba(0,212,170,0.35); border-radius: 6px;
+    background: rgba(4,8,16,0.6); color: #00d4aa; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s ease; opacity: 0; pointer-events: none;
+  }
+  .terminal:hover .term-expand { opacity: 1; pointer-events: auto; }
+  .term-expand:hover { background: rgba(0,212,170,0.15); border-color: #00ffff; color: #00ffff; }
+  .term-expand svg { width: 14px; height: 14px; }
+
+  .term-section {
+    border: 1px solid rgba(0,212,170,0.15);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    background: rgba(4,8,16,0.4);
+  }
+  .term-section summary {
+    padding: 8px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #00d4aa;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    transition: background 0.2s ease;
+  }
+  .term-section summary::-webkit-details-marker { display: none; }
+  .term-section summary::after {
+    content: '+';
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #00d4aa;
     transition: transform 0.2s ease;
   }
-
-  .btn-primary:hover svg {
-    transform: translateX(4px);
+  .term-section[open] summary::after {
+    content: '−';
+  }
+  .term-section summary:hover {
+    background: rgba(0,212,170,0.08);
+  }
+  .term-section-content {
+    padding: 10px 12px;
+    border-top: 1px solid rgba(0,212,170,0.1);
   }
 
-  .btn-secondary {
-    background: transparent;
+  .term-lightbox {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,0.92); backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem; opacity: 0; pointer-events: none; visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .term-lightbox.open { opacity: 1; pointer-events: auto; visibility: visible; }
+  .term-lightbox-content {
+    width: 100%; max-width: 900px; max-height: 90vh;
+    border: 1px solid rgba(0,212,170,0.3); border-radius: 12px;
+    background: rgba(4,8,16,0.98); display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .term-lightbox-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px; border-bottom: 1px solid rgba(0,212,170,0.2);
+    background: rgba(0,212,170,0.06);
+  }
+  .term-lightbox-header .term-title { margin: 0; }
+  .term-lightbox-close {
+    width: 36px; height: 36px; padding: 6px;
+    border: 1px solid rgba(0,212,170,0.4); border-radius: 8px;
+    background: rgba(4,8,16,0.8); color: #00d4aa; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.125rem; transition: all 0.2s ease;
+  }
+  .term-lightbox-close:hover { background: rgba(0,212,170,0.15); border-color: #00ffff; color: #00ffff; }
+  .term-body-full { padding: 16px; overflow-y: auto; max-height: calc(90vh - 56px); }
+  .term-body-full .term-img { max-width: 100%; height: auto; }
+
+  /* Steam diagram */
+  .steam-diagram { width: 100%; position: relative; }
+  .s-preview { position: relative; width: 100%; border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,212,170,0.2); background: rgba(4,8,16,0.6); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; padding: 1.5rem 1rem 2.25rem; }
+  .s-preview:hover .home-avatar { transform: scale(1.05); }
+  .s-preview-badge {
+    position: absolute; top: 8px; right: 8px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.5625rem; font-weight: 700; letter-spacing: 0.1em;
+    color: #00d4aa; border: 1px solid rgba(0,212,170,0.4);
+    padding: 4px 10px; border-radius: 4px; text-transform: uppercase;
+    background: rgba(4,8,16,0.7); backdrop-filter: blur(4px);
+    z-index: 2;
+  }
+  .s-preview-badge svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  .home-avatar {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px; height: 72px;
+    border: 2px solid var(--hud-color, #33ff33);
+    border-radius: 50%;
+    text-decoration: none;
+    color: var(--hud-color, #33ff33);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: steamPulse 2.5s ease-in-out infinite;
+    z-index: 10;
+  }
+
+  @keyframes steamPulse {
+    0%, 100% { box-shadow: 0 0 0 0 currentColor; }
+    50% { box-shadow: 0 0 0 10px transparent; }
+  }
+
+  .home-avatar::after {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: 50%;
+    background: rgba(4, 8, 16, 0.95);
+    border: 2px dashed var(--hud-color, #33ff33);
+    transform: scale(0);
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: -1;
+  }
+
+  .home-avatar:hover .steam-icon {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 6px var(--hud-color, #33ff33));
+  }
+
+  .steam-icon {
+    width: 36px; height: 36px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative; z-index: 2;
+    pointer-events: none;
+  }
+
+  .steam-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    border: 2px solid var(--hud-color, #33ff33);
+    margin-bottom: 4px;
+    object-fit: cover;
+    animation: avatarFloat 3s ease-in-out infinite;
+  }
+
+  @keyframes avatarFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  .steam-status-text {
+    font-weight: 700; font-size: 0.7rem;
+    letter-spacing: 1px; margin-top: 2px;
+    text-transform: uppercase;
+  }
+
+  .steam-game-text {
+    font-size: 0.6rem; margin-top: 3px;
+    max-width: 100px; word-wrap: break-word;
+    color: #ff00ff; line-height: 1.2;
+  }
+
+  .steam-status-label {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--hud-color, #33ff33);
+    transition: color 0.3s ease;
+    min-height: 1em;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+
+  .status-legend { display: inline-flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .status-item { display: inline-flex; align-items: center; gap: 4px; font-size: 0.65rem; font-weight: 600; color: #8ab; letter-spacing: 0.04em; }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--dot); box-shadow: 0 0 6px var(--dot); flex-shrink: 0; }
+
+  @media (min-width: 768px) {
+    .status-legend { gap: 10px; margin-top: 8px; }
+    .status-item { font-size: 0.75rem; gap: 6px; letter-spacing: 0.05em; }
+    .status-dot { width: 8px; height: 8px; box-shadow: 0 0 8px var(--dot); }
+  }
+
+  /* Yerba */
+  .yerba-diagram { width: 100%; position: relative; }
+  .y-preview { position: relative; width: 100%; border-radius: 8px; overflow: hidden; border: 1px solid rgba(0, 212, 170, 0.2); background: rgba(4, 8, 16, 0.6); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; padding: 1.5rem 1rem 2.25rem; }
+  .y-preview .yerba-emoji { font-size: 4.5rem; line-height: 1; animation: yerbaFloat 3s ease-in-out infinite; }
+  .y-preview:hover .yerba-emoji { transform: scale(1.1); }
+  .y-preview-badge {
+    position: absolute; top: 8px; right: 8px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.5625rem; font-weight: 700; letter-spacing: 0.1em;
+    color: #00d4aa; border: 1px solid rgba(0,212,170,0.4);
+    padding: 4px 10px; border-radius: 4px;
+    background: rgba(4,8,16,0.7); backdrop-filter: blur(4px);
+    z-index: 2;
+  }
+  .y-preview-badge svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .yerba-status-label {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #00d4aa;
+    z-index: 2;
+  }
+  @keyframes yerbaFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .nms-yerba { text-decoration: none; color: inherit; display: block; }
+  .nms-yerba:hover { transform: translateY(-3px); }
+  .nms-yerba .nms-badge { color: #00d4aa; border-color: rgba(0,212,170,0.3); }
+  .nms-yerba:hover .nms-badge { border-color: #00d4aa; }
+
+  /* ═══════════════════════════════════════
+     GAMING ARCADE THEME
+     ═══════════════════════════════════════ */
+  .arcade {
+    position: relative;
+    min-height: 100vh;
     color: var(--color-text);
+    padding: 5rem 1.5rem 6rem;
+    overflow: hidden;
+    perspective: 1000px;
+  }
+
+  .arcade-header { text-align: center; margin-bottom: 3rem; position: relative; z-index: 2; }
+  .arcade-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 800;
+    margin: 0 0 0.5rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-shadow:
+      0 0 10px rgba(0,255,65,0.5),
+      0 0 40px rgba(0,255,65,0.2),
+      0 0 80px rgba(0,255,65,0.1);
+    animation: titleGlitch 4s infinite;
+  }
+  @keyframes titleGlitch {
+    0%,90%,100%{text-shadow:0 0 10px rgba(0,255,65,0.5),0 0 40px rgba(0,255,65,0.2)}
+    92%{text-shadow:-2px 0 #ff00ff,2px 0 #00ffff}
+    94%{text-shadow:2px 0 #ff00ff,-2px 0 #00ffff}
+    96%{text-shadow:0 0 10px rgba(0,255,65,0.5),0 0 40px rgba(0,255,65,0.2)}
+  }
+  .arcade-sub {
+    font-size: 1rem;
+    color: #7a7a8a;
+    margin: 0 0 1rem;
+    font-family: var(--font-mono);
+  }
+  .arcade-coin-slot {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 16px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: #555;
+  }
+  .coin-light {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #eab308;
+    box-shadow: 0 0 8px #eab308;
+    animation: coinPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes coinPulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  .game-card {
+    position: relative;
     border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-bg-card);
+    padding: 1.25rem;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+    animation: cardAppear 0.5s ease backwards;
+    animation-delay: calc(var(--i) * 0.08s);
+  }
+  @keyframes cardAppear {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .game-card:hover {
+    border-color: var(--glow);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--glow) 20%, transparent), 0 8px 24px rgba(0,0,0,0.4);
+    transform: translateY(-6px);
+  }
+  .card-glitch {
+    position: absolute; inset: 0;
+    background: linear-gradient(105deg, transparent 40%, color-mix(in srgb, var(--glow) 8%, transparent) 50%, transparent 60%);
+    opacity: 0; transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  .game-card:hover .card-glitch { opacity: 1; }
+  .card-number {
+    position: absolute; top: 8px; left: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.15);
+  }
+  .card-icon {
+    width: 48px; height: 48px;
+    margin: 0 auto 0.75rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .card-icon svg { width: 100%; height: 100%; }
+  .card-name {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #e0e0e0;
+    margin: 0 0 0.625rem;
+    line-height: 1.3;
+    min-height: 2.4em;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .card-bar {
+    width: 100%; height: 3px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.625rem;
+  }
+  .card-bar-fill {
+    height: 100%; width: 0%;
+    background: var(--glow);
+    box-shadow: 0 0 8px var(--glow);
+    transition: width 1s cubic-bezier(0.22,1,0.36,1);
+  }
+  .game-card:hover .card-bar-fill { width: 100%; }
+  .card-tag {
+    font-size: 0.5625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--glow);
+    opacity: 0.6;
   }
 
-  .btn-secondary:hover {
-    background: rgba(59, 130, 246, 0.1);
-    border-color: var(--color-primary);
+  /* Responsive */
+  @media (max-width: 900px) {
+    .nms-grid { grid-template-columns: 1fr; }
+    .games-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .games-grid { grid-template-columns: 1fr; }
+    .v-stats { gap: 1.5rem; }
+    .v-card { padding: 1.25rem; }
+  }
+  </style>
+
+  <script>
+    let dmgStyleInjected = false;
+    let aboutInitialized = false;
+
+    async function initAboutPage() {
+      if (aboutInitialized) return;
+      aboutInitialized = true;
+
+      await loadReadme();
+      initSteamWidget();
+      initScrollReveal();
+      initDamageNumbers();
+    }
+
+    /* ═══════════════════════════════════════
+       FETCH GITHUB README
+      ═══════════════════════════════════════ */
+  async function loadReadme() {
+    const container = document.getElementById('readmeContent');
+    try {
+      const res = await fetch('https://raw.githubusercontent.com/vukilis/vukilis/main/README.md');
+      if (!res.ok) throw new Error('Uplink failed');
+      const md = await res.text();
+      
+      const rawSections = extractReadmeSections(md);
+      const sections = rawSections.map(s => ({
+        name: s.name,
+        html: renderMarkdown(s.content),
+        visible: true
+      }));
+      
+      renderSections(container, sections, true);
+    } catch (e) {
+      container.innerHTML = `<div class="term-line" style="color:#ff5f56;">Error: ${e.message}</div><div class="term-line" style="color:#5a8;">Retrying in 5s...</div>`;
+      setTimeout(loadReadme, 5000);
+    }
   }
 
-  @media (max-width: 768px) {
-    .about-page {
-      padding-top: calc(var(--nav-height) + 1rem);
-    }
+  function renderMarkdown(content) {
+    let html = content
+      .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="term-img" />')
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+      .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+      .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+      .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/^- (.*$)/gim, '<div class="term-list-item">• $1</div>')
+      .replace(/^\d+\.\s(.*$)/gim, '<div class="term-list-item">• $1</div>')
+      .replace(/:fire:/g, '🔥')
+      .replace(/:desktop_computer:/g, '🖥️');
+    return html;
+  }
 
-    .what-i-do-grid {
-      grid-template-columns: 1fr;
-    }
+  function renderSections(container, sections, showPrompt) {
+    const promptHtml = showPrompt 
+      ? `<div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">cat README.md</span></div>`
+      : '';
+    
+    const visible = sections.filter(s => s.visible).map(s => {
+      const titleMatch = s.html.match(/<h[123][^>]*>(.*?)<\/h[123]>/);
+      const title = titleMatch ? titleMatch[1] : s.name;
+      const content = s.html.replace(/<h[123][^>]*>.*?<\/h[123]>/, '');
+      
+      return `<details class="term-section" open>
+        <summary>${title}</summary>
+        <div class="term-section-content">${content}</div>
+      </details>`;
+    }).join('');
+    
+    container.innerHTML = `${promptHtml}<div class="term-line" style="color:#5a8;">${visible}</div>`;
+  }
 
-    .contact-buttons {
-      flex-direction: column;
-      align-items: center;
+  function extractReadmeSections(md) {
+    const lines = md.split('\n');
+    const sections = [];
+    let i = 0;
+    
+    const targets = [
+      { key: 'My Gear', marker: 'My Gear' },
+      { key: 'My Github Stats', marker: 'My Github Stats' },
+      { key: 'Check out what I\'m currently working on', marker: 'Check out what I\'m currently working on' },
+      { key: 'My latest projects', marker: 'My latest projects' },
+      { key: 'Recent Blog Posts', marker: 'Recent Blog Posts' }
+    ];
+    
+    while (i < lines.length) {
+      const line = lines[i];
+      const target = targets.find(t => line.includes(t.marker));
+      
+      if (target) {
+        let sectionLines = [line];
+        let j = i + 1;
+        
+        if (target.key === 'My Gear' || target.key === 'My Github Stats') {
+          while (j < lines.length && !lines[j].includes('</details>')) {
+            sectionLines.push(lines[j]);
+            j++;
+          }
+          if (j < lines.length) {
+            sectionLines.push(lines[j]);
+            j++;
+          }
+        } else if (line.startsWith('###')) {
+          while (j < lines.length && !lines[j].startsWith('###') && !lines[j].includes('</details>')) {
+            sectionLines.push(lines[j]);
+            j++;
+          }
+        }
+        
+        sections.push({
+          name: target.key,
+          content: sectionLines.join('\n')
+        });
+        i = j;
+      } else {
+        i++;
+      }
     }
+    
+    return sections;
+  }
+  function initScrollReveal() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
 
-    .btn {
-      width: 100%;
-      max-width: 280px;
-      justify-content: center;
+    document.querySelectorAll('.nms-card, .game-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+      observer.observe(el);
+    });
+
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.nms-card, .game-card').forEach(el => revealObs.observe(el));
+  }
+
+  function initDamageNumbers() {
+    if (dmgStyleInjected) return;
+    dmgStyleInjected = true;
+
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('a, button, .terminal')) return;
+      const tags = ['POW!', 'BAM!', 'ZAP!', 'WOW!', 'NICE!', 'SICK!'];
+      const el = document.createElement('div');
+      el.textContent = tags[Math.floor(Math.random() * tags.length)];
+      el.style.cssText = `
+        position: fixed; left: ${e.clientX}px; top: ${e.clientY}px;
+        font-family: var(--font-mono, monospace); font-size: 13px; font-weight: 800;
+        color: #eab308; pointer-events: none; z-index: 10000;
+        text-shadow: 0 0 10px rgba(234,179,8,0.6);
+        animation: dmgPop 0.7s ease-out forwards;
+      `;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 700);
+    });
+
+    const dmgStyle = document.createElement('style');
+    dmgStyle.textContent = `@keyframes dmgPop {
+      0%{transform:translate(-50%,0) scale(1);opacity:1}
+      100%{transform:translate(-50%,-45px) scale(1.25);opacity:0}
+    }`;
+    document.head.appendChild(dmgStyle);
+  }
+
+  /* ═══════════════════════════════════════
+     FETCH STEAM STATUS
+     ═══════════════════════════════════════ */
+  function initSteamWidget() {
+    const statusLabel = document.getElementById('steamStatusLabel');
+    if (!statusLabel) return;
+    (async () => {
+      try {
+        const response = await fetch('https://vukilis.com/status-steam');
+        const data = await response.json();
+        const statusMap = ["OFFLINE", "ONLINE", "BUSY", "AWAY", "SNOOZE", "TRADING", "PLAYING"];
+        const statusColors = { 0: "#888", 1: "#33ff33", 2: "#ff3333", 3: "#ffff33", 4: "#ffff33", 5: "#33ccff", 6: "#ff00ff" };
+        const isPlaying = data.game && data.game.trim().length > 0;
+        const statusText = isPlaying ? "PLAYING" : (statusMap[data.status] || "OFFLINE");
+        const color = isPlaying ? "#ff00ff" : (statusColors[data.status] || "#33ff33");
+        statusLabel.textContent = statusText;
+        const preview = document.querySelector('.s-preview');
+        if (preview) preview.style.setProperty('--hud-color', color);
+        if (statusLabel) statusLabel.style.color = color;
+      } catch (err) {
+        console.error("Steam status fetch failed:", err);
+      }
+    })();
+    setInterval(async () => {
+      try {
+        const response = await fetch('https://vukilis.com/status-steam');
+        const data = await response.json();
+        const statusMap = ["OFFLINE", "ONLINE", "BUSY", "AWAY", "SNOOZE", "TRADING", "PLAYING"];
+        const statusColors = { 0: "#888", 1: "#33ff33", 2: "#ff3333", 3: "#ffff33", 4: "#ffff33", 5: "#33ccff", 6: "#ff00ff" };
+        const isPlaying = data.game && data.game.trim().length > 0;
+        const statusText = isPlaying ? "PLAYING" : (statusMap[data.status] || "OFFLINE");
+        const color = isPlaying ? "#ff00ff" : (statusColors[data.status] || "#33ff33");
+        statusLabel.textContent = statusText;
+        const preview = document.querySelector('.s-preview');
+        if (preview) preview.style.setProperty('--hud-color', color);
+        if (statusLabel) statusLabel.style.color = color;
+      } catch (err) {
+        console.error("Steam status fetch failed:", err);
+      }
+    }, 30000);
+  }
+
+  let readmeFullLoaded = false;
+
+  async function loadFullReadme() {
+    const readmeContentFull = document.getElementById('readmeContentFull');
+    if (!readmeContentFull || readmeFullLoaded) return;
+    try {
+      const res = await fetch('https://raw.githubusercontent.com/vukilis/vukilis/main/README.md');
+      if (!res.ok) throw new Error('Failed to load');
+      const md = await res.text();
+      
+      const rawSections = extractReadmeSections(md);
+      const sections = rawSections.map(s => ({
+        name: s.name,
+        html: renderMarkdown(s.content),
+        visible: true
+      }));
+      
+      renderSections(readmeContentFull, sections, false);
+      
+      readmeFullLoaded = true;
+    } catch (e) {
+      readmeContentFull.innerHTML = `<div class="term-line" style="color:#ff5f56;">Error: ${e.message}</div>`;
     }
   }
-</style>
+
+  // Astro lifecycle: re-init when navigating back to About
+  function handleAboutNavigate() {
+    aboutInitialized = false;
+    readmeFullLoaded = false;
+    
+    const btn = document.getElementById('steam-toggle-btn');
+    const infoDiv = document.getElementById('steam-info');
+    if (btn) btn.classList.remove('active');
+    if (infoDiv) infoDiv.innerHTML = '';
+    
+    initAboutPage();
+    initModal();
+  }
+
+  function initModal() {
+    const termExpandBtn = document.getElementById('termExpandBtn');
+    const termLightbox = document.getElementById('termLightbox');
+    const termLightboxClose = document.getElementById('termLightboxClose');
+    const readmeContentFull = document.getElementById('readmeContentFull');
+
+    if (!termExpandBtn || !termLightbox || !readmeContentFull) return;
+
+    termExpandBtn.onclick = async () => {
+      termLightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      if (!readmeContentFull.innerHTML || readmeContentFull.querySelector('.term-loading')) {
+        await loadFullReadme();
+      }
+    };
+
+    termLightboxClose.onclick = () => {
+      termLightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    };
+
+    termLightbox.onclick = (e) => {
+      if (e.target === termLightbox) {
+        termLightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    };
+
+    document.onkeydown = (e) => {
+      if (e.key === 'Escape' && termLightbox.classList.contains('open')) {
+        termLightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    };
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      initAboutPage();
+      initModal();
+    });
+  } else {
+    initAboutPage();
+    initModal();
+  }
+
+  document.addEventListener('astro:page-load', handleAboutNavigate);
+  window.addEventListener('astro:after-swap', handleAboutNavigate);
+</script>

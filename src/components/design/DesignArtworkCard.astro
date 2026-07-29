@@ -10,6 +10,7 @@ interface Props {
     cover: string;
     src?: string;
     id?: string;
+    pubDate: number | Date;
   };
   index: number;
   categories: { id: string; label: string }[];
@@ -27,6 +28,7 @@ const label = categories.find((c) => c.id === item.cat[0])?.label;
   class="art-card"
   data-index={index}
   data-category={item.cat.join(',')}
+  data-pub-date={new Date(item.pubDate).toISOString()}
   data-type={isVideo ? "video" : "image"}
   data-src={src}
   data-cover={item.cover || ''}

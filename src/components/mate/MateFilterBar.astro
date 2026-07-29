@@ -1,5 +1,5 @@
 ---
-import '../../styles/music/filter.css';
+import '../../styles/mate/filter.css';
 
 interface Props {
   categories: { id: string; label: string; count?: number }[];
@@ -8,8 +8,8 @@ interface Props {
 const { categories } = Astro.props;
 ---
 
-<div class="music-filter-bar" role="tablist" aria-label="Filter by category">
-  <div class="music-filter-row">
+<div class="mate-filter-bar" role="tablist" aria-label="Filter by category">
+  <div class="mate-filter-row">
     <span class="filter-label">Categories</span>
     <div class="filter-pills">
       {categories.map((c, i) => (
@@ -28,15 +28,15 @@ const { categories } = Astro.props;
       ))}
     </div>
   </div>
-  <div class="music-filter-row">
+  <div class="mate-filter-row">
     <span class="filter-label">Sort by</span>
     <div class="sort-controls">
-      <button class="sort-btn" id="music-pubdate-sort-btn" type="button" aria-label="Sort by date" title="Sort by date">
-        <span class="sort-text">Date</span>
+      <button class="sort-btn" id="rating-sort-btn" type="button" aria-label="Sort by rating" title="Sort by rating">
+        <span class="sort-text">Rating</span>
         <svg class="sort-icon sort-icon--up" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
         <svg class="sort-icon sort-icon--down" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
       </button>
-      <button class="clear-sort-btn" id="music-clear-sort-btn" type="button" aria-label="Clear sort" title="Clear sort" hidden>
+      <button class="clear-sort-btn" id="rating-clear-sort-btn" type="button" aria-label="Clear sort" title="Clear sort" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         Clear
       </button>

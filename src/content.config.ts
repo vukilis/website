@@ -72,4 +72,22 @@ const projectsMusic = defineCollection({
   }),
 });
 
-export const collections = { blog, projectsIT, projectsDesign, projectsMusic };
+const yerbaMate = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/yerbamate' }),
+  schema: z.object({
+    name: z.string(),
+    category: z.string().default('yerba'),
+    image: z.string(),
+    rating: z.string(),
+    type: z.string(),
+    complexity: z.string(),
+    body: z.string(),
+    durability: z.string(),
+    effect: z.string(),
+    level: z.string(),
+    pubDate: z.coerce.date(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { blog, projectsIT, projectsDesign, projectsMusic, yerbaMate };

@@ -1,0 +1,405 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Vuk1lis — Homelab Diagram" description="Interactive homelab network diagram">
+  <Navigation />
+
+  <section class="homelab-page">
+    <div class="h-page-bg" aria-hidden="true">
+      <div class="h-grid"></div>
+      <svg class="h-network" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <radialGradient id="nodeGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#00d4aa" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#00d4aa" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <g class="h-network-lines" stroke="#00d4aa" stroke-opacity="0.08" stroke-width="1"></g>
+        <g class="h-network-nodes" fill="#00d4aa" filter="url(#glow)"></g>
+        <g class="h-network-pulses"></g>
+      </svg>
+      <div class="h-particles" id="hParticles"></div>
+      <div class="h-glow h-glow-1"></div>
+      <div class="h-glow h-glow-2"></div>
+    </div>
+
+    <div class="h-page-header">
+      <a href={`${base}about/`} class="h-back">← Back to About</a>
+      <h1 class="h-page-title">Homelab Network Diagram</h1>
+      <p class="h-page-sub">Live diagram — my homelab network topology showing the full self-hosted infrastructure powering everything — zoom, pan, and explore!</p>
+    </div>
+
+    <div class="h-page-diagram">
+      <div id="diagram-container" style="position: relative; width: 100%!important; overflow: hidden;">
+        <!-- Loader Overlay -->
+        <div id="diagram-loader" class="diagram-loader" aria-hidden="true">
+          <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <p class="loader-text">Loading diagram…</p>
+          </div>
+        </div>
+
+        <div class="mxgraph" style="width: 100%!important; height: 100%!important; border: 1px solid transparent; overflow: hidden; min-height: 600px;" data-mxgraph="{
+          &quot;highlight&quot;:&quot;#0000ff&quot;,
+          &quot;nav&quot;:true,
+          &quot;resize&quot;:true,
+          &quot;dark-mode&quot;:&quot;dark&quot;,
+          &quot;toolbar&quot;:&quot;zoom layers tags lightbox&quot;,
+          &quot;edit&quot;:&quot;_blank&quot;,
+          &quot;url&quot;:&quot;https://raw.githubusercontent.com/vukilis/homelab/main/homelab_diagram.drawio&quot;,
+          &quot;auto-fit&quot;:true,
+          &quot;allow-zoom-in&quot;:true
+        }"></div>
+      </div>
+    </div>
+  </section>
+
+  <style is:global>
+    .homelab-page { min-height: 100vh; color: var(--color-text); padding: calc(var(--nav-height, 64px) + 3rem) 1.5rem 5rem; position: relative; overflow: hidden; }
+    .h-page-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .h-network { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.7; }
+    .h-network-nodes circle { opacity: 0.6; }
+    .h-network-pulses circle { opacity: 0; }
+    @keyframes pulseMove {
+      0% { opacity: 0; r: 1.5; }
+      15% { opacity: 0.9; }
+      85% { opacity: 0.9; }
+      100% { opacity: 0; r: 2; }
+    }
+    .h-particles { position: absolute; inset: 0; }
+    .h-particle {
+      position: absolute; width: 3px; height: 3px;
+      background: #00d4aa; border-radius: 50%;
+      box-shadow: 0 0 8px #00d4aa, 0 0 16px rgba(0, 212, 170, 0.4);
+      animation: particleFloat 8s ease-in-out infinite;
+      opacity: 0;
+    }
+    @keyframes particleFloat {
+      0%, 100% { opacity: 0; transform: translateY(0) scale(0.5); }
+      20% { opacity: 0.8; }
+      50% { opacity: 0.4; transform: translateY(-120px) scale(1); }
+      80% { opacity: 0.6; }
+    }
+    .homelab-page > *:not(.h-page-bg) { position: relative; z-index: 1; }
+    .h-page-header { max-width: 1100px; margin: 0 auto 2.5rem; }
+    .h-back { display: inline-flex; color: #00d4aa; text-decoration: none; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; transition: color 0.2s ease; }
+    .h-back:hover { color: #00ffff; }
+    .h-page-title { font-family: var(--font-heading); font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 700; margin: 0 0 0.5rem; color: #e0f2f1; }
+    .h-page-sub { font-size: 0.9375rem; color: #7aa; margin: 0; }
+    .h-page-diagram { max-width: 1100px; margin: 0 auto; }
+
+    [data-theme="light"] .h-page-title { color: #0f172a; }
+    [data-theme="light"] .h-page-sub { color: #334155; }
+    [data-theme="light"] .h-back { color: #0891b2; }
+    [data-theme="light"] .h-back:hover { color: #0e7490; }
+    [data-theme="light"] .h-grid {
+      background-image:
+        linear-gradient(rgba(8, 145, 178, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(8, 145, 178, 0.12) 1px, transparent 1px);
+    }
+    [data-theme="light"] .h-network { opacity: 0.9; }
+    [data-theme="light"] .h-network-lines { stroke: #0891b2; stroke-opacity: 0.25; }
+    [data-theme="light"] .h-network-nodes circle { fill: #0891b2; opacity: 0.75; }
+    [data-theme="light"] .h-particle {
+      background: #0891b2;
+      box-shadow: 0 0 8px rgba(8, 145, 178, 0.6), 0 0 16px rgba(8, 145, 178, 0.25);
+    }
+    [data-theme="light"] .h-glow { opacity: 0.18; }
+    [data-theme="light"] .h-glow-1 { background: #0891b2; }
+    [data-theme="light"] .h-glow-2 { background: #2563eb; }
+    [data-theme="light"] .loader-text { color: #0891b2; }
+    [data-theme="light"] .loader-spinner { border-top-color: #0891b2; }
+
+    .diagram-loader {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(10, 15, 20, 0.9);
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      border-radius: 8px;
+      min-height: 600px;
+    }
+    .diagram-loader.is-visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    .loader-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .loader-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(0, 212, 170, 0.2);
+      border-top-color: #00d4aa;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    .loader-text {
+      color: #00d4aa;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin: 0;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+
+  <script>
+    (function() {
+      const CACHE_KEY = 'homelab-diagram-loaded';
+      const CACHE_TTL = 15 * 60 * 1000;
+      const LOAD_TIMEOUT = 1000;
+
+      let loadTimer = null;
+      let isInitializing = false;
+
+      function isCacheValid() {
+        try {
+          const cached = sessionStorage.getItem(CACHE_KEY);
+          if (!cached) return false;
+          return Date.now() - parseInt(cached, 10) < CACHE_TTL;
+        } catch {
+          return false;
+        }
+      }
+
+      function setCache() {
+        try {
+          sessionStorage.setItem(CACHE_KEY, Date.now().toString());
+        } catch {}
+      }
+
+      function showLoader() {
+        const loader = document.getElementById('diagram-loader');
+        if (loader) loader.classList.add('is-visible');
+      }
+
+      function hideLoader() {
+        const loader = document.getElementById('diagram-loader');
+        if (loader) loader.classList.remove('is-visible');
+        if (loadTimer) {
+          clearTimeout(loadTimer);
+          loadTimer = null;
+        }
+      }
+
+      function onDiagramReady() {
+        setCache();
+        hideLoader();
+      }
+
+      function createParticles() {
+        const container = document.getElementById('hParticles');
+        if (!container) return;
+        container.innerHTML = '';
+        const count = window.innerWidth < 768 ? 15 : 30;
+        for (let i = 0; i < count; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'h-particle';
+          particle.style.left = Math.random() * 100 + '%';
+          particle.style.top = Math.random() * 100 + '%';
+          particle.style.animationDelay = Math.random() * 8 + 's';
+          particle.style.animationDuration = (6 + Math.random() * 6) + 's';
+          container.appendChild(particle);
+        }
+      }
+
+      function createNetwork() {
+        const svg = document.querySelector('.h-network');
+        if (!svg) return;
+        const linesGroup = svg.querySelector('.h-network-lines');
+        const nodesGroup = svg.querySelector('.h-network-nodes');
+        const pulsesGroup = svg.querySelector('.h-network-pulses');
+        if (!linesGroup || !nodesGroup || !pulsesGroup) return;
+
+        linesGroup.innerHTML = '';
+        nodesGroup.innerHTML = '';
+        pulsesGroup.innerHTML = '';
+
+        const width = 1440;
+        const height = 900;
+        const nodeCount = window.innerWidth < 768 ? 12 : 22;
+        const maxDist = 280;
+
+        const nodes = [];
+        for (let i = 0; i < nodeCount; i++) {
+          const x = 80 + Math.random() * (width - 160);
+          const y = 80 + Math.random() * (height - 160);
+          nodes.push({ x, y });
+        }
+
+        const edges = [];
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dx = nodes[i].x - nodes[j].x;
+            const dy = nodes[i].y - nodes[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < maxDist) {
+              edges.push({ from: nodes[i], to: nodes[j], dist });
+            }
+          }
+        }
+
+        edges.forEach(edge => {
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', edge.from.x);
+          line.setAttribute('y1', edge.from.y);
+          line.setAttribute('x2', edge.to.x);
+          line.setAttribute('y2', edge.to.y);
+          linesGroup.appendChild(line);
+
+          const pulse = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          pulse.setAttribute('cx', edge.from.x);
+          pulse.setAttribute('cy', edge.from.y);
+          pulse.setAttribute('r', '2');
+          const duration = 2.5 + Math.random() * 3;
+          const delay = Math.random() * 5;
+          pulse.innerHTML = `
+            <animate attributeName="cx" values="${edge.from.x};${edge.to.x}" dur="${duration}s" begin="${delay}s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="${edge.from.y};${edge.to.y}" dur="${duration}s" begin="${delay}s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0.9;0.9;0" dur="${duration}s" begin="${delay}s" repeatCount="indefinite"/>
+          `;
+          pulsesGroup.appendChild(pulse);
+        });
+
+        nodes.forEach((node, i) => {
+          const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          circle.setAttribute('cx', node.x);
+          circle.setAttribute('cy', node.y);
+          circle.setAttribute('r', '3.5');
+          nodesGroup.appendChild(circle);
+
+          const glow = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          glow.setAttribute('cx', node.x);
+          glow.setAttribute('cy', node.y);
+          glow.setAttribute('r', '10');
+          glow.setAttribute('fill', 'url(#nodeGrad)');
+          glow.style.opacity = '0.4';
+          nodesGroup.appendChild(glow);
+        });
+      }
+
+      function initDiagram() {
+        const container = document.getElementById('diagram-container');
+        if (!container) return;
+
+        if (isInitializing) return;
+        if (container.querySelector('iframe')) return;
+
+        const mxgraph = container.querySelector('.mxgraph');
+        if (!mxgraph) return;
+
+        if (isCacheValid()) {
+          injectScript();
+          return;
+        }
+
+        showLoader();
+        isInitializing = true;
+
+        loadTimer = setTimeout(() => {
+          console.warn('[Homelab] Diagram load timeout — hiding loader');
+          hideLoader();
+          isInitializing = false;
+        }, LOAD_TIMEOUT);
+
+        injectScript();
+        observeIframe(container);
+      }
+
+      function injectScript() {
+        const existing = document.querySelector('script[src^="https://viewer.diagrams.net/embed2.js"]');
+        if (existing) existing.remove();
+
+        const script = document.createElement('script');
+        script.src = 'https://viewer.diagrams.net/embed2.js?t=' + Date.now();
+        script.async = true;
+        document.body.appendChild(script);
+      }
+
+      function observeIframe(container) {
+        const existing = container.querySelector('iframe');
+        if (existing) {
+          existing.addEventListener('load', onDiagramReady, { once: true });
+          return;
+        }
+
+        const observer = new MutationObserver((mutations) => {
+          for (const m of mutations) {
+            for (const node of m.addedNodes) {
+              if (node.tagName === 'IFRAME') {
+                node.addEventListener('load', onDiagramReady, { once: true });
+                observer.disconnect();
+                return;
+              }
+            }
+          }
+        });
+        observer.observe(container, { childList: true, subtree: true });
+      }
+
+      function handleMessage(event) {
+        const allowedOrigins = ['https://viewer.diagrams.net', 'https://app.diagrams.net'];
+        if (!allowedOrigins.includes(event.origin)) return;
+
+        let data = event.data;
+        if (typeof data === 'string') {
+          try { data = JSON.parse(data); } catch { return; }
+        }
+        if (!data || typeof data !== 'object') return;
+
+        if (['init', 'render', 'load', 'ready'].includes(data.event)) {
+          onDiagramReady();
+          isInitializing = false;
+        }
+      }
+
+      window.addEventListener('message', handleMessage);
+
+      const initEffects = () => {
+        createParticles();
+        createNetwork();
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          initEffects();
+          initDiagram();
+        });
+      } else {
+        initEffects();
+        initDiagram();
+      }
+
+      document.addEventListener('astro:page-load', () => {
+        initEffects();
+        initDiagram();
+      });
+      window.addEventListener('astro:after-swap', () => {
+        initEffects();
+        initDiagram();
+      });
+    })();
+  </script>
+</BaseLayout>

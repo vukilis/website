@@ -17,11 +17,19 @@ const items = allItems.sort((a, b) => {
   return b.data.pubDate - a.data.pubDate;
 });
 
+const categoryCounts = new Map();
+for (const i of items) {
+  for (const cat of i.data.cat) {
+    categoryCounts.set(cat, (categoryCounts.get(cat) || 0) + 1);
+  }
+}
+
 const categories = [
-  { id: "all", label: "All Works" },
+  { id: "all", label: "All Works", count: items.length },
   ...Array.from(new Set(items.flatMap(i => i.data.cat))).map(cat => ({
     id: cat,
-    label: cat.charAt(0).toUpperCase() + cat.slice(1)
+    label: cat.charAt(0).toUpperCase() + cat.slice(1),
+    count: categoryCounts.get(cat) ?? 0,
   }))
 ];
 ---
@@ -40,7 +48,7 @@ const categories = [
 
       <div class="gallery-grid" id="artGallery">
         {items.map((item, index) => (
-          <DesignArtworkCard item={item.data} index={index} categories={categories} />
+          <DesignArtworkCard item={{ ...item.data, pubDate: item.data.pubDate }} index={index} categories={categories} />
         ))}
       </div>
     </div>
@@ -84,25 +92,33 @@ const categories = [
         img.src = img.dataset.staticSrc;
       });
 
-      document.addEventListener('click', function(e) {
-        const chip = e.target.closest('.filter-chip');
-        if (!chip) return;
-        const filter = chip.dataset.filter;
-        if (!filter) return;
+      (function() {
+        var cards = Array.from(document.querySelectorAll('.art-card'));
 
-        document.querySelectorAll('.filter-chip').forEach(function(c) {
-          c.classList.remove('active');
-          c.setAttribute('aria-selected', 'false');
-        });
-        chip.classList.add('active');
-        chip.setAttribute('aria-selected', 'true');
+        function applyFilter() {
+          cards.forEach(function(card) {
+            var cats = (card.getAttribute('data-category') || '').split(',');
+            var activeFilter = document.querySelector('.filter-chip.active');
+            var filter = activeFilter ? activeFilter.getAttribute('data-filter') : 'all';
+            var matches = filter === 'all' || cats.includes(filter);
+            card.style.display = matches ? 'flex' : 'none';
+          });
+        }
 
-        document.querySelectorAll('.art-card').forEach(function(card) {
-          const cats = (card.dataset.category || '').split(',');
-          var matches = filter === 'all' || cats.includes(filter);
-          card.style.display = matches ? 'flex' : 'none';
+        document.querySelectorAll('.filter-chip').forEach(function(chip) {
+          chip.addEventListener('click', function() {
+            document.querySelectorAll('.filter-chip').forEach(function(c) {
+              c.classList.remove('active');
+              c.setAttribute('aria-selected', 'false');
+            });
+            chip.classList.add('active');
+            chip.setAttribute('aria-selected', 'true');
+            applyFilter();
+          });
         });
-      });
+
+        applyFilter();
+      })();
     }
   </script>
 </BaseLayout>

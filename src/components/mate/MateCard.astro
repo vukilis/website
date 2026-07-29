@@ -1,0 +1,129 @@
+---
+import '../../styles/mate/mate-card.css';
+
+const mateImages = import.meta.glob('/src/assets/images/mates/*.{webp,png,jpg}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
+
+function getMateImage(filename: string | undefined | null) {
+  if (!filename) return '/images/mates/placeholder.webp';
+  const basename = filename.split('/').pop() || filename;
+  return mateImages[`/src/assets/images/mates/${basename}`] || `/images/mates/${basename}`;
+}
+
+interface Props {
+  image: string;
+  name: string;
+  type: string;
+  rating: string;
+  complexity: string;
+  body: string;
+  durability: string;
+  effect: string;
+  level: string;
+  category: string;
+  slug: string;
+  index?: number;
+}
+
+const {
+  image,
+  name,
+  type,
+  rating,
+  complexity,
+  body: bodyScore,
+  durability,
+  effect: effectScore,
+  level,
+  category,
+  slug,
+  index = 0,
+} = Astro.props;
+
+const cover = getMateImage(image);
+
+const levelConfig: Record<string, { name: string; color: string }> = {
+  '1': { name: 'Beginner', color: '#8db600' },
+  '2': { name: 'Intermediate', color: '#fbbf24' },
+  '3': { name: 'Advanced', color: '#f97316' },
+  '4': { name: 'Expert', color: '#ef4444' },
+  '5': { name: 'Master', color: '#a855f7' },
+};
+
+const levelInfo = levelConfig[level] || { name: level, color: '#94a3b8' };
+---
+
+<a
+  class="mate-card"
+  href={'/yerbamate/' + slug + '/'}
+  aria-label={'Open review for ' + name}
+  style={'--i: ' + index + ';'}
+  data-category={category.toLowerCase()}
+  data-rating={Number(rating)}
+>
+  <div class="mate-card__cover">
+    <img
+      src={cover}
+      alt={name}
+      loading="lazy"
+      decoding="async"
+      class="mate-card__img"
+    />
+    <div class="mate-card__cover-grad" aria-hidden="true" />
+  </div>
+
+  <div class="mate-card__body">
+    <div class="mate-card__header">
+      <h3 class="mate-card__title">{name}</h3>
+      <p class="mate-card__type">{type}</p>
+    </div>
+
+    <div class="mate-card__stars" aria-label={'Rating: ' + rating + ' out of 5'}>
+      {'★'.repeat(Number(rating))}
+      <span class="mate-card__stars-empty">{'☆'.repeat(5 - Number(rating))}</span>
+    </div>
+
+    <dl class="mate-card__stats">
+      {[
+        { key: 'Complexity', value: complexity },
+        { key: 'Body', value: bodyScore },
+        { key: 'Durability', value: durability },
+        { key: 'Effect', value: effectScore },
+        { key: 'Level', value: level },
+      ].map(({ key, value }) => (
+        <div class="mate-card__stat">
+          <dt>{key}</dt>
+          <dd>
+            {key === 'Level' ? (
+              <span
+                class="level-label"
+                style={`color: ${levelInfo.color}; border-color: ${levelInfo.color}; background: ${levelInfo.color}1A;`}
+              >
+                {levelInfo.name}
+              </span>
+            ) : (
+              <div class="pips">
+                {Array.from({ length: 5 }, (_, i) => (
+                  <span class={`pip ${i < Number(value) ? 'filled' : ''}`} />
+                ))}
+              </div>
+            )}
+          </dd>
+        </div>
+      ))}
+    </dl>
+
+    <span class="mate-card__cta">
+      <span class="read-more-text">
+        Read review
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </span>
+    </span>
+  </div>
+</a>
