@@ -5,18 +5,6 @@ import Navigation from '../../components/Navigation.astro';
 import Mate from '../../components/mate/Mate.astro';
 import '../../styles/mate/layout.css';
 
-const mateImages = import.meta.glob('/src/assets/images/mates/*.{webp,png,jpg}', {
-  eager: true,
-  query: '?url',
-  import: 'default',
-});
-
-function resolveMateImage(filename) {
-  if (!filename) return '/images/mates/placeholder.webp';
-  const basename = filename.split('/').pop();
-  return mateImages[`/src/assets/images/mates/${basename}`] || `/images/mates/${basename}`;
-}
-
 export async function getStaticPaths() {
   const entries = await getCollection('yerbaMate', ({ data }) => !data.draft);
   return entries.map(entry => ({
@@ -27,7 +15,6 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const resolvedImage = resolveMateImage(entry.data.image);
 ---
 
 <BaseLayout
@@ -43,7 +30,7 @@ const resolvedImage = resolveMateImage(entry.data.image);
       <Mate
         name={entry.data.name}
         category={entry.data.category}
-        image={resolvedImage}
+        image={entry.data.image}
         rating={entry.data.rating}
         type={entry.data.type}
         complexity={entry.data.complexity}

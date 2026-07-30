@@ -1,0 +1,106 @@
+---
+export interface ReadmeSection {
+  name: string;
+  content: string;
+}
+
+export function renderMarkdown(content: string): string {
+  return content
+    .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="term-img" />')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/^- (.*$)/gim, '<div class="term-list-item">• $1</div>')
+    .replace(/^\d+\.\s(.*$)/gim, '<div class="term-list-item">• $1</div>')
+    .replace(/:fire:/g, '🔥')
+    .replace(/:desktop_computer:/g, '🖥️');
+}
+
+export function buildReadmeSectionsHtml(
+  sections: Array<{ name: string; html: string; visible: boolean }>,
+  showPrompt: boolean
+): string {
+  const promptHtml = showPrompt
+    ? '<div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">cat README.md</span></div>'
+    : '';
+
+  const visible = sections
+    .filter((s) => s.visible)
+    .map((s) => {
+      const titleMatch = s.html.match(/<h[123][^>]*>(.*?)<\/h[123]>/);
+      const title = titleMatch ? titleMatch[1] : s.name;
+      const content = s.html.replace(/<h[123][^>]*>.*?<\/h[123]>/, '');
+
+      return `<details class="term-section" open>
+  <summary>${title}</summary>
+  <div class="term-section-content">${content}</div>
+</details>`;
+    })
+    .join('');
+
+  return `${promptHtml}<div class="term-line" style="color:#5a8;">${visible}</div>`;
+}
+
+export function extractReadmeSections(md: string): ReadmeSection[] {
+  const lines = md.split('\n');
+  const sections: ReadmeSection[] = [];
+  let i = 0;
+
+  const targets = [
+    { key: 'My Gear', marker: 'My Gear' },
+    { key: 'My Github Stats', marker: 'My Github Stats' },
+    {
+      key: "Check out what I'm currently working on",
+      marker: "Check out what I'm currently working on",
+    },
+    { key: 'My latest projects', marker: 'My latest projects' },
+    { key: 'Recent Blog Posts', marker: 'Recent Blog Posts' },
+  ];
+
+  while (i < lines.length) {
+    const line = lines[i];
+    const target = targets.find((t) => line.includes(t.marker));
+
+    if (target) {
+      let sectionLines = [line];
+      let j = i + 1;
+
+      if (
+        target.key === 'My Gear' ||
+        target.key === 'My Github Stats'
+      ) {
+        while (j < lines.length && !lines[j].includes('</details>')) {
+          sectionLines.push(lines[j]);
+          j++;
+        }
+        if (j < lines.length) {
+          sectionLines.push(lines[j]);
+          j++;
+        }
+      } else if (line.startsWith('###')) {
+        while (
+          j < lines.length &&
+          !lines[j].startsWith('###') &&
+          !lines[j].includes('</details>')
+        ) {
+          sectionLines.push(lines[j]);
+          j++;
+        }
+      }
+
+      sections.push({
+        name: target.key,
+        content: sectionLines.join('\n'),
+      });
+      i = j;
+    } else {
+      i++;
+    }
+  }
+
+  return sections;
+}
+---

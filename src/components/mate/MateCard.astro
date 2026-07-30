@@ -1,18 +1,6 @@
 ---
 import '../../styles/mate/mate-card.css';
 
-const mateImages = import.meta.glob('/src/assets/images/mates/*.{webp,png,jpg}', {
-  eager: true,
-  query: '?url',
-  import: 'default',
-});
-
-function getMateImage(filename: string | undefined | null) {
-  if (!filename) return '/images/mates/placeholder.webp';
-  const basename = filename.split('/').pop() || filename;
-  return mateImages[`/src/assets/images/mates/${basename}`] || `/images/mates/${basename}`;
-}
-
 interface Props {
   image: string;
   name: string;
@@ -43,8 +31,6 @@ const {
   index = 0,
 } = Astro.props;
 
-const cover = getMateImage(image);
-
 const levelConfig: Record<string, { name: string; color: string }> = {
   '1': { name: 'Beginner', color: '#8db600' },
   '2': { name: 'Intermediate', color: '#fbbf24' },
@@ -66,7 +52,7 @@ const levelInfo = levelConfig[level] || { name: level, color: '#94a3b8' };
 >
   <div class="mate-card__cover">
     <img
-      src={cover}
+      src={image}
       alt={name}
       loading="lazy"
       decoding="async"

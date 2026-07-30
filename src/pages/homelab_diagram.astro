@@ -169,7 +169,7 @@ const base = import.meta.env.BASE_URL;
     (function() {
       const CACHE_KEY = 'homelab-diagram-loaded';
       const CACHE_TTL = 15 * 60 * 1000;
-      const LOAD_TIMEOUT = 1000;
+      const LOAD_TIMEOUT = 3000;
 
       let loadTimer = null;
       let isInitializing = false;

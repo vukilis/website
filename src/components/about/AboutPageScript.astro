@@ -1,0 +1,426 @@
+---
+interface Props {
+  readmeUrl?: string;
+  steamStatusUrl?: string;
+}
+
+const {
+  readmeUrl = 'https://raw.githubusercontent.com/vukilis/vukilis/main/README.md',
+  steamStatusUrl = 'https://vukilis.com/status-steam',
+} = Astro.props;
+---
+
+<script define:vars={{ readmeUrl, steamStatusUrl }}>
+  // ============================================
+  // ABOUT PAGE — CLIENT INIT
+  // ============================================
+
+  // Markdown / section helpers
+  // Canonical exports: src/components/about/ReadmeHelpers.astro
+  function renderMarkdown(content) {
+    return content
+      .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="term-img" />')
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+      .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+      .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+      .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/^- (.*$)/gim, '<div class="term-list-item">• $1</div>')
+      .replace(/^\d+\.\s(.*$)/gim, '<div class="term-list-item">• $1</div>')
+      .replace(/:fire:/g, '🔥')
+      .replace(/:desktop_computer:/g, '🖥️');
+  }
+
+  function buildReadmeSectionsHtml(sections, showPrompt) {
+    const promptHtml = showPrompt
+      ? '<div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">cat README.md</span></div>'
+      : '';
+
+    const visible = sections
+      .filter((s) => s.visible)
+      .map((s) => {
+        const titleMatch = s.html.match(/<h[123][^>]*>(.*?)<\/h[123]>/);
+        const title = titleMatch ? titleMatch[1] : s.name;
+        const content = s.html.replace(/<h[123][^>]*>.*?<\/h[123]>/, '');
+
+        return `<details class="term-section" open>
+  <summary>${title}</summary>
+  <div class="term-section-content">${content}</div>
+</details>`;
+      })
+      .join('');
+
+    return `${promptHtml}<div class="term-line" style="color:#5a8;">${visible}</div>`;
+  }
+
+  function extractReadmeSections(md) {
+    const lines = md.split('\n');
+    const sections = [];
+    let i = 0;
+
+    const targets = [
+      { key: 'My Gear', marker: 'My Gear' },
+      { key: 'My Github Stats', marker: 'My Github Stats' },
+      {
+        key: "Check out what I'm currently working on",
+        marker: "Check out what I'm currently working on",
+      },
+      { key: 'My latest projects', marker: 'My latest projects' },
+      { key: 'Recent Blog Posts', marker: 'Recent Blog Posts' },
+    ];
+
+    while (i < lines.length) {
+      const line = lines[i];
+      const target = targets.find((t) => line.includes(t.marker));
+
+      if (target) {
+        let sectionLines = [line];
+        let j = i + 1;
+
+        if (
+          target.key === 'My Gear' ||
+          target.key === 'My Github Stats'
+        ) {
+          while (j < lines.length && !lines[j].includes('</details>')) {
+            sectionLines.push(lines[j]);
+            j++;
+          }
+          if (j < lines.length) {
+            sectionLines.push(lines[j]);
+            j++;
+          }
+        } else if (line.startsWith('###')) {
+          while (
+            j < lines.length &&
+            !lines[j].startsWith('###') &&
+            !lines[j].includes('</details>')
+          ) {
+            sectionLines.push(lines[j]);
+            j++;
+          }
+        }
+
+        sections.push({
+          name: target.key,
+          content: sectionLines.join('\n'),
+        });
+        i = j;
+      } else {
+        i++;
+      }
+    }
+
+    return sections;
+  }
+
+  // ============================================
+  // README FETCHERS
+  // ============================================
+
+  async function loadReadme(containerId = 'readmeContent') {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    try {
+      const res = await fetch(readmeUrl);
+      if (!res.ok) throw new Error('Uplink failed');
+      const md = await res.text();
+
+      const rawSections = extractReadmeSections(md);
+      const sections = rawSections.map((s) => ({
+        name: s.name,
+        html: renderMarkdown(s.content),
+        visible: true,
+      }));
+
+      container.innerHTML = buildReadmeSectionsHtml(sections, true);
+    } catch (e) {
+      container.innerHTML = `<div class="term-line" style="color:#ff5f56;">Error: ${e.message}</div><div class="term-line" style="color:#5a8;">Retrying in 5s...</div>`;
+      setTimeout(() => loadReadme(containerId), 5000);
+    }
+  }
+
+  async function loadFullReadme() {
+    const readmeContentFull = document.getElementById('readmeContentFull');
+    if (!readmeContentFull || readmeContentFull.dataset.fullLoaded) return;
+
+    try {
+      const res = await fetch(readmeUrl);
+      if (!res.ok) throw new Error('Failed to load');
+      const md = await res.text();
+
+      const rawSections = extractReadmeSections(md);
+      const sections = rawSections.map((s) => ({
+        name: s.name,
+        html: renderMarkdown(s.content),
+        visible: true,
+      }));
+
+      readmeContentFull.innerHTML = buildReadmeSectionsHtml(sections, false);
+      readmeContentFull.dataset.fullLoaded = 'true';
+    } catch (e) {
+      readmeContentFull.innerHTML = `<div class="term-line" style="color:#ff5f56;">Error: ${e.message}</div>`;
+    }
+  }
+
+  // ============================================
+  // MODAL / LIGHTBOX
+  // ============================================
+
+  function initModal() {
+    const termExpandBtn = document.getElementById('termExpandBtn');
+    const termLightbox = document.getElementById('termLightbox');
+    const termLightboxClose = document.getElementById('termLightboxClose');
+    const readmeContentFull = document.getElementById('readmeContentFull');
+
+    if (!termExpandBtn || !termLightbox || !readmeContentFull) return;
+
+    termExpandBtn.onclick = async () => {
+      termLightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      if (
+        !readmeContentFull.innerHTML ||
+        readmeContentFull.querySelector('.term-loading')
+      ) {
+        await loadFullReadme();
+      }
+    };
+
+    termLightboxClose.onclick = () => {
+      termLightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    };
+
+    termLightbox.onclick = (e) => {
+      if (e.target === termLightbox) {
+        termLightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    };
+
+    document.onkeydown = (e) => {
+      if (e.key === 'Escape' && termLightbox.classList.contains('open')) {
+        termLightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    };
+  }
+
+  // ============================================
+  // ARCADE TABS / CAROUSEL
+  // ============================================
+
+  function initCarousel() {
+    const tabs = document.querySelectorAll('.arcade-tab');
+    const panels = document.querySelectorAll('.carousel-panel');
+    const titleEl = document.getElementById('arcadeDynamicTitle');
+    const titles = { games: 'Games', shows: 'Shows', movies: 'Movies' };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.tab;
+        tabs.forEach((t) => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        panels.forEach((p) => p.classList.remove('active'));
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        const panel = document.querySelector(
+          `.carousel-panel[data-panel="${target}"]`
+        );
+        if (panel) panel.classList.add('active');
+        if (titleEl) titleEl.textContent = titles[target] || target;
+      });
+    });
+  }
+
+  // ============================================
+  // STEAM WIDGET
+  // ============================================
+
+  function initSteamWidget() {
+    const statusLabel = document.getElementById('steamStatusLabel');
+    if (!statusLabel) return;
+
+    async function poll() {
+      try {
+        const response = await fetch(steamStatusUrl);
+        const data = await response.json();
+        const statusMap = [
+          'OFFLINE',
+          'ONLINE',
+          'BUSY',
+          'AWAY',
+          'SNOOZE',
+          'TRADING',
+          'PLAYING',
+        ];
+        const statusColors = {
+          0: '#888',
+          1: '#33ff33',
+          2: '#ff3333',
+          3: '#ffff33',
+          4: '#ffff33',
+          5: '#33ccff',
+          6: '#ff00ff',
+        };
+        const isPlaying = data.game && data.game.trim().length > 0;
+        const statusText = isPlaying
+          ? 'PLAYING'
+          : statusMap[data.status] || 'OFFLINE';
+        const color = isPlaying
+          ? '#ff00ff'
+          : statusColors[data.status] || '#33ff33';
+
+        statusLabel.textContent = statusText;
+        const preview = document.querySelector('.s-preview');
+        if (preview) preview.style.setProperty('--hud-color', color);
+        if (statusLabel) statusLabel.style.color = color;
+      } catch (err) {
+        console.error('Steam status fetch failed:', err);
+      }
+    }
+
+    poll();
+    setInterval(poll, 30000);
+  }
+
+  // ============================================
+  // SCROLL REVEAL
+  // ============================================
+
+  function initScrollReveal() {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document
+      .querySelectorAll('.nms-card, .game-card, .show-card, .movie-card')
+      .forEach((el) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+        observer.observe(el);
+      });
+
+    const revealObs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document
+      .querySelectorAll('.nms-card, .game-card, .show-card, .movie-card')
+      .forEach((el) => revealObs.observe(el));
+  }
+
+  // ============================================
+  // DAMAGE NUMBERS
+  // ============================================
+
+  function initDamageNumbers() {
+    if (window.__aboutDmgStyleInjected) return;
+    window.__aboutDmgStyleInjected = true;
+
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('a, button, .terminal')) return;
+      const tags = [
+        'POW!',
+        'BAM!',
+        'ZAP!',
+        'WOW!',
+        'NICE!',
+        'SICK!',
+      ];
+      const el = document.createElement('div');
+      el.textContent = tags[Math.floor(Math.random() * tags.length)];
+      el.style.cssText = `
+        position: fixed; left: ${e.clientX}px; top: ${e.clientY}px;
+        font-family: var(--font-mono, monospace); font-size: 13px; font-weight: 800;
+        color: #eab308; pointer-events: none; z-index: 10000;
+        text-shadow: 0 0 10px rgba(234,179,8,0.6);
+        animation: dmgPop 0.7s ease-out forwards;
+      `;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 700);
+    });
+
+    const dmgStyle = document.createElement('style');
+    dmgStyle.textContent = `@keyframes dmgPop {
+      0%{transform:translate(-50%,0) scale(1);opacity:1}
+      100%{transform:translate(-50%,-45px) scale(1.25);opacity:0}
+    }`;
+    document.head.appendChild(dmgStyle);
+  }
+
+  // ============================================
+  // INIT / LIFECYCLE
+  // ============================================
+
+  let aboutInitialized = false;
+  let readmeFullLoaded = false;
+
+  async function initAboutPage() {
+    if (aboutInitialized) return;
+    aboutInitialized = true;
+
+    await loadReadme('readmeContent');
+    initSteamWidget();
+    initScrollReveal();
+    initDamageNumbers();
+  }
+
+  function resetAboutState() {
+    aboutInitialized = false;
+    readmeFullLoaded = false;
+
+    const btn = document.getElementById('steam-toggle-btn');
+    const infoDiv = document.getElementById('steam-info');
+    if (btn) btn.classList.remove('active');
+    if (infoDiv) infoDiv.innerHTML = '';
+
+    const readmeContentFull = document.getElementById('readmeContentFull');
+    if (readmeContentFull) {
+      readmeContentFull.innerHTML = '';
+      delete readmeContentFull.dataset.fullLoaded;
+    }
+
+    initAboutPage();
+    initCarousel();
+    initModal();
+  }
+
+  function handleAboutNavigate() {
+    resetAboutState();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      initAboutPage();
+      initCarousel();
+      initModal();
+    });
+  } else {
+    initAboutPage();
+    initCarousel();
+    initModal();
+  }
+
+  document.addEventListener('astro:page-load', handleAboutNavigate);
+  window.addEventListener('astro:after-swap', handleAboutNavigate);
+</script>

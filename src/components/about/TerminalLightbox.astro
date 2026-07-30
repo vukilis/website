@@ -1,0 +1,18 @@
+---
+import '../../styles/about/TerminalLightbox.css';
+interface Props {
+  id?: string;
+}
+
+const { id = 'termLightbox' } = Astro.props;
+---
+
+<div class="term-lightbox" id={id}>
+  <div class="term-lightbox-content">
+    <div class="term-lightbox-header">
+      <span class="term-title">vukilis@github:~/README.md — Full Size</span>
+      <button class="term-lightbox-close" id="termLightboxClose" aria-label="Close">✕</button>
+    </div>
+    <div class="term-body term-body-full" id="readmeContentFull"></div>
+  </div>
+</div>

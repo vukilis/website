@@ -23,18 +23,6 @@ const categories = [
   })),
 ];
 
-const mateImages = import.meta.glob('/src/assets/images/mates/*.{webp,png,jpg}', {
-  eager: true,
-  query: '?url',
-  import: 'default',
-});
-
-function resolveMateImage(filename) {
-  if (!filename) return '/images/mates/placeholder.webp';
-  const basename = filename.split('/').pop();
-  return mateImages[`/src/assets/images/mates/${basename}`] || `/images/mates/${basename}`;
-}
-
 const rendered = await Promise.all(
   entries.map(async (entry) => ({ entry, Content: (await render(entry)).Content }))
 );
@@ -51,10 +39,9 @@ const rendered = await Promise.all(
       <MateFilterBar {categories} />
       <div class="reviews-list" id="reviews-list">
         {rendered.map(({ entry, Content }, i) => {
-          const image = resolveMateImage(entry.data.image);
           return (
             <MateCard
-              image={image}
+              image={entry.data.image}
               name={entry.data.name}
               type={entry.data.type}
               rating={entry.data.rating}

@@ -1,0 +1,72 @@
+---
+interface Props {
+  games: { name: string; color: string; img: string; url: string }[];
+  shows: { name: string; color: string; img: string; url: string }[];
+  movies: { name: string; color: string; img: string; url: string }[];
+}
+
+const { games, shows, movies } = Astro.props;
+import '../../styles/about/ArcadeSection.css';
+---
+
+<section class="arcade" id="gaming">
+  <div class="arcade-content">
+    <div class="arcade-header">
+      <p class="arcade-pretitle">There's a little bit of V in all of us.</p>
+      <h2 class="arcade-title">My Favorite <span id="arcadeDynamicTitle">Games</span></h2>
+      <p class="arcade-sub">Every click is an act of defiance.</p>
+      <div class="arcade-tabs" role="tablist">
+        <button class="arcade-tab active" data-tab="games" role="tab" aria-selected="true">Games</button>
+        <button class="arcade-tab" data-tab="shows" role="tab" aria-selected="false">Shows</button>
+        <button class="arcade-tab" data-tab="movies" role="tab" aria-selected="false">Movies</button>
+      </div>
+    </div>
+
+    <div class="arcade-carousel">
+      <div class="carousel-panel active" data-panel="games">
+        <div class="games-grid">
+          {games.map((game, i) => (
+            <a href={game.url} target="_blank" rel="noopener" class="game-card" style={`--glow:${game.color};--i:${i}`}>
+              <div class="card-media">
+                <div class="card-bg" style={`background-image:url('${game.img}')`} aria-hidden="true"></div>
+                <div class="card-glitch" aria-hidden="true"></div>
+                <div class="card-number">{String(i + 1).padStart(2, '0')}</div>
+              </div>
+              <span class="game-name">{game.name}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div class="carousel-panel" data-panel="shows">
+        <div class="games-grid">
+          {shows.map((show, i) => (
+            <a href={show.url} target="_blank" rel="noopener" class="show-card" style={`--glow:${show.color};--i:${i}`}>
+              <div class="card-media">
+                <div class="card-bg" style={`background-image:url('${show.img}')`} aria-hidden="true"></div>
+                <div class="card-glitch" aria-hidden="true"></div>
+                <span class="card-number">{String(i + 1).padStart(2, '0')}</span>
+              </div>
+              <span class="show-name">{show.name}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div class="carousel-panel" data-panel="movies">
+        <div class="games-grid">
+          {movies.map((movie, i) => (
+            <a href={movie.url} target="_blank" rel="noopener" class="movie-card" style={`--glow:${movie.color};--i:${i}`}>
+              <div class="card-media">
+                <div class="card-bg" style={`background-image:url('${movie.img}')`} aria-hidden="true"></div>
+                <div class="card-glitch" aria-hidden="true"></div>
+                <span class="card-number">{String(i + 1).padStart(2, '0')}</span>
+              </div>
+              <span class="movie-name">{movie.name}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
