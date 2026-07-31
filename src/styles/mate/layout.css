@@ -73,3 +73,30 @@
     gap: 1.1rem;
   }
 }
+
+/* Particles */
+.yerba-review-page {
+  position: relative;
+  min-height: 100vh;
+  padding: calc(var(--nav-height) + 2rem) 1rem 5rem;
+  overflow: hidden;
+}
+
+.yerba-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: auto;
+}
+
+.yerba-particles canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Content floats above the canvas */
+.yerba-review-page > .container {
+  position: relative;
+  z-index: 1;
+}

@@ -31,6 +31,10 @@ const rendered = await Promise.all(
 <BaseLayout title="Yerba Mate Reviews - Vuk1lis" description="Reviews of various yerba mate brands and varieties.">
   <Navigation />
   <main class="yerba-review-page">
+    <div class="yerba-particles">
+      <canvas id="leafCanvas"></canvas>
+    </div>
+
     <div class="container">
       <header class="page-header">
         <h1 class="page-title">Yerba Mate Reviews</h1>
@@ -38,7 +42,7 @@ const rendered = await Promise.all(
       </header>
       <MateFilterBar {categories} />
       <div class="reviews-list" id="reviews-list">
-        {rendered.map(({ entry, Content }, i) => {
+        {rendered.map(({ entry }, i) => {
           return (
             <MateCard
               image={entry.data.image}
@@ -174,4 +178,184 @@ const rendered = await Promise.all(
     }
     document.addEventListener('astro:page-load', init);
   })();
+</script>
+
+<script is:inline>
+(function() {
+  var CONFIG = {
+    density: 120,      // number of leaves
+    speed: 0.7,       // vertical drift multiplier
+    size: 1.5,        // leaf size multiplier
+  };
+
+  var S = {
+    animId: null,
+    canvas: null,
+    ctx: null,
+    container: null,
+    width: 0,
+    height: 0,
+    dpr: 1,
+    leaves: [],
+    mouse: { x: -9999, y: -9999, active: false },
+  };
+
+  // Same green family, brighter for light-theme visibility
+  var PALETTE = [
+    { h: 100, s: 48, l: 38 },
+    { h: 105, s: 44, l: 44 },
+    { h: 95,  s: 42, l: 34 },
+    { h: 110, s: 40, l: 50 },
+    { h: 85,  s: 46, l: 40 },
+    { h: 115, s: 36, l: 56 },
+  ];
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function onMouseMove(e) {
+    if (!S.container) return;
+    var rect = S.container.getBoundingClientRect();
+    S.mouse.x = e.clientX - rect.left;
+    S.mouse.y = e.clientY - rect.top;
+    S.mouse.active = true;
+  }
+
+  function onMouseLeave() {
+    S.mouse.active = false;
+  }
+
+  function resize() {
+    S.dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var rect = S.container.getBoundingClientRect();
+    S.width = rect.width;
+    S.height = rect.height;
+    S.canvas.width = S.width * S.dpr;
+    S.canvas.height = S.height * S.dpr;
+    S.canvas.style.width = S.width + 'px';
+    S.canvas.style.height = S.height + 'px';
+    S.ctx.setTransform(S.dpr, 0, 0, S.dpr, 0, 0);
+  }
+
+  function Leaf() {
+    this.reset(true);
+  }
+
+  Leaf.prototype.reset = function(initial) {
+    var base = pick(PALETTE);
+    this.x = rand(0, S.width);
+    this.y = initial ? rand(-20, S.height + 20) : S.height + rand(10, 80);
+    this.vx = rand(-0.25, 0.25);
+    this.vy = rand(-0.4, -1.2) * CONFIG.speed;
+    this.size = rand(2.5, 5.5) * CONFIG.size;
+    this.color = 'hsla(' + (base.h + (Math.random() * 10 - 5 | 0)) + ', ' + base.s + '%, ' + base.l + '%, ' + rand(0.35, 0.65) + ')';
+    this.rotation = rand(0, Math.PI * 2);
+    this.rotSpeed = rand(-0.006, 0.006);
+    this.wobblePhase = rand(0, Math.PI * 2);
+    this.wobbleSpeed = rand(0.006, 0.02);
+    this.wobbleAmp = rand(0.3, 1.0);
+    this.opacity = rand(0.35, 0.65);
+  };
+
+  Leaf.prototype.update = function() {
+    this.wobblePhase += this.wobbleSpeed;
+    this.x += this.vx + Math.sin(this.wobblePhase) * this.wobbleAmp * 0.25;
+    this.y += this.vy;
+    this.rotation += this.rotSpeed;
+
+    if (S.mouse.active) {
+      var dx = this.x - S.mouse.x;
+      var dy = this.y - S.mouse.y;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var radius = 80;
+      if (dist < radius && dist > 0.1) {
+        var force = (1 - dist / radius) * 1.2;
+        this.x += (dx / dist) * force;
+        this.y += (dy / dist) * force;
+      }
+    }
+
+    if (this.y < -40 || this.x < -50 || this.x > S.width + 50) {
+      this.reset(false);
+    }
+  };
+
+  Leaf.prototype.draw = function() {
+    S.ctx.save();
+    S.ctx.translate(this.x, this.y);
+    S.ctx.rotate(this.rotation);
+    S.ctx.globalAlpha = this.opacity;
+    S.ctx.fillStyle = this.color;
+    S.ctx.beginPath();
+    var s = this.size;
+    S.ctx.ellipse(0, 0, s * 1.5, s * 0.65, 0, 0, Math.PI * 2);
+    S.ctx.fill();
+
+    S.ctx.strokeStyle = this.color;
+    S.ctx.lineWidth = 0.6;
+    S.ctx.globalAlpha = this.opacity * 0.55;
+    S.ctx.beginPath();
+    S.ctx.moveTo(-s, 0);
+    S.ctx.lineTo(s, 0);
+    S.ctx.stroke();
+    S.ctx.restore();
+  };
+
+  function cleanup() {
+    if (S.animId) {
+      cancelAnimationFrame(S.animId);
+      S.animId = null;
+    }
+    if (S.container) {
+      S.container.removeEventListener('mousemove', onMouseMove);
+      S.container.removeEventListener('mouseleave', onMouseLeave);
+    }
+    S.leaves = [];
+  }
+
+  function init() {
+    cleanup();
+
+    S.canvas = document.getElementById('leafCanvas');
+    if (!S.canvas) return;
+
+    S.ctx = S.canvas.getContext('2d');
+    S.container = S.canvas.parentElement;
+    if (!S.container) return;
+
+    resize();
+
+    for (var i = 0; i < CONFIG.density; i++) {
+      S.leaves.push(new Leaf());
+    }
+
+    S.container.addEventListener('mousemove', onMouseMove);
+    S.container.addEventListener('mouseleave', onMouseLeave);
+
+    loop();
+  }
+
+  function loop() {
+    S.ctx.clearRect(0, 0, S.width, S.height);
+    for (var i = 0; i < S.leaves.length; i++) {
+      S.leaves[i].update();
+      S.leaves[i].draw();
+    }
+    S.animId = requestAnimationFrame(loop);
+  }
+
+  function onResize() {
+    if (!S.canvas || !S.container) return;
+    resize();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  document.addEventListener('astro:page-load', init);
+  window.addEventListener('resize', onResize);
+})();
 </script>
