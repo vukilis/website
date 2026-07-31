@@ -291,43 +291,43 @@ const {
   // SCROLL REVEAL
   // ============================================
 
-  function initScrollReveal() {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+  // function initScrollReveal() {
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       entries.forEach((entry) => {
+  //         if (entry.isIntersecting) {
+  //           entry.target.classList.add('visible');
+  //         }
+  //       });
+  //     },
+  //     { threshold: 0.1 }
+  //   );
 
-    document
-      .querySelectorAll('.nms-card, .game-card, .show-card, .movie-card')
-      .forEach((el) => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
-        observer.observe(el);
-      });
+  //   document
+  //     .querySelectorAll('.nms-card, .game-card, .show-card, .movie-card')
+  //     .forEach((el) => {
+  //       el.style.opacity = '0';
+  //       el.style.transform = 'translateY(30px)';
+  //       el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+  //       observer.observe(el);
+  //     });
 
-    const revealObs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+  //   const revealObs = new IntersectionObserver(
+  //     (entries) => {
+  //       entries.forEach((entry) => {
+  //         if (entry.isIntersecting) {
+  //           entry.target.style.opacity = '1';
+  //           entry.target.style.transform = 'translateY(0)';
+  //         }
+  //       });
+  //     },
+  //     { threshold: 0.1 }
+  //   );
 
-    document
-      .querySelectorAll('.nms-card, .game-card, .show-card, .movie-card')
-      .forEach((el) => revealObs.observe(el));
-  }
+  //   document
+  //     .querySelectorAll('.nms-card, .game-card, .show-card, .movie-card')
+  //     .forEach((el) => revealObs.observe(el));
+  // }
 
   // ============================================
   // DAMAGE NUMBERS

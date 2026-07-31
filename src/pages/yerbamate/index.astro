@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navigation from '../../components/Navigation.astro';
 import MateCard from '../../components/mate/MateCard.astro';
 import MateFilterBar from '../../components/mate/MateFilterBar.astro';
+import MateHeader from '../../components/mate/MateHeader.astro';
 import '../../styles/mate/layout.css';
 import '../../styles/mate/filter.css';
 
@@ -28,7 +29,7 @@ const rendered = await Promise.all(
 );
 ---
 
-<BaseLayout title="Yerba Mate Reviews - Vuk1lis" description="Reviews of various yerba mate brands and varieties.">
+<BaseLayout title="Yerba Mate Reviews - Vuk1lis" description="Welcome to my personal archive of Yerba Mate reviews. As a European who has fallen in love with the vibrant culture of Argentina 🇦🇷 and the unique ritual of drinking mate 🧉, I want to share my honest impressions with you. I am here to help you cut through all the options and find the mate that actually suits your taste, so you can just skip the guesswork and get straight to the good stuff.">
   <Navigation />
   <main class="yerba-review-page">
     <div class="yerba-particles">
@@ -36,10 +37,7 @@ const rendered = await Promise.all(
     </div>
 
     <div class="container">
-      <header class="page-header">
-        <h1 class="page-title">Yerba Mate Reviews</h1>
-        <p class="page-subtitle">From traditional gourd rituals to modern energy boosts.</p>
-      </header>
+      <MateHeader />
       <MateFilterBar {categories} />
       <div class="reviews-list" id="reviews-list">
         {rendered.map(({ entry }, i) => {

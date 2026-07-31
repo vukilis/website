@@ -75,7 +75,7 @@
 .nms-card:hover {
   border-color: rgba(0,212,170,0.5);
   box-shadow: 0 8px 40px rgba(0,212,170,0.1);
-  transform: translateY(-3px);
+  transform: translateY(-6px);
 }
 .nms-badge {
   display: inline-block;

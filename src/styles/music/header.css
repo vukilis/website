@@ -21,15 +21,33 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.3rem 0;
-  color: var(--color-text-dim);
+  color: var(--color-primary);
   text-decoration: none;
   font-size: 0.85rem;
   font-weight: 500;
-  transition: color 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.back-link::before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent-cyan));
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 1px;
 }
 
 .back-link:hover {
-  color: var(--color-primary);
+  color: var(--color-accent-cyan);
+  transform: translateX(-4px);
+}
+
+.back-link:hover::before {
+  width: 100%;
 }
 
 .back-link i {

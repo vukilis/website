@@ -16,6 +16,7 @@
 .blog-page {
   min-height: 100vh;
   padding: calc(var(--nav-height) + 2rem) 2rem 5rem;
+  animation: fadeInUp 0.8s ease-out;
 }
 
 .container {
@@ -66,3 +67,12 @@
   text-decoration: underline;
 }
 
+@media (max-width: 768px) {
+  .blog-page {
+    padding-top: calc(var(--nav-height) + 1rem);
+  }
+
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+}

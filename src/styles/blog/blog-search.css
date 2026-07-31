@@ -345,13 +345,3 @@
   }
 }
 
-@media (max-width: 768px) {
-  .blog-page {
-    padding-top: calc(var(--nav-height) + 1rem);
-  }
-
-  .blog-grid {
-    grid-template-columns: 1fr;
-  }
-}
-

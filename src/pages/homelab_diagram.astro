@@ -66,7 +66,7 @@ const base = import.meta.env.BASE_URL;
   </section>
 
   <style is:global>
-    .homelab-page { min-height: 100vh; color: var(--color-text); padding: calc(var(--nav-height, 64px) + 3rem) 1.5rem 5rem; position: relative; overflow: hidden; }
+    .homelab-page { min-height: 100vh; color: var(--color-text); padding: calc(var(--nav-height, 64px) + 3rem) 1.5rem 5rem; position: relative; overflow: hidden; animation: fadeInUp 0.8s ease-out; animation: fadeInUp 0.8s ease-out;}
     .h-page-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
     .h-network { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.7; }
     .h-network-nodes circle { opacity: 0.6; }
@@ -93,8 +93,10 @@ const base = import.meta.env.BASE_URL;
     }
     .homelab-page > *:not(.h-page-bg) { position: relative; z-index: 1; }
     .h-page-header { max-width: 1100px; margin: 0 auto 2.5rem; }
-    .h-back { display: inline-flex; color: #00d4aa; text-decoration: none; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; transition: color 0.2s ease; }
-    .h-back:hover { color: #00ffff; }
+    .h-back { display: inline-flex; align-items: center; gap: 0.4rem; color: #00d4aa; text-decoration: none; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; }
+    .h-back::before { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1.5px; background: linear-gradient(90deg, #00d4aa, #00ffff); transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 1px; }
+    .h-back:hover { color: #00ffff; transform: translateX(-4px); }
+    .h-back:hover::before { width: 100%; }
     .h-page-title { font-family: var(--font-heading); font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 700; margin: 0 0 0.5rem; color: #e0f2f1; }
     .h-page-sub { font-size: 0.9375rem; color: #7aa; margin: 0; }
     .h-page-diagram { max-width: 1100px; margin: 0 auto; }
@@ -102,7 +104,9 @@ const base = import.meta.env.BASE_URL;
     [data-theme="light"] .h-page-title { color: #0f172a; }
     [data-theme="light"] .h-page-sub { color: #334155; }
     [data-theme="light"] .h-back { color: #0891b2; }
-    [data-theme="light"] .h-back:hover { color: #0e7490; }
+    [data-theme="light"] .h-back::before { background: linear-gradient(90deg, #0891b2, #0e7490); }
+    [data-theme="light"] .h-back:hover { color: #0e7490; transform: translateX(-4px); }
+    [data-theme="light"] .h-back:hover::before { width: 100%; }
     [data-theme="light"] .h-grid {
       background-image:
         linear-gradient(rgba(8, 145, 178, 0.12) 1px, transparent 1px),
