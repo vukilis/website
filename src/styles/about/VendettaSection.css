@@ -44,7 +44,7 @@
   font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.3em;
-  color: #8b0000;
+  color: var(--color-primary);
   font-weight: 600;
   margin-bottom: 1rem;
 }
@@ -57,12 +57,12 @@
   color: var(--color-text);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  text-shadow: 0 0 60px rgba(139,0,0,0.4);
+  text-shadow: 0 0 60px var(--color-shadow);
 }
 .v-card {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
-  border-left: 3px solid #8b0000;
+  border-left: 3px solid var(--color-primary);
   border-radius: 4px;
   padding: 2rem;
   text-align: left;
@@ -77,19 +77,22 @@
 }
 .v-card p:last-child { margin-bottom: 0; }
 .v-lead { font-size: 1.125rem !important; color: var(--color-text) !important; }
-.v-lead strong { color: #ff1a1a; font-weight: 700; }
+.v-lead strong { color: var(--color-primary); font-weight: 700; }
 
 .v-quote {
   position: relative;
   font-style: italic;
   font-size: 1.125rem;
-  color: #dc2626;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent-purple) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   line-height: 1.6;
   padding: 0 1.5rem;
   margin: 0 0 2.5rem;
 }
 .q-mark {
-  color: #8b0000;
+  color: var(--color-primary);
   font-size: 1.5rem;
   font-weight: 700;
   line-height: 1;
@@ -106,9 +109,11 @@
   display: block;
   font-size: 2rem;
   font-weight: 800;
-  color: #ff1a1a;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent-purple) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-family: var(--font-heading);
-  text-shadow: 0 0 20px rgba(255,26,26,0.3);
 }
 .v-label {
   font-size: 0.75rem;
@@ -133,6 +138,9 @@
   opacity: 0.15;
 }
 [data-theme="light"] .v-num {
-  color: #B91C1C;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent-purple) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-shadow: none;
 }

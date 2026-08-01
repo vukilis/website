@@ -1,10 +1,9 @@
 ---
 // Hero section - Clean, professional design
-import SocialLinks from './SocialLinks.astro';
 const base = import.meta.env.BASE_URL;
 ---
 
-<section class="hero">
+<section class="hero" id="hero">
   <div class="hero-content">
     <div class="greeting">
       <a href={/about/} class="logo">
@@ -16,14 +15,8 @@ const base = import.meta.env.BASE_URL;
     </h1>
     <p class="hero-subtitle">DevOps - Linux Enthusiast - VibeCoder</p>
     <p class="hero-description">
-      "Behind this mask there is more than just flesh. Beneath this mask there is an idea... and ideas are bulletproof"
+      "Beneath this mask there is more than flesh. Beneath this mask there is an idea, and ideas are bulletproof."
     </p>
-    
-    <!-- Social links -->
-    <div class="hero-socials">
-      <SocialLinks />
-    </div>
-
     <div class="hero-buttons">
       <a href={`${base}projects/`} class="btn btn-primary">
         <span>View Projects</span>
@@ -35,16 +28,7 @@ const base = import.meta.env.BASE_URL;
       <a href={`${base}blog/`} class="btn btn-secondary">
         <span>Read Blog</span>
       </a>
-      <a href={`${base}homelab_diagram/`} class="btn btn-secondary">
-        <span>Homelab</span>
-      </a>
     </div>
-  </div>
-
-  <!-- Decorative elements -->
-  <div class="hero-decoration">
-    <div class="glow glow-1"></div>
-    <div class="glow glow-2"></div>
   </div>
 </section>
 
@@ -114,13 +98,24 @@ const base = import.meta.env.BASE_URL;
   }
 
   .hero-description {
+    position: relative;
+    font-style: italic;
     font-size: clamp(1rem, 1.5vw, 1.125rem);
+    color: var(--color-text-dim);
+    line-height: 1.7;
+    padding: 0 1.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2.5rem;
+
+    /* font-size: clamp(1rem, 1.5vw, 1.125rem);
     color: var(--color-text-dim);
     margin-bottom: 2.5rem;
     line-height: 1.7;
     max-width: 600px;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto; */
   }
 
   .hero-buttons {

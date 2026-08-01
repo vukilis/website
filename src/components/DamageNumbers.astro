@@ -1,0 +1,184 @@
+<script>
+(function() {
+  if (!window.__dmgState) {
+    window.__dmgState = { clickListenerAdded: false };
+  }
+
+  const CONFIG = {
+    tags: [
+      { text: 'sudo',    color: 'var(--dmg-red)' },
+      { text: 'grep',    color: 'var(--dmg-green)' },
+      { text: 'chmod',   color: 'var(--dmg-yellow)' },
+      { text: 'make',    color: 'var(--dmg-blue)' },
+      { text: 'awk',     color: 'var(--dmg-cyan)' },
+      { text: 'bash',    color: 'var(--dmg-green)' },
+      { text: 'rm -rf',  color: 'var(--dmg-red)' },
+      { text: 'curl',    color: 'var(--dmg-yellow)' },
+      { text: 'ssh',     color: 'var(--dmg-cyan)' },
+      { text: 'ps',      color: 'var(--dmg-gray)' },
+      { text: 'man',     color: 'var(--dmg-blue)' },
+      { text: 'ls',      color: 'var(--dmg-green)' },
+      { text: 'cat',     color: 'var(--dmg-yellow)' },
+      { text: 'ping',    color: 'var(--dmg-yellow)' },
+    ],
+    particleCount: 3,
+    gravity: 0.25,
+    drag: 0.97
+  };
+
+  function randomRange(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  function createParticle(x, y, color) {
+    const el = document.createElement('div');
+    const size = randomRange(2, 3);
+    const angle = randomRange(0, Math.PI * 2);
+    const speed = randomRange(1.5, 3.5);
+    let vx = Math.cos(angle) * speed;
+    let vy = Math.sin(angle) * speed - 2;
+    let opacity = 0.5;
+
+    el.dataset.dmg = 'particle';
+    el.style.cssText = `
+      position: fixed; left: ${x}px; top: ${y}px;
+      width: ${size}px; height: ${size}px;
+      background: ${color}; border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      opacity: 0.5;
+    `;
+    document.body.appendChild(el);
+
+    function animate() {
+      vx *= CONFIG.drag;
+      vy += CONFIG.gravity;
+      const left = parseFloat(el.style.left) + vx;
+      const top = parseFloat(el.style.top) + vy;
+      opacity -= 0.018;
+
+      el.style.left = left + 'px';
+      el.style.top = top + 'px';
+      el.style.opacity = opacity;
+
+      if (opacity > 0) requestAnimationFrame(animate);
+      else el.remove();
+    }
+    requestAnimationFrame(animate);
+  }
+
+  function spawnDamage(e) {
+    if (e.target.closest('a, button, .terminal, input, textarea, select')) return;
+
+    const tag = CONFIG.tags[Math.floor(Math.random() * CONFIG.tags.length)];
+    const el = document.createElement('div');
+    
+    const driftX = randomRange(-18, 18);
+    const driftY = randomRange(-40, -58);
+
+    el.textContent = tag.text;
+    el.dataset.dmg = 'float';
+    el.style.cssText = `
+      position: fixed;
+      left: ${e.clientX}px;
+      top: ${e.clientY}px;
+      font-family: var(--font-mono, ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', 'Courier New', monospace);
+      font-size: 14px;
+      font-weight: 500;
+      color: ${tag.color};
+      pointer-events: none;
+      z-index: 10000;
+      white-space: nowrap;
+      text-transform: lowercase;
+      letter-spacing: 0.3px;
+      line-height: 1;
+      transform: translate(-50%, -50%) scale(0.7);
+      opacity: 0;
+    `;
+
+    const animName = `dmgArc_${Math.random().toString(36).slice(2, 9)}`;
+    const style = document.createElement('style');
+    style.dataset.dmg = 'keyframe';
+    style.textContent = `
+      @keyframes ${animName} {
+        0% {
+          transform: translate(-50%, -50%) scale(0.7);
+          opacity: 0;
+        }
+        25% {
+          transform: translate(calc(-50% + ${driftX * 0.3}px), calc(-50% + ${driftY * 0.2}px)) scale(1);
+          opacity: 0.9;
+        }
+        100% {
+          transform: translate(calc(-50% + ${driftX}px), calc(-50% + ${driftY}px)) scale(0.9);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    el.style.animation = `${animName} 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards`;
+
+    document.body.appendChild(el);
+
+    setTimeout(() => {
+      el.remove();
+      style.remove();
+    }, 900);
+
+    for (let i = 0; i < CONFIG.particleCount; i++) {
+      createParticle(e.clientX, e.clientY, tag.color);
+    }
+  }
+
+  function injectStyles() {
+    const oldStyle = document.getElementById('dmg-base-styles');
+    if (oldStyle) oldStyle.remove();
+
+    const dmgStyle = document.createElement('style');
+    dmgStyle.id = 'dmg-base-styles';
+    dmgStyle.textContent = `
+      :root {
+        --dmg-red: #f87171;
+        --dmg-green: #4ade80;
+        --dmg-yellow: #fbbf24;
+        --dmg-blue: var(--color-accent-blue);
+        --dmg-cyan: var(--color-accent-cyan);
+        --dmg-purple: var(--color-accent-purple);
+        --dmg-pink: var(--color-accent-pink);
+        --dmg-gray: var(--color-text-dim);
+      }
+      [data-theme="light"] {
+        --dmg-red: #dc2626;
+        --dmg-green: #16a34a;
+        --dmg-yellow: #b45309;
+        --dmg-blue: var(--color-accent-blue);
+        --dmg-cyan: var(--color-accent-cyan);
+        --dmg-purple: var(--color-accent-purple);
+        --dmg-pink: var(--color-accent-pink);
+        --dmg-gray: var(--color-text-muted);
+      }
+    `;
+    document.head.appendChild(dmgStyle);
+  }
+
+  function cleanup() {
+    document.querySelectorAll('[data-dmg]').forEach(el => el.remove());
+  }
+
+  function init() {
+    injectStyles();
+
+    if (!window.__dmgState.clickListenerAdded) {
+      document.addEventListener('click', spawnDamage);
+      window.__dmgState.clickListenerAdded = true;
+    }
+  }
+
+  document.addEventListener('astro:before-swap', cleanup);
+  document.addEventListener('astro:page-load', init);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>

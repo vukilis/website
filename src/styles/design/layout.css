@@ -1,6 +1,6 @@
 .design-page {
   min-height: 100vh;
-  padding: calc(var(--nav-height) + 2rem) 2rem 5rem;
+  padding: calc(var(--nav-height) + 5rem) 2rem 5rem;
   animation: fadeInUp 0.8s ease-out;
 }
 

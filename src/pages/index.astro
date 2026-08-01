@@ -5,6 +5,7 @@ import Navigation from '../components/Navigation.astro';
 import Hero from '../components/Hero.astro';
 import Skills from '../components/Skills.astro';
 import BlogCard from '../components/blog/BlogCard.astro';
+// import PaginationDots from '../components/PaginationDots.astro';
 
 const base = import.meta.env.BASE_URL;
 const allBlogPosts = await getCollection('blog', ({ data }) => !data.draft);
@@ -17,8 +18,14 @@ const recentPosts = allBlogPosts
   <Navigation />
   <Hero />
   <Skills />
+  <!-- <PaginationDots sections={[
+    { id: 'hero', label: 'Home' },
+    { id: 'skills', label: 'Skills' },
+    { id: 'posts', label: 'Posts' },
+    { id: 'footer', label: 'Footer' },
+  ]} /> -->
 
-  <section class="recent-posts">
+  <section id="posts" class="recent-posts">
     <div class="container">
       <h2 class="section-title">Recent Posts</h2>
       <p class="section-subtitle">Latest articles from the blog</p>
@@ -50,12 +57,18 @@ const recentPosts = allBlogPosts
 
 <style>
   .recent-posts {
-    padding: 6rem 2rem 8rem;
+    /* min-height: 100vh; */
+    /* display: flex; */
+    /* align-items: center; */
+    justify-content: center;
     position: relative;
+    overflow: hidden;
+    padding: calc(var(--nav-height) + 2rem) 2rem 14rem;
   }
 
   .container {
     max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
   }
 

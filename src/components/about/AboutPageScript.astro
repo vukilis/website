@@ -330,45 +330,6 @@ const {
   // }
 
   // ============================================
-  // DAMAGE NUMBERS
-  // ============================================
-
-  function initDamageNumbers() {
-    if (window.__aboutDmgStyleInjected) return;
-    window.__aboutDmgStyleInjected = true;
-
-    document.addEventListener('click', (e) => {
-      if (e.target.closest('a, button, .terminal')) return;
-      const tags = [
-        'POW!',
-        'BAM!',
-        'ZAP!',
-        'WOW!',
-        'NICE!',
-        'SICK!',
-      ];
-      const el = document.createElement('div');
-      el.textContent = tags[Math.floor(Math.random() * tags.length)];
-      el.style.cssText = `
-        position: fixed; left: ${e.clientX}px; top: ${e.clientY}px;
-        font-family: var(--font-mono, monospace); font-size: 13px; font-weight: 800;
-        color: #eab308; pointer-events: none; z-index: 10000;
-        text-shadow: 0 0 10px rgba(234,179,8,0.6);
-        animation: dmgPop 0.7s ease-out forwards;
-      `;
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 700);
-    });
-
-    const dmgStyle = document.createElement('style');
-    dmgStyle.textContent = `@keyframes dmgPop {
-      0%{transform:translate(-50%,0) scale(1);opacity:1}
-      100%{transform:translate(-50%,-45px) scale(1.25);opacity:0}
-    }`;
-    document.head.appendChild(dmgStyle);
-  }
-
-  // ============================================
   // INIT / LIFECYCLE
   // ============================================
 
@@ -382,7 +343,6 @@ const {
     await loadReadme('readmeContent');
     initSteamWidget();
     // initScrollReveal();
-    initDamageNumbers();
   }
 
   function resetAboutState() {

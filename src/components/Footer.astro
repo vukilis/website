@@ -14,7 +14,7 @@ interface Props {
 const { socialLinks } = Astro.props;
 ---
 
-<footer class="footer" role="contentinfo">
+<footer class="footer" role="contentinfo" id="footer">
   <div class="footer-container">
     <div class="footer-main">
       <div class="footer-brand">
@@ -41,9 +41,9 @@ const { socialLinks } = Astro.props;
         &copy; {new Date().getFullYear()} Vuk1lis. All rights reserved.
       </p>
       <nav class="footer-legal" aria-label="Legal">
-        <a href="/privacy" class="footer-legal-link">Privacy</a>
+        <a href="/privacy/" class="footer-legal-link">Privacy</a>
         <span class="footer-separator" aria-hidden="true"></span>
-        <a href="/terms" class="footer-legal-link">Terms</a>
+        <a href="/terms/" class="footer-legal-link">Terms</a>
       </nav>
     </div>
   </div>

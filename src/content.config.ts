@@ -90,4 +90,14 @@ const yerbaMate = defineCollection({
   }),
 });
 
-export const collections = { blog, projectsIT, projectsDesign, projectsMusic, yerbaMate };
+const legal = defineCollection({
+  loader: glob({ pattern: '{privacy,terms}.md', base: './src/content' }),
+  schema: z.object({
+    title: z.string(),
+    pubDate: z.coerce.date(),
+    lastmod: z.coerce.date().optional(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { blog, projectsIT, projectsDesign, projectsMusic, yerbaMate, legal };

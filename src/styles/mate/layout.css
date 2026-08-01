@@ -1,6 +1,6 @@
 .yerba-review-page {
   min-height: 100vh;
-  padding: calc(var(--nav-height) + 2rem) 1rem 5rem;
+  padding: calc(var(--nav-height) + 5rem) 1rem 5rem;
   animation: fadeInUp 0.8s ease-out;
 }
 
@@ -87,7 +87,7 @@
 .yerba-review-page {
   position: relative;
   min-height: 100vh;
-  padding: calc(var(--nav-height) + 2rem) 1rem 5rem;
+  padding: calc(var(--nav-height) + 5rem) 1rem 5rem;
   overflow: hidden;
 }
 
