@@ -1,0 +1,150 @@
+---
+import '../../styles/homelab/status.css';
+
+interface Props {
+  class?: string;
+  service?: 'homelab' | 'kuma';
+}
+
+const { class: className = '', service = 'homelab' } = Astro.props;
+---
+
+<span class:list={['status-item', 'status-item-' + service, className]} data-service={service}>
+  <span class="status-dot" aria-hidden="true"></span>
+  <span class="status-name">{service === 'homelab' ? 'HOMELAB' : 'STATUS'}</span>
+  <span data-status={service} class="status-value">checking...</span>
+</span>
+
+<script is:inline>
+  (function() {
+    let abortController = null;
+    let timers = {};
+    let initialized = {};
+
+    function setStatus(itemEl, valueEl, status) {
+      if (!itemEl || !valueEl) return;
+      const states = ['is-up', 'is-down', 'is-partial', 'is-unknown', 'is-error'];
+      itemEl.classList.remove(...states);
+      valueEl.classList.remove(...states);
+      if (status) {
+        itemEl.classList.add('is-' + status);
+        valueEl.classList.add('is-' + status);
+      }
+    }
+
+    function cleanup(service) {
+      if (abortController) {
+        abortController.abort();
+        abortController = null;
+      }
+      if (timers[service]) {
+        clearInterval(timers[service]);
+        delete timers[service];
+      }
+    }
+
+    function checkHomelabStatus(cancelSignal) {
+      const el = document.querySelector('.status-item-homelab [data-status="homelab"]');
+      if (!el) return;
+      const item = el.closest('.status-item');
+      fetch('https://vukilis.com/status-api', {
+        method: 'GET',
+        cache: 'no-store',
+        signal: cancelSignal
+      })
+      .then(function(r) {
+        if (r.ok) {
+          el.textContent = 'UP';
+          setStatus(item, el, 'up');
+        } else {
+          el.textContent = 'DOWN';
+          setStatus(item, el, 'down');
+        }
+      })
+      .catch(function(err) {
+        if (err.name !== 'AbortError') {
+          el.textContent = 'DOWN';
+          setStatus(item, el, 'down');
+        }
+      });
+    }
+
+    function setKumaStatus() {
+      const el = document.querySelector('.status-item-kuma [data-status="kuma"]');
+      if (!el) return;
+      const item = el.closest('.status-item');
+      fetch('https://vukilis.com/status-api', {
+        cache: 'no-cache'
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        const heartbeats = data.heartbeatList || {};
+        let upCount = 0;
+        let downCount = 0;
+        let totalCount = 0;
+        for (let id in heartbeats) {
+          const pulses = heartbeats[id];
+          if (Array.isArray(pulses) && pulses.length > 0) {
+            const latest = pulses[pulses.length - 1];
+            if (latest.status === 1) upCount++;
+            else downCount++;
+            totalCount++;
+          }
+        }
+        if (totalCount === 0) {
+          el.textContent = 'NO DATA';
+          setStatus(item, el, 'unknown');
+        } else if (downCount === totalCount) {
+          el.textContent = 'DOWN';
+          setStatus(item, el, 'down');
+        } else if (downCount > 0) {
+          el.textContent = 'PARTIAL (' + downCount + ')';
+          setStatus(item, el, 'partial');
+        } else {
+          el.textContent = 'UP';
+          setStatus(item, el, 'up');
+        }
+      })
+      .catch(function(err) {
+        el.textContent = 'ERROR';
+        setStatus(item, el, 'error');
+      });
+    }
+
+    function initService(service) {
+      if (initialized[service]) return;
+      cleanup(service);
+      abortController = new AbortController();
+      const cancelSignal = abortController.signal;
+
+      if (service === 'homelab') {
+        checkHomelabStatus(cancelSignal);
+        timers['homelab'] = setInterval(function() {
+          checkHomelabStatus(abortController ? abortController.signal : cancelSignal);
+        }, 30000);
+      } else if (service === 'kuma') {
+        setKumaStatus();
+        timers['kuma'] = setInterval(setKumaStatus, 60000);
+      }
+
+      initialized[service] = true;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      initService('homelab');
+      initService('kuma');
+    });
+
+    document.addEventListener('astro:before-page-transition', function() {
+      cleanup('homelab');
+      cleanup('kuma');
+      initialized = {};
+    });
+
+    document.addEventListener('astro:page-load', function() {
+      initService('homelab');
+      initService('kuma');
+    });
+   })();
+</script>
+

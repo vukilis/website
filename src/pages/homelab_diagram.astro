@@ -1,11 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
-
-const base = import.meta.env.BASE_URL;
+import HomelabHeader from '../components/homelab/HomelabHeader.astro';
+import '../styles/homelab/diagram.css';
 ---
 
-<BaseLayout title="Homelab Diagram - Vuk1lis" description="Live diagram — my homelab network topology showing the full self-hosted infrastructure powering everything — zoom, pan, and explore!">
+<BaseLayout title="Homelab Diagram - Vuk1lis" description="Live diagram — I run a homelab with over 100 containerized services. I use it to experiment with
+different tools, improve my skills in containerization and automation, and simulate production-like
+setups. It is where I usually test new ideas and figure out what actually works in practice.">
   <Navigation />
 
   <section class="homelab-page">
@@ -34,11 +36,7 @@ const base = import.meta.env.BASE_URL;
       <div class="h-glow h-glow-2"></div>
     </div>
 
-    <div class="h-page-header">
-      <a href={`${base}about/`} class="h-back">← Back to About</a>
-      <h1 class="h-page-title">Homelab Network Diagram</h1>
-      <p class="h-page-sub">Live diagram — my homelab network topology showing the full self-hosted infrastructure powering everything — zoom, pan, and explore!</p>
-    </div>
+    <HomelabHeader />
 
     <div class="h-page-diagram">
       <div id="diagram-container" style="position: relative; width: 100%!important; overflow: hidden;">
@@ -64,110 +62,6 @@ const base = import.meta.env.BASE_URL;
       </div>
     </div>
   </section>
-
-  <style is:global>
-    .homelab-page { min-height: 100vh; color: var(--color-text); padding: calc(var(--nav-height, 64px) + 3rem) 1.5rem 5rem; position: relative; overflow: hidden; animation: fadeInUp 0.8s ease-out; animation: fadeInUp 0.8s ease-out;}
-    .h-page-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-    .h-network { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.7; }
-    .h-network-nodes circle { opacity: 0.6; }
-    .h-network-pulses circle { opacity: 0; }
-    @keyframes pulseMove {
-      0% { opacity: 0; r: 1.5; }
-      15% { opacity: 0.9; }
-      85% { opacity: 0.9; }
-      100% { opacity: 0; r: 2; }
-    }
-    .h-particles { position: absolute; inset: 0; }
-    .h-particle {
-      position: absolute; width: 3px; height: 3px;
-      background: #00d4aa; border-radius: 50%;
-      box-shadow: 0 0 8px #00d4aa, 0 0 16px rgba(0, 212, 170, 0.4);
-      animation: particleFloat 8s ease-in-out infinite;
-      opacity: 0;
-    }
-    @keyframes particleFloat {
-      0%, 100% { opacity: 0; transform: translateY(0) scale(0.5); }
-      20% { opacity: 0.8; }
-      50% { opacity: 0.4; transform: translateY(-120px) scale(1); }
-      80% { opacity: 0.6; }
-    }
-    .homelab-page > *:not(.h-page-bg) { position: relative; z-index: 1; }
-    .h-page-header { max-width: 1100px; margin: 0 auto 2.5rem; }
-    .h-back { display: inline-flex; align-items: center; gap: 0.4rem; color: #00d4aa; text-decoration: none; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; }
-    .h-back::before { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1.5px; background: linear-gradient(90deg, #00d4aa, #00ffff); transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 1px; }
-    .h-back:hover { color: #00ffff; transform: translateX(-4px); }
-    .h-back:hover::before { width: 100%; }
-    .h-page-title { font-family: var(--font-heading); font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 700; margin: 0 0 0.5rem; color: #e0f2f1; }
-    .h-page-sub { font-size: 0.9375rem; color: #7aa; margin: 0; }
-    .h-page-diagram { max-width: 1100px; margin: 0 auto; }
-
-    [data-theme="light"] .h-page-title { color: #0f172a; }
-    [data-theme="light"] .h-page-sub { color: #334155; }
-    [data-theme="light"] .h-back { color: #0891b2; }
-    [data-theme="light"] .h-back::before { background: linear-gradient(90deg, #0891b2, #0e7490); }
-    [data-theme="light"] .h-back:hover { color: #0e7490; transform: translateX(-4px); }
-    [data-theme="light"] .h-back:hover::before { width: 100%; }
-    [data-theme="light"] .h-grid {
-      background-image:
-        linear-gradient(rgba(8, 145, 178, 0.12) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(8, 145, 178, 0.12) 1px, transparent 1px);
-    }
-    [data-theme="light"] .h-network { opacity: 0.9; }
-    [data-theme="light"] .h-network-lines { stroke: #0891b2; stroke-opacity: 0.25; }
-    [data-theme="light"] .h-network-nodes circle { fill: #0891b2; opacity: 0.75; }
-    [data-theme="light"] .h-particle {
-      background: #0891b2;
-      box-shadow: 0 0 8px rgba(8, 145, 178, 0.6), 0 0 16px rgba(8, 145, 178, 0.25);
-    }
-    [data-theme="light"] .h-glow { opacity: 0.18; }
-    [data-theme="light"] .h-glow-1 { background: #0891b2; }
-    [data-theme="light"] .h-glow-2 { background: #2563eb; }
-    [data-theme="light"] .loader-text { color: #0891b2; }
-    [data-theme="light"] .loader-spinner { border-top-color: #0891b2; }
-
-    .diagram-loader {
-      position: absolute;
-      inset: 0;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(10, 15, 20, 0.9);
-      backdrop-filter: blur(4px);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-      border-radius: 8px;
-      min-height: 600px;
-    }
-    .diagram-loader.is-visible {
-      opacity: 1;
-      visibility: visible;
-    }
-    .loader-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
-    .loader-spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid rgba(0, 212, 170, 0.2);
-      border-top-color: #00d4aa;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-    .loader-text {
-      color: #00d4aa;
-      font-size: 0.875rem;
-      font-weight: 500;
-      margin: 0;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-  </style>
 
   <script>
     (function() {

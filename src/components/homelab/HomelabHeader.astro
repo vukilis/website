@@ -1,0 +1,66 @@
+---
+import '../../styles/homelab/header.css';
+import HomelabStatus from './HomelabStatus.astro';
+---
+
+<header class="homelab-header">
+  <div class="header-top-nav">
+    <a href="/" class="back-link">
+      <i class="fa-solid fa-arrow-left"></i> Back to Home
+    </a>
+  </div>
+
+  <div class="header-main-content">
+    <div class="header-titles">
+      <h1 class="page-title">Homelab Network Diagram</h1>
+      <p class="page-subtitle">
+        Self-hosted infrastructure and services running at home.
+      </p>
+    </div>
+
+    <div class="intro-cards">
+      <div class="intro-card">
+        <div class="intro-card-icon">
+          <i class="fa-solid fa-server"></i>
+        </div>
+        <div class="intro-card-content">
+          <span class="intro-card-title">Infrastructure</span>
+          <HomelabStatus service="homelab" class="status-inline" />
+        </div>
+      </div>
+      <div class="intro-card">
+        <div class="intro-card-icon">
+          <i class="fa-solid fa-network-wired"></i>
+        </div>
+        <div class="intro-card-content">
+          <span class="intro-card-title">Services</span>
+          <HomelabStatus service="kuma" class="status-inline" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="intro-highlight">
+    <div class="intro-highlight-icon">
+      <i class="fa-solid fa-bolt"></i>
+    </div>
+    <div class="intro-highlight-content">
+      <div class="intro-highlight-header">
+        <span class="intro-highlight-title">Ideas Are Virtualized</span>
+        <a href="https://www.reddit.com/r/homelab/" target="_blank" rel="noopener noreferrer" class="intro-highlight-link">
+          r/homelab <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+      </div>
+      <p class="intro-highlight-text">
+        I run a homelab with over 100 containerized services. I use it to experiment with
+        different tools, improve my skills in containerization and automation, and simulate production-like
+        setups. It is where I usually test new ideas and figure out what actually works in practice.
+      </p>
+    </div>
+  </div>
+
+  <p class="header-note">
+    <i class="fa-solid fa-circle-info"></i>
+    Zoom, pan, and explore the full homelab topology.
+  </p>
+</header>

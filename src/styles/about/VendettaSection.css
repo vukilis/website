@@ -132,3 +132,7 @@
 [data-theme="light"] .v-rose {
   opacity: 0.15;
 }
+[data-theme="light"] .v-num {
+  color: #B91C1C;
+  text-shadow: none;
+}

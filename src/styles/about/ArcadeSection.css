@@ -260,7 +260,7 @@
   background: rgba(0, 0, 0, 0.04);
 }
 [data-theme="light"] .arcade-tab.active {
-  color: #f59e0b;
-  background: rgba(245,158,11,0.08);
-  box-shadow: inset 0 -2px 0 #f59e0b;
+  color: #B45309;
+  background: rgba(245,158,11,0.1);
+  box-shadow: inset 0 -2px 0 #B45309;
 }

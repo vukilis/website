@@ -40,6 +40,8 @@
 
   --sort-btn-hover-bg: rgba(255, 255, 255, 0.06);
   --sort-buttons-bg: rgba(255, 255, 255, 0.03);
+
+  --color-preview-bg: #060911;
 }
 
 [data-theme="light"] {
@@ -62,7 +64,7 @@
   --color-text: #0F172A;
   --color-text-secondary: #334155;
   --color-text-dim: #475569;
-  --color-text-muted: #94A3B8;
+  --color-text-muted: #64748B;
 
   --color-border: rgba(0, 0, 0, 0.06);
   --color-border-hover: rgba(0, 0, 0, 0.12);
@@ -77,6 +79,8 @@
 
   --sort-btn-hover-bg: rgba(0, 0, 0, 0.06);
   --sort-buttons-bg: rgba(0, 0, 0, 0.03);
+
+  --color-preview-bg: #fffaf0;
 }
 
 * {
@@ -237,5 +241,11 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: text-shimmer 3s linear infinite;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
 }
 

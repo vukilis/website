@@ -13,7 +13,7 @@ const recentPosts = allBlogPosts
   .slice(0, 3);
 ---
 
-<BaseLayout title="Vuk1lis" description="Vuk1lis is a DevOps engineer, Linux enthusiast, and VibeCoder. He shares his knowledge and experience through blog posts, tutorials, and open-source projects.">
+<BaseLayout title="Vuk1lis" description="I'm Vuk1lis - a DevOps engineer, Linux enthusiast, and VibeCoder. My work sits at the intersection of art and technology. I build immersive digital experiences where dark aesthetics meet surgical performance. Every deployment is a revolution. Every animation is a statement. I don't just write code - I orchestrate infrastructure like a symphony, and craft interfaces that feel like they were pulled from another dimension.">
   <Navigation />
   <Hero />
   <Skills />
@@ -87,38 +87,63 @@ const recentPosts = allBlogPosts
   }
 
   .btn {
+    position: relative;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     padding: 0.875rem 1.75rem;
-    font-size: 1rem;
+    font-size: 0.9375rem;
     font-weight: 600;
-    font-family: var(--font-body);
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
+    font-family: var(--font-body, system-ui, sans-serif);
+    letter-spacing: -0.01em;
     text-decoration: none;
-    transition: all 0.2s ease;
+    border-radius: 0.875rem;
+    cursor: pointer;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
   }
 
   .btn-secondary {
-    background: transparent;
-    color: var(--color-text);
-    border: 1px solid var(--color-border);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--color-text, #e2e8f0);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .btn-secondary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.25s ease;
   }
 
   .btn-secondary:hover {
-    background: rgba(59, 130, 246, 0.1);
-    border-color: var(--color-primary);
-    color: var(--color-primary);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(148, 163, 184, 0.35);
+    color: var(--color-text, #f8fafc);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.2);
   }
 
-  .btn-secondary svg {
-    transition: transform 0.2s ease;
+  .btn-secondary:hover::after {
+    opacity: 1;
   }
 
-  .btn-secondary:hover svg {
-    transform: translateX(4px);
+  .btn-secondary:active {
+    transform: translateY(0);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .btn-secondary:focus-visible {
+    outline: 2px solid var(--color-primary, #3b82f6);
+    outline-offset: 3px;
   }
 
   @media (max-width: 768px) {

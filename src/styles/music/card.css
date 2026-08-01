@@ -160,7 +160,7 @@
 }
 
 .music-card--latest .card-title {
-  background: linear-gradient(135deg, var(--amber) 0%, var(--cyan) 100%);
+  background: linear-gradient(135deg, #D97706 0%, #0891B2 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

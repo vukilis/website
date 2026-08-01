@@ -21,10 +21,17 @@
 
 .mate-card:hover {
   transform: translateY(-4px);
-  border-color: var(--color-border-hover, rgba(255, 255, 255, 0.15));
+  border-color: rgba(141, 182, 0, 0.35);
   box-shadow:
     0 10px 25px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(255, 255, 255, 0.04);
+    0 0 0 1px rgba(141, 182, 0, 0.12);
+}
+
+[data-theme="light"] .mate-card:hover {
+  border-color: rgba(141, 182, 0, 0.35);
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(141, 182, 0, 0.2);
 }
 
 .mate-card__cover {
