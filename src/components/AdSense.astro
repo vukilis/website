@@ -1,0 +1,32 @@
+---
+interface Props {
+  slot: string;
+  format?: string;
+  responsive?: boolean;
+  className?: string;
+}
+
+const { slot, format = 'auto', responsive = true, className = '' } = Astro.props;
+---
+
+<ins
+  class={`adsbygoogle ${className}`}
+  style={`display:block${responsive ? '' : ';width:300px;height:250px'}`}
+  data-ad-client="ca-pub-7134772077337777"
+  data-ad-slot={slot}
+  data-ad-format={format}
+  data-full-width-responsive={responsive ? 'true' : 'false'}
+/>
+
+<script is:inline>
+  try {
+    if (window.adsbygoogle) {
+      window.adsbygoogle.push({});
+    }
+  } catch (e) {
+    console.error('AdSense push failed:', e);
+  }
+</script>
+
+<!-- Manually inject the AdSense code  -->
+<!-- <AdSense slot="8209987227" /> -->

@@ -1,0 +1,75 @@
+---
+import '../../styles/colab/cloud.css';
+---
+
+<div class="service-block" id="cloud">
+  <div class="block-header">
+    <div class="service-icon cloud-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+      </svg>
+    </div>
+    <div>
+      <h3 class="block-title">Cloud Infrastructure</h3>
+      <p class="service-desc">Scalable, secure, and resilient cloud architecture across providers</p>
+    </div>
+  </div>
+  <div class="animation-stage">
+    <div class="cloud-animation-v2">
+      <svg class="cloud-net-svg" viewBox="0 0 300 300" fill="none">
+        <path id="cloud-path-tl" class="net-line" d="M 150 150 Q 100 100 45 60" />
+        <path id="cloud-path-tr" class="net-line" d="M 150 150 Q 200 100 255 60" />
+        <path id="cloud-path-bl" class="net-line" d="M 150 150 Q 100 200 45 240" />
+        <path id="cloud-path-br" class="net-line" d="M 150 150 Q 200 200 255 240" />
+
+        <circle r="4" class="net-packet packet-cyan"><animateMotion dur="2.5s" repeatCount="indefinite" rotate="auto"><mpath href="#cloud-path-tl"/></animateMotion></circle>
+        <circle r="4" class="net-packet packet-cyan" opacity="0.6"><animateMotion dur="2.5s" begin="1.2s" repeatCount="indefinite" rotate="auto"><mpath href="#cloud-path-tl"/></animateMotion></circle>
+
+        <circle r="4" class="net-packet packet-pink"><animateMotion dur="3s" begin="0.5s" repeatCount="indefinite" rotate="auto"><mpath href="#cloud-path-tr"/></animateMotion></circle>
+
+        <circle r="4" class="net-packet packet-green"><animateMotion dur="2s" begin="1s" repeatCount="indefinite" rotate="auto"><mpath href="#cloud-path-bl"/></animateMotion></circle>
+
+        <circle r="4" class="net-packet packet-blue"><animateMotion dur="2.8s" begin="0.2s" repeatCount="indefinite" rotate="auto"><mpath href="#cloud-path-br"/></animateMotion></circle>
+        <circle r="4" class="net-packet packet-blue" opacity="0.5"><animateMotion dur="2.8s" begin="1.5s" repeatCount="indefinite" rotate="auto"><mpath href="#cloud-path-br"/></animateMotion></circle>
+      </svg>
+
+      <div class="cloud-core">
+        <div class="cloud-core-ring"></div>
+        <div class="cloud-core-ring" style="animation-delay: 1.5s;"></div>
+        <div class="cloud-core-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+          </svg>
+        </div>
+      </div>
+
+      <div class="cloud-edge-node node-tl">
+        <div class="node-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+        </div>
+        <div class="node-bar"><div class="node-bar-fill"></div></div>
+      </div>
+
+      <div class="cloud-edge-node node-tr">
+        <div class="node-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12V2H2v20h10"></path><path d="M22 12v0a3 3 0 0 0-3-3h-4v7h4a3 3 0 0 0 3-3z"></path></svg>
+        </div>
+        <div class="node-bar"><div class="node-bar-fill"></div></div>
+      </div>
+
+      <div class="cloud-edge-node node-bl">
+        <div class="node-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+        </div>
+        <div class="node-bar"><div class="node-bar-fill"></div></div>
+      </div>
+
+      <div class="cloud-edge-node node-br">
+        <div class="node-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </div>
+        <div class="node-bar"><div class="node-bar-fill"></div></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,6 +7,10 @@ import Footer from '../components/Footer.astro';
 import LightGalleryInit from '../components/LightGalleryInit.astro';
 import DamageNumbers from '../components/DamageNumbers.astro';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import {
+  GoogleTagmanager,
+  GoogleTagmanagerNoscript
+} from '@digi4care/astro-google-tagmanager';
 
 interface Props {
   title?: string;
@@ -55,9 +59,20 @@ const {
       })();
     </script>
     
+    <script is:inline>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-7134772077337777"
+      });
+    </script>
+    
+    <script is:inline src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" async></script>
+    
     <ClientRouter />
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="6253d22e-47b0-4cf0-aea1-f20de51d328f"></script>
+    <GoogleTagmanager id="GTM-K7KG6MT7" />
   </head>
   <body>
+    <GoogleTagmanagerNoscript id="GTM-K7KG6MT7" />
     <SiteBackdrop />
     <div id="page-content">
       <slot />
@@ -125,6 +140,18 @@ const {
         document.addEventListener('astro:page-load', () => {
           const saved = getSavedTheme();
           applyTheme(saved || getSystemTheme(), !!saved);
+        });
+
+        // Re-push AdSense ads after every Astro view transition
+        document.addEventListener('astro:after-swap', () => {
+          if (window.adsbygoogle) {
+            window.adsbygoogle.push({});
+          }
+        });
+
+        // Track Umami pageviews after every Astro view transition
+        document.addEventListener('astro:after-swap', () => {
+          if (window.umami) window.umami.track();
         });
 
         // Notify widgets that depend on theme (Giscus)

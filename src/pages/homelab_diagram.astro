@@ -39,7 +39,7 @@ setups. It is where I usually test new ideas and figure out what actually works 
     <HomelabHeader />
 
     <div class="h-page-diagram">
-      <div id="diagram-container" style="position: relative; width: 100%!important; overflow: hidden;">
+      <div id="diagram-container" class="diagram-container">
         <!-- Loader Overlay -->
         <div id="diagram-loader" class="diagram-loader" aria-hidden="true">
           <div class="loader-content">
@@ -48,7 +48,7 @@ setups. It is where I usually test new ideas and figure out what actually works 
           </div>
         </div>
 
-        <div class="mxgraph" style="width: 100%!important; height: 100%!important; border: 1px solid transparent; overflow: hidden; min-height: 600px;" data-mxgraph="{
+        <div class="mxgraph" data-mxgraph="{
           &quot;highlight&quot;:&quot;#0000ff&quot;,
           &quot;nav&quot;:true,
           &quot;resize&quot;:true,
@@ -105,6 +105,10 @@ setups. It is where I usually test new ideas and figure out what actually works 
       function onDiagramReady() {
         setCache();
         hideLoader();
+        const container = document.getElementById('diagram-container');
+        if (container) {
+          container.classList.add('has-diagram');
+        }
       }
 
       function createParticles() {
@@ -208,22 +212,51 @@ setups. It is where I usually test new ideas and figure out what actually works 
         const mxgraph = container.querySelector('.mxgraph');
         if (!mxgraph) return;
 
-        if (isCacheValid()) {
-          injectScript();
-          return;
-        }
-
-        showLoader();
         isInitializing = true;
 
-        loadTimer = setTimeout(() => {
-          console.warn('[Homelab] Diagram load timeout — hiding loader');
-          hideLoader();
-          isInitializing = false;
-        }, LOAD_TIMEOUT);
+        let loaded = false;
+        const load = () => {
+          if (loaded) return;
+          loaded = true;
 
-        injectScript();
-        observeIframe(container);
+          if (isCacheValid()) {
+            injectScript();
+            return;
+          }
+
+          showLoader();
+
+          loadTimer = setTimeout(() => {
+            console.warn('[Homelab] Diagram load timeout — hiding loader');
+            hideLoader();
+            isInitializing = false;
+          }, LOAD_TIMEOUT);
+
+          injectScript();
+          observeIframe(container);
+        };
+
+        if ('IntersectionObserver' in window) {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  load();
+                  observer.disconnect();
+                }
+              });
+            },
+            { rootMargin: '300px' }
+          );
+          observer.observe(container);
+
+          const fallbackTimer = setTimeout(() => {
+            load();
+            observer.disconnect();
+          }, 2500);
+        } else {
+          setTimeout(load, 150);
+        }
       }
 
       function injectScript() {
@@ -275,6 +308,14 @@ setups. It is where I usually test new ideas and figure out what actually works 
 
       window.addEventListener('message', handleMessage);
 
+      const scheduleInit = (fn, delay = 0) => {
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(fn, { timeout: delay || 200 });
+        } else {
+          setTimeout(fn, delay || 50);
+        }
+      };
+
       const initEffects = () => {
         createParticles();
         createNetwork();
@@ -282,21 +323,21 @@ setups. It is where I usually test new ideas and figure out what actually works 
 
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
-          initEffects();
-          initDiagram();
+          scheduleInit(initEffects, 100);
+          scheduleInit(initDiagram, 150);
         });
       } else {
-        initEffects();
-        initDiagram();
+        scheduleInit(initEffects, 100);
+        scheduleInit(initDiagram, 150);
       }
 
       document.addEventListener('astro:page-load', () => {
-        initEffects();
-        initDiagram();
+        scheduleInit(initEffects, 100);
+        scheduleInit(initDiagram, 150);
       });
       window.addEventListener('astro:after-swap', () => {
-        initEffects();
-        initDiagram();
+        scheduleInit(initEffects, 100);
+        scheduleInit(initDiagram, 150);
       });
     })();
   </script>

@@ -1,4 +1,24 @@
-.homelab-page { min-height: 100vh; color: var(--color-text); padding: calc(var(--nav-height) + 5rem); position: relative; overflow: hidden; animation: fadeInUp 0.8s ease-out; animation: fadeInUp 0.8s ease-out;}
+.homelab-page {
+  min-height: 100vh;
+  color: var(--color-text);
+  padding: calc(var(--nav-height) + 5rem) 2rem 5rem;
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.8s ease-out;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@media (max-width: 768px) {
+  .homelab-page {
+    padding-top: calc(var(--nav-height) + 1.5rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .homelab-page {
+    padding-top: calc(var(--nav-height) + 1rem);
+  }
+}
 .h-page-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
 .h-network { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.7; }
 .h-network-nodes circle { opacity: 0.6; }
@@ -24,7 +44,17 @@
   80% { opacity: 0.6; }
 }
 .homelab-page > *:not(.h-page-bg) { position: relative; z-index: 1; }
-.h-page-diagram { max-width: 1100px; margin: 0 auto; }
+.h-page-diagram {
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .h-page-diagram {
+    max-width: 100%;
+  }
+}
 
 [data-theme="light"] .h-grid {
   background-image:
@@ -85,4 +115,54 @@
 }
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+#diagram-container {
+  position: relative;
+}
+
+#diagram-container:not(.has-diagram) {
+  pointer-events: none;
+}
+
+#diagram-container.has-diagram {
+  pointer-events: auto;
+}
+
+.diagram-container {
+  position: relative;
+  width: 100% !important;
+  overflow: hidden;
+  min-height: 600px;
+}
+
+.mxgraph {
+  width: 100% !important;
+  height: 100% !important;
+  border: 1px solid transparent;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .diagram-container {
+    min-height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .diagram-container {
+    min-height: 320px;
+  }
+}
+
+@media (max-width: 768px) {
+  .diagram-loader {
+    min-height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .diagram-loader {
+    min-height: 320px;
+  }
 }

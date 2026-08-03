@@ -1,0 +1,83 @@
+---
+import '../../styles/colab/sysadmin.css';
+---
+
+<div class="service-block" id="sysadmin">
+  <div class="block-header">
+    <div class="service-icon sysadmin-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+        <line x1="8" y1="21" x2="16" y2="21"></line>
+        <line x1="12" y1="17" x2="12" y2="21"></line>
+      </svg>
+    </div>
+    <div>
+      <h3 class="block-title">System Administration</h3>
+      <p class="service-desc">Installation, configuration, hardening, and virtualization expertise</p>
+    </div>
+  </div>
+  <div class="animation-stage">
+    <div class="sysadmin-animation">
+      <div class="sys-right-panel">
+        <div class="sys-term-header">
+          <div class="term-dots">
+            <span class="dot" style="background:#ff5f56;"></span>
+            <span class="dot" style="background:#ffbd2e;"></span>
+            <span class="dot" style="background:#27c93f;"></span>
+          </div>
+          <span class="term-title">root@vuk1lis: ~</span>
+        </div>
+        <div class="sys-term-body" id="sysTermBody">
+          <div class="term-line"><span class="term-prompt">root@vuk1lis:~#</span> <span class="term-cmd">apt update && apt upgrade -y</span></div>
+          <div class="term-line term-output">Reading package lists... Done</div>
+          <div class="term-line term-output">Building dependency tree... Done</div>
+          <div class="term-line term-success">5 packages can be upgraded. Run 'apt list --upgradable'.</div>
+          <div class="term-line"><span class="term-prompt">root@vuk1lis:~#</span> <span class="term-cmd">ufw allow 443/tcp</span></div>
+          <div class="term-line term-output">Rules updated</div>
+          <div class="term-line term-output">Rules updated (v6)</div>
+          <div class="term-line"><span class="term-prompt">root@vuk1lis:~#</span> <span class="term-cmd">systemctl restart nginx</span></div>
+          <div class="term-line typing-line"><span class="term-prompt">root@vuk1lis:~#</span> <span class="cursor-blink">_</span></div>
+        </div>
+      </div>
+
+      <div class="sys-left-panel">
+        <div class="sys-gauge-section">
+          <div class="gauge-title">CPU CORES</div>
+          <div class="cpu-cores-grid">
+            <div class="core-bar"><div class="core-fill" style="--delay: 0s; --max-h: 0.8;"></div></div>
+            <div class="core-bar"><div class="core-fill" style="--delay: 0.5s; --max-h: 0.6;"></div></div>
+            <div class="core-bar"><div class="core-fill" style="--delay: 1s; --max-h: 0.9;"></div></div>
+            <div class="core-bar"><div class="core-fill" style="--delay: 1.5s; --max-h: 0.45;"></div></div>
+          </div>
+        </div>
+
+        <div class="sys-gauge-section">
+          <div class="gauge-title">MEMORY (16GB)</div>
+          <div class="mem-bar-container">
+            <div class="mem-fill"></div>
+            <span class="mem-text">6.4G / 16G</span>
+          </div>
+        </div>
+
+        <div class="sys-services">
+          <div class="gauge-title">SYSTEMD SERVICES</div>
+          <div class="svc-row active">
+            <span class="svc-dot"></span>
+            <span class="svc-name">nginx.service</span>
+            <span class="svc-status">active (running)</span>
+          </div>
+          <div class="svc-row active">
+            <span class="svc-dot"></span>
+            <span class="svc-name">docker.service</span>
+            <span class="svc-status">active (running)</span>
+          </div>
+          <div class="svc-row active">
+            <span class="svc-dot"></span>
+            <span class="svc-name">apache2.service</span>
+            <span class="svc-status">active (running)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

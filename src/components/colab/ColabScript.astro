@@ -1,0 +1,322 @@
+---
+---
+
+<script>
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let observer = null;
+  let typewriterTimeout = null;
+
+  function resetHeroState() {
+    const heroParticles = document.getElementById('hero-particles');
+    const typedTextEl = document.getElementById('typed-text');
+    const heroBgScene = document.getElementById('hero-bg-scene');
+
+    if (heroParticles) heroParticles.innerHTML = '';
+    if (typedTextEl) typedTextEl.textContent = '';
+    if (heroBgScene) heroBgScene.innerHTML = '';
+
+    document.querySelectorAll('.service-section.visible').forEach(section => {
+      section.classList.remove('visible');
+      section.removeAttribute('data-animated');
+    });
+
+    document.querySelectorAll('.phys-unit.mounted').forEach(unit => {
+      unit.classList.remove('mounted');
+    });
+  }
+
+  function resetSysTerminal() {
+    const sysTermBody = document.getElementById('sysTermBody');
+    if (!sysTermBody) return;
+
+    sysTermBody.innerHTML = `
+      <div class="term-line"><span class="term-prompt">root@vuk1lis:~#</span> <span class="term-cmd">apt update && apt upgrade -y</span></div>
+      <div class="term-line term-output">Reading package lists... Done</div>
+      <div class="term-line term-output">Building dependency tree... Done</div>
+      <div class="term-line term-success">5 packages can be upgraded. Run 'apt list --upgradable'.</div>
+      <div class="term-line"><span class="term-prompt">root@vuk1lis:~#</span> <span class="term-cmd">ufw allow 443/tcp</span></div>
+      <div class="term-line term-output">Rules updated</div>
+      <div class="term-line term-output">Rules updated (v6)</div>
+      <div class="term-line"><span class="term-prompt">root@vuk1lis:~#</span> <span class="term-cmd">systemctl restart nginx</span></div>
+      <div class="term-line typing-line"><span class="term-prompt">root@vuk1lis:~#</span> <span class="cursor-blink">_</span></div>
+    `;
+  }
+
+  function init() {
+    if (typewriterTimeout) {
+      clearTimeout(typewriterTimeout);
+      typewriterTimeout = null;
+    }
+    if (observer) {
+      observer.disconnect();
+      observer = null;
+    }
+
+    resetHeroState();
+    resetSysTerminal();
+
+    const heroParticles = document.getElementById('hero-particles');
+    if (heroParticles && !prefersReducedMotion) {
+      for (let i = 0; i < 30; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.top = Math.random() * 100 + '%';
+        p.style.animationDelay = Math.random() * 8 + 's';
+        p.style.animationDuration = (Math.random() * 4 + 6) + 's';
+        heroParticles.appendChild(p);
+      }
+    }
+
+    const typedTextEl = document.getElementById('typed-text');
+    if (typedTextEl) {
+      const commands = [
+        "terraform apply colab",
+        "git push \"vuk.lekic@vukilis.com\"",
+        "ansible-playbook poweron.yml",
+        "docker compose -f project.yml up"
+      ];
+
+      let cmdIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+
+      function typeLoop() {
+        const currentCmd = commands[cmdIndex];
+
+        if (!isDeleting) {
+          typedTextEl.textContent = currentCmd.slice(0, charIndex + 1);
+          charIndex++;
+
+          if (charIndex === currentCmd.length) {
+            isDeleting = true;
+            typewriterTimeout = setTimeout(typeLoop, 2500);
+            return;
+          }
+          typewriterTimeout = setTimeout(typeLoop, 70);
+        } else {
+          typedTextEl.textContent = currentCmd.slice(0, charIndex - 1);
+          charIndex--;
+
+          if (charIndex === 0) {
+            isDeleting = false;
+            cmdIndex = (cmdIndex + 1) % commands.length;
+            typewriterTimeout = setTimeout(typeLoop, 500);
+            return;
+          }
+          typewriterTimeout = setTimeout(typeLoop, 30);
+        }
+      }
+
+      typewriterTimeout = setTimeout(typeLoop, 1000);
+    }
+
+    const observerOptions = {
+      threshold: 0.1
+    };
+
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+
+          if (entry.target.id === 'services' && !entry.target.dataset.animated) {
+            entry.target.dataset.animated = 'true';
+
+            const units = entry.target.querySelectorAll('.phys-unit');
+            units.forEach(unit => {
+              const delay = parseInt(unit.getAttribute('data-delay') || '0', 10);
+              setTimeout(() => {
+                unit.classList.add('mounted');
+              }, delay);
+            });
+          }
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.service-section').forEach(section => {
+      observer.observe(section);
+    });
+
+    const quoteForm = document.getElementById('quoteForm');
+    if (quoteForm) {
+      quoteForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const service = document.getElementById('service').value;
+        const complexity = document.getElementById('complexity').value;
+        const currency = document.getElementById('currency').value;
+        const budget = document.getElementById('budget').value;
+        const message = document.getElementById('message').value;
+
+        const currencySymbol = currency === 'EUR' ? '€' : '$';
+        const subject = `Project Inquiry: ${service} (${complexity})`;
+
+        const body =
+          `Name: ${name}\n` +
+          `Email: ${email}\n` +
+          `Service Needed: ${service}\n` +
+          `Project Complexity: ${complexity}\n` +
+          `Proposed Payment: ${currencySymbol}${budget} ${currency}\n\n` +
+          `Project Details:\n${message}`;
+
+        const mailtoLink = `mailto:vuk.lekic@vukilis.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+        window.location.href = mailtoLink;
+      });
+    }
+  }
+
+  function buildRacks() {
+    const heroBgScene = document.getElementById('hero-bg-scene');
+    if (!heroBgScene) return;
+
+    heroBgScene.innerHTML = '';
+
+    const isSmallScreen = window.matchMedia('(max-width: 768px)').matches;
+    const rackPositions = isSmallScreen
+      ? [
+          { left: '50%', scale: 1.0, opacity: 0.8, delay: '1s', zIndex: 2 },
+        ]
+      : [
+          { left: '10%', scale: 0.9, opacity: 0.4, delay: '0s', zIndex: 1 },
+          { left: '25%', scale: 1.0, opacity: 0.7, delay: '1s', zIndex: 2 },
+          { left: '75%', scale: 1.0, opacity: 0.7, delay: '1s', zIndex: 2 },
+          { left: '90%', scale: 0.9, opacity: 0.4, delay: '0s', zIndex: 1 },
+        ];
+
+    const ledColors = ['blue', 'green', 'cyan', 'orange'];
+
+    function createServerUnit() {
+      const unit = document.createElement('div');
+      unit.className = 'bg-rack-unit';
+
+      unit.innerHTML = '<div class="server-handle"></div><div class="server-vents"></div>';
+
+      const ledCount = Math.floor(Math.random() * 2) + 1;
+      for (let j = 0; j < ledCount; j++) {
+        const led = document.createElement('div');
+        led.className = `bg-led ${ledColors[Math.floor(Math.random() * ledColors.length)]}`;
+        led.style.animationDelay = `${Math.random() * 4}s`;
+        unit.appendChild(led);
+      }
+
+      const bayType = Math.random();
+      if (bayType > 0.7) {
+        const screen = document.createElement('div');
+        screen.className = 'bg-rack-screen';
+        screen.style.animationDuration = `${15 + Math.random() * 10}s`;
+        unit.appendChild(screen);
+      } else {
+        const bayCount = isSmallScreen ? Math.floor(Math.random() * 2) + 1 : Math.floor(Math.random() * 3) + 2;
+        const bays = document.createElement('div');
+        bays.className = 'server-bays';
+        const bayFrag = document.createDocumentFragment();
+        for (let i = 0; i < bayCount; i++) {
+          const slot = document.createElement('div');
+          slot.className = 'bay-slot';
+          bayFrag.appendChild(slot);
+        }
+        bays.appendChild(bayFrag);
+        unit.appendChild(bays);
+      }
+
+      return unit;
+    }
+
+    function createSwitchUnit() {
+      const unit = document.createElement('div');
+      unit.className = 'bg-rack-unit';
+
+      unit.innerHTML = '<div class="server-handle"></div>';
+
+      const ports = document.createElement('div');
+      ports.className = 'switch-ports';
+      const portCount = isSmallScreen ? 12 : 24;
+      const portFrag = document.createDocumentFragment();
+      for (let i = 0; i < portCount; i++) {
+        const port = document.createElement('div');
+        port.className = 'switch-port';
+        if (Math.random() > 0.6) port.classList.add('active');
+        portFrag.appendChild(port);
+      }
+      ports.appendChild(portFrag);
+      unit.appendChild(ports);
+
+      const led = document.createElement('div');
+      led.className = 'bg-led green';
+      led.style.marginLeft = 'auto';
+      unit.appendChild(led);
+
+      return unit;
+    }
+
+    function createPatchPanel() {
+      const unit = document.createElement('div');
+      unit.className = 'bg-rack-unit';
+      unit.style.height = '16px';
+
+      unit.innerHTML = '<div class="server-handle"></div>';
+
+      const ports = document.createElement('div');
+      ports.className = 'switch-ports';
+      const portCount = isSmallScreen ? 6 : 12;
+      const portFrag = document.createDocumentFragment();
+      for (let i = 0; i < portCount; i++) {
+        const port = document.createElement('div');
+        port.className = 'switch-port';
+        port.style.background = 'rgba(255,255,255,0.05)';
+        port.style.width = '8px';
+        port.style.height = '6px';
+        portFrag.appendChild(port);
+      }
+      ports.appendChild(portFrag);
+      unit.appendChild(ports);
+
+      return unit;
+    }
+
+    const fragment = document.createDocumentFragment();
+    rackPositions.forEach(pos => {
+      const rack = document.createElement('div');
+      rack.className = 'bg-rack';
+      rack.style.left = pos.left;
+      rack.style.setProperty('--rack-scale', pos.scale);
+      rack.style.opacity = pos.opacity;
+      rack.style.animationDelay = pos.delay;
+      rack.style.zIndex = pos.zIndex || 1;
+
+      const unitCount = isSmallScreen
+        ? Math.floor(Math.random() * 4) + 8
+        : Math.floor(Math.random() * 6) + 12;
+
+      for (let i = 0; i < unitCount; i++) {
+        const typeRoll = Math.random();
+        let unit;
+        if (typeRoll > 0.8) unit = createSwitchUnit();
+        else if (typeRoll > 0.7) unit = createPatchPanel();
+        else unit = createServerUnit();
+
+        rack.appendChild(unit);
+      }
+      fragment.appendChild(rack);
+    });
+    heroBgScene.appendChild(fragment);
+  }
+
+  function initRacks() {
+    if (prefersReducedMotion) {
+      buildRacks();
+    } else {
+      requestAnimationFrame(buildRacks);
+    }
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    init();
+    initRacks();
+  });
+</script>

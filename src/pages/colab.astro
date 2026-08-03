@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+
+import ColabHero from '../components/colab/ColabHero.astro';
+import InfrastructureSection from '../components/colab/InfrastructureSection.astro';
+import OfferServices from '../components/colab/OfferServices.astro';
+import QuoteForm from '../components/colab/QuoteForm.astro';
+import ColabScript from '../components/colab/ColabScript.astro';
+---
+
+<BaseLayout
+  title="Colab - Vuk1lis"
+  description="Collaboration services: DevOps, System Administration, Scripting, Microservices, and Physical Infrastructure installation."
+>
+  <Navigation />
+
+  <main class="colab-page" id="main-content">
+    <ColabHero />
+    <InfrastructureSection />
+    <OfferServices />
+    <QuoteForm />
+  </main>
+  <ColabScript />
+</BaseLayout>

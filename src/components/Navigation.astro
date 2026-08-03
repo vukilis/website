@@ -24,6 +24,9 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
         <a href={`${base}projects/`} class:list={['nav-link', { active: relativePath.startsWith('/projects') }]}>
           <span class="link-prefix" aria-hidden="true">~/</span>projects
         </a>
+        <a href={`${base}colab/`} class:list={['nav-link', { active: relativePath.startsWith('/colab') }]}>
+          <span class="link-prefix" aria-hidden="true">~/</span>colab
+        </a>
 
         <!-- Terminal-style dropdown -->
         <div class="nav-dropdown" id="nav-dropdown">
@@ -117,6 +120,9 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
     </a>
     <a href={`${base}projects/`} class:list={['mobile-nav-link', { active: relativePath.startsWith('/projects') }]}>
       <span class="perm">drwxr-xr-x</span> <span class="link-name">projects</span>
+    </a>
+    <a href={`${base}colab/`} class:list={['mobile-nav-link', { active: relativePath.startsWith('/colab') }]}>
+      <span class="perm">drwxr-xr-x</span> <span class="link-name">colab</span>
     </a>
     <a href={`${base}homelab_diagram/`} class:list={['mobile-nav-link', { active: relativePath.startsWith('/homelab') }]}>
       <span class="perm">drwxr-xr-x</span> <span class="link-name">homelab</span>
@@ -681,6 +687,7 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
   .mobile-menu.open .mobile-nav-link:nth-child(5) { transition-delay: 0.24s; }
   .mobile-menu.open .mobile-nav-link:nth-child(6) { transition-delay: 0.30s; }
   .mobile-menu.open .mobile-nav-link:nth-child(7) { transition-delay: 0.36s; }
+  .mobile-menu.open .mobile-nav-link:nth-child(8) { transition-delay: 0.42s; }
 
   .mobile-nav-link .perm {
     color: var(--color-text-dim);

@@ -1,0 +1,58 @@
+---
+import '../../styles/colab/physical.css';
+---
+
+<div class="service-block" id="physical">
+  <div class="block-header">
+    <div class="service-icon physical-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+        <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+        <line x1="6" y1="6" x2="6.01" y2="6"></line>
+        <line x1="6" y1="18" x2="6.01" y2="18"></line>
+      </svg>
+    </div>
+    <div>
+      <h3 class="block-title">Physical Installation</h3>
+      <p class="service-desc">Racks, servers, and cable management.</p>
+    </div>
+  </div>
+  <div class="animation-stage">
+    <div class="physical-animation">
+      <div class="rack-assembly">
+        <div class="phys-rack" id="physRack">
+          <div class="phys-rack-screw" style="top:6px; left:5px;"></div>
+          <div class="phys-rack-screw" style="top:6px; right:5px;"></div>
+          <div class="phys-rack-screw" style="bottom:6px; left:5px;"></div>
+          <div class="phys-rack-screw" style="bottom:6px; right:5px;"></div>
+
+          <div class="phys-unit" data-delay="0"><div class="phys-led green"></div><div class="phys-led green"></div><div class="phys-unit-bar" style="width:60%;"></div><div class="phys-hdd"></div><div class="phys-hdd"></div></div>
+          <div class="phys-unit" data-delay="150"><div class="phys-led blue"></div><div class="phys-led green"></div><div class="phys-unit-bar" style="width:72%;"></div><div class="phys-hdd"></div></div>
+          <div class="phys-unit" data-delay="300"><div class="phys-led orange"></div><div class="phys-led green"></div><div class="phys-unit-bar" style="width:50%;"></div><div class="phys-hdd"></div><div class="phys-hdd"></div><div class="phys-hdd"></div></div>
+          <div class="phys-unit" data-delay="450"><div class="phys-led green"></div><div class="phys-led green"></div><div class="phys-unit-bar" style="width:65%;"></div><div class="phys-hdd"></div><div class="phys-hdd"></div></div>
+          <div class="phys-unit" data-delay="600"><div class="phys-led blue"></div><div class="phys-unit-bar" style="width:55%;"></div><div class="phys-hdd"></div></div>
+          <div class="phys-unit" data-delay="750"><div class="phys-led green"></div><div class="phys-led green"></div><div class="phys-unit-bar" style="width:78%;"></div><div class="phys-hdd"></div><div class="phys-hdd"></div></div>
+          <div class="phys-unit" data-delay="900"><div class="phys-led orange"></div><div class="phys-led green"></div><div class="phys-unit-bar" style="width:45%;"></div><div class="phys-hdd"></div></div>
+          <div class="phys-unit" data-delay="1050"><div class="phys-led green"></div><div class="phys-unit-bar" style="width:60%;"></div><div class="phys-hdd"></div><div class="phys-hdd"></div></div>
+        </div>
+
+        <svg class="cable-svg" viewBox="0 0 60 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path class="cable-line cable-line-1" d="M10 10 C30 10, 40 40, 40 80 C40 120, 20 130, 20 160 C20 190, 45 200, 45 240 C45 280, 25 290, 30 310" stroke="#27c93f" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path class="cable-line cable-line-2" d="M20 15 C40 20, 50 50, 45 90 C40 130, 25 140, 30 170 C35 200, 50 210, 40 250 C30 290, 40 300, 45 310" stroke="#3b82f6" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path class="cable-line cable-line-3" d="M5 25 C25 30, 35 60, 30 100 C25 140, 15 150, 20 180 C25 210, 40 220, 35 260 C30 300, 20 305, 25 310" stroke="#ec4899" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="serbia-indicator">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        <span class="serbia-label">RS</span>
+      </div>
+
+      <div class="phys-status-bar">
+        <span class="phys-status-item"><span class="phys-status-dot" style="background:#27c93f;"></span>Online</span>
+        <span class="phys-status-item"><span class="phys-status-dot" style="background:#3b82f6;"></span>Active</span>
+        <span class="phys-status-item"><span class="phys-status-dot" style="background:#f97316;"></span>Warning</span>
+      </div>
+    </div>
+  </div>
+</div>

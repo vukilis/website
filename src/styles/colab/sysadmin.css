@@ -1,0 +1,287 @@
+.sysadmin-animation {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  contain: strict;
+  flex-direction: column;
+  transform: translateZ(0);
+}
+
+.sys-left-panel {
+  flex: 1;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sys-gauge-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gauge-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cpu-cores-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  height: 50px;
+}
+
+.core-bar {
+  background: rgba(0,0,0,0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+
+.core-fill {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, var(--color-primary), var(--color-accent-cyan));
+  border-radius: 4px;
+  animation: cpuLoad 4s ease-in-out infinite;
+  animation-delay: var(--delay);
+  transform-origin: bottom;
+  will-change: transform;
+}
+
+@keyframes cpuLoad {
+  0%, 100% { transform: scaleY(0.2); }
+  50% { transform: scaleY(var(--max-h, 0.8)); }
+}
+
+.mem-bar-container {
+  height: 14px;
+  width: 100%;
+  background: rgba(0,0,0,0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.mem-fill {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent-purple), var(--color-accent-pink));
+  border-radius: 4px;
+  animation: memLoad 6s ease-in-out infinite;
+  transform-origin: left;
+  will-change: transform;
+}
+
+@keyframes memLoad {
+  0%, 100% { transform: scaleX(0.4); }
+  50% { transform: scaleX(0.65); }
+}
+
+.mem-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.6rem;
+  color: var(--color-text);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  text-shadow: 0 0 4px rgba(0,0,0,0.8);
+}
+
+.sys-services {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.svc-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+}
+
+.svc-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.svc-row.active .svc-dot {
+  background: #27c93f;
+  box-shadow: 0 0 6px rgba(39, 201, 63, 0.6);
+  animation: ledPulse 2s infinite;
+}
+
+.svc-row.inactive .svc-dot {
+  background: #ef4444;
+  opacity: 0.5;
+}
+
+.svc-name {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.svc-status {
+  margin-left: auto;
+  font-size: 0.6rem;
+}
+
+.svc-row.active .svc-status { color: #27c93f; }
+.svc-row.inactive .svc-status { color: var(--color-text-dim); }
+
+.sys-right-panel {
+  flex: 2.4;
+  background: #0a0a0a;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sys-term-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.term-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.term-dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: block;
+}
+
+.term-title {
+  font-size: 0.7rem;
+  color: var(--color-text-dim);
+  opacity: 0.7;
+  margin-left: 0.5rem;
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.sys-term-body {
+  flex: 1;
+  padding: 14px 16px;
+  overflow-y: auto;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+.sys-term-body::-webkit-scrollbar { width: 4px; }
+.sys-term-body::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 2px; }
+
+.term-line {
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.term-prompt {
+  color: #27c93f;
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.term-cmd {
+  color: var(--color-text);
+}
+
+.term-output {
+  color: var(--color-text-dim);
+  opacity: 0.8;
+}
+
+.term-success {
+  color: #27c93f;
+  opacity: 0.9;
+}
+
+.typing-line {
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .sysadmin-animation {
+    flex-direction: column;
+  }
+  .sys-left-panel {
+    flex-direction: row;
+    gap: 12px;
+    padding: 10px;
+  }
+  .sys-gauge-section {
+    flex: 1;
+  }
+  .sys-services {
+    margin-top: 0;
+    flex: 1.2;
+  }
+  .cpu-cores-grid {
+    height: 30px;
+  }
+  .sys-term-body {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sysadmin-animation {
+    padding: 10px;
+    gap: 8px;
+  }
+  .sys-left-panel {
+    padding: 8px;
+    gap: 8px;
+  }
+  .sys-term-body {
+    font-size: 0.65rem;
+  }
+  .core-fill {
+    animation-duration: 6s;
+  }
+  .mem-fill {
+    animation-duration: 8s;
+  }
+  .svc-row {
+    font-size: 0.6rem;
+  }
+  .svc-dot {
+    width: 6px;
+    height: 6px;
+  }
+}

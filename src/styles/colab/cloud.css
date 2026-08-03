@@ -1,0 +1,192 @@
+.cloud-icon { color: var(--color-accent-cyan, #06b6d4); }
+
+.cloud-animation-v2 {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  contain: strict;
+  transform: translateZ(0);
+}
+
+.cloud-net-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.net-line {
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+  animation: netDash 1s linear infinite;
+}
+
+@keyframes netDash {
+  to { stroke-dashoffset: -8; }
+}
+
+.net-packet {
+  filter: drop-shadow(0 0 4px currentColor);
+}
+.packet-cyan { fill: var(--color-accent-cyan, #06b6d4); color: var(--color-accent-cyan, #06b6d4); }
+.packet-pink { fill: var(--color-accent-pink, #ec4899); color: var(--color-accent-pink, #ec4899); }
+.packet-green { fill: #27c93f; color: #27c93f; }
+.packet-blue { fill: var(--color-primary, #3b82f6); color: var(--color-primary, #3b82f6); }
+
+.cloud-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.cloud-core-icon {
+  color: var(--color-accent-cyan, #06b6d4);
+  filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.4));
+  animation: floatY 4s ease-in-out infinite;
+}
+
+.cloud-core-ring {
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(6, 182, 212, 0.4);
+  border-radius: 50%;
+  animation: pulseRing 3s ease-out infinite;
+}
+
+@keyframes pulseRing {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.cloud-edge-node {
+  position: absolute;
+  width: 64px;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 2;
+  box-shadow: 0 8px 20px -8px rgba(0,0,0,0.5);
+  animation: nodeScale 4s ease-in-out infinite;
+}
+
+@keyframes nodeScale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.node-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.node-bar {
+  height: 4px;
+  width: 100%;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.node-bar-fill {
+  height: 100%;
+  width: 100%;
+  border-radius: 2px;
+  animation: barLoad 3s ease-in-out infinite;
+  transform-origin: left;
+  will-change: transform;
+}
+
+@keyframes barLoad {
+  0% { transform: scaleX(0.2); }
+  50% { transform: scaleX(0.85); }
+  100% { transform: scaleX(0.3); }
+}
+
+.node-tl {
+  top: 20%;
+  left: 15%;
+  border-color: rgba(6, 182, 212, 0.3);
+}
+.node-tl .node-icon { color: var(--color-accent-cyan, #06b6d4); }
+.node-tl .node-bar-fill { background: var(--color-accent-cyan, #06b6d4); animation-delay: 0s; }
+
+.node-tr {
+  top: 20%;
+  right: 15%;
+  animation-delay: 1s;
+  border-color: rgba(236, 72, 153, 0.3);
+}
+.node-tr .node-icon { color: var(--color-accent-pink, #ec4899); }
+.node-tr .node-bar-fill { background: var(--color-accent-pink, #ec4899); animation-delay: 0.5s; }
+
+.node-bl {
+  bottom: 20%;
+  left: 15%;
+  animation-delay: 2s;
+  border-color: rgba(39, 201, 63, 0.3);
+}
+.node-bl .node-icon { color: #27c93f; }
+.node-bl .node-bar-fill { background: #27c93f; animation-delay: 1s; }
+
+.node-br {
+  bottom: 20%;
+  right: 15%;
+  animation-delay: 1.5s;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+.node-br .node-icon { color: var(--color-primary); }
+.node-br .node-bar-fill { background: var(--color-primary); animation-delay: 1.5s; }
+
+@media (max-width: 768px) {
+  .cloud-edge-node {
+    width: 52px;
+    padding: 6px;
+  }
+  .cloud-edge-node .node-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cloud-net-svg {
+    opacity: 0.6;
+  }
+  .net-packet {
+    filter: none;
+  }
+  .cloud-core-icon {
+    filter: none;
+  }
+  .cloud-core-ring {
+    animation-duration: 5s;
+  }
+  .cloud-edge-node {
+    animation: none;
+  }
+  .node-bar-fill {
+    animation-duration: 5s;
+  }
+}
