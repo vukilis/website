@@ -64,21 +64,21 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
                 <span class="dropdown-icon" aria-hidden="true">
                   <i class="fa-solid fa-server"></i>
                 </span>
-                <span class="dropdown-name">homelab</span>
+                <span class="dropdown-name">~/homelab</span>
               </a>
               
               <a href={`${base}yerbamate/`} class:list={['dropdown-link', { active: relativePath.startsWith('/yerbamate') }]} role="menuitem">
                 <span class="dropdown-icon" aria-hidden="true">
                   <i class="fa-solid fa-mug-hot"></i>
                 </span>
-                <span class="dropdown-name">yerbamate</span>
+                <span class="dropdown-name">~/yerbamate</span>
               </a>
 
               <a href={`${base}about/`} class:list={['dropdown-link', { active: relativePath.startsWith('/about') }]} role="menuitem">
                 <span class="dropdown-icon" aria-hidden="true">
                   <i class="fa-solid fa-user"></i>
                 </span>
-                <span class="dropdown-name">about</span>
+                <span class="dropdown-name">~/about</span>
               </a>
               
               <div class="dropdown-footer">

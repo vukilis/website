@@ -32,7 +32,7 @@
     sysTermBody.innerHTML = `
       <div class="term-line"><span class="term-prompt">root@vuk1lis:~#</span> <span class="term-cmd">apt update && apt upgrade -y</span></div>
       <div class="term-line term-output">Reading package lists... Done</div>
-      <div class="term-line term-output">Building dependency tree... Done</div>
+      <div class="term-line term-output">Building dependency lists... Done</div>
       <div class="term-line term-success">5 packages can be upgraded. Run 'apt list --upgradable'.</div>
       <div class="term-line"><span class="term-prompt">root@vuk1lis:~#</span> <span class="term-cmd">ufw allow 443/tcp</span></div>
       <div class="term-line term-output">Rules updated</div>
@@ -72,7 +72,7 @@
     if (typedTextEl) {
       const commands = [
         "terraform apply colab",
-        "git push \"vuk.lekic@vukilis.com\"",
+        'git push "vuk.lekic@vukilis.com"',
         "ansible-playbook poweron.yml",
         "docker compose -f project.yml up"
       ];
@@ -138,36 +138,6 @@
     document.querySelectorAll('.service-section').forEach(section => {
       observer.observe(section);
     });
-
-    const quoteForm = document.getElementById('quoteForm');
-    if (quoteForm) {
-      quoteForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const service = document.getElementById('service').value;
-        const complexity = document.getElementById('complexity').value;
-        const currency = document.getElementById('currency').value;
-        const budget = document.getElementById('budget').value;
-        const message = document.getElementById('message').value;
-
-        const currencySymbol = currency === 'EUR' ? '€' : '$';
-        const subject = `Project Inquiry: ${service} (${complexity})`;
-
-        const body =
-          `Name: ${name}\n` +
-          `Email: ${email}\n` +
-          `Service Needed: ${service}\n` +
-          `Project Complexity: ${complexity}\n` +
-          `Proposed Payment: ${currencySymbol}${budget} ${currency}\n\n` +
-          `Project Details:\n${message}`;
-
-        const mailtoLink = `mailto:vuk.lekic@vukilis.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-        window.location.href = mailtoLink;
-      });
-    }
   }
 
   function buildRacks() {
@@ -215,7 +185,7 @@
         const bays = document.createElement('div');
         bays.className = 'server-bays';
         const bayFrag = document.createDocumentFragment();
-        for (let i = 0; i < bayCount; i++) {
+        for (let j = 0; j < bayCount; j++) {
           const slot = document.createElement('div');
           slot.className = 'bay-slot';
           bayFrag.appendChild(slot);
@@ -237,7 +207,7 @@
       ports.className = 'switch-ports';
       const portCount = isSmallScreen ? 12 : 24;
       const portFrag = document.createDocumentFragment();
-      for (let i = 0; i < portCount; i++) {
+      for (let j = 0; j < portCount; j++) {
         const port = document.createElement('div');
         port.className = 'switch-port';
         if (Math.random() > 0.6) port.classList.add('active');
@@ -265,7 +235,7 @@
       ports.className = 'switch-ports';
       const portCount = isSmallScreen ? 6 : 12;
       const portFrag = document.createDocumentFragment();
-      for (let i = 0; i < portCount; i++) {
+      for (let j = 0; j < portCount; j++) {
         const port = document.createElement('div');
         port.className = 'switch-port';
         port.style.background = 'rgba(255,255,255,0.05)';
@@ -320,3 +290,4 @@
     initRacks();
   });
 </script>
+
