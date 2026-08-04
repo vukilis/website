@@ -30,7 +30,7 @@ export default defineEcConfig({
       editorActiveTabIndicatorBottomColor: 'transparent',
       inlineButtonBackground: [
         'rgba(255, 255, 255, 0.14)',
-        'rgba(138, 92, 246, 0.45)',
+        'rgba(241, 196, 15, 0.45)',
       ],
       inlineButtonBackgroundIdleOpacity: '1',
       inlineButtonBackgroundHoverOrFocusOpacity: '1',

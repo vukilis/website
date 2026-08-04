@@ -23,7 +23,7 @@ const defaultLinks: SponsoringLink[] = [
     name: 'Buy Me a Coffee',
     url: 'https://www.buymeacoffee.com/vukilis',
     icon: 'buymeacoffee',
-    color: '#FFDD00',
+    color: 'var(--color-accent-purple)',
   },
   {
     name: 'PayPal',
@@ -84,7 +84,7 @@ const iconClasses: Record<string, string> = {
     width: 2.25rem;
     height: 2.25rem;
     border-radius: 0.5rem;
-    background: rgba(139, 92, 246, 0.08);
+    background: rgba(241, 196, 15, 0.08);
     border: 1px solid var(--color-border);
     color: var(--color-text-dim);
     text-decoration: none;
@@ -93,9 +93,9 @@ const iconClasses: Record<string, string> = {
 
   .sponsoring-link:hover {
     border-color: var(--color-primary);
-    background: rgba(59, 130, 246, 0.15);
+    background: rgba(241, 196, 15, 0.15);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+    box-shadow: 0 4px 12px rgba(241, 196, 15, 0.15);
     color: var(--color-text);
   }
 

@@ -255,7 +255,7 @@
 
 .header-note {
   font-size: 0.78rem;
-  color: #64748B;
+  color: #8a7f72;
   font-style: italic;
   margin: 0;
   display: flex;
@@ -353,7 +353,7 @@
 }
 
 [data-theme="light"] .header-note {
-  color: #64748B;
+  color: #8a7f72;
 }
 
 @media (max-width: 900px) {

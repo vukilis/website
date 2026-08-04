@@ -172,14 +172,14 @@
 .btn-primary {
   background: linear-gradient(135deg, var(--color-primary, #3b82f6) 0%, var(--color-primary-hover, #2563eb) 100%);
   color: #ffffff;
-  box-shadow: 0 1px 2px rgba(59, 130, 246, 0.05),
-              0 4px 16px -2px rgba(59, 130, 246, 0.25);
+  box-shadow: 0 1px 2px rgba(241, 196, 15, 0.05),
+              0 4px 16px -2px rgba(241, 196, 15, 0.25);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px -2px rgba(59, 130, 246, 0.35),
-              0 8px 28px -4px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 4px 12px -2px rgba(241, 196, 15, 0.35),
+              0 8px 28px -4px rgba(241, 196, 15, 0.2);
 }
 
 /* ===== RESPONSIVE ===== */
@@ -341,6 +341,9 @@
   background: var(--color-primary-soft);
   border-color: rgba(37, 99, 235, 0.2);
 }
+
+[data-theme="light"] .physical-icon { color: #d4a80e; }
+[data-theme="light"] .script-micro-icon { color: #d4a80e; }
 
 /* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {

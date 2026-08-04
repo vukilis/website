@@ -123,12 +123,12 @@
 }
 
 [data-theme="light"] .status-item.is-unknown .status-dot {
-  background-color: #94A3B8;
+  background-color: #b8a88a;
   box-shadow: 0 0 4px rgba(148, 163, 184, 0.25);
 }
 
 [data-theme="light"] .status-item.is-unknown .status-value {
-  color: #94A3B8;
+  color: #b8a88a;
 }
 
 [data-theme="light"] .status-item.is-error .status-dot {

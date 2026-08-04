@@ -285,3 +285,8 @@
     height: 6px;
   }
 }
+
+/* ===== LIGHT THEME ===== */
+[data-theme="light"] .mem-fill {
+  background: linear-gradient(90deg, var(--color-primary), #d4a80e);
+}

@@ -392,7 +392,7 @@
 }
 
 .colab-title .accent {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent-purple, #8b5cf6) 50%, var(--color-accent-pink, #ec4899) 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent-purple, #f9e076) 50%, var(--color-accent-pink, #ffe8a3) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -484,4 +484,12 @@
     white-space: normal;
     word-break: break-all;
   }
+}
+
+/* ===== LIGHT THEME ===== */
+[data-theme="light"] .colab-title .accent {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent-purple, #f9e076) 50%, #d4a80e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

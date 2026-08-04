@@ -47,8 +47,8 @@
   width: 56px;
   height: 56px;
   border-radius: 12px;
-  background: rgba(59, 130, 246, 0.1);
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  background: rgba(241, 196, 15, 0.1);
+  border: 1px solid rgba(241, 196, 15, 0.2);
   color: var(--color-primary);
   display: flex;
   align-items: center;

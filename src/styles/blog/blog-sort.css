@@ -21,7 +21,7 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-text-dim, #94A3B8);
+  color: var(--color-text-dim, #b8a88a);
 }
 
 .sort-buttons {
@@ -29,7 +29,7 @@
   align-items: center;
   gap: 0.35rem;
   background: var(--sort-buttons-bg, rgba(255, 255, 255, 0.03));
-  border: 1px solid var(--color-border, #334155);
+  border: 1px solid var(--color-border, #2d3038);
   border-radius: 0.5rem;
   padding: 0.25rem;
 }
@@ -46,7 +46,7 @@
   font-weight: 600;
   font-family: var(--font-body, 'DM Sans', sans-serif);
   letter-spacing: 0.02em;
-  color: var(--color-text-dim, #94A3B8);
+  color: var(--color-text-dim, #b8a88a);
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   outline: none;
@@ -55,13 +55,13 @@
 }
 
 .sort-btn:hover {
-  color: var(--color-text, #E2E8F0);
+  color: var(--color-text, #faf7f0);
   background: var(--sort-btn-hover-bg, rgba(255, 255, 255, 0.06));
 }
 
 .sort-btn.active {
-  background: rgba(59, 130, 246, 0.15);
-  color: var(--color-accent-blue, #3B82F6);
+  background: rgba(241, 196, 15, 0.15);
+  color: var(--color-accent-blue, #f1c40f);
 }
 
 .sort-text {

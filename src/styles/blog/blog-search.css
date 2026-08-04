@@ -21,7 +21,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  background: var(--color-bg-card, #141B2D);
+  background: var(--color-bg-card, #24262b);
   border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
   border-radius: 0.875rem;
   padding: 0 0.9rem;
@@ -39,13 +39,13 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: var(--color-text-dim), #94A3B8;
+  color: var(--color-text-dim), #b8a88a;
   transition: color 0.2s ease;
   pointer-events: none;
 }
 
 .blog-search:focus-within .search-icon {
-  color: var(--color-primary), #3B82F6;
+  color: var(--color-primary), #f1c40f;
 }
 
 .search-input {
@@ -57,12 +57,12 @@
   font-family: var(--font-body, 'Inter', 'DM Sans', system-ui, sans-serif);
   font-size: 0.95rem;
   letter-spacing: 0.01em;
-  color: var(--color-text, #F1F5F9);
-  caret-color: var(--color-primary, #3B82F6);
+  color: var(--color-text, #faf7f0);
+  caret-color: var(--color-primary, #f1c40f);
 }
 
 .search-input::placeholder {
-  color: var(--color-text-dim, #94A3B8);
+  color: var(--color-text-dim, #b8a88a);
   opacity: 0.7;
 }
 
@@ -76,7 +76,7 @@
   border-radius: 0.4rem;
   border: none;
   background: var(--search-clear-bg, rgba(255, 255, 255, 0.05));
-  color: var(--color-text-dim, #94A3B8);
+  color: var(--color-text-dim, #b8a88a);
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
   padding: 0;
@@ -84,8 +84,8 @@
 }
 
 .search-clear:hover {
-  background: var(--search-clear-hover-bg, rgba(59, 130, 246, 0.18));
-  color: var(--color-primary, #3B82F6);
+  background: var(--search-clear-hover-bg, rgba(241, 196, 15, 0.18));
+  color: var(--color-primary, #f1c40f);
   transform: scale(1.05);
 }
 
@@ -98,7 +98,7 @@
   border-radius: 0.35rem;
   background: var(--search-clear-bg, rgba(255, 255, 255, 0.05));
   border: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--color-text-dim, #94A3B8);
+  color: var(--color-text-dim, #b8a88a);
   font-family: var(--font-body, 'Inter', 'DM Sans', system-ui, sans-serif);
   font-size: 0.72rem;
   line-height: 1;
@@ -108,9 +108,9 @@
 }
 
 .blog-search:focus-within .search-shortcut {
-  background: rgba(59, 130, 246, 0.12);
-  border-color: rgba(59, 130, 246, 0.25);
-  color: var(--color-primary, #3B82F6);
+  background: rgba(241, 196, 15, 0.12);
+  border-color: rgba(241, 196, 15, 0.25);
+  color: var(--color-primary, #f1c40f);
 }
 
 .search-shortcut kbd {
@@ -128,7 +128,7 @@
   margin: 0;
   padding: 0.4rem 0;
   list-style: none;
-  background: var(--color-bg-card, #141B2D);
+  background: var(--color-bg-card, #24262b);
   border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
   border-radius: 0.875rem;
   box-shadow: var(--search-suggestions-shadow, 0 24px 48px rgba(2, 6, 23, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.04) inset);
@@ -145,7 +145,7 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-text-dim, #94A3B8);
+  color: var(--color-text-dim, #b8a88a);
   opacity: 0.8;
 }
 
@@ -163,7 +163,7 @@
   cursor: pointer;
   font-family: var(--font-body, 'Inter', 'DM Sans', system-ui, sans-serif);
   font-size: 0.9rem;
-  color: var(--color-text, #F1F5F9);
+  color: var(--color-text, #faf7f0);
   transition: background 0.12s ease, color 0.12s ease;
   position: relative;
 }
@@ -177,8 +177,8 @@
 
 .search-suggestion:not(.empty):hover,
 .search-suggestion.active {
-  background: rgba(59, 130, 246, 0.1);
-  color: var(--color-primary, #3B82F6);
+  background: rgba(241, 196, 15, 0.1);
+  color: var(--color-primary, #f1c40f);
 }
 
 .search-suggestion.active::before {
@@ -188,14 +188,14 @@
   top: 0.5rem;
   bottom: 0.5rem;
   width: 2px;
-  background: var(--color-primary, #3B82F6);
+  background: var(--color-primary, #f1c40f);
   border-radius: 0 2px 2px 0;
 }
 
 .search-suggestion:not(.empty):hover .suggestion-icon,
 .search-suggestion.active .suggestion-icon {
-  background: rgba(59, 130, 246, 0.15);
-  color: var(--color-primary, #3B82F6);
+  background: rgba(241, 196, 15, 0.15);
+  color: var(--color-primary, #f1c40f);
 }
 
 .suggestion-title {
@@ -218,7 +218,7 @@
 .suggestion-description {
   font-size: 0.8rem;
   font-weight: 400;
-  color: var(--color-text-dim, #94A3B8);
+  color: var(--color-text-dim, #b8a88a);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -233,14 +233,14 @@
   opacity: 0;
   transform: translateX(-4px);
   transition: opacity 0.15s ease, transform 0.15s ease, color 0.12s ease;
-  color: var(--color-text-dim, #94A3B8);
+  color: var(--color-text-dim, #b8a88a);
 }
 
 .search-suggestion:not(.empty):hover .suggestion-arrow,
 .search-suggestion.active .suggestion-arrow {
   opacity: 1;
   transform: translateX(0);
-  color: var(--color-primary, #3B82F6);
+  color: var(--color-primary, #f1c40f);
 }
 
 .suggestion-empty-icon {
@@ -252,7 +252,7 @@
   height: 2rem;
   border-radius: 0.5rem;
   background: var(--search-empty-icon-bg, rgba(255, 255, 255, 0.03));
-  color: var(--color-text-dim, #94A3B8);
+  color: var(--color-text-dim, #b8a88a);
 }
 
 .suggestion-empty-text {
@@ -263,12 +263,12 @@
 .suggestion-empty-text strong {
   font-style: normal;
   font-weight: 600;
-  color: var(--color-text, #F1F5F9);
+  color: var(--color-text, #faf7f0);
 }
 
 .search-highlight {
-  background: rgba(59, 130, 246, 0.22);
-  color: var(--color-primary, #3B82F6);
+  background: rgba(241, 196, 15, 0.22);
+  color: var(--color-primary, #f1c40f);
   border-radius: 0.2rem;
   padding: 0.05rem 0.2rem;
   font-weight: 600;
@@ -282,7 +282,7 @@
   padding: 0.45rem 0.85rem;
   font-size: 0.8rem;
   font-family: var(--font-body, 'Inter', 'DM Sans', system-ui, sans-serif);
-  color: var(--color-text-dim, #94A3B8);
+  color: var(--color-text-dim, #b8a88a);
   background: var(--search-status-bg, rgba(255, 255, 255, 0.03));
   border: 1px solid var(--search-status-border, rgba(255, 255, 255, 0.05));
   border-radius: 0.6rem;
@@ -296,12 +296,12 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: var(--color-primary, #3B82F6);
+  color: var(--color-primary, #f1c40f);
   opacity: 0.8;
 }
 
 .search-status strong {
-  color: var(--color-text, #F1F5F9);
+  color: var(--color-text, #faf7f0);
   font-weight: 600;
 }
 

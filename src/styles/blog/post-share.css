@@ -22,7 +22,7 @@
 
 .share-btn:hover {
   color: var(--color-primary);
-  background: rgba(59, 130, 246, 0.1);
+  background: rgba(241, 196, 15, 0.1);
 }
 
 .share-btn svg {

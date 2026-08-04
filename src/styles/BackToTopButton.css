@@ -1,12 +1,12 @@
 :root {
   --btt-size: 64px;
-  --btt-accent: var(--accent, #8b5cf6);
-  --btt-background: var(--background, #020617);
-  --btt-border: rgba(128, 128, 128, 0.25);
+  --btt-accent: var(--accent, #f1c40f);
+  --btt-background: var(--background, #24262b);
+  --btt-border: rgba(255, 255, 255, 0.08);
 }
 
 [data-theme="light"] {
-  --btt-accent: var(--color-primary, #2563EB);
+  --btt-accent: var(--color-primary, #f1c40f);
   --btt-background: #ffffff;
   --btt-border: rgba(0, 0, 0, 0.08);
 }
@@ -115,7 +115,8 @@
   letter-spacing: 0.18em;
   margin-left: 0.18em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--btt-accent) 75%, transparent);
+  color: var(--btt-accent);
+  transition: color 0.2s ease;
 }
 
 .sr-only {

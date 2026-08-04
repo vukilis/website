@@ -24,7 +24,7 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-text-dim, #94A3B8);
+  color: var(--color-text-dim, #b8a88a);
 }
 
 .filter-pills {
@@ -44,7 +44,7 @@
   font-weight: 600;
   font-family: var(--font-body, 'DM Sans', sans-serif);
   letter-spacing: .04em;
-  color: var(--color-text-dim, #94A3B8);
+  color: var(--color-text-dim, #b8a88a);
   text-decoration: none;
   transition: all .2s cubic-bezier(.4, 0, .2, 1);
   outline: none;
@@ -52,15 +52,15 @@
 }
 
 .filter-pill:hover {
-  background: rgba(59, 130, 246, 0.12);
-  border-color: rgba(59, 130, 246, 0.4);
-  color: var(--color-accent-blue, #3B82F6);
+  background: rgba(241, 196, 15, 0.12);
+  border-color: rgba(241, 196, 15, 0.4);
+  color: var(--color-accent-blue, #f1c40f);
 }
 
 .filter-pill.active {
-  background: rgba(59, 130, 246, 0.2);
-  border-color: rgba(59, 130, 246, 0.5);
-  color: var(--color-accent-blue, #3B82F6);
+  background: rgba(241, 196, 15, 0.2);
+  border-color: rgba(241, 196, 15, 0.5);
+  color: var(--color-accent-blue, #f1c40f);
 }
 
 .filter-pill-count {
@@ -78,7 +78,7 @@
 }
 
 .filter-pill.active .filter-pill-count {
-  color: var(--color-accent-blue, #3B82F6);
+  color: var(--color-accent-blue, #f1c40f);
 }
 
 .filter-pill:focus-visible {

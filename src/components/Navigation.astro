@@ -139,7 +139,7 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
   </div>
 </div>
 
-<style>
+<style is:global>
   /* Import JetBrains Mono — add to your global CSS or layout head */
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
 
@@ -153,7 +153,7 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
     z-index: 1000;
     height: var(--nav-height);
     padding: 0 1.5rem;
-    background: var(--color-bg-overlay);
+    background: var(--color-bg-darker);
     -webkit-backdrop-filter: blur(16px) saturate(120%);
     backdrop-filter: blur(16px) saturate(120%);
     border-bottom: 1px solid var(--color-border);
@@ -169,7 +169,7 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--color-primary), var(--color-accent-purple), transparent);
+    background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
     opacity: 0.6;
   }
 
@@ -267,7 +267,7 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
   .nav-link.active {
     color: var(--color-text);
     background: var(--color-primary-soft);
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    border: 1px solid rgba(241, 196, 15, 0.3);
     font-weight: 600;
   }
 
@@ -315,7 +315,7 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
   .nav-dropdown-toggle.active {
     color: var(--color-text);
     background: var(--color-primary-soft);
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    border: 1px solid rgba(241, 196, 15, 0.3);
     font-weight: 600;
   }
 
@@ -348,7 +348,7 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
     top: calc(100% + 0.75rem);
     right: 0;
     width: 260px;
-    background: var(--color-bg-overlay-heavy);
+    background: var(--color-bg-darker);
     -webkit-backdrop-filter: blur(32px) saturate(140%);
     backdrop-filter: blur(32px) saturate(140%);
     border: 1px solid var(--color-border);
@@ -360,9 +360,9 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 1001;
     box-shadow: 
-      0 0 0 1px rgba(59, 130, 246, 0.08),
+      0 0 0 1px rgba(241, 196, 15, 0.08),
       0 20px 50px -10px rgba(0, 0, 0, 0.5),
-      0 0 30px -5px rgba(59, 130, 246, 0.1);
+      0 0 30px -5px rgba(241, 196, 15, 0.1);
   }
 
   .nav-dropdown.open .nav-dropdown-panel {
@@ -377,7 +377,7 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
     align-items: center;
     gap: 0.5rem;
     padding: 0.625rem 0.875rem;
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--color-bg-elevated);
     border-bottom: 1px solid var(--color-border);
   }
 
@@ -437,11 +437,11 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
     overflow: hidden;
   }
 
-  .prompt-user { color: var(--color-primary); font-weight: 600; }
+  .prompt-user { color: var(--color-accent-purple); font-weight: 600; }
   .prompt-at { color: var(--color-text-dim); }
   .prompt-host { color: var(--color-accent-purple); font-weight: 600; }
-  .prompt-path { color: var(--color-accent-blue); }
-  .prompt-cmd { color: var(--color-text); font-weight: 500; }
+  .prompt-path { color: var(--color-accent-purple); }
+  .prompt-cmd { color: var(--color-accent-purple); font-weight: 500; }
 
   .blinking-cursor {
     color: var(--color-primary);
@@ -489,7 +489,7 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
   .dropdown-link:hover .dropdown-icon {
     background: var(--color-primary-soft);
     color: var(--color-primary);
-    box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
+    box-shadow: 0 0 12px rgba(241, 196, 15, 0.2);
   }
 
   .dropdown-name {
@@ -513,7 +513,7 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
 
   .dropdown-link.active {
     background: var(--color-primary-soft);
-    border: 1px solid rgba(59, 130, 246, 0.25);
+    border: 1px solid rgba(241, 196, 15, 0.25);
   }
 
   .dropdown-link.active .dropdown-name {
@@ -625,7 +625,7 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--color-primary), var(--color-accent-purple), transparent);
+    background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
     opacity: 0.5;
   }
 
@@ -710,7 +710,7 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
 
   .mobile-nav-link.active {
     background: var(--color-primary-soft);
-    border: 1px solid rgba(59, 130, 246, 0.25);
+    border: 1px solid rgba(241, 196, 15, 0.25);
   }
 
   .mobile-nav-link.active .link-name {
@@ -771,6 +771,13 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
       padding: 0.5rem 1rem;
     }
   }
+
+[data-theme='light'] .nav-link .link-prefix, .nav-dropdown-toggle .link-prefix {
+  color: var(--color-text);
+}
+[data-theme='light'] .dropdown-link.active {
+  background: #fff !important;
+}
 </style>
 
 <script>

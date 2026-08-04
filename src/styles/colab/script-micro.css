@@ -170,3 +170,6 @@
     animation-duration: 3s;
   }
 }
+
+/* ===== LIGHT THEME ===== */
+[data-theme="light"] .syn-key { color: #d4a80e; }

@@ -19,7 +19,7 @@
 .blog-card:hover {
   transform: translateY(-6px);
   border-color: var(--color-primary);
-  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 8px 30px rgba(241, 196, 15, 0.15);
 }
 
 .blog-meta-row {
@@ -67,7 +67,7 @@
 }
 
 .blog-card:hover .blog-title {
-  color: var(--color-primary);
+  color: var(--color-accent-purple);
 }
 
 .blog-description {
@@ -87,7 +87,7 @@
 
 .tag {
   padding: 0.25rem 0.625rem;
-  background: rgba(59, 130, 246, 0.1);
+  background: rgba(241, 196, 15, 0.1);
   border: 1px solid var(--color-border);
   border-radius: 0.25rem;
   font-size: 0.75rem;
@@ -98,15 +98,15 @@
 }
 
 .tag:hover {
-  background: rgba(59, 130, 246, 0.12);
-  border-color: rgba(59, 130, 246, 0.4);
+  background: rgba(241, 196, 15, 0.12);
+  border-color: rgba(241, 196, 15, 0.4);
   color: var(--color-primary);
 }
 
 .tag.active {
-  background: rgba(59, 130, 246, 0.2);
-  border-color: rgba(59, 130, 246, 0.5);
-  color: var(--color-accent-blue, #3B82F6);
+  background: rgba(241, 196, 15, 0.2);
+  border-color: rgba(241, 196, 15, 0.5);
+  color: var(--color-accent-blue, #f1c40f);
 }
 
 .read-more {
@@ -116,7 +116,7 @@
   width: 100%;
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--color-primary);
+  color: var(--color-accent-purple);
   margin-top: auto;
   gap: 0.75rem;
 }

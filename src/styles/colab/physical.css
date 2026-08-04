@@ -79,7 +79,7 @@
 
 .phys-led.blue {
   background: #3b82f6;
-  box-shadow: 0 0 6px rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 6px rgba(241, 196, 15, 0.5);
   animation: ledFlicker 3s ease-in-out infinite;
 }
 
@@ -140,7 +140,7 @@
 }
 
 .serbia-indicator svg {
-  filter: drop-shadow(0 0 4px rgba(236, 72, 153, 0.3));
+  filter: drop-shadow(0 0 4px rgba(241, 196, 15, 0.3));
 }
 
 .serbia-label {
@@ -193,3 +193,6 @@
     height: 14px;
   }
 }
+
+/* ===== LIGHT THEME ===== */
+[data-theme="light"] .serbia-indicator { color: #d4a80e; }
