@@ -16,12 +16,14 @@ import {
 interface Props {
   title?: string;
   description?: string;
+  hideFooter?: boolean;
 }
 
 const base = import.meta.env.BASE_URL;
 const {
   title = 'Vuk1lis | V For Vuk1lis',
-  description = 'My work sits at the intersection of art and technology. I build immersive digital experiences where dark aesthetics meet surgical performance. Every deployment is a revolution. Every animation is a statement.'
+  description = 'My work sits at the intersection of art and technology. I build immersive digital experiences where dark aesthetics meet surgical performance. Every deployment is a revolution. Every animation is a statement.',
+  hideFooter = false,
 } = Astro.props;
 ---
 
@@ -79,7 +81,7 @@ const {
     <div id="page-content">
       <slot />
     </div>
-    <Footer />
+    {!hideFooter && <Footer />}
 
     <script is:inline>
       (function() {
