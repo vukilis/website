@@ -1,0 +1,55 @@
+---
+const particleCount = 200;
+const particles = Array.from({ length: particleCount }, () => ({
+  left: Math.random() * 100,
+  top: Math.random() * 100,
+  delay: Math.random() * 8,
+  duration: Math.random() * 4 + 6,
+}));
+---
+
+<div class="hero-particles">
+  {particles.map((p, i) => (
+    <div
+      key={i}
+      class="particle"
+      style={`left: ${p.left}%; top: ${p.top}%; animation-delay: ${p.delay}s; animation-duration: ${p.duration}s`}
+    />
+  ))}
+</div>
+
+<style is:global>
+  .hero-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: particleFloat 8s ease-in-out infinite;
+  }
+
+  @keyframes particleFloat {
+    0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+    25% { transform: translateY(-30px) translateX(10px); opacity: 0.6; }
+    50% { transform: translateY(-15px) translateX(-10px); opacity: 0.4; }
+    75% { transform: translateY(-40px) translateX(5px); opacity: 0.5; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .particle {
+      animation: none !important;
+    }
+  }
+
+  [data-theme="light"] .hero-particles {
+    display: none;
+  }
+</style>

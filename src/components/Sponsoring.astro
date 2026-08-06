@@ -70,45 +70,11 @@ const iconClasses: Record<string, string> = {
 </div>
 
 <style>
-  .sponsoring-links {
-    display: flex;
-    gap: 0.625rem;
-    align-items: center;
-    justify-content: flex-start;
-  }
-
-  .sponsoring-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: 0.5rem;
-    background: rgba(241, 196, 15, 0.08);
-    border: 1px solid var(--color-border);
-    color: var(--color-text-dim);
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-
-  .sponsoring-link:hover {
-    border-color: var(--color-primary);
-    background: rgba(241, 196, 15, 0.15);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(241, 196, 15, 0.15);
-    color: var(--color-text);
-  }
-
-  .sponsoring-link i {
-    width: 18px;
-    font-size: 18px;
-    line-height: 1;
-    display: block;
-  }
-
+  .sponsoring-links { display: flex; gap: 0.625rem; align-items: center; justify-content: flex-start; }
+  .sponsoring-link { display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border-radius: 0.5rem; background: rgba(241, 196, 15, 0.08); border: 1px solid var(--color-border); color: var(--color-text-dim); text-decoration: none; transition: all 0.2s ease; }
+  .sponsoring-link:hover { border-color: var(--color-primary); background: rgba(241, 196, 15, 0.15); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(241, 196, 15, 0.15); color: var(--color-text); }
+  .sponsoring-link i { width: 18px; font-size: 18px; line-height: 1; display: block; }
   @media (max-width: 768px) {
-    .sponsoring-links {
-      justify-content: center;
-    }
+    .sponsoring-links { justify-content: center; }
   }
 </style>

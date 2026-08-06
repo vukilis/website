@@ -27,124 +27,24 @@ const { Content } = await render(entry);
 </BaseLayout>
 
 <style>
-  .legal-page {
-    min-height: 100vh;
-    padding: calc(var(--nav-height) + 3rem) 2rem 6rem;
-    display: flex;
-    justify-content: center;
-  }
-
-  .legal-container {
-    max-width: 800px;
-    width: 100%;
-  }
-
-  .legal-title {
-    font-family: var(--font-heading);
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 700;
-    color: var(--color-text);
-    margin-bottom: 0.5rem;
-  }
-
-  .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    color: var(--color-accent-purple);
-    text-decoration: none;
-    margin-bottom: 2rem;
-    font-weight: 600;
-    font-size: 0.875rem;
-    letter-spacing: 0.01em;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-  }
-
-  .back-link::before {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 1.5px;
-    background: linear-gradient(90deg, var(--color-accent-purple), var(--color-accent-pink));
-    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 1px;
-  }
-
-  .back-link:hover {
-    color: var(--color-accent-pink);
-    transform: translateX(-4px);
-  }
-
-  .back-link:hover::before {
-    width: 100%;
-  }
-
-  .legal-meta {
-    font-size: 0.875rem;
-    color: var(--color-text-dim);
-    margin-bottom: 2.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .legal-content {
-    color: var(--color-text);
-    line-height: 1.7;
-    font-size: 1rem;
-  }
-
-  .legal-content :global(h2) {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-top: 2.5rem;
-    margin-bottom: 1rem;
-    color: var(--color-text);
-  }
-
-  .legal-content :global(h3) {
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-top: 2rem;
-    margin-bottom: 0.75rem;
-    color: var(--color-text);
-  }
-
-  .legal-content :global(p) {
-    margin-bottom: 1.25rem;
-    color: var(--color-text);
-  }
-
-  .legal-content :global(ul) {
-    margin-bottom: 1.25rem;
-    padding-left: 1.5rem;
-  }
-
-  .legal-content :global(li) {
-    margin-bottom: 0.5rem;
-  }
-
-  .legal-content :global(a) {
-    color: var(--color-primary);
-    text-decoration: none;
-  }
-
-  .legal-content :global(a:hover) {
-    text-decoration: underline;
-  }
-
-  .legal-content :global(strong) {
-    font-weight: 600;
-    color: var(--color-text);
-  }
-
+  .legal-page { min-height: 100vh; padding: calc(var(--nav-height) + 3rem) 2rem 6rem; display: flex; justify-content: center; }
+  .legal-container { max-width: 800px; width: 100%; }
+  .legal-title { font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; color: var(--color-text); margin-bottom: 0.5rem; }
+  .back-link { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--color-accent-purple); text-decoration: none; margin-bottom: 2rem; font-weight: 600; font-size: 0.875rem; letter-spacing: 0.01em; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; }
+  .back-link::before { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1.5px; background: linear-gradient(90deg, var(--color-accent-purple), var(--color-accent-pink)); transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 1px; }
+  .back-link:hover { color: var(--color-accent-pink); transform: translateX(-4px); }
+  .back-link:hover::before { width: 100%; }
+  .legal-meta { font-size: 0.875rem; color: var(--color-text-dim); margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-border); }
+  .legal-content { color: var(--color-text); line-height: 1.7; font-size: 1rem; }
+  .legal-content :global(h2) { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; color: var(--color-text); }
+  .legal-content :global(h3) { font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--color-text); }
+  .legal-content :global(p) { margin-bottom: 1.25rem; color: var(--color-text); }
+  .legal-content :global(ul) { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+  .legal-content :global(li) { margin-bottom: 0.5rem; }
+  .legal-content :global(a) { color: var(--color-primary); text-decoration: none; }
+  .legal-content :global(a:hover) { text-decoration: underline; }
+  .legal-content :global(strong) { font-weight: 600; color: var(--color-text); }
   @media (max-width: 768px) {
-    .legal-page {
-      padding: calc(var(--nav-height) + 2rem) 1.5rem 4rem;
-    }
+    .legal-page { padding: calc(var(--nav-height) + 2rem) 1.5rem 4rem; }
   }
 </style>

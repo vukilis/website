@@ -56,116 +56,21 @@ const recentPosts = allBlogPosts
 </BaseLayout>
 
 <style>
-  .recent-posts {
-    /* min-height: 100vh; */
-    /* display: flex; */
-    /* align-items: center; */
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    padding: calc(var(--nav-height) + 2rem) 2rem 14rem;
-  }
-
-  .container {
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-  }
-
-  .section-title {
-    font-family: var(--font-heading);
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 0.75rem;
-    color: var(--color-text);
-  }
-
-  .section-subtitle {
-    text-align: center;
-    color: var(--color-text-dim);
-    font-size: 1.1rem;
-    margin-bottom: 3rem;
-  }
-
-  .posts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 3rem;
-  }
-
-  .view-all {
-    text-align: center;
-  }
-
-  .btn {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.875rem 1.75rem;
-    font-size: 0.9375rem;
-    font-weight: 600;
-    font-family: var(--font-body, system-ui, sans-serif);
-    letter-spacing: -0.01em;
-    text-decoration: none;
-    border-radius: 0.875rem;
-    cursor: pointer;
-    border: 1px solid transparent;
-    white-space: nowrap;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-  }
-
-  .btn-secondary {
-    background: rgba(255, 255, 255, 0.04);
-    color: var(--color-text, #e2e8f0);
-    border: 1px solid rgba(148, 163, 184, 0.2);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-
-  .btn-secondary::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, transparent 60%);
-    opacity: 0;
-    transition: opacity 0.25s ease;
-  }
-
-  .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(148, 163, 184, 0.35);
-    color: var(--color-text, #f8fafc);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.2);
-  }
-
-  .btn-secondary:hover::after {
-    opacity: 1;
-  }
-
-  .btn-secondary:active {
-    transform: translateY(0);
-    background: rgba(255, 255, 255, 0.03);
-  }
-
-  .btn-secondary:focus-visible {
-    outline: 2px solid var(--color-primary, #3b82f6);
-    outline-offset: 3px;
-  }
-
+  .recent-posts { justify-content: center; position: relative; overflow: hidden; padding: calc(var(--nav-height) + 2rem) 2rem 14rem; }
+  .container { max-width: 1200px; width: 100%; margin: 0 auto; }
+  .section-title { font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; text-align: center; margin-bottom: 0.75rem; color: var(--color-text); }
+  .section-subtitle { text-align: center; color: var(--color-text-dim); font-size: 1.1rem; margin-bottom: 3rem; }
+  .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+  .view-all { text-align: center; }
+  .btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.875rem 1.75rem; font-size: 0.9375rem; font-weight: 600; font-family: var(--font-body, system-ui, sans-serif); letter-spacing: -0.01em; text-decoration: none; border-radius: 0.875rem; cursor: pointer; border: 1px solid transparent; white-space: nowrap; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; }
+  .btn-secondary { background: rgba(255, 255, 255, 0.04); color: var(--color-text, #e2e8f0); border: 1px solid rgba(148, 163, 184, 0.2); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  .btn-secondary::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, transparent 60%); opacity: 0; transition: opacity 0.25s ease; }
+  .btn-secondary:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(148, 163, 184, 0.35); color: var(--color-text, #f8fafc); transform: translateY(-2px); box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.2); }
+  .btn-secondary:hover::after { opacity: 1; }
+  .btn-secondary:active { transform: translateY(0); background: rgba(255, 255, 255, 0.03); }
+  .btn-secondary:focus-visible { outline: 2px solid var(--color-primary, #3b82f6); outline-offset: 3px; }
   @media (max-width: 768px) {
-    .recent-posts {
-      padding: 4rem 1.5rem 6rem;
-    }
-
-    .posts-grid {
-      grid-template-columns: 1fr;
-    }
+    .recent-posts { padding: 4rem 1.5rem 6rem; }
+    .posts-grid { grid-template-columns: 1fr; }
   }
 </style>

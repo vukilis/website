@@ -7,11 +7,9 @@
   let typewriterTimeout = null;
 
   function resetHeroState() {
-    const heroParticles = document.getElementById('hero-particles');
     const typedTextEl = document.getElementById('typed-text');
     const heroBgScene = document.getElementById('hero-bg-scene');
 
-    if (heroParticles) heroParticles.innerHTML = '';
     if (typedTextEl) typedTextEl.textContent = '';
     if (heroBgScene) heroBgScene.innerHTML = '';
 
@@ -54,19 +52,6 @@
 
     resetHeroState();
     resetSysTerminal();
-
-    const heroParticles = document.getElementById('hero-particles');
-    if (heroParticles && !prefersReducedMotion) {
-      for (let i = 0; i < 30; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        p.style.left = Math.random() * 100 + '%';
-        p.style.top = Math.random() * 100 + '%';
-        p.style.animationDelay = Math.random() * 8 + 's';
-        p.style.animationDuration = (Math.random() * 4 + 6) + 's';
-        heroParticles.appendChild(p);
-      }
-    }
 
     const typedTextEl = document.getElementById('typed-text');
     if (typedTextEl) {

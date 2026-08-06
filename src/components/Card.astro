@@ -30,52 +30,11 @@ const isEmoji = !icons[icon];
 </div>
 
 <style>
-  .card {
-    position: relative;
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    border-radius: 1rem;
-    padding: 2rem;
-    transition: all 0.2s ease;
-  }
-
-  .card:hover {
-    border-color: var(--color-primary);
-    box-shadow: 0 8px 30px rgba(241, 196, 15, 0.15);
-  }
-
-  .card-icon {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(241, 196, 15, 0.1);
-    border-radius: 0.75rem;
-    margin-bottom: 1.25rem;
-    color: var(--color-primary);
-  }
-
-  .card-icon :global(svg) {
-    width: 24px;
-    height: 24px;
-  }
-
-  .card-icon.emoji {
-    font-size: 1.5rem;
-  }
-
-  .card-title {
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--color-text);
-  }
-
-  .card-description {
-    color: var(--color-text-dim);
-    line-height: 1.6;
-    font-size: 0.95rem;
-  }
+  .card { position: relative; background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: 1rem; padding: 2rem; transition: all 0.2s ease; }
+  .card:hover { border-color: var(--color-primary); box-shadow: 0 8px 30px rgba(241, 196, 15, 0.15); }
+  .card-icon { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: rgba(241, 196, 15, 0.1); border-radius: 0.75rem; margin-bottom: 1.25rem; color: var(--color-primary); }
+  .card-icon :global(svg) { width: 24px; height: 24px; }
+  .card-icon.emoji { font-size: 1.5rem; }
+  .card-title { font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text); }
+  .card-description { color: var(--color-text-dim); line-height: 1.6; font-size: 0.95rem; }
 </style>

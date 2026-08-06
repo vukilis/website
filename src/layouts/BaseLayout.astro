@@ -7,6 +7,7 @@ import Footer from '../components/Footer.astro';
 import LightGalleryInit from '../components/LightGalleryInit.astro';
 import DamageNumbers from '../components/DamageNumbers.astro';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import HeroParticles from '../components/colab/HeroParticles.astro';
 import {
   GoogleTagmanager,
   GoogleTagmanagerNoscript
@@ -74,6 +75,7 @@ const {
   <body>
     <GoogleTagmanagerNoscript id="GTM-K7KG6MT7" />
     <SiteBackdrop />
+    {Astro.url.pathname !== '/homelab_diagram/' && <HeroParticles />}
     <div id="page-content">
       <slot />
     </div>
