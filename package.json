@@ -25,7 +25,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "check": "astro check"
+    "check": "astro check",
+    "test": "vitest run"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.2.1",
@@ -49,7 +50,9 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@types/three": "^0.184.0",
-    "typescript": "^5.9.3"
+    "@vitest/coverage-v8": "^4.1.10",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.10"
   },
   "engines": {
     "node": ">=22.0.0"
