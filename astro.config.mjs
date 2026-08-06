@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import cloudflare from '@astrojs/cloudflare';
 import remarkToc from 'remark-toc';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -22,6 +23,7 @@ function rehypeLazyImages() {
 export default defineConfig({
   site: 'https://vukilis.com',
   trailingSlash: 'always',
+  adapter: cloudflare({ mode: 'advanced' }),
 
   markdown: unified({
     remarkPlugins: [[remarkToc, { heading: 'contents' }]],
