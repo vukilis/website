@@ -1,0 +1,105 @@
+---
+title: "New Website Based on Astro"
+url: /new_website_based_on_astro
+pubDate: 2026-08-06T21:27:55+02:00
+lastmod: 2026-08-06T21:27:55+02:00
+share:
+    enable: true
+    link: true
+    twitter: true
+    reddit: true
+
+draft: false
+license: "MIT"
+
+tags: [astro, hugo, website, migration, frontend]
+categories: [Development, Website]
+description: "Why I migrated my personal website from Hugo to Astro, and what that decision unlocked in terms of performance, architecture, and creative freedom."
+---
+
+import { Image } from 'astro:assets';
+import astroImg from '../../../assets/images/2026/new_website_based_on_astro/website.png';
+
+<Image src={astroImg} alt="Astro Website" />
+
+I've been running this site on Hugo for quite a while now. The LoveIt theme served me well, and Hugo always did exactly what it promised: build fast and ship faster.
+
+For some time, though, I'd been thinking about giving the website a fresh, more modern look. At the same time, AI-assisted development has made experimenting with new designs and ideas faster than ever, which felt like the perfect opportunity to rethink the entire site.
+
+## Why Now
+
+A complete rebuild was necessary because the architecture of the old site had become a constraint. Hugo is excellent for content-first sites, but when you start pushing beyond static pages into interactive components, the template model fights you. Astro removed that fight.
+
+What changed was the way I wanted to build this site. I wanted reusable UI components, typed content collections, first-class `MDX` support, and selective interactivity while keeping the site fully static.
+
+Astro gave me exactly that. I didn't have to abandon the simplicity and performance of static site generation, I simply gained a more modern development experience.
+
+## Why the Old Site Couldn't Last Forever
+
+The biggest challenge I ran into with Hugo was that, over time, I found myself writing more and more JavaScript. I also frequently ended up embedding HTML directly inside my Markdown files.
+
+Why? Simply because I wanted to build pages exactly the way I envisioned them, with custom layouts and interactive features that went beyond what the theme or Hugo's content model was designed for.
+
+At that point, I was constantly fighting against the template, relying on an increasing number of shortcodes, and working around the limitations of the framework. Instead of making development easier, those workarounds gradually turned the codebase into something that was harder to maintain and evolve.
+
+That's the moment you know a rebuild is necessary. Not because the old thing is broken, but because it has become a ceiling.
+
+Hugo can do almost anything, but as my requirements grew, implementing custom layouts and interactive features became increasingly awkward within its template model. I wanted a component model that matched how I actually think about UI and a build pipeline that felt modern without giving up the advantages of static site generation.
+
+## What Astro Offered That Hugo Couldn't
+
+One day, while browsing YouTube, I came across a video about Astro. After watching it, I felt genuinely inspired to start this migration. The more I learned about Astro, the more it seemed like the right tool for where I wanted to take this website.
+
+I started evaluating Astro not because Hugo failed me, but because the problems I was hitting were precisely the ones Astro was designed to solve. Here is what drew me in.
+
+### Islands Architecture
+
+Astro's Islands Architecture was the biggest selling point for me. Every page is generated as static HTML at build time, and JavaScript is only shipped where it's actually needed, whether for interactive components or client-side navigation.
+
+For a content-heavy website like mine, that makes perfect sense. Most pages consist of text, images, and code snippets that don't need client-side JavaScript. At the same time, features like the image gallery, theme switcher, search, and page transitions benefit from being interactive.
+
+With Astro, I get both: static pages where possible and client-side interactivity only where it's needed.
+
+### Native MDX Support
+
+Although most of my articles are written in Markdown, I occasionally want something more expressive.
+
+With MDX, every article can import Astro components directly. I can embed responsive image galleries, custom alerts, diagrams, or any reusable component exactly where I need it.
+
+In Hugo, similar functionality relied on shortcodes or template-specific solutions. MDX feels much more natural because content and components work together without friction.
+
+### Content Collections and Type Safety
+
+One of the first things I appreciated was Astro's Content Collections.
+
+Instead of treating every Markdown file as an isolated document, Astro lets you define schemas for different types of content. Blog posts, projects, music, homelab articles, and even my yerba mate reviews all have their own collections with clearly defined fields.
+
+This gives me type safety throughout the project and catches missing or invalid frontmatter during the build instead of after deployment. As the website continues to grow, that structure becomes increasingly valuable.
+
+## Developer Experience
+
+Astro feels like a framework built for modern frontend development without sacrificing the simplicity of static sites.
+
+The `.astro` component format is easy to understand, TypeScript support is excellent, and the Vite-powered development server provides instant feedback while working. File-based routing, automatic code splitting, and straightforward configuration make the overall development experience significantly smoother than what I had before.
+
+### Built-in View Transitions
+
+One feature I wasn't initially looking for, but quickly came to appreciate was Astro's built-in View Transitions API.
+
+Page navigation feels much smoother without requiring a full client-side application. The transitions add a subtle layer of polish while preserving the performance benefits of static site generation.
+
+## Performance
+
+Performance has always been one of the primary goals of this website, and Astro fits that philosophy perfectly.
+
+The entire site is generated ahead of time as static HTML, CSS, and optimized assets. Since JavaScript is only loaded for interactive islands, visitors only download JavaScript for the parts of the page that actually need it.
+
+Combined with image optimization, code splitting, and static hosting, the website delivers fast page loads, excellent Core Web Vitals, and consistently high Lighthouse scores without requiring much manual optimization.
+
+## Conclusion
+
+Migrating to Astro wasn't about following a trend or replacing Hugo because it was lacking. Hugo served this website well for years.
+
+The move was about choosing a framework that better matches how I build today. Astro lets me keep everything I value about static site generation while adding a modern component model, typed content collections, native MDX support, and islands architecture for the few places where interactivity actually matters.
+
+The website is still a fully static site, it just has a more flexible foundation. I can continue building it the way I build modern applications today, without giving up the speed, simplicity, and reliability that drew me to static site generators in the first place.
