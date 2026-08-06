@@ -85,64 +85,6 @@ const queryString = sortParam ? `sort=${encodeURIComponent(sortParam)}` : '';
       <BlogSort allPosts={categoryPosts} currentPage={page.currentPage} />
 
       <Pagination page={page} baseUrl={`/blog/category/${categorySlug}`} showFirstLast={true} maxVisible={5} queryString={queryString} />
-
-      <script is:inline>
-        (function() {
-          const SCROLL_KEY = 'blog-list-scroll-pos';
-          const PATH_KEY = 'blog-list-path';
-          const FLAG_KEY = 'blog-list-scroll-top';
-
-          function saveScroll() {
-            try {
-              sessionStorage.setItem(SCROLL_KEY, String(window.scrollY));
-              sessionStorage.setItem(PATH_KEY, window.location.pathname + window.location.search);
-            } catch (e) {}
-          }
-
-          function restoreScroll() {
-            try {
-              const flag = sessionStorage.getItem(FLAG_KEY);
-              if (flag === '1') {
-                sessionStorage.removeItem(FLAG_KEY);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                return;
-              }
-              const savedPos = parseInt(sessionStorage.getItem(SCROLL_KEY) || '0', 10);
-              const savedPath = sessionStorage.getItem(PATH_KEY) || '';
-              if (savedPath && window.location.pathname + window.location.search === savedPath && savedPos > 0) {
-                requestAnimationFrame(() => window.scrollTo({ top: savedPos, behavior: 'instant' }));
-              }
-            } catch (e) {}
-          }
-
-          if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', restoreScroll);
-          } else {
-            restoreScroll();
-          }
-
-          document.addEventListener('astro:page-load', restoreScroll);
-          document.addEventListener('astro:before-page-load', saveScroll);
-          window.addEventListener('beforeunload', saveScroll);
-          window.addEventListener('pagehide', saveScroll);
-
-          document.addEventListener('click', function(e) {
-            var card = e.target.closest('.blog-card');
-            if (card) {
-              saveScroll();
-            }
-          });
-
-          document.addEventListener('click', function(e) {
-            var pagLink = e.target.closest('.pagination-page, .pagination-icon');
-            if (pagLink) {
-              try {
-                sessionStorage.setItem(FLAG_KEY, '1');
-              } catch (err) {}
-            }
-          });
-        })();
-      </script>
     </div>
   </main>
 </BaseLayout>

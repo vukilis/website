@@ -112,7 +112,7 @@
 
 .script-gear {
   position: absolute;
-  color: var(--color-accent-purple, #8b5cf6);
+  color: var(--color-accent-purple, #d4a80e);
   opacity: 0.15;
   animation: gearSpin 8s linear infinite;
 }
@@ -173,3 +173,4 @@
 
 /* ===== LIGHT THEME ===== */
 [data-theme="light"] .syn-key { color: #d4a80e; }
+[data-theme="light"] .script-gear { color: #d4a80e; opacity: 0.5; }

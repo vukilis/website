@@ -55,7 +55,7 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
   <article class="blog-post">
     <div class="container">
       <header class="post-header">
-         <a href={`${base}blog/`} class="back-link" id="back-to-blog">← Back to Blog</a>
+        <button type="button" class="back-link" id="back-to-blog" data-default={`${base}blog/`}>← Back to Blog</button>
         <h1 class="post-title">{title}</h1>
         <div class="post-meta">
           <time class="post-date">
@@ -126,7 +126,7 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
   .blog-post { min-height: 100vh; padding: 8rem 2rem 5rem; }
   .container { max-width: 1200px; margin: 0 auto; }
   .post-header { margin-bottom: 3.5rem; animation: fadeInDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) both; }
-  .back-link { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--color-accent-purple); text-decoration: none; margin-bottom: 2rem; font-weight: 600; font-size: 0.875rem; letter-spacing: 0.01em; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; }
+  .back-link { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--color-accent-purple); text-decoration: none; margin-bottom: 2rem; font-weight: 600; font-size: 0.875rem; letter-spacing: 0.01em; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; background: transparent; border: none; padding: 0; cursor: pointer; font-family: inherit; }
   .back-link::before { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1.5px; background: linear-gradient(90deg, var(--color-accent-purple), var(--color-accent-pink)); transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 1px; }
   .back-link:hover { color: var(--color-accent-pink); transform: translateX(-4px); }
   .back-link:hover::before { width: 100%; }
@@ -237,10 +237,31 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
         try {
           const savedPath = sessionStorage.getItem(PATH_KEY);
           if (savedPath) {
-            backLink.href = savedPath;
+            backLink.dataset.target = savedPath;
+          } else {
+            delete backLink.dataset.target;
           }
         } catch (e) {}
       }
+
+      function navigateBack(e) {
+        const btn = e.target.closest('#back-to-blog');
+        if (!btn) return;
+        e.preventDefault();
+        const target = btn.dataset.target;
+        if (target) {
+          window.location.href = target;
+        } else {
+          const defaultHref = btn.dataset.default;
+          if (defaultHref) {
+            window.location.href = defaultHref;
+          } else {
+            window.location.href = '/blog/';
+          }
+        }
+      }
+
+      document.addEventListener('click', navigateBack);
 
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', updateBackLink);

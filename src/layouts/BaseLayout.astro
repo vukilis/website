@@ -177,5 +177,56 @@ const {
     <BackToTopButton />
     <LightGalleryInit />
     <DamageNumbers />
+    <script>
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      let currentPath = window.location.pathname;
+      document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (target.closest('.pagination-page, .pagination-icon')) {
+          try {
+            sessionStorage.setItem('pagination-clicked', 'true');
+          } catch (err) {}
+          return;
+        }
+        const link = target.closest('a');
+        if (link && link.href && link.origin === window.location.origin) {
+          try {
+            const destUrl = new URL(link.href);
+            sessionStorage.removeItem('scroll-' + destUrl.pathname);
+          } catch (err) {}
+        }
+      });
+      document.addEventListener('astro:before-swap', () => {
+        try {
+          sessionStorage.setItem('scroll-' + currentPath, String(window.scrollY));
+        } catch (e) {}
+      });
+      window.addEventListener('pagehide', () => {
+        try {
+          sessionStorage.setItem('scroll-' + currentPath, String(window.scrollY));
+        } catch (e) {}
+      });
+      function handleScrollRestore() {
+        currentPath = window.location.pathname;
+        if (sessionStorage.getItem('pagination-clicked') === 'true') {
+          sessionStorage.removeItem('pagination-clicked');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+        const savedPos = parseInt(sessionStorage.getItem('scroll-' + currentPath) || '0', 10);
+        
+        if (savedPos > 0) {
+          requestAnimationFrame(() => {
+            window.scrollTo({ top: savedPos, behavior: 'instant' });
+          });
+          return;
+        }
+        window.scrollTo(0, 0);
+      }
+      window.addEventListener('DOMContentLoaded', handleScrollRestore);
+      document.addEventListener('astro:page-load', handleScrollRestore);
+    </script>
   </body>
 </html>
