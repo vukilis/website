@@ -28,14 +28,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: "pnpm"
-          cache-dependency-path: "./pnpm-lock.yaml"
+          cache: "npm"
+          cache-dependency-path: "./package-lock.json"
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
 
       - name: Build Astro project
-        run: pnpm build
+        run: npm run build
 
       - name: Upload build artifact
         uses: actions/upload-pages-artifact@v3
@@ -54,14 +54,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: "pnpm"
-          cache-dependency-path: "./pnpm-lock.yaml"
+          cache: "npm"
+          cache-dependency-path: "./package-lock.json"
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
 
       - name: Run tests
-        run: pnpm test
+        run: npm test
 
   deploy:
     name: Deploy to Cloudflare Pages
