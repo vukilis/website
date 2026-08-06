@@ -1,4 +1,4 @@
-name = "website-astro"
+name = "website"
 compatibility_date = "2026-08-6"
 compatibility_flags = ["nodejs_compat"]
 
