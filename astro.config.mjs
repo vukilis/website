@@ -28,8 +28,8 @@ export default defineConfig({
     rehypePlugins: [rehypeSlug, rehypeLazyImages, [rehypeAutolinkHeadings, { behavior: 'append' }]],
   }),
 
-  viewTransitions: {
-    prefetch: false
+  prefetch: {
+    defaultStrategy: 'tap',
   },
 
   integrations: [expressiveCode(), sitemap(), mdx()],
