@@ -28,6 +28,9 @@ export default defineConfig({
     rehypePlugins: [rehypeSlug, rehypeLazyImages, [rehypeAutolinkHeadings, { behavior: 'append' }]],
   }),
 
-  // Note: Place expressiveCode() BEFORE mdx()
+  viewTransitions: {
+    prefetch: false
+  },
+
   integrations: [expressiveCode(), sitemap(), mdx()],
 });
