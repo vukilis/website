@@ -28,9 +28,7 @@ export default defineConfig({
     rehypePlugins: [rehypeSlug, rehypeLazyImages, [rehypeAutolinkHeadings, { behavior: 'append' }]],
   }),
 
-  prefetch: {
-    defaultStrategy: 'tap',
-  },
+  prefetch: false,
 
   integrations: [expressiveCode(), sitemap(), mdx()],
 });
