@@ -167,6 +167,10 @@ ins.adsbygoogle iframe {
   height: auto !important;
 }
 
+ins.adsbygoogle:empty {
+  display: none !important;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 5px;
