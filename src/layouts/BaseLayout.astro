@@ -63,6 +63,69 @@ const {
     </script>
     
     <ClientRouter />
+
+    <script is:inline>
+      (function() {
+        if (!window.__pageCache) window.__pageCache = new Map();
+        window.__pageCache.set(window.location.href, document.documentElement.outerHTML);
+
+        document.addEventListener('astro:before-preparation', (e) => {
+          var url = e.to.href;
+
+          if (e.from.href === url) {
+            e.load = async () => ({
+              html: document.documentElement.outerHTML,
+              redirected: false,
+            });
+            document.head.querySelector('[name="astro-view-transitions-fallback"]')?.remove();
+            document.head.insertAdjacentHTML("afterbegin", '<meta name="astro-view-transitions-fallback" content="swap">');
+            return;
+          }
+
+          e.load = async () => {
+            var cached = window.__pageCache.get(url);
+
+            for (var attempt = 0; attempt < 3; attempt++) {
+              try {
+                var res = await fetch(url, { redirect: 'follow' });
+                if (res.ok) {
+                  var html = await res.text();
+                  window.__pageCache.set(url, html);
+                  return { html: html, redirected: res.redirected };
+                }
+              } catch (err) {
+              }
+
+              if (attempt < 2) {
+                await new Promise(function(r) { setTimeout(r, 400 * (attempt + 1)); });
+              }
+            }
+
+            if (cached) {
+              return { html: cached, redirected: false };
+            }
+
+            window.location.href = url;
+            return { html: document.documentElement.outerHTML, redirected: false };
+          };
+        });
+
+        document.addEventListener('astro:before-swap', (e) => {
+          if (e.from.href === e.to.href) {
+            e.viewTransition?.skipTransition();
+          }
+        });
+
+        document.addEventListener('astro:page-load', () => {
+          window.__pageCache.set(window.location.href, document.documentElement.outerHTML);
+          if (window.__pageCache.size > 30) {
+            var firstKey = window.__pageCache.keys().next().value;
+            window.__pageCache.delete(firstKey);
+          }
+        });
+      })();
+    </script>
+
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7134772077337777"
      crossorigin="anonymous"></script>
     <script defer src="https://cloud.umami.is/script.js" data-website-id="6253d22e-47b0-4cf0-aea1-f20de51d328f"></script>
@@ -139,13 +202,6 @@ const {
           const saved = getSavedTheme();
           applyTheme(saved || getSystemTheme(), !!saved);
         });
-
-        // Re-push AdSense ads after every Astro view transition
-        // document.addEventListener('astro:after-swap', () => {
-        //   if (window.adsbygoogle) {
-        //     window.adsbygoogle.push({});
-        //   }
-        // });
 
         // Track Umami pageviews after every Astro view transition
         document.addEventListener('astro:after-swap', () => {
