@@ -101,6 +101,7 @@ html {
   overflow-x: hidden;
   scroll-behavior: smooth;
   overscroll-behavior: none;
+  height: 100%;
 }
 
 /* Headings use Space Grotesk */
@@ -111,7 +112,10 @@ h1, h2, h3, h4, h5, h6 {
 body {
   min-height: 100vh;
   min-height: 100dvh;
+  height: 100%;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Animated background gradient */
@@ -144,6 +148,7 @@ body {
 
 #page-content {
   position: relative;
+  flex: 1;
 }
 
 ins.adsbygoogle {
@@ -151,12 +156,16 @@ ins.adsbygoogle {
   margin: 0 !important;
   padding: 0 !important;
   min-height: 0 !important;
+  max-height: none !important;
+  height: auto !important;
 }
 
 ins.adsbygoogle iframe {
   display: block !important;
   margin: 0 !important;
   padding: 0 !important;
+  max-height: none !important;
+  height: auto !important;
 }
 
 /* Custom scrollbar */
