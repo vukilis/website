@@ -155,7 +155,8 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
 
 <style is:global>
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
-  .nav { position: fixed; top: 0px; left: 0; right: 0; z-index: 1000; height: var(--nav-height); padding: 0 1.5rem; background: var(--color-bg-darker); -webkit-backdrop-filter: blur(16px) saturate(120%); backdrop-filter: blur(16px) saturate(120%); border-bottom: 1px solid var(--color-border); font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace; align-content: center; animation: .5s ease-out slideDown; }
+  .nav { position: fixed; top: 0px; left: 0; right: 0; z-index: 1000; height: var(--nav-height); padding: 0 1.5rem; background: transparent; border-bottom: 1px solid var(--color-border); font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace; align-content: center; animation: .5s ease-out slideDown; }
+  .nav::before { content: ''; position: absolute; inset: 0; background: rgba(10, 10, 10, 0.85); -webkit-backdrop-filter: blur(16px) saturate(120%); backdrop-filter: blur(16px) saturate(120%); z-index: -1; }
   .nav::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--color-primary), transparent); opacity: 0.6; transition: all 0.3s ease; }
   body.radio-loading .nav::after { opacity: 1; background: linear-gradient(90deg, transparent, var(--color-primary), transparent); animation: navLoadingPulse 1s ease-in-out infinite; }
   body.radio-playing .nav::after { opacity: 1; background: linear-gradient(90deg, transparent, #4ade80, var(--color-primary), #4ade80, transparent); background-size: 200% 100%; animation: navAudioWave 2.5s linear infinite; }
@@ -188,7 +189,7 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
   .nav-dropdown-toggle[aria-expanded="true"] { color: var(--color-text); background: var(--color-bg-elevated); border-color: var(--color-border); }
   .dropdown-chevron { width: 14px; height: 14px; margin-left: 0.15rem; transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0.7; }
   .nav-dropdown-toggle[aria-expanded="true"] .dropdown-chevron { transform: rotate(180deg); }
-  .nav-dropdown-panel { position: absolute; top: calc(100% + 0.75rem); right: 0; width: 360px; background: var(--color-bg-darker); -webkit-backdrop-filter: blur(32px) saturate(140%); backdrop-filter: blur(32px) saturate(140%); border: 1px solid var(--color-border); border-radius: 16px; overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(-12px) scale(0.96); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1001; box-shadow: 0 0 0 1px rgba(241, 196, 15, 0.05), 0 25px 60px -15px rgba(0, 0, 0, 0.6), 0 0 40px -10px rgba(241, 196, 15, 0.08); }
+  .nav-dropdown-panel { position: absolute; top: calc(100% + 0.75rem); right: 0; width: 360px; background: rgba(10, 10, 10, 0.88); -webkit-backdrop-filter: blur(16px) saturate(140%); backdrop-filter: blur(16px) saturate(140%); border: 1px solid var(--color-border); border-radius: 16px; overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(-12px) scale(0.96); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1001; box-shadow: 0 0 0 1px rgba(241, 196, 15, 0.05), 0 25px 60px -15px rgba(0, 0, 0, 0.6), 0 0 40px -10px rgba(241, 196, 15, 0.08); }
   .nav-dropdown.open .nav-dropdown-panel { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
   .dropdown-header { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem; background: var(--color-bg-elevated); border-bottom: 1px solid var(--color-border); }
   .window-dots { display: flex; gap: 6px; }
@@ -273,6 +274,9 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
   }
   [data-theme='light'] .nav-link .link-prefix, .nav-dropdown-toggle .link-prefix { color: var(--color-text); }
   [data-theme='light'] .dropdown-link.active { background: #fff !important; }
+  [data-theme='light'] .nav { background: transparent; }
+  [data-theme='light'] .nav::before { background: rgba(245, 240, 229, 0.85); }
+  [data-theme='light'] .nav-dropdown-panel { background: rgba(245, 240, 229, 0.88); }
   [data-theme='light'] .nav-dropdown .radio-player-instance .radio-inner { background: rgba(255, 255, 255, 0.6); border-color: rgba(0, 0, 0, 0.08); }
 </style>
 
