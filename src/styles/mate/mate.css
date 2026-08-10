@@ -97,7 +97,7 @@
 @media (min-width: 768px) {
   .mate-body img,
   .review-image {
-    max-width: 65%;
+    max-width: 50%;
     margin-left: auto;
     margin-right: auto;
     display: block;
