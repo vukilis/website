@@ -57,68 +57,71 @@ const categories = [
   <ArtworkModal />
 
   <script>
-    if (!window.__designPageInitialized) {
-      window.__designPageInitialized = true;
+    document.addEventListener('mouseover', function(e) {
+      const card = e.target.closest('.art-card');
+      if (!card) return;
+      const img = card.querySelector('.art-thumb');
+      if (!img || !img.dataset.hoverSrc) return;
+      img.src = img.dataset.hoverSrc;
+    });
 
-      document.addEventListener('mouseover', function(e) {
-        const card = e.target.closest('.art-card');
-        if (!card) return;
-        const img = card.querySelector('.art-thumb');
-        if (!img || !img.dataset.hoverSrc) return;
-        img.src = img.dataset.hoverSrc;
-      });
+    document.addEventListener('mouseout', function(e) {
+      const card = e.target.closest('.art-card');
+      if (!card) return;
+      const img = card.querySelector('.art-thumb');
+      if (!img || !img.dataset.staticSrc) return;
+      img.src = img.dataset.staticSrc;
+    });
 
-      document.addEventListener('mouseout', function(e) {
-        const card = e.target.closest('.art-card');
-        if (!card) return;
-        const img = card.querySelector('.art-thumb');
-        if (!img || !img.dataset.staticSrc) return;
-        img.src = img.dataset.staticSrc;
-      });
+    document.addEventListener('focusin', function(e) {
+      const card = e.target.closest('.art-card');
+      if (!card) return;
+      const img = card.querySelector('.art-thumb');
+      if (!img || !img.dataset.hoverSrc) return;
+      img.src = img.dataset.hoverSrc;
+    });
 
-      document.addEventListener('focusin', function(e) {
-        const card = e.target.closest('.art-card');
-        if (!card) return;
-        const img = card.querySelector('.art-thumb');
-        if (!img || !img.dataset.hoverSrc) return;
-        img.src = img.dataset.hoverSrc;
-      });
+    document.addEventListener('focusout', function(e) {
+      const card = e.target.closest('.art-card');
+      if (!card) return;
+      const img = card.querySelector('.art-thumb');
+      if (!img || !img.dataset.staticSrc) return;
+      img.src = img.dataset.staticSrc;
+    });
 
-      document.addEventListener('focusout', function(e) {
-        const card = e.target.closest('.art-card');
-        if (!card) return;
-        const img = card.querySelector('.art-thumb');
-        if (!img || !img.dataset.staticSrc) return;
-        img.src = img.dataset.staticSrc;
-      });
+    function initDesignFilter() {
+      var cards = Array.from(document.querySelectorAll('.art-card'));
 
-      (function() {
-        var cards = Array.from(document.querySelectorAll('.art-card'));
-
-        function applyFilter() {
-          cards.forEach(function(card) {
-            var cats = (card.getAttribute('data-category') || '').split(',');
-            var activeFilter = document.querySelector('.filter-chip.active');
-            var filter = activeFilter ? activeFilter.getAttribute('data-filter') : 'all';
-            var matches = filter === 'all' || cats.includes(filter);
-            card.style.display = matches ? 'flex' : 'none';
-          });
-        }
-
-        document.querySelectorAll('.filter-chip').forEach(function(chip) {
-          chip.addEventListener('click', function() {
-            document.querySelectorAll('.filter-chip').forEach(function(c) {
-              c.classList.remove('active');
-              c.setAttribute('aria-selected', 'false');
-            });
-            chip.classList.add('active');
-            chip.setAttribute('aria-selected', 'true');
-            applyFilter();
-          });
+      function applyFilter() {
+        cards.forEach(function(card) {
+          var cats = (card.getAttribute('data-category') || '').split(',');
+          var activeFilter = document.querySelector('.filter-chip.active');
+          var filter = activeFilter ? activeFilter.getAttribute('data-filter') : 'all';
+          var matches = filter === 'all' || cats.includes(filter);
+          card.style.display = matches ? 'flex' : 'none';
         });
+      }
 
-        applyFilter();
-      })();
+      document.querySelectorAll('.filter-chip').forEach(function(chip) {
+        chip.addEventListener('click', function() {
+          document.querySelectorAll('.filter-chip').forEach(function(c) {
+            c.classList.remove('active');
+            c.setAttribute('aria-selected', 'false');
+          });
+          chip.classList.add('active');
+          chip.setAttribute('aria-selected', 'true');
+          applyFilter();
+        });
+      });
+
+      applyFilter();
     }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initDesignFilter);
+    } else {
+      initDesignFilter();
+    }
+    document.addEventListener('astro:page-load', initDesignFilter);
   </script>
 </BaseLayout>
