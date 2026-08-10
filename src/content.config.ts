@@ -31,6 +31,7 @@ const projectsIT = defineCollection({
     image: z.string().optional(),
     link: z.string().optional(),
     github: z.string().optional(),
+    blog: z.string().optional(),
     tags: z.array(z.string()).optional(),
     categories: z.array(z.string()).optional(),
     featured: z.boolean().default(false),
