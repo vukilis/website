@@ -15,13 +15,16 @@ interface Props {
   subtitle: string;
   paginationBaseUrl: string;
   noResultsExtra?: string;
+  keywords?: string;
 }
 
-const { page, allProjectsForFilter, activeCategory, title, subtitle, paginationBaseUrl, noResultsExtra } = Astro.props;
+const { page, allProjectsForFilter, activeCategory, title, subtitle, paginationBaseUrl, noResultsExtra, keywords } = Astro.props;
 ---
 
 <BaseLayout title="IT Projects - Vuk1lis"
-  description="Explore IT projects, including Windows & Linux tooling, homelab experiments, and web development projects.">
+  description="Explore IT projects, including Windows & Linux tooling, homelab experiments, and web development projects."
+  {keywords}
+>
   <Navigation />
 
   <main class="projects-page" id="main-content">

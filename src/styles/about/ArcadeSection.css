@@ -108,7 +108,8 @@
 }
 .game-card:hover .card-glitch,
 .show-card:hover .card-glitch,
-.movie-card:hover .card-glitch { opacity: 1; }
+.movie-card:hover .card-glitch,
+.club-card:hover .card-glitch { opacity: 1; }
 .card-media {
   position: relative;
   width: 100%;
@@ -124,7 +125,7 @@
   color: var(--color-text-muted);
   opacity: 0.5;
 }
-.show-name, .movie-name, .game-name {
+.show-name, .movie-name, .game-name, .club-name {
   position: relative;
   z-index: 1;
   width: 100%;
@@ -135,6 +136,25 @@
   line-height: 1.3;
   text-align: center;
   padding: 0.5rem 0.5rem 0;
+}
+.club-card-wrapper {
+  position: relative;
+  animation: cardAppear 0.5s ease backwards;
+  animation-delay: calc(var(--i) * 0.08s);
+}
+.club-card {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-bg-card);
+  padding: 1.25rem;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
 }
 .show-card, .movie-card {
   position: relative;
@@ -160,6 +180,81 @@
 }
 .show-card:hover { border-color: var(--glow, #f59e0b); box-shadow: 0 0 20px color-mix(in srgb, var(--glow, #f59e0b) 25%, transparent), 0 8px 24px rgba(0,0,0,0.4); }
 .movie-card:hover { border-color: var(--glow, #ff00ff); box-shadow: 0 0 20px color-mix(in srgb, var(--glow, #ff00ff) 25%, transparent), 0 8px 24px rgba(0,0,0,0.4); }
+.club-card:hover { border-color: var(--glow, #ffffff); box-shadow: 0 0 20px color-mix(in srgb, var(--glow, #ffffff) 25%, transparent), 0 8px 24px rgba(0,0,0,0.4); }
+
+.club-sound-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.45);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+.club-sound-btn:hover {
+  background: rgba(0,0,0,0.7);
+  border-color: #f59e0b;
+  color: #f59e0b;
+  transform: scale(1.05);
+}
+.club-youtube-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.club-youtube-modal.open { display: flex; }
+.club-youtube-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+.club-youtube-wrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.club-youtube-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1010;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+.club-youtube-close:hover {
+  background: rgba(0,0,0,0.9);
+  border-color: #f59e0b;
+  color: #f59e0b;
+}
 
 .arcade-tabs {
   display: inline-flex;
@@ -169,6 +264,7 @@
   overflow: hidden;
   margin-top: 1.5rem;
   backdrop-filter: blur(8px);
+  flex-wrap: wrap;
 }
 .arcade-tab {
   padding: 10px 24px;
@@ -183,6 +279,7 @@
   cursor: pointer;
   transition: all 0.25s ease;
   position: relative;
+  white-space: nowrap;
 }
 .arcade-tab:hover {
   color: var(--color-text);
@@ -192,6 +289,31 @@
   color: #f59e0b;
   background: rgba(245,158,11,0.08);
   box-shadow: inset 0 -2px 0 #f59e0b;
+}
+
+@media (max-width: 640px) {
+  .arcade-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: 10px;
+  }
+  .arcade-tab {
+    padding: 10px 16px;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .arcade-tab {
+    padding: 9px 10px;
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+  }
 }
 .arcade-carousel {
   position: relative;
@@ -241,6 +363,11 @@
   border-color: rgba(0, 0, 0, 0.06);
   color: #0F172A;
 }
+[data-theme="light"] .club-card {
+  background: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.06);
+  color: #0F172A;
+}
 [data-theme="light"] .show-card:hover {
   border-color: color-mix(in srgb, var(--glow, #f59e0b) 50%, transparent);
   box-shadow: 0 0 20px color-mix(in srgb, var(--glow, #f59e0b) 15%, transparent), 0 8px 24px rgba(0, 0, 0, 0.08);
@@ -249,7 +376,11 @@
   border-color: color-mix(in srgb, var(--glow, #c026d3) 50%, transparent);
   box-shadow: 0 0 20px color-mix(in srgb, var(--glow, #c026d3) 15%, transparent), 0 8px 24px rgba(0, 0, 0, 0.08);
 }
-[data-theme="light"] .show-name, [data-theme="light"] .movie-name, [data-theme="light"] .game-name {
+[data-theme="light"] .club-card:hover {
+  border-color: color-mix(in srgb, var(--glow, #ffffff) 50%, transparent);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--glow, #ffffff) 15%, transparent), 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .show-name, [data-theme="light"] .movie-name, [data-theme="light"] .game-name, [data-theme="light"] .club-name {
   color: #0F172A;
 }
 [data-theme="light"] .arcade-tab {

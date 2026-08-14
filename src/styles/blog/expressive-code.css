@@ -85,7 +85,7 @@
 
 .expressive-code .frame .header .title {
   text-align: center;
-  padding-left: 3rem;
+  /* padding-left: 3rem; */
 }
 
 .expressive-code .frame.collapsed pre,
@@ -170,7 +170,7 @@
   }
   
   .expressive-code .frame .header .title {
-    padding-left: 3rem !important;
+    padding-left: 2rem !important;
   }
 }
 

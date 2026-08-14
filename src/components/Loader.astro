@@ -1,0 +1,347 @@
+---
+// src/components/Loader.astro
+---
+
+<div id="app-loader" aria-hidden="true">
+  <div class="server-chassis">
+    <div class="server-left">
+      <div class="power-section">
+        <div class="power-led"></div>
+        <div class="power-label">PWR</div>
+      </div>
+      <div class="vents">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    
+    <div class="server-center">
+      <div class="fan-grill">
+        <div class="fan-blades">
+          <svg viewBox="0 0 100 100">
+            <path d="M50,50 L90,50 C90,70 70,90 50,90 C60,70 70,60 50,50 Z" fill="#1a1a0a" />
+            <path d="M50,50 L10,50 C10,30 30,10 50,10 C40,30 30,40 50,50 Z" fill="#1a1a0a" />
+            <path d="M50,50 L50,90 C30,90 10,70 10,50 C30,60 40,70 50,50 Z" fill="#1a1a0a" />
+            <path d="M50,50 L50,10 C70,10 90,30 90,50 C70,40 60,30 50,50 Z" fill="#1a1a0a" />
+          </svg>
+        </div>
+        <div class="fan-hub"></div>
+      </div>
+    </div>
+    
+    <div class="server-right">
+      <div class="drive-bay">
+        <div class="bay-led bay-led-1"></div>
+        <div class="bay-text">root</div>
+      </div>
+      <div class="drive-bay">
+        <div class="bay-led bay-led-2"></div>
+        <div class="bay-text">/vukilis</div>
+      </div>
+      <div class="drive-bay">
+        <div class="bay-led bay-led-3"></div>
+        <div class="bay-text">sys</div>
+      </div>
+      <div class="drive-bay">
+        <div class="bay-led bay-led-4"></div>
+        <div class="bay-text">init</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="terminal-text">
+    <span class="v-symbol">V</span>
+    <span>UK1LIS</span>
+    <span class="cursor">_</span>
+  </div>
+</div>
+
+<style>
+  /* INSTANTLY hide the loader if the session flag is set */
+  html.loader-seen #app-loader {
+    display: none !important;
+  }
+
+  #app-loader {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #0b0b0c;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    z-index: 9999;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+
+  [data-theme="light"] #app-loader {
+    background-color: #faf7f0;
+  }
+
+  #app-loader.loaded {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* --- Server Chassis --- */
+  .server-chassis {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 380px;
+    height: 100px;
+    background: linear-gradient(145deg, #24262b, #1c1e22);
+    border: 1px solid rgba(241, 196, 15, 0.15);
+    border-radius: 4px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    padding: 0 20px;
+    box-sizing: border-box;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  [data-theme="light"] .server-chassis {
+    background: linear-gradient(145deg, #fdfaf2, #f5f0e5);
+    border: 1px solid rgba(241, 196, 15, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  }
+
+  /* --- Left Side (Power & Vents) --- */
+  .server-left {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 60px;
+  }
+
+  .power-section {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .power-led {
+    width: 8px;
+    height: 8px;
+    background: #f1c40f;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #f1c40f;
+    animation: power-pulse 1.5s ease-in-out infinite;
+  }
+
+  .power-label {
+    font-size: 8px;
+    color: #ffe8a3;
+    letter-spacing: 0.1em;
+  }
+
+  [data-theme="light"] .power-label {
+    color: #6b6e72;
+  }
+
+  .vents {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+  }
+
+  .vents span {
+    display: block;
+    width: 100%;
+    height: 12px;
+    background: #0a0a0a;
+    border-radius: 1px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.9);
+  }
+
+  [data-theme="light"] .vents span {
+    background: #e8e4d9;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
+  }
+
+  /* --- Center (Cooling Fan) --- */
+  .server-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .fan-grill {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #0b0b0c;
+    border: 2px solid rgba(241, 196, 15, 0.2);
+    box-shadow: inset 0 0 10px #000, 0 0 5px rgba(0,0,0,0.5);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  [data-theme="light"] .fan-grill {
+    background: #faf7f0;
+    border: 2px solid rgba(241, 196, 15, 0.4);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.05), 0 0 5px rgba(0,0,0,0.08);
+  }
+
+  .fan-blades {
+    width: 100%;
+    height: 100%;
+    animation: spin 0.4s linear infinite; /* Spinning fast */
+    transform-origin: center;
+  }
+
+  .fan-hub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(circle, #f1c40f, #d4a80e);
+    border-radius: 50%;
+    border: 1px solid rgba(241, 196, 15, 0.3);
+    z-index: 2;
+  }
+
+  /* --- Right Side (Drive Bays) --- */
+  .server-right {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 110px;
+  }
+
+  .drive-bay {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #0a0a0a;
+    border: 1px solid rgba(241, 196, 15, 0.15);
+    border-radius: 2px;
+    padding: 4px 8px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.9);
+  }
+
+  [data-theme="light"] .drive-bay {
+    background: #f5f0e5;
+    border: 1px solid rgba(241, 196, 15, 0.3);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.08);
+  }
+
+  .bay-led {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(241, 196, 15, 0.25);
+  }
+
+  .bay-led-1 { animation: led-blink 1s ease-in-out infinite; }
+  .bay-led-2 { animation: led-blink 1.2s ease-in-out infinite 0.2s; }
+  .bay-led-3 { animation: led-blink 0.8s ease-in-out infinite 0.4s; }
+  .bay-led-4 { animation: led-blink 1.5s ease-in-out infinite 0.1s; }
+
+  .bay-text {
+    font-size: 9px;
+    color: #ffe8a3;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
+  [data-theme="light"] .bay-text {
+    color: #6b6e72;
+  }
+
+  /* --- Terminal Text (V for Vendetta Style) --- */
+  .terminal-text {
+    font-family: 'Space Grotesk', monospace;
+    color: #faf7f0;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    text-shadow: 0 0 10px rgba(241, 196, 15, 0.8), 0 0 20px rgba(241, 196, 15, 0.4);
+  }
+
+  [data-theme="light"] .terminal-text {
+    color: #0b0b0c;
+    text-shadow: 0 0 10px rgba(241, 196, 15, 0.4), 0 0 20px rgba(241, 196, 15, 0.2);
+  }
+
+  .v-symbol {
+    font-size: 1.4rem;
+    margin-right: 4px;
+    color: #f1c40f;
+    text-shadow: 0 0 15px #f1c40f;
+  }
+
+  .cursor {
+    margin-left: 8px;
+    color: #f1c40f;
+    animation: cursor-blink 1s steps(2) infinite;
+  }
+
+  /* --- Keyframes --- */
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes power-pulse {
+    0%, 100% { opacity: 0.6; box-shadow: 0 0 4px #f1c40f; }
+    50% { opacity: 1; box-shadow: 0 0 10px #f1c40f, 0 0 15px #f9e076; }
+  }
+
+  @keyframes led-blink {
+    0%, 100% { background: rgba(241, 196, 15, 0.15); box-shadow: none; }
+    50% { background: #f1c40f; box-shadow: 0 0 6px #f1c40f; }
+  }
+
+  @keyframes cursor-blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fan-blades, .power-led, .bay-led, .cursor {
+      animation: none !important;
+    }
+    .power-led { background: #f1c40f; box-shadow: 0 0 5px #f1c40f; }
+    .bay-led { background: rgba(241, 196, 15, 0.4); }
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    var hasSeenLoader = false;
+    try {
+      hasSeenLoader = sessionStorage.getItem('loader-seen') === 'true';
+    } catch (e) {}
+
+    if (!hasSeenLoader) {
+      try {
+        sessionStorage.setItem('loader-seen', 'true');
+      } catch (e) {}
+      
+      setTimeout(function() {
+        var loader = document.getElementById('app-loader');
+        if (loader) {
+          loader.classList.add('loaded');
+          setTimeout(function() { 
+            if (loader) loader.remove(); 
+          }, 600);
+        }
+      }, 2000); // Show loader for 2 seconds
+    } else {
+      var loader = document.getElementById('app-loader');
+      if (loader) loader.remove();
+    }
+  })();
+</script>

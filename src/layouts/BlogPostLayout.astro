@@ -22,10 +22,11 @@ interface Props {
     twitter?: boolean | undefined;
     reddit?: boolean | undefined;
   } | undefined;
+  keywords?: string;
 }
 
 const base = import.meta.env.BASE_URL;
-const { title, description, pubDate, lastmod, tags, categories, wordCount, readingTime, license, share } = Astro.props;
+const { title, description, pubDate, lastmod, tags, categories, wordCount, readingTime, license, share, keywords } = Astro.props;
 
 function slugify(str: string) {
   return str
@@ -49,7 +50,7 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
 });
 ---
 
-<BaseLayout title={`${title} - Vuk1lis`} description={`${description } - Designed by Vuk1lis`}>
+<BaseLayout title={`${title} - Vuk1lis`} description={`${description } - Written by Vuk1lis`} keywords={keywords || [tags, categories].flat().filter(Boolean).slice(0, 20).join(', ')}>
   <Navigation />
 
   <article class="blog-post">
@@ -156,7 +157,7 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
   .post-content :global(h2:first-child) { margin-top: 0; }
   .post-content :global(h3) { font-size: 1.5rem; color: var(--color-text-dim); }
   .post-content :global(h4) { font-size: 1.1rem; color: #8a7f72; font-weight: 600; }
-  .post-content :global(p) { line-height: 1.85; margin-bottom: 1.5rem; color: var(--color-text-dim); font-size: 0.95rem; }
+  .post-content :global(p) { line-height: 1.85; margin-bottom: 1.5rem; color: var(--color-text-dim); font-size: 0.95rem; margin-top: 1.5rem;}
   .post-content :global(a) { color: var(--color-accent-purple); text-decoration: none; border-bottom: 1px solid var(--color-accent-purple); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 500; }
   .post-content :global(a:hover) { color: var(--color-accent-pink); border-color: var(--color-accent-pink); }
   .post-content :global(code) { background: rgba(241, 196, 15, 0.1); padding: 0.2rem 0rem; border-radius: 0.25rem; font-family: 'Courier New', monospace; font-size: 0.9em; color: var(--color-accent-purple); }

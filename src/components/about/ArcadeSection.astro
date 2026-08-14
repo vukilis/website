@@ -3,9 +3,10 @@ interface Props {
   games: { name: string; color: string; img: string; url: string }[];
   shows: { name: string; color: string; img: string; url: string }[];
   movies: { name: string; color: string; img: string; url: string }[];
+  clubs: { name: string; color: string; img: string | import('astro:assets').ImageMetadata; url: string; himno?: string }[];
 }
 
-const { games, shows, movies } = Astro.props;
+const { games, shows, movies, clubs } = Astro.props;
 import '../../styles/about/ArcadeSection.css';
 ---
 
@@ -19,6 +20,7 @@ import '../../styles/about/ArcadeSection.css';
         <button class="arcade-tab active" data-tab="games" role="tab" aria-selected="true">Games</button>
         <button class="arcade-tab" data-tab="shows" role="tab" aria-selected="false">Shows</button>
         <button class="arcade-tab" data-tab="movies" role="tab" aria-selected="false">Movies</button>
+        <button class="arcade-tab" data-tab="clubs" role="tab" aria-selected="false">Clubs</button>
       </div>
     </div>
 
@@ -65,6 +67,38 @@ import '../../styles/about/ArcadeSection.css';
               <span class="movie-name">{movie.name}</span>
             </a>
           ))}
+        </div>
+      </div>
+
+      <div class="carousel-panel" data-panel="clubs">
+        <div class="games-grid">
+          {clubs.map((club, i) => {
+            const imgSrc = typeof club.img === 'string' ? club.img : club.img.src;
+            return (
+            <div class="club-card-wrapper" style={`--i:${i}`}>
+              <a href={club.url} target="_blank" rel="noopener" class="club-card" style={`--glow:${club.color}`}>
+                <div class="card-media">
+                  <div class="card-bg" style={`background-image:url('${imgSrc}')`} aria-hidden="true"></div>
+                  <div class="card-glitch" aria-hidden="true"></div>
+                  <span class="card-number">{String(i + 1).padStart(2, '0')}</span>
+                </div>
+                <span class="club-name">{club.name}</span>
+              </a>
+              {club.himno && (
+                <button type="button" class="club-sound-btn" data-himno={club.himno} aria-label="Play anthem" title="Play anthem">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                </button>
+              )}
+            </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div class="club-youtube-modal" id="clubYoutubeModal">
+        <button class="club-youtube-close" id="clubYoutubeClose" aria-label="Close">✕</button>
+        <div class="club-youtube-wrap">
+          <iframe id="clubYoutubeFrame" src="" title="Club anthem" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
       </div>
     </div>

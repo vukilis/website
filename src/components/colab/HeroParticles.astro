@@ -1,6 +1,8 @@
 ---
-const particleCount = 200;
-const particles = Array.from({ length: particleCount }, () => ({
+const DESKTOP_PARTICLE_COUNT = 200;
+const MOBILE_PARTICLE_COUNT = 80;
+const PARTICLE_COUNT = Math.max(DESKTOP_PARTICLE_COUNT, MOBILE_PARTICLE_COUNT);
+const particles = Array.from({ length: PARTICLE_COUNT }, () => ({
   left: Math.random() * 100,
   top: Math.random() * 100,
   delay: Math.random() * 8,
@@ -12,7 +14,7 @@ const particles = Array.from({ length: particleCount }, () => ({
   {particles.map((p, i) => (
     <div
       key={i}
-      class="particle"
+      class={`particle${i >= MOBILE_PARTICLE_COUNT ? ' particle--hide-mobile' : ''}`}
       style={`left: ${p.left}%; top: ${p.top}%; animation-delay: ${p.delay}s; animation-duration: ${p.duration}s`}
     />
   ))}
@@ -20,7 +22,7 @@ const particles = Array.from({ length: particleCount }, () => ({
 
 <style is:global>
   .hero-particles {
-    position: absolute;
+    position: fixed;
     inset: 0;
     pointer-events: none;
     overflow: hidden;
@@ -41,6 +43,12 @@ const particles = Array.from({ length: particleCount }, () => ({
     25% { transform: translateY(-30px) translateX(10px); opacity: 0.6; }
     50% { transform: translateY(-15px) translateX(-10px); opacity: 0.4; }
     75% { transform: translateY(-40px) translateX(5px); opacity: 0.5; }
+  }
+
+  @media (max-width: 768px) {
+    .particle--hide-mobile {
+      display: none;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

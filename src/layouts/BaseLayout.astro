@@ -8,6 +8,8 @@ import LightGalleryInit from '../components/LightGalleryInit.astro';
 import DamageNumbers from '../components/DamageNumbers.astro';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import HeroParticles from '../components/colab/HeroParticles.astro';
+import Loader from '../components/Loader.astro';
+
 import {
   GoogleTagmanager,
   GoogleTagmanagerNoscript
@@ -16,6 +18,7 @@ import {
 interface Props {
   title?: string;
   description?: string;
+  keywords?: string;
   hideFooter?: boolean;
 }
 
@@ -23,6 +26,7 @@ const base = import.meta.env.BASE_URL;
 const {
   title = 'Vuk1lis | V For Vuk1lis',
   description = 'My work sits at the intersection of art and technology. I build immersive digital experiences where dark aesthetics meet surgical performance. Every deployment is a revolution. Every animation is a statement.',
+  keywords = 'vukilis, portfolio, creative developer, immersive experiences, dark aesthetics',
   hideFooter = false,
 } = Astro.props;
 ---
@@ -32,8 +36,28 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href={`${base}favicon.png`} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${Astro.site}${base}logo.png`} />
+    <meta property="og:site_name" content="Vuk1lis" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${Astro.site}${base}logo.png`} />
+
+    <link rel="icon" type="image/png" href={`${base}favicon-96x96.png`} sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="shortcut icon" href={`${base}favicon.ico`} />
+    <link rel="apple-touch-icon" sizes="180x180" href={`${base}apple-touch-icon.png`} />
+    <meta name="apple-mobile-web-app-title" content="Vuk1lis" />
+    <link rel="manifest" href={`${base}site.webmanifest`} />
+    
     <meta name="generator" content={Astro.generator} />
     <!-- Google Fonts: Space Grotesk + DM Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -61,6 +85,16 @@ const {
         } catch (e) {}
       })();
     </script>
+
+    <script is:inline>
+      (function() {
+        try {
+          if (sessionStorage.getItem('loader-seen') === 'true') {
+            document.documentElement.classList.add('loader-seen');
+          }
+        } catch (e) {}
+      })();
+    </script>
     
     <ClientRouter prefetch={false} />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7134772077337777"
@@ -70,6 +104,7 @@ const {
   </head>
   <body>
     <GoogleTagmanagerNoscript id="GTM-K7KG6MT7" />
+    <Loader />
     <SiteBackdrop />
     {Astro.url.pathname !== '/homelab_diagram/' && <HeroParticles />}
     <div id="page-content">
@@ -132,6 +167,16 @@ const {
           if (!getSavedTheme()) {
             applyTheme(e.matches ? 'dark' : 'light', false);
           }
+        });
+
+        // Remove loader after every Astro view transition
+        document.addEventListener('astro:before-swap', (e) => {
+          try {
+            if (sessionStorage.getItem('loader-seen') === 'true') {
+              var newLoader = e.newDocument.querySelector('#app-loader');
+              if (newLoader) newLoader.remove();
+            }
+          } catch (err) {}
         });
 
         // Re-enforce theme after every Astro view transition

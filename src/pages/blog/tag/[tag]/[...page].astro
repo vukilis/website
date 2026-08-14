@@ -44,7 +44,7 @@ const queryString = sortParam ? `sort=${encodeURIComponent(sortParam)}` : '';
 const initialPage = page?.currentPage || 1;
 ---
 
-<BaseLayout title="Blog - Vuk1lis" description="This blog is made to document all my work, store a different guides and how-to articles.">
+<BaseLayout title={`Blog / ${activeTag.charAt(0).toLowerCase() + activeTag.slice(1)} - Vuk1lis`} description={`Articles tagged with ${activeTag}. ${sortedAllPosts.filter(p => (p.data.tags ?? []).map(t => t.toLowerCase()).includes(activeTag)).length} posts found.`} keywords={`vukilis, blog, tag, ${activeTag}, articles, guides, tutorials, tech content, programming, devops, linux, web dev, coding, automation, software engineering, infrastructure, cloud, technical writing, how-to, tutorials`}>
   <Navigation />
 
   <main class="blog-page" id="main-content">

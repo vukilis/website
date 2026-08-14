@@ -14,7 +14,7 @@ const recentPosts = allBlogPosts
   .slice(0, 3);
 ---
 
-<BaseLayout title="Vuk1lis" description="I'm Vuk1lis - a DevOps engineer, Linux enthusiast, and VibeCoder. My work sits at the intersection of art and technology. I build immersive digital experiences where dark aesthetics meet surgical performance. Every deployment is a revolution. Every animation is a statement. I don't just write code - I orchestrate infrastructure like a symphony, and craft interfaces that feel like they were pulled from another dimension.">
+<BaseLayout title="Vuk1lis | Personal Website & Portfolio" description="Vuk1lis is a DevOps engineer, Linux enthusiast, and VibeCoder crafting immersive digital experiences where dark aesthetics meet surgical performance." keywords="vukilis, portfolio, creative developer, devops engineer, linux enthusiast, immersive experiences, dark aesthetics, web development, personal website, tech blog, coding, automation, frontend, backend, open source, github, projects, skills, recent posts, vuk1lis">
   <Navigation />
   <Hero />
   <Skills />
@@ -28,7 +28,7 @@ const recentPosts = allBlogPosts
   <section id="posts" class="recent-posts">
     <div class="container">
       <h2 class="section-title">Recent Posts</h2>
-      <p class="section-subtitle">Latest articles from the blog</p>
+      <p class="section-subtitle">Discover my latest articles, guides, tutorials, and how-to posts from recent projects</p>
       <div class="posts-grid">
         {recentPosts.map((post) => (
           <BlogCard
@@ -59,7 +59,7 @@ const recentPosts = allBlogPosts
   .recent-posts { justify-content: center; position: relative; overflow: hidden; padding: calc(var(--nav-height) + 2rem) 2rem 14rem; }
   .container { max-width: 1200px; width: 100%; margin: 0 auto; }
   .section-title { font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; text-align: center; margin-bottom: 0.75rem; color: var(--color-text); }
-  .section-subtitle { text-align: center; color: var(--color-text-dim); font-size: 1.1rem; margin-bottom: 3rem; }
+  .section-subtitle { text-align: center; font-size: 1.1rem; color: var(--color-text-dim); max-width: 480px; margin: 0rem auto 4rem; line-height: 1.6; }
   .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
   .view-all { text-align: center; }
   .btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.875rem 1.75rem; font-size: 0.9375rem; font-weight: 600; font-family: var(--font-body, system-ui, sans-serif); letter-spacing: -0.01em; text-decoration: none; border-radius: 0.875rem; cursor: pointer; border: 1px solid transparent; white-space: nowrap; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; }

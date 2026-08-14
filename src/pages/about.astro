@@ -6,6 +6,10 @@ import NomansskySection from '../components/about/NomansskySection.astro';
 import ArcadeSection from '../components/about/ArcadeSection.astro';
 import TerminalLightbox from '../components/about/TerminalLightbox.astro';
 import AboutPageScript from '../components/about/AboutPageScript.astro';
+import partizanImg from '../assets/images/about/fk-partizan-logo.webp';
+import paokImg from '../assets/images/about/paok.png';
+import santosImg from '../assets/images/about/santos.png';
+import bocajrImg from '../assets/images/about/bocajr.svg';
 
 const LOGO = '/logo.png';
 
@@ -41,15 +45,22 @@ const movies = [
   { name: 'City of God', color: '#eab308', img: 'https://image.tmdb.org/t/p/w500/5KkDvrbYsWEGvTQUDm1TtGo7x3v.jpg', url: 'https://www.imdb.com/title/tt0317248' },
   { name: 'The Breakfast Club', color: '#8b5cf6', img: 'https://image.tmdb.org/t/p/w500/gp4zlj7wgbiofLMNsTPndMuO3PN.jpg', url: 'https://www.imdb.com/title/tt0088847' },
 ];
+
+const clubs = [
+  { name: 'FK Partizan', color: 'var(--color-text)', img: partizanImg, url: 'https://www.partizan.rs/', himno: 'KjE388nXOqc' },
+  { name: 'PAOK FC', color: 'var(--color-text)', img: paokImg, url: 'https://www.paokfc.gr/', himno: 'FrB7_aU_b9c' },
+  { name: 'Santos FC', color: 'var(--color-text)', img: santosImg, url: 'https://www.santosfc.com.br/', himno: 'lgjGo6QwNwk' },
+  { name: 'CA Boca Juniors', color: 'var(--color-boca-juniors)', img: bocajrImg, url: 'https://www.bocajuniors.com.ar/', himno: 'pf6-Wc9hhQA' },
+];
 ---
 
-<BaseLayout title="About - Vuk1lis" description="My work sits at the intersection of art and technology. I build immersive digital experiences where dark aesthetics meet surgical performance. Every deployment is a revolution. Every animation is a statement. I don't just write code - I orchestrate infrastructure like a symphony, and craft interfaces that feel like they were pulled from another dimension.">
+<BaseLayout title="About - Vuk1lis" description="My work sits at the intersection of art and technology. I build immersive digital experiences where dark aesthetics meet surgical performance. Every deployment is a revolution. Every animation is a statement. I don't just write code - I orchestrate infrastructure like a symphony, and craft interfaces that feel like they were pulled from another dimension." keywords="vukilis, about, bio, creative developer, devops, linux, gaming, euro truck simulator, no man's sky, left 4 dead 2, path of exile, rocket league, doom, tv shows, movies, football, partizan, paok, santos, boca juniors">
   <Navigation />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
   <VendettaSection logo={LOGO} />
   <NomansskySection />
-  <ArcadeSection {games} {shows} {movies} />
+  <ArcadeSection {games} {shows} {movies} {clubs} />
   <TerminalLightbox id="termLightbox" />
   <AboutPageScript />
 </BaseLayout>
