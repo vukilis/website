@@ -56,7 +56,7 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
   <article class="blog-post">
     <div class="container">
       <header class="post-header">
-        <button type="button" class="back-link" id="back-to-blog" data-default={`${base}blog/`}>← Back to Blog</button>
+        <a href={`${base}blog/`} class="back-link" id="back-to-blog">← Back to Blog</a>
         <h1 class="post-title">{title}</h1>
         <div class="post-meta">
           <time class="post-date">
@@ -238,31 +238,10 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
         try {
           const savedPath = sessionStorage.getItem(PATH_KEY);
           if (savedPath) {
-            backLink.dataset.target = savedPath;
-          } else {
-            delete backLink.dataset.target;
+            backLink.href = savedPath;
           }
         } catch (e) {}
       }
-
-      function navigateBack(e) {
-        const btn = e.target.closest('#back-to-blog');
-        if (!btn) return;
-        e.preventDefault();
-        const target = btn.dataset.target;
-        if (target) {
-          window.location.href = target;
-        } else {
-          const defaultHref = btn.dataset.default;
-          if (defaultHref) {
-            window.location.href = defaultHref;
-          } else {
-            window.location.href = '/blog/';
-          }
-        }
-      }
-
-      document.addEventListener('click', navigateBack);
 
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', updateBackLink);

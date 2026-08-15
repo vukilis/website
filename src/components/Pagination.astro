@@ -65,7 +65,8 @@ const lastHref = `${base}/${lastPage}/${querySuffix}`;
       </span>
     ) : (
       <a href={firstHref} class="pagination-icon" aria-label="First page">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <span class="sr-only">First page</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polyline points="11 17 6 12 11 7" />
           <polyline points="18 17 13 12 18 7" />
         </svg>
@@ -75,13 +76,39 @@ const lastHref = `${base}/${lastPage}/${querySuffix}`;
 
   {prevHref ? (
     <a href={prevHref} class="pagination-icon" aria-label="Previous page">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <span class="sr-only">Previous page</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
         <polyline points="15 18 9 12 15 6" />
       </svg>
     </a>
   ) : (
-    <span class="pagination-icon pagination-disabled" aria-label="Previous page" aria-disabled="true">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <span
+      class="pagination-icon pagination-disabled"
+      aria-hidden="true"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
         <polyline points="15 18 9 12 15 6" />
       </svg>
     </span>
@@ -117,13 +144,14 @@ const lastHref = `${base}/${lastPage}/${querySuffix}`;
 
   {nextHref ? (
     <a href={nextHref} class="pagination-icon" aria-label="Next page">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <span class="sr-only">Next page</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <polyline points="9 18 15 12 9 6" />
       </svg>
     </a>
   ) : (
-    <span class="pagination-icon pagination-disabled" aria-label="Next page" aria-disabled="true">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <span class="pagination-icon pagination-disabled" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <polyline points="9 18 15 12 9 6" />
       </svg>
     </span>
@@ -131,7 +159,7 @@ const lastHref = `${base}/${lastPage}/${querySuffix}`;
 
   {showFirstLast && (
     currentPage === lastPage ? (
-      <span class="pagination-icon pagination-disabled" aria-hidden="true" aria-label="Last page">
+      <span class="pagination-icon pagination-disabled" aria-hidden="true">
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polyline points="13 17 18 12 13 7" />
           <polyline points="6 17 11 12 6 7" />
@@ -139,7 +167,8 @@ const lastHref = `${base}/${lastPage}/${querySuffix}`;
       </span>
     ) : (
       <a href={lastHref} class="pagination-icon" aria-label="Last page">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <span class="sr-only">Last page</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polyline points="13 17 18 12 13 7" />
           <polyline points="6 17 11 12 6 7" />
         </svg>

@@ -11,10 +11,13 @@ interface Props {
   categories?: string[] | undefined;
   activeTag?: string | undefined;
   readingTime?: number | undefined;
+  currentPage?: number | undefined;
 }
 
 const base = import.meta.env.BASE_URL;
-const { title, description, pubDate, lastmod, slug, tags, categories, activeTag, readingTime } = Astro.props;
+const { title, description, pubDate, lastmod, slug, tags, categories, activeTag, readingTime, currentPage } = Astro.props;
+
+const postUrl = currentPage && currentPage > 1 ? `${base}blog/${currentPage}/${slug}/` : `${base}blog/${slug}/`;
 
 const formattedDate = pubDate.toLocaleDateString('en-US', {
   year: 'numeric',
@@ -32,9 +35,9 @@ const tagsJson = JSON.stringify(tags ?? []);
 const categoriesJson = JSON.stringify(categories ?? []);
 ---
 
-<a
-  href={`${base}blog/${slug}/`}
+<div
   class="blog-card"
+  data-href={postUrl}
   data-pub-date={pubDate.toISOString()}
   data-lastmod={lastmod?.toISOString() ?? ''}
   data-reading-time={readingTime ?? ''}
@@ -62,7 +65,9 @@ const categoriesJson = JSON.stringify(categories ?? []);
       </span>
     )}
   </div>
-  <h3 class="blog-title">{title}</h3>
+  <h3 class="blog-title">
+    <a href={postUrl} class="blog-title-link">{title}</a>
+  </h3>
   <p class="blog-description">{description}</p>
   {tags && tags.length > 0 && (
     <div class="blog-tags">
@@ -71,7 +76,7 @@ const categoriesJson = JSON.stringify(categories ?? []);
       ))}
     </div>
   )}
-  <span class="read-more">
+  <a href={postUrl} class="read-more">
     <span class="read-more-text">
       Read article
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -88,12 +93,21 @@ const categoriesJson = JSON.stringify(categories ?? []);
         {readingTime} min
       </span>
     )}
-  </span>
-</a>
+  </a>
+</div>
 
 <script is:inline>
   (function() {
     function init() {
+      document.querySelectorAll('.blog-card[data-href]').forEach(function(card) {
+        if (card.getAttribute('data-card-initialized')) return;
+        card.setAttribute('data-card-initialized', 'true');
+        card.addEventListener('click', function(e) {
+          if (e.target.closest('a, .tag, button')) return;
+          var link = card.querySelector('.blog-title-link');
+          if (link) link.click();
+        });
+      });
       document.querySelectorAll('.blog-card .tag[data-tag]').forEach(function(el) {
         if (el.getAttribute('data-initialized')) return;
         el.setAttribute('data-initialized', 'true');

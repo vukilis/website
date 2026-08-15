@@ -111,7 +111,7 @@ const {
       <slot />
     </div>
     {!hideFooter && <Footer />}
-
+    <!-- Theme Toggle -->
     <script is:inline>
       (function() {
         if (window.__themeInitialized) return;
@@ -169,32 +169,10 @@ const {
           }
         });
 
-        // Remove loader after every Astro view transition
-        document.addEventListener('astro:before-swap', (e) => {
-          try {
-            if (sessionStorage.getItem('loader-seen') === 'true') {
-              var newLoader = e.newDocument.querySelector('#app-loader');
-              if (newLoader) newLoader.remove();
-            }
-          } catch (err) {}
-        });
-
         // Re-enforce theme after every Astro view transition
         document.addEventListener('astro:page-load', () => {
           const saved = getSavedTheme();
           applyTheme(saved || getSystemTheme(), !!saved);
-        });
-
-        // Re-push AdSense ads after every Astro view transition
-        // document.addEventListener('astro:after-swap', () => {
-        //   if (window.adsbygoogle) {
-        //     window.adsbygoogle.push({});
-        //   }
-        // });
-
-        // Track Umami pageviews after every Astro view transition
-        document.addEventListener('astro:after-swap', () => {
-          if (window.umami) window.umami.track();
         });
 
         // Notify widgets that depend on theme (Giscus)
@@ -215,14 +193,41 @@ const {
         };
       })();
     </script>
+    <script is:inline>
+      // Remove loader after every Astro view transition
+      document.addEventListener('astro:before-swap', (e) => {
+        try {
+          if (sessionStorage.getItem('loader-seen') === 'true') {
+            var newLoader = e.newDocument.querySelector('#app-loader');
+            if (newLoader) newLoader.remove();
+          }
+        } catch (err) {}
+      });
+
+      // Re-push AdSense ads after every Astro view transition
+      // document.addEventListener('astro:after-swap', () => {
+      //   if (window.adsbygoogle) {
+      //     window.adsbygoogle.push({});
+      //   }
+      // });
+
+      // Track Umami pageviews after every Astro view transition
+      document.addEventListener('astro:after-swap', () => {
+        if (window.umami) window.umami.track();
+      });
+    </script>
     <BackToTopButton />
     <LightGalleryInit />
     <DamageNumbers />
+    <!-- Scroll restoration -->
     <script>
       if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
       }
       let currentPath = window.location.pathname;
+      let fromPath = currentPath;
+      const isBlogList = (path) => path === '/blog/' || /^\/blog\/\d+\/?$/.test(path) || path.startsWith('/blog/category/') || path.startsWith('/blog/tag/');
+      const isBlogSection = (path) => isBlogList(path) || /^\/blog\/\d{4}\//.test(path);
       document.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
         if (target.closest('.pagination-page, .pagination-icon')) {
@@ -235,30 +240,43 @@ const {
         if (link && link.href && link.origin === window.location.origin) {
           try {
             const destUrl = new URL(link.href);
-            sessionStorage.removeItem('scroll-' + destUrl.pathname);
+            fromPath = currentPath;
+            if (!isBlogList(destUrl.pathname) && sessionStorage.getItem('scroll-' + destUrl.pathname)) {
+              sessionStorage.removeItem('scroll-' + destUrl.pathname);
+            }
           } catch (err) {}
         }
       });
       document.addEventListener('astro:before-swap', () => {
-        try {
-          sessionStorage.setItem('scroll-' + currentPath, String(window.scrollY));
-        } catch (e) {}
+        if (isBlogList(currentPath)) {
+          try {
+            sessionStorage.setItem('scroll-' + currentPath, String(window.scrollY));
+          } catch (e) {}
+        }
       });
       window.addEventListener('pagehide', () => {
-        try {
-          sessionStorage.setItem('scroll-' + currentPath, String(window.scrollY));
-        } catch (e) {}
+        if (isBlogList(currentPath)) {
+          try {
+            sessionStorage.setItem('scroll-' + currentPath, String(window.scrollY));
+          } catch (e) {}
+        }
       });
       function handleScrollRestore() {
+        const prevPath = fromPath;
         currentPath = window.location.pathname;
+        fromPath = currentPath;
         if (sessionStorage.getItem('pagination-clicked') === 'true') {
           sessionStorage.removeItem('pagination-clicked');
           window.scrollTo({ top: 0, behavior: 'smooth' });
           return;
         }
+        if (!isBlogList(currentPath)) {
+          window.scrollTo(0, 0);
+          return;
+        }
+        const wasFromBlog = isBlogSection(prevPath);
         const savedPos = parseInt(sessionStorage.getItem('scroll-' + currentPath) || '0', 10);
-        
-        if (savedPos > 0) {
+        if (savedPos > 0 && wasFromBlog) {
           requestAnimationFrame(() => {
             window.scrollTo({ top: savedPos, behavior: 'instant' });
           });
@@ -268,6 +286,16 @@ const {
       }
       window.addEventListener('DOMContentLoaded', handleScrollRestore);
       document.addEventListener('astro:page-load', handleScrollRestore);
+
+      function updateBlogListPath() {
+        const path = window.location.pathname;
+        const isBlogList = path === '/blog/' || /^\/blog\/\d+\/?$/.test(path) || path.startsWith('/blog/category/') || path.startsWith('/blog/tag/');
+        if (isBlogList) {
+          try { sessionStorage.setItem('blog-list-path', path); } catch (e) {}
+        }
+      }
+
+      document.addEventListener('astro:page-load', updateBlogListPath);
     </script>
   </body>
 </html>
