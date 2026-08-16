@@ -4,6 +4,7 @@ import Navigation from '../components/Navigation.astro';
 import TableOfContents from '../components/blog/TableOfContents.astro';
 import PostComments from "../components/blog/PostComments.astro";
 import PostShare from "../components/blog/PostShare.astro";
+import RelatedPosts from "../components/blog/RelatedPosts.astro";
 import '../styles/blog/expressive-code.css';
 
 interface Props {
@@ -23,10 +24,11 @@ interface Props {
     reddit?: boolean | undefined;
   } | undefined;
   keywords?: string;
+  entry?: import('astro:content').CollectionEntry<'blog'> | undefined;
 }
 
 const base = import.meta.env.BASE_URL;
-const { title, description, pubDate, lastmod, tags, categories, wordCount, readingTime, license, share, keywords } = Astro.props;
+const { title, description, pubDate, lastmod, tags, categories, wordCount, readingTime, license, share, keywords, entry } = Astro.props;
 
 function slugify(str: string) {
   return str
@@ -115,6 +117,7 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
           ))}
         </div>
       )}
+      {entry && <RelatedPosts currentEntry={entry} />}
       <br />
       <br />
       <PostComments />
@@ -158,7 +161,7 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
   .post-content :global(h3) { font-size: 1.5rem; color: var(--color-text-dim); }
   .post-content :global(h4) { font-size: 1.1rem; color: #8a7f72; font-weight: 600; }
   .post-content :global(p) { line-height: 1.85; margin-bottom: 1.5rem; color: var(--color-text-dim); font-size: 0.95rem; margin-top: 1.5rem;}
-  .post-content :global(a) { color: var(--color-accent-purple); text-decoration: none; border-bottom: 1px solid var(--color-accent-purple); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 500; }
+  .post-content :global(a) { color: var(--color-accent-purple); text-decoration: none; border-bottom: 1px solid var(--color-accent-purple); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 500; overflow-wrap: anywhere; }
   .post-content :global(a:hover) { color: var(--color-accent-pink); border-color: var(--color-accent-pink); }
   .post-content :global(code) { background: rgba(241, 196, 15, 0.1); padding: 0.2rem 0rem; border-radius: 0.25rem; font-family: 'Courier New', monospace; font-size: 0.9em; color: var(--color-accent-purple); }
   .post-content :global(ul), .post-content :global(ol) { margin: 1.5rem 0; padding-left: 2rem; color: var(--color-text-dim); }
@@ -177,7 +180,8 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
   }
   @media (max-width: 1100px) {
     .post-layout { grid-template-columns: 1fr; gap: 2.5rem; }
-    .post-layout aside { position: static; }
+    .post-layout aside { position: static; order: -1; }
+    .post-content { order: 1; }
   }
   @media (max-width: 768px) {
     .blog-post { padding: calc(var(--nav-height) + 5rem) 1rem 3rem; }

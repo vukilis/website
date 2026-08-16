@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content';
+import BlogCard from './BlogCard.astro';
+import '../../styles/blog/related-posts.css';
+
+interface Props {
+  currentEntry: import('astro:content').CollectionEntry<'blog'>;
+}
+
+const { currentEntry } = Astro.props;
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+
+const currentCategories = currentEntry.data.categories ?? [];
+const currentTags = currentEntry.data.tags ?? [];
+
+const related = allPosts
+  .filter(post => post.id !== currentEntry.id)
+  .map(post => {
+    const postCategories = post.data.categories ?? [];
+    const postTags = post.data.tags ?? [];
+
+    let score = 0;
+    const sharedCategories = postCategories.filter(c => currentCategories.includes(c));
+    score += sharedCategories.length * 10;
+    const sharedTags = postTags.filter(t => currentTags.includes(t));
+    score += sharedTags.length;
+
+    return { post, score };
+  })
+  .filter(({ score }) => score > 0)
+  .sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    return b.post.data.pubDate.valueOf() - a.post.data.pubDate.valueOf();
+  })
+  .slice(0, 6);
+
+if (related.length === 0) {
+  return null;
+}
+
+function computeReadingTime(body: string | null | undefined): number {
+  const text = (body ?? '')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/[#*_`~\-\[\]\(\)!$|\\]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const words = text.split(' ').filter(w => w.length > 0).length;
+  return Math.max(1, Math.ceil(words / 200));
+}
+---
+
+<section class="related-posts">
+  <h2 class="related-posts-title">Related Posts</h2>
+  <div class="related-posts-grid">
+    {related.map(({ post }) => (
+      <BlogCard
+        title={post.data.title}
+        description={post.data.description}
+        pubDate={post.data.pubDate}
+        lastmod={post.data.lastmod}
+        slug={post.id}
+        tags={post.data.tags}
+        categories={post.data.categories}
+        readingTime={computeReadingTime(post.body)}
+      />
+    ))}
+  </div>
+</section>

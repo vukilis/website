@@ -37,38 +37,45 @@ const {
         </svg>
       </div>
       <span class="toc-label">On This Page</span>
+      <button class="toc-toggle" aria-label="Toggle table of contents" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
       <div class="toc-header-line" aria-hidden="true"></div>
     </header>
 
-    <nav class="toc-nav" aria-label="Table of contents">
-      <ul class="toc-list" id="toc-list">
-        {(items.length > 0 ? items : []).map((item) => {
-          if (item.depth > maxDepth) return null;
-          return (
-            <li key={item.id}>
-              <a
-                href={`#${item.id}`}
-                class={`toc-link toc-depth-${item.depth > 2 ? 3 : 2}`}
-                data-toc-depth={item.depth}
-              >
-                <span class="toc-dot" aria-hidden="true"></span>
-                <span class="toc-text">{item.text}</span>
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-    </nav>
+    <div class="toc-body">
+      <nav class="toc-nav" aria-label="Table of contents">
+        <ul class="toc-list" id="toc-list">
+          {(items.length > 0 ? items : []).map((item) => {
+            if (item.depth > maxDepth) return null;
+            return (
+              <li key={item.id}>
+                <a
+                  href={`#${item.id}`}
+                  class={`toc-link toc-depth-${item.depth > 2 ? 3 : 2}`}
+                  data-toc-depth={item.depth}
+                >
+                  <span class="toc-dot" aria-hidden="true"></span>
+                  <span class="toc-text">{item.text}</span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
 
-    <footer class="toc-footer">
-      <div class="toc-footer-line" aria-hidden="true"></div>
-      <span class="toc-scroll-hint">
-        <svg class="toc-scroll-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
-        Scroll to navigate
-      </span>
-    </footer>
+      <footer class="toc-footer">
+        <div class="toc-footer-line" aria-hidden="true"></div>
+        <span class="toc-scroll-hint">
+          <svg class="toc-scroll-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+          Scroll to navigate
+        </span>
+      </footer>
+    </div>
   </div>
 </div>
 
@@ -209,6 +216,49 @@ const {
           }
         });
       }, { passive: true });
+
+      var tocBody = tocEl.querySelector('.toc-body');
+      var toggleBtn = tocEl.querySelector('.toc-toggle');
+      var tocHeader = tocEl.querySelector('.toc-header');
+      
+      if (tocBody && toggleBtn && tocHeader) {
+        function updateToggle() {
+          var isMobile = window.matchMedia('(max-width: 1100px)').matches;
+          if (!isMobile) {
+            tocEl.setAttribute('data-expanded', 'true');
+            toggleBtn.setAttribute('aria-expanded', 'true');
+            return;
+          }
+          
+          var isExpanded = tocEl.getAttribute('data-expanded') === 'true';
+          toggleBtn.setAttribute('aria-expanded', String(isExpanded));
+        }
+
+        tocHeader.addEventListener('click', function (e) {
+          if (e.target.closest('.toc-toggle')) return;
+          var isMobile = window.matchMedia('(max-width: 1100px)').matches;
+          if (!isMobile) return;
+          
+          var isExpanded = tocEl.getAttribute('data-expanded') === 'true';
+          tocEl.setAttribute('data-expanded', isExpanded ? 'false' : 'true');
+          toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
+        });
+
+        toggleBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var isExpanded = tocEl.getAttribute('data-expanded') === 'true';
+          tocEl.setAttribute('data-expanded', isExpanded ? 'false' : 'true');
+          toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
+        });
+
+        var mql = window.matchMedia('(max-width: 1100px)');
+        if (mql.addEventListener) {
+          mql.addEventListener('change', updateToggle);
+        } else if (mql.addListener) {
+          mql.addListener(updateToggle);
+        }
+        updateToggle();
+      }
     }
 
     function init() {
