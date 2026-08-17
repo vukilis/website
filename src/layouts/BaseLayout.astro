@@ -130,7 +130,32 @@ const {
 
         const getInitialTheme = () => getSavedTheme() || getSystemTheme();
 
+        const TRANSITION_CSS_ID = '__theme-transition-disable';
+        const TRANSITION_CSS = '*,*::before,*::after{transition:none!important;}';
+        let transitionStyle = null;
+
+        const ensureTransitionStyle = () => {
+          if (!transitionStyle) {
+            transitionStyle = document.createElement('style');
+            transitionStyle.id = TRANSITION_CSS_ID;
+            transitionStyle.textContent = TRANSITION_CSS;
+            document.head.appendChild(transitionStyle);
+          }
+        };
+
+        const removeTransitionStyle = () => {
+          if (transitionStyle) {
+            transitionStyle.remove();
+            transitionStyle = null;
+          }
+        };
+
         let applyTheme = (theme, shouldPersist = true) => {
+          ensureTransitionStyle();
+          
+          // Force the browser to apply the 'no-transition' style BEFORE changing the theme
+          void document.body.offsetWidth; 
+
           html.setAttribute('data-theme', theme);
           const toggleBtn = document.getElementById('theme-toggle');
           if (toggleBtn) {
@@ -140,6 +165,7 @@ const {
           if (shouldPersist) {
             try { localStorage.setItem(STORAGE_KEY, theme); } catch (e) {}
           }
+          requestAnimationFrame(() => requestAnimationFrame(() => removeTransitionStyle()));
         };
 
         const toggle = () => {
