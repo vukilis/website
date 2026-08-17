@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import HomelabHeader from '../components/homelab/HomelabHeader.astro';
 import '../styles/homelab/diagram.css';
+
+const diagramSrc = "https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/it/homelab-diagram.svg";
 ---
 
 <BaseLayout title="Homelab Diagram - Vuk1lis" description="Live diagram — I run a homelab with over 100 containerized services. I use it to experiment with different tools, improve my skills in containerization and automation, and simulate production-like setups. It is where I usually test new ideas and figure out what actually works in practice." keywords="vukilis, homelab, homelab diagram, network diagram, containerization, docker, kubernetes, automation, self-hosted, home lab, infrastructure, networking, servers, virtualization, self-hosting, home server, tech setup, network topology, homelab services, devops home lab">
@@ -38,152 +40,207 @@ import '../styles/homelab/diagram.css';
 
     <div class="h-page-diagram">
       <div id="diagram-container" class="diagram-container">
-        <!-- Loader Overlay -->
-        <div id="diagram-loader" class="diagram-loader" aria-hidden="true">
+        <div id="diagram-loader" class="diagram-loader">
           <div class="loader-content">
             <div class="loader-spinner"></div>
             <p class="loader-text">Loading diagram…</p>
           </div>
         </div>
 
-        <div class="mxgraph" data-mxgraph="{
-          &quot;highlight&quot;:&quot;#0000ff&quot;,
-          &quot;nav&quot;:true,
-          &quot;resize&quot;:true,
-          &quot;dark-mode&quot;:&quot;dark&quot;,
-          &quot;toolbar&quot;:&quot;zoom layers tags lightbox&quot;,
-          &quot;edit&quot;:&quot;_blank&quot;,
-          &quot;url&quot;:&quot;https://raw.githubusercontent.com/vukilis/homelab/main/homelab_diagram.drawio&quot;,
-          &quot;auto-fit&quot;:true,
-          &quot;allow-zoom-in&quot;:true
-        }"></div>
+        {/* Panzoom Wrapper */}
+        <div id="pan-wrapper" class="pan-wrapper">
+          <img 
+            id="diagram-svg" 
+            src={diagramSrc} 
+            alt="Homelab Diagram" 
+            draggable="false"
+            fetchpriority="high"
+          />
+        </div>
+
+        {/* Floating Zoom Controls */}
+        <div class="zoom-controls">
+          <button id="zoom-in" aria-label="Zoom in">+</button>
+          <button id="zoom-out" aria-label="Zoom out">−</button>
+          <button id="zoom-reset" aria-label="Reset zoom">⤢</button>
+        </div>
       </div>
     </div>
   </section>
 
-  <script>
-    (function() {
-      const CACHE_KEY = 'homelab-diagram-loaded';
-      const CACHE_TTL = 15 * 60 * 1000;
-      const LOAD_TIMEOUT = 3000;
+  <script type="module">
+    import Panzoom from '@panzoom/panzoom';
 
-      let loadTimer = null;
-      let isInitializing = false;
+    function initHomelab() {
+      const wrapper = document.getElementById('pan-wrapper');
+      
+      if (!wrapper || wrapper.dataset.panzoomReady === 'true') return;
+      wrapper.dataset.panzoomReady = 'true';
 
-      function isCacheValid() {
-        try {
-          const cached = sessionStorage.getItem(CACHE_KEY);
-          if (!cached) return false;
-          return Date.now() - parseInt(cached, 10) < CACHE_TTL;
-        } catch {
-          return false;
+      const img = document.getElementById('diagram-svg');
+      const loader = document.getElementById('diagram-loader');
+      const container = document.getElementById('diagram-container');
+      const pageElement = document.querySelector('.homelab-page');
+      
+      let panzoomInstance = null;
+      let rafId = null;
+      let targetX = 0;
+      let targetY = 0;
+
+      // Smooth Animation Loop (Lerp)
+      const animatePan = () => {
+        if (!panzoomInstance) return;
+        const currentPan = panzoomInstance.getPan();
+        const lerpFactor = 0.15; // 0.1 = smoother/slower, 0.2 = faster
+        
+        const nextX = currentPan.x + (targetX - currentPan.x) * lerpFactor;
+        const nextY = currentPan.y + (targetY - currentPan.y) * lerpFactor;
+        
+        panzoomInstance.pan(nextX, nextY);
+        
+        // Continue animating until we reach the target
+        if (Math.abs(targetX - nextX) > 0.5 || Math.abs(targetY - nextY) > 0.5) {
+          rafId = requestAnimationFrame(animatePan);
+        } else {
+          rafId = null;
         }
+      };
+
+      // 1. Initialize Panzoom and Hide Loader
+      const startPan = () => {
+        loader.classList.remove('is-visible');
+        
+        panzoomInstance = Panzoom(wrapper, {
+          maxScale: 5,
+          minScale: 1,
+          contain: 'outside',
+          cursor: 'grab',
+          step: 0.5
+        });
+
+        // Pause background animations for performance while dragging
+        wrapper.addEventListener('panzoomstart', () => {
+          if (rafId) cancelAnimationFrame(rafId);
+          rafId = null;
+          wrapper.style.cursor = 'grabbing';
+          if (pageElement) pageElement.classList.add('is-dragging');
+        });
+
+        wrapper.addEventListener('panzoomend', () => {
+          wrapper.style.cursor = 'grab';
+          if (pageElement) pageElement.classList.remove('is-dragging');
+        });
+      };
+
+      if (img.complete && img.naturalWidth > 0) {
+        startPan();
+      } else if (img.complete) {
+        loader.classList.remove('is-visible');
+      } else {
+        loader.classList.add('is-visible');
+        img.addEventListener('load', startPan);
+        img.addEventListener('error', () => loader.classList.remove('is-visible'));
       }
 
-      function setCache() {
-        try {
-          sessionStorage.setItem(CACHE_KEY, Date.now().toString());
-        } catch {}
-      }
+      // 2. Zoom Controls
+      container.addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (!btn || !panzoomInstance) return;
+        
+        e.stopPropagation();
+        e.preventDefault();
 
-      function showLoader() {
-        const loader = document.getElementById('diagram-loader');
-        if (loader) loader.classList.add('is-visible');
-      }
+        if (btn.id === 'zoom-in') panzoomInstance.zoomIn();
+        else if (btn.id === 'zoom-out') panzoomInstance.zoomOut();
+        else if (btn.id === 'zoom-reset') panzoomInstance.reset();
+      });
 
-      function hideLoader() {
-        const loader = document.getElementById('diagram-loader');
-        if (loader) loader.classList.remove('is-visible');
-        if (loadTimer) {
-          clearTimeout(loadTimer);
-          loadTimer = null;
+      // 3. Scroll to Pan (up/down) & Ctrl+Scroll to Zoom
+      container.addEventListener('wheel', (e) => {
+        if (!panzoomInstance) return;
+        
+        const scale = panzoomInstance.getScale();
+        if (scale > 1 || e.ctrlKey) {
+          e.preventDefault();
+          
+          if (e.ctrlKey) {
+            if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+            panzoomInstance.zoomWithWheel(e);
+          } else {
+            const deltaX = e.shiftKey ? e.deltaY : e.deltaX;
+            const deltaY = e.shiftKey ? 0 : e.deltaY;
+            
+            if (!rafId) {
+              const currentPan = panzoomInstance.getPan();
+              targetX = currentPan.x;
+              targetY = currentPan.y;
+            }
+            
+            targetX -= deltaX;
+            targetY -= deltaY;
+            
+            if (!rafId) {
+              rafId = requestAnimationFrame(animatePan);
+            }
+          }
         }
-      }
+      }, { passive: false });
 
-      function onDiagramReady() {
-        setCache();
-        hideLoader();
-        const container = document.getElementById('diagram-container');
-        if (container) {
-          container.classList.add('has-diagram');
-        }
-      }
-
-      function createParticles() {
-        const container = document.getElementById('hParticles');
-        if (!container) return;
-        container.innerHTML = '';
+      // 4. Background Effects (Particles & Network)
+      const particles = document.getElementById('hParticles');
+      if (particles) {
         const count = window.innerWidth < 768 ? 15 : 30;
         for (let i = 0; i < count; i++) {
-          const particle = document.createElement('div');
-          particle.className = 'h-particle';
-          particle.style.left = Math.random() * 100 + '%';
-          particle.style.top = Math.random() * 100 + '%';
-          particle.style.animationDelay = Math.random() * 8 + 's';
-          particle.style.animationDuration = (6 + Math.random() * 6) + 's';
-          container.appendChild(particle);
+          const p = document.createElement('div');
+          p.className = 'h-particle';
+          p.style.left = Math.random() * 100 + '%';
+          p.style.top = Math.random() * 100 + '%';
+          p.style.animationDelay = Math.random() * 8 + 's';
+          p.style.animationDuration = (6 + Math.random() * 6) + 's';
+          particles.appendChild(p);
         }
       }
 
-      function createNetwork() {
-        const svg = document.querySelector('.h-network');
-        if (!svg) return;
+      const svg = document.querySelector('.h-network');
+      if (svg) {
         const linesGroup = svg.querySelector('.h-network-lines');
         const nodesGroup = svg.querySelector('.h-network-nodes');
         const pulsesGroup = svg.querySelector('.h-network-pulses');
-        if (!linesGroup || !nodesGroup || !pulsesGroup) return;
-
-        linesGroup.innerHTML = '';
-        nodesGroup.innerHTML = '';
-        pulsesGroup.innerHTML = '';
-
-        const width = 1440;
-        const height = 900;
+        const width = 1440, height = 900;
         const nodeCount = window.innerWidth < 768 ? 12 : 22;
         const maxDist = 280;
-
         const nodes = [];
+
         for (let i = 0; i < nodeCount; i++) {
-          const x = 80 + Math.random() * (width - 160);
-          const y = 80 + Math.random() * (height - 160);
-          nodes.push({ x, y });
+          nodes.push({ x: 80 + Math.random() * (width - 160), y: 80 + Math.random() * (height - 160) });
         }
 
-        const edges = [];
         for (let i = 0; i < nodes.length; i++) {
           for (let j = i + 1; j < nodes.length; j++) {
             const dx = nodes[i].x - nodes[j].x;
             const dy = nodes[i].y - nodes[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < maxDist) {
-              edges.push({ from: nodes[i], to: nodes[j], dist });
+            if (Math.sqrt(dx * dx + dy * dy) < maxDist) {
+              const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+              line.setAttribute('x1', nodes[i].x);
+              line.setAttribute('y1', nodes[i].y);
+              line.setAttribute('x2', nodes[j].x);
+              line.setAttribute('y2', nodes[j].y);
+              linesGroup.appendChild(line);
+
+              const pulse = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+              pulse.setAttribute('r', '2');
+              const duration = 2.5 + Math.random() * 3;
+              const delay = Math.random() * 5;
+              pulse.innerHTML = `
+                <animate attributeName="cx" values="${nodes[i].x};${nodes[j].x}" dur="${duration}s" begin="${delay}s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="${nodes[i].y};${nodes[j].y}" dur="${duration}s" begin="${delay}s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0;0.9;0.9;0" dur="${duration}s" begin="${delay}s" repeatCount="indefinite"/>
+              `;
+              pulsesGroup.appendChild(pulse);
             }
           }
         }
-
-        edges.forEach(edge => {
-          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-          line.setAttribute('x1', edge.from.x);
-          line.setAttribute('y1', edge.from.y);
-          line.setAttribute('x2', edge.to.x);
-          line.setAttribute('y2', edge.to.y);
-          linesGroup.appendChild(line);
-
-          const pulse = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-          pulse.setAttribute('cx', edge.from.x);
-          pulse.setAttribute('cy', edge.from.y);
-          pulse.setAttribute('r', '2');
-          const duration = 2.5 + Math.random() * 3;
-          const delay = Math.random() * 5;
-          pulse.innerHTML = `
-            <animate attributeName="cx" values="${edge.from.x};${edge.to.x}" dur="${duration}s" begin="${delay}s" repeatCount="indefinite"/>
-            <animate attributeName="cy" values="${edge.from.y};${edge.to.y}" dur="${duration}s" begin="${delay}s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0;0.9;0.9;0" dur="${duration}s" begin="${delay}s" repeatCount="indefinite"/>
-          `;
-          pulsesGroup.appendChild(pulse);
-        });
-
-        nodes.forEach((node, i) => {
+        nodes.forEach(node => {
           const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
           circle.setAttribute('cx', node.x);
           circle.setAttribute('cy', node.y);
@@ -199,144 +256,8 @@ import '../styles/homelab/diagram.css';
           nodesGroup.appendChild(glow);
         });
       }
-
-      function initDiagram() {
-        const container = document.getElementById('diagram-container');
-        if (!container) return;
-
-        if (isInitializing) return;
-        if (container.querySelector('iframe')) return;
-
-        const mxgraph = container.querySelector('.mxgraph');
-        if (!mxgraph) return;
-
-        isInitializing = true;
-
-        let loaded = false;
-        const load = () => {
-          if (loaded) return;
-          loaded = true;
-
-          if (isCacheValid()) {
-            injectScript();
-            return;
-          }
-
-          showLoader();
-
-          loadTimer = setTimeout(() => {
-            console.warn('[Homelab] Diagram load timeout — hiding loader');
-            hideLoader();
-            isInitializing = false;
-          }, LOAD_TIMEOUT);
-
-          injectScript();
-          observeIframe(container);
-        };
-
-        if ('IntersectionObserver' in window) {
-          const observer = new IntersectionObserver(
-            (entries) => {
-              entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                  load();
-                  observer.disconnect();
-                }
-              });
-            },
-            { rootMargin: '300px' }
-          );
-          observer.observe(container);
-
-          const fallbackTimer = setTimeout(() => {
-            load();
-            observer.disconnect();
-          }, 2500);
-        } else {
-          setTimeout(load, 150);
-        }
-      }
-
-      function injectScript() {
-        const existing = document.querySelector('script[src^="https://viewer.diagrams.net/embed2.js"]');
-        if (existing) existing.remove();
-
-        const script = document.createElement('script');
-        script.src = 'https://viewer.diagrams.net/embed2.js?t=' + Date.now();
-        script.async = true;
-        document.body.appendChild(script);
-      }
-
-      function observeIframe(container) {
-        const existing = container.querySelector('iframe');
-        if (existing) {
-          existing.addEventListener('load', onDiagramReady, { once: true });
-          return;
-        }
-
-        const observer = new MutationObserver((mutations) => {
-          for (const m of mutations) {
-            for (const node of m.addedNodes) {
-              if (node.tagName === 'IFRAME') {
-                node.addEventListener('load', onDiagramReady, { once: true });
-                observer.disconnect();
-                return;
-              }
-            }
-          }
-        });
-        observer.observe(container, { childList: true, subtree: true });
-      }
-
-      function handleMessage(event) {
-        const allowedOrigins = ['https://viewer.diagrams.net', 'https://app.diagrams.net'];
-        if (!allowedOrigins.includes(event.origin)) return;
-
-        let data = event.data;
-        if (typeof data === 'string') {
-          try { data = JSON.parse(data); } catch { return; }
-        }
-        if (!data || typeof data !== 'object') return;
-
-        if (['init', 'render', 'load', 'ready'].includes(data.event)) {
-          onDiagramReady();
-          isInitializing = false;
-        }
-      }
-
-      window.addEventListener('message', handleMessage);
-
-      const scheduleInit = (fn, delay = 0) => {
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(fn, { timeout: delay || 200 });
-        } else {
-          setTimeout(fn, delay || 50);
-        }
-      };
-
-      const initEffects = () => {
-        createParticles();
-        createNetwork();
-      };
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-          scheduleInit(initEffects, 100);
-          scheduleInit(initDiagram, 150);
-        });
-      } else {
-        scheduleInit(initEffects, 100);
-        scheduleInit(initDiagram, 150);
-      }
-
-      document.addEventListener('astro:page-load', () => {
-        scheduleInit(initEffects, 100);
-        scheduleInit(initDiagram, 150);
-      });
-      window.addEventListener('astro:after-swap', () => {
-        scheduleInit(initEffects, 100);
-        scheduleInit(initDiagram, 150);
-      });
-    })();
+    }
+    initHomelab();
+    document.addEventListener('astro:page-load', initHomelab);
   </script>
 </BaseLayout>

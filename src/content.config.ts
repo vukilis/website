@@ -19,6 +19,8 @@ const blog = defineCollection({
       link: z.boolean().default(true),
       twitter: z.boolean().default(true),
       reddit: z.boolean().default(true),
+      bluesky: z.boolean().default(true),
+      hackernews: z.boolean().default(true),
     }).optional(),
   }),
 });

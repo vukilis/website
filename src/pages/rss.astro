@@ -1,0 +1,463 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+---
+
+<BaseLayout title="RSS Feed — vukilis.com">
+  <Navigation />
+
+  <main class="rss-page">
+    <div class="container">
+      <!-- Hero -->
+      <section class="hero reveal">
+        <div class="hero__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M4 11a9 9 0 0 1 9 9"/>
+            <path d="M4 4a16 16 0 0 1 16 16"/>
+            <circle cx="5" cy="19" r="1" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="hero__badge"><span class="dot"></span> Live Feed</div>
+        <h1 class="hero__title">Subscribe via<br><em>RSS</em></h1>
+        <p class="hero__desc">Never miss a post. Get every new article delivered straight to your feed reader - no algorithms, no noise, no middlemen.</p>
+      </section>
+
+      <!-- Feed URLs -->
+      <section class="section reveal">
+        <!-- RSS -->
+        <div class="feed-card" id="feed-rss">
+          <div class="feed-card__header">
+            <div class="feed-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="feed-card__info">
+              <h3>Main RSS Feed</h3>
+              <p>Full articles</p>
+            </div>
+            <span class="feed-card__badge">RSS</span>
+          </div>
+          <div class="feed-card__url">
+            <code><span class="protocol">https://</span><span class="domain">vukilis.com/rss.xml</span></code>
+            <button class="btn-copy" data-url="https://vukilis.com/rss.xml" aria-label="Copy RSS URL">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              copy
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SUBSCRIBE -->
+      <section class="cta reveal">
+        <a href="https://vukilis.com/rss.xml" class="btn-subscribe">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1" fill="currentColor"/></svg>
+          Subscribe Now
+        </a>
+        <p>or add <code class="code-accent">vukilis.com/rss.xml</code> manually</p>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
+
+<style is:inline>
+  :root {
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  .rss-page { padding: calc(var(--nav-height) + 2rem) 2rem 7rem; }
+  .container { max-width: 1200px; width: 100%; margin: 0 auto; }
+
+  .hero { text-align: center; padding: 64px 0 48px; }
+  .hero__icon {
+    width: 72px; height: 72px;
+    margin: 0 auto 28px;
+    border-radius: 20px;
+    background: var(--color-primary-soft);
+    border: 1px solid rgba(241, 196, 15, 0.15);
+    display: flex; align-items: center; justify-content: center;
+    animation: iconPulse 3s ease-in-out infinite;
+    position: relative;
+  }
+  .hero__icon::after {
+    content: '';
+    position: absolute; inset: -4px;
+    border-radius: 24px;
+    border: 1px solid rgba(241, 196, 15, 0.08);
+    animation: iconRingPulse 3s ease-in-out infinite;
+  }
+  .hero__icon svg { width: 32px; height: 32px; color: var(--color-primary); }
+
+  @keyframes iconPulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(241,196,15,0.08); }
+    50% { box-shadow: 0 0 35px rgba(241,196,15,0.18); }
+  }
+  @keyframes iconRingPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .hero__badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-heading); font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--color-primary);
+    background: var(--color-primary-soft);
+    border: 1px solid rgba(241, 196, 15, 0.12);
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+  }
+  .hero__badge .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--color-primary);
+    animation: dotBlink 2s ease-in-out infinite;
+  }
+  @keyframes dotBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hero__title {
+    font-size: clamp(36px, 6vw, 56px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .hero__title em {
+    font-style: normal;
+    color: var(--color-primary);
+  }
+  .hero__desc {
+    font-size: 17px; color: var(--color-text-muted);
+    line-height: 1.65; max-width: 520px; margin: 0 auto;
+  }
+
+  .section {
+    display: flex;
+    justify-content: center;
+    padding-top: 0;
+  }
+
+  .feed-card {
+    background: var(--color-bg-darker);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin: 0 auto 16px;
+    max-width: 640px;
+    width: 100%;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feed-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(241,196,15,0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .feed-card:hover {
+    border-color: var(--color-border-hover);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    transform: translateY(-2px);
+  }
+  .feed-card:hover::before { opacity: 1; }
+
+  .feed-card__header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .feed-card__icon {
+    width: 38px; height: 38px; border-radius: var(--radius-sm);
+    background: var(--color-primary-soft);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .feed-card__icon svg { width: 18px; height: 18px; color: var(--color-primary); }
+  .feed-card__info h3 {
+    font-size: 15px; font-weight: 600; letter-spacing: -0.01em;
+  }
+  .feed-card__info p {
+    font-size: 12px; color: var(--color-text-muted); margin-top: 2px;
+  }
+  .feed-card__badge {
+    margin-left: auto;
+    font-family: var(--font-heading); font-size: 10px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--color-primary); background: var(--color-primary-soft);
+    padding: 4px 10px; border-radius: 100px;
+    flex-shrink: 0;
+  }
+
+  .feed-card__url {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    font-family: var(--font-heading);
+    font-size: 12px;
+    color: var(--color-text-muted);
+    overflow-x: auto;
+  }
+  .feed-card__url code {
+    white-space: nowrap;
+    color: var(--color-text);
+  }
+  .feed-card__url .protocol { color: var(--color-text-muted); }
+  .feed-card__url .domain { color: var(--color-primary); }
+
+  .btn-copy {
+    margin-left: auto;
+    flex-shrink: 0;
+    background: var(--color-primary-soft);
+    border: 1px solid rgba(241, 196, 15, 0.15);
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .btn-copy:hover {
+    background: rgba(241, 196, 15, 0.18);
+    box-shadow: 0 0 12px rgba(241,196,15,0.12);
+  }
+  .btn-copy svg { width: 13px; height: 13px; }
+  .btn-copy.copied {
+    background: rgba(241, 196, 15, 0.2);
+    color: #fff;
+  }
+
+  @media (max-width: 480px) {
+    .feed-card {
+      padding: 18px;
+    }
+    .feed-card__header {
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .feed-card__badge {
+      margin-left: 0;
+    }
+    .feed-card__url {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .btn-copy {
+      margin-left: 0;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .btn-subscribe {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--color-primary);
+    color: var(--color-bg-dark);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: var(--radius-sm);
+    border: none; cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+    box-shadow: 0 0 20px var(--color-shadow);
+  }
+  .btn-subscribe:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 35px var(--color-shadow);
+  }
+  .btn-subscribe svg { width: 16px; height: 16px; }
+
+  .cta {
+    text-align: center;
+    padding: 48px 0 64px;
+  }
+  .cta p {
+    font-size: 14px; color: var(--color-text-muted); margin-top: 16px;
+    font-family: var(--font-heading);
+  }
+  .code-accent { color: var(--color-primary); }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .rss-page { padding: calc(var(--nav-height) + 1.5rem) 1.5rem 4rem; }
+  }
+
+  [data-theme='light'] {
+    /* Hero Icon */
+    .hero__icon {
+      background: rgba(241, 196, 15, 0.25);
+      border-color: rgba(184, 134, 11, 0.45);
+    }
+    .hero__icon svg {
+      color: #6b4f00; /* Dark gold for high contrast */
+    }
+    .hero__icon::after {
+      border-color: rgba(184, 134, 11, 0.22);
+    }
+
+    /* Hero Badge */
+    .hero__badge {
+      border-color: rgba(184, 134, 11, 0.4);
+      background: rgba(241, 196, 15, 0.25);
+      color: #6b4f00; 
+    }
+    .hero__badge .dot {
+      background: #6b4f00;
+    }
+
+    /* Hero Title */
+    .hero__title em {
+      color: #6b4f00; 
+    }
+
+    /* Feed Card */
+    .feed-card {
+      background: var(--color-bg-card);
+      border-color: rgba(184, 134, 11, 0.35);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    }
+    .feed-card::before {
+      background: linear-gradient(90deg, transparent, rgba(184, 134, 11, 0.6), transparent);
+    }
+    .feed-card:hover {
+      border-color: rgba(184, 134, 11, 0.6);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Feed Card Header */
+    .feed-card__icon {
+      background: rgba(241, 196, 15, 0.25);
+    }
+    .feed-card__icon svg {
+      color: #6b4f00; 
+    }
+    .feed-card__badge {
+      color: #6b4f00;
+      background: rgba(241, 196, 15, 0.25);
+    }
+
+    /* Feed Card URL */
+    .feed-card__url {
+      background: rgba(241, 196, 15, 0.08);
+      border-color: rgba(184, 134, 11, 0.35);
+    }
+    .feed-card__url .domain {
+      color: #6b4f00;
+    }
+
+    /* Copy Button */
+    .btn-copy {
+      border-color: rgba(184, 134, 11, 0.5);
+      color: #6b4f00;
+      background: rgba(241, 196, 15, 0.2);
+    }
+    .btn-copy:hover {
+      background: rgba(241, 196, 15, 0.35);
+      box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.3);
+    }
+    .btn-copy.copied {
+      background: #6b4f00;
+      color: #ffffff; /* White checkmark on dark gold */
+      border-color: #6b4f00;
+    }
+
+    /* Subscribe Button */
+    .btn-subscribe {
+      background: #a06f00; /* Slightly brighter dark gold for button background */
+      color: #ffffff; /* White text instead of white-ish background */
+      box-shadow: 0 4px 15px rgba(160, 111, 0, 0.2);
+    }
+    .btn-subscribe:hover {
+      background: #855d00;
+      box-shadow: 0 6px 20px rgba(160, 111, 0, 0.3);
+    }
+    .code-accent {
+      color: #6b4f00;
+    }
+  }
+</style>
+
+<script is:inline>
+  function initReveal() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      el.classList.remove('visible');
+      observer.observe(el);
+    });
+  }
+
+  function initCopyButtons() {
+    document.querySelectorAll('.btn-copy').forEach(btn => {
+      if (btn.dataset.initialized) return;
+      btn.dataset.initialized = 'true';
+      btn.addEventListener('click', async () => {
+        const url = btn.dataset.url;
+        try {
+          await navigator.clipboard.writeText(url);
+        } catch {
+          const ta = document.createElement('textarea');
+          ta.value = url;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        }
+        btn.classList.add('copied');
+        const origHTML = btn.innerHTML;
+        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M20 6L9 17l-5-5"/></svg> copied`;
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = origHTML;
+        }, 2000);
+      });
+    });
+  }
+
+  function init() {
+    initReveal();
+    initCopyButtons();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  document.addEventListener('astro:page-load', init);
+</script>

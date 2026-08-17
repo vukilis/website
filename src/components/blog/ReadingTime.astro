@@ -1,0 +1,21 @@
+---
+export function fromBody(body: string | null | undefined): number {
+  try {
+    const text = (body ?? '')
+      .replace(/<[^>]*>/g, ' ')
+      .replace(/[#*_`~\-\[\]\(\)!$|\\]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    const words = text.split(' ').filter(w => w.length > 0).length;
+    return Math.max(1, Math.ceil(words / 200));
+  } catch {
+    return 1;
+  }
+}
+
+export function fromPost(post: { body?: string | null }): number {
+  const body = post?.body ?? '';
+  if (typeof body !== 'string' || body.trim().length === 0) return 1;
+  return fromBody(body);
+}
+---

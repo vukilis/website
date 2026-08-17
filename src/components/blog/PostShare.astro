@@ -7,6 +7,8 @@ interface Props {
     link?: boolean | undefined;
     twitter?: boolean | undefined;
     reddit?: boolean | undefined;
+    bluesky?: boolean | undefined;
+    hackernews?: boolean | undefined;
   } | undefined;
 }
 
@@ -29,6 +31,16 @@ const { share } = Astro.props;
       {share.reddit && (
         <button class="share-btn share-reddit" title="Share on Reddit" onclick="shareOnReddit()">
           <svg class="meta-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042 1.625c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.166.016-.33.046-.492a1.748 1.748 0 0 1-1.071-1.614c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.133-.847 2.678-1.39 4.476-1.488l.885-4.162a.342.342 0 0 1 .214-.216c.11-.04.243-.02.378.063l2.61.549a1.25 1.25 0 1 1 .837 1.241l-2.446 1.084c-.06.195-.075.464-.003.674.26.718.89 1.164 1.636 1.164.908 0 1.636-.728 1.636-1.626 0-.9-.728-1.626-1.636-1.626a1.748 1.748 0 0 1-1.053.302z"/></svg>
+        </button>
+      )}
+      {share.bluesky && (
+        <button class="share-btn share-bluesky" title="Share on Bluesky" onclick="shareOnBluesky()">
+          <svg class="meta-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565C.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479c.815 2.736 3.713 3.66 6.383 3.364q.204-.03.415-.056q-.207.033-.415.056c-3.912.58-7.387 2.005-2.83 7.078c5.013 5.19 6.87-1.113 7.823-4.308c.953 3.195 2.05 9.271 7.733 4.308c4.267-4.308 1.172-6.498-2.74-7.078a9 9 0 0 1-.415-.056q.21.026.415.056c2.67.297 5.568-.628 6.383-3.364c.246-.828.624-5.79.624-6.478c0-.69-.139-1.861-.902-2.206c-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8"/></svg>
+        </button>
+      )}
+      {share.hackernews && (
+        <button class="share-btn share-hackernews" title="Share on Hacker News" onclick="shareOnHackerNews()">
+          <svg class="meta-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.108l4.147-5.715h-2.218l-2.508 3.503L11.41 5.896H9.24l-2.508 3.503L6.951 5.896zM22 12.196h-2.665v-1.58H22v1.58zm-6.896 5.904h-4.49v-1.58h4.49v1.58z"/></svg>
         </button>
       )}
     </>
@@ -79,5 +91,13 @@ const { share } = Astro.props;
 
   window.shareOnReddit = function() {
     window.open(`https://www.reddit.com/submit?url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent(document.title)}`, '_blank');
+  };
+
+  window.shareOnBluesky = function() {
+    window.open(`https://bsky.app/intent/compose?text=${encodeURIComponent(window.location.href + ' ' + document.title)}`, '_blank');
+  };
+
+  window.shareOnHackerNews = function() {
+    window.open(`https://news.ycombinator.com/submitlink?u=${encodeURIComponent(window.location.href)}&t=${encodeURIComponent(document.title)}`, '_blank');
   };
 </script>

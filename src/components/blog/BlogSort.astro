@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import BlogCard from './BlogCard.astro';
+import { fromPost } from './ReadingTime.astro';
 import '../../styles/blog/blog-sort.css';
 
 interface Props {
@@ -13,17 +14,6 @@ interface Props {
 const { allPosts, pageSize = 12, activeTag } = Astro.props;
 
 type BlogPost = CollectionEntry<'blog'>;
-
-function getReadingTime(post: BlogPost): number {
-  try {
-    const body = (post as any).body ?? '';
-    if (typeof body !== 'string' || body.trim().length === 0) return 1;
-    const words = body.replace(/<[^>]*>/g, ' ').replace(/[#*_`~\-\[\]\(\)!$|\\]/g, ' ').replace(/\s+/g, ' ').trim().split(' ').filter(Boolean).length;
-    return Math.max(1, Math.ceil(words / 200));
-  } catch {
-    return 1;
-  }
-}
 ---
 
 <div class="blog-sort" id="blog-sort">
@@ -59,7 +49,7 @@ function getReadingTime(post: BlogPost): number {
         tags={post.data.tags}
         categories={post.data.categories}
         activeTag={activeTag}
-        readingTime={getReadingTime(post)}
+        readingTime={fromPost(post)}
       />
     ))}
   </div>

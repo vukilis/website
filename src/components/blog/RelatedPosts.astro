@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BlogCard from './BlogCard.astro';
+import { fromPost } from './ReadingTime.astro';
 import '../../styles/blog/related-posts.css';
 
 interface Props {
@@ -37,16 +38,6 @@ const related = allPosts
 if (related.length === 0) {
   return null;
 }
-
-function computeReadingTime(body: string | null | undefined): number {
-  const text = (body ?? '')
-    .replace(/<[^>]*>/g, ' ')
-    .replace(/[#*_`~\-\[\]\(\)!$|\\]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-  const words = text.split(' ').filter(w => w.length > 0).length;
-  return Math.max(1, Math.ceil(words / 200));
-}
 ---
 
 <section class="related-posts">
@@ -61,7 +52,7 @@ function computeReadingTime(body: string | null | undefined): number {
         slug={post.id}
         tags={post.data.tags}
         categories={post.data.categories}
-        readingTime={computeReadingTime(post.body)}
+        readingTime={fromPost(post)}
       />
     ))}
   </div>
