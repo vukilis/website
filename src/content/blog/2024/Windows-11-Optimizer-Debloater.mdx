@@ -1,7 +1,7 @@
 ---
 title: "Windows 10/11 Optimizer & Debloater"
 pubDate: 2024-05-07T23:54:16+02:00
-lastmod: 2025-08-20T17:05:00+02:00
+lastmod: 2026-08-17T17:20:53+02:00
 share:
     enable: true
     link: true
@@ -25,6 +25,17 @@ import servicesImg from '../../../assets/images/2024/Windows_11_Optimizer_Debloa
 import updatesImg from '../../../assets/images/2024/Windows_11_Optimizer_Debloater/updates.png';
 import configImg from '../../../assets/images/2024/Windows_11_Optimizer_Debloater/config.png';
 
+<img src="https://raw.githubusercontent.com/vukilis/Windows11-Optimizer-Debloater/refs/heads/main/logo.png" alt="Windows 10/11 Optimizer & Debloater" loading="lazy" width="70%"/>
+
+So basically I was getting tired of all those bloatware and background processes that keep coming 
+with Windows 11 each time I was setting up a new machine, so I thought why not create my own tool 
+for that.
+
+I have created [Windows11-Optimizer-Debloater](https://github.com/vukilis/Windows11-Optimizer-Debloater), where you can clean all the 
+unnecessary installations, optimize performance of your system, and configure the system according 
+to your needs. Just wanted to put this forward for people who are looking for ways to improve 
+performance and clean up the Windows clutter.
+
 ## One Command - Download and Usage
 
 Requires you to launch PowerShell or Windows Terminal As **ADMINISTRATOR!**
@@ -45,33 +56,59 @@ If you are having TLS 1.2 Issues or You cannot find or resolve `vukilis.com/win1
 
 This utility show basic system information, install programs, debloat and optimize Windows with tweaks, troubleshoot with config, and fix Windows updates.
 
-It has 7 main tabs:
+### **INFO** 
 
-* **INFO** - Show basic system information about OS and hardware.
+- Show basic system information about OS and hardware.
+
+Right out of the box, the software will show you a fresh picture of your system specifications and the operating system specifications, giving you an idea of the hardware that you have before making any changes.
 
 <Image src={infoImg} alt="info"/>
 
-* I**NSTALL** - Install/Uninstall/Upgrade winget, chocolatey and python packages
+### I**NSTALL** 
+
+- Install/Uninstall/Upgrade winget, chocolatey and python packages
+
+it manages your package management from one single place. Installing, updating or deleting software becomes easy using winget, chocolatey, and python packages without the need to go through the command prompt for each different package manager.
 
 <Image src={installImg} alt="install"/>
 
-* **DEBLOAT** - Removes all necessary pre-installed apps comes with Windows
+### **DEBLOAT** 
+
+- Removes all necessary pre-installed apps comes with Windows
+
+It removes all those irritating pre-installed programs that come bundled with Windows, which means you can finally delete the unnecessary applications that you never wanted to install.
 
 <Image src={debloatImg} alt="debloat"/>
 
-* **OPTIMIZATION** - Disable Telemetry, optimizes Windows and reduces running processes. 
+### **OPTIMIZATION** 
+
+- Disable Telemetry, optimizes Windows and reduces running processes. 
+
+It shuts off all the distracting tracking and telemetry running in the background and makes some useful performance adjustments to make your computer perform a lot better.
 
 <Image src={optimizationImg} alt="optimization"/>
 
-* **SERVICES** - Shows services status and cut down on running background services.
+### **SERVICES** 
+
+- Shows services status and cut down on running background services.
+
+It provides you with a complete view of your services and enables you to shut down all those unnecessary background processes that are just wasting your system resources.
 
 <Image src={servicesImg} alt="services"/>
 
-* **UPDATES** - Change Windows Update to only use Security Updates, Pause Updates for 5 weeks or Disable them altogether. Also, Fix Updates if you have problem and back to Default Settings.
+### **UPDATES** 
+
+- Better control over Windows updates
+
+This allows you to have full control over Windows updates whether you want to restrict the updates only to security fixes, or pause them for up to five weeks or turn them off altogether. In case something goes wrong, there is a fix-it tool to resolve problems and even reset all the changes to their default state.
 
 <Image src={updatesImg} alt="updates"/>
 
-* **CONFIG** - Configure your system and launch legacy Win7 Control Panels.
+### **CONFIG** 
+
+- Configure your system and launch legacy Win7 Control Panels.
+
+It gives you the ability to configure your system settings without any problems, and you can immediately access the good old Windows 7 Control Panel.
 
 <Image src={configImg} alt="config"/>
 
