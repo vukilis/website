@@ -74,7 +74,7 @@ const recentPosts = allBlogPosts
   .btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.875rem 1.75rem; font-size: 0.9375rem; font-weight: 600; font-family: var(--font-body, system-ui, sans-serif); letter-spacing: -0.01em; text-decoration: none; border-radius: 0.875rem; cursor: pointer; border: 1px solid transparent; white-space: nowrap; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; }
   .btn-icon { transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; }
   .btn-secondary:hover .btn-icon { transform: translateX(3px); }
-  .btn-secondary { background: rgba(255, 255, 255, 0.04); color: var(--color-text, #e2e8f0); border: 1px solid rgba(148, 163, 184, 0.2); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); width: 12rem; }
+  .btn-secondary { background: var(--color-bg-card); color: var(--color-text, #e2e8f0); border: 1px solid rgba(148, 163, 184, 0.2); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); width: 12rem; }
   .btn-secondary::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, transparent 60%); opacity: 0; transition: opacity 0.25s ease; }
   .btn-secondary:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(148, 163, 184, 0.35); color: var(--color-text, #f8fafc); transform: translateY(-2px); box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.2); }
   .btn-secondary:hover::after { opacity: 1; }
