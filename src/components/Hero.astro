@@ -59,7 +59,7 @@ const base = import.meta.env.BASE_URL;
   .btn-primary:hover .btn-icon { transform: translateX(3px); }
   .btn-secondary { background: var(--color-bg-card); color: var(--color-text, #faf7f0); border: 1px solid rgba(100, 84, 21, 0.2); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); width: 12rem;}
   .btn-secondary::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(135deg, rgba(241, 196, 15, 0.08) 0%, transparent 60%); opacity: 0; transition: opacity 0.25s ease; }
-  .btn-secondary:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); color: var(--color-text, #faf7f0); transform: translateY(-2px); box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.2); }
+  .btn-secondary:hover { border-color: rgba(255, 255, 255, 0.2); color: var(--color-text, #faf7f0); transform: translateY(-2px); box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.2); }
   .btn-secondary:hover::after { opacity: 1; }
   .btn-secondary:active { transform: translateY(0); background: rgba(255, 255, 255, 0.03); }
   .btn-secondary:focus-visible { outline: 2px solid var(--color-primary, #f1c40f); outline-offset: 3px; }
