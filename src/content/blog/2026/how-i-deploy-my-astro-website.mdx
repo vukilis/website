@@ -1,0 +1,239 @@
+---
+title: "How I Deploy My Astro Website"
+pubDate: 2026-08-20T00:00:54+02:00
+lastmod: 2026-08-20T00:00:54+02:00
+share:
+  enable: true
+  link: true
+  twitter: true
+  reddit: true
+  bluesky: true
+  hackernews: true
+
+draft: false
+license: "MIT"
+
+tags: [astro, website, frontend, blog, portfolio, framework, mdx]
+categories: [Web]
+description: "Whenever I start working on a new project, I want to spend as little time as possible thinking about and managing the installation of specific versions of..."
+---
+
+import { Image } from 'astro:assets';
+import websiteImg from '../../../assets/images/2026/how_i_deploy_my_astro_website/website.webp';
+import deployImg from '../../../assets/images/2026/how_i_deploy_my_astro_website/deploy.png';
+import scriptImg from '../../../assets/images/2026/how_i_deploy_my_astro_website/script.png';
+
+<Image src={websiteImg} alt="Website" />  
+
+Whenever I start working on a new project, I want to spend as little time as possible thinking about and managing the installation of specific versions of Node.js, Python, Go, and other dependencies. That's why I prefer using `Nix`.
+
+With a `Nix flake`, each project can define its own development environment, including the exact versions of the tools and dependencies it needs. These dependencies are provided by Nix rather than being installed globally on the host system, which helps keep projects isolated and avoids potential version conflicts between them.
+
+This also makes the development environment reproducible for myself: whenever I switch to a different system or set up the project on a new machine, I can get the same versions of the required tools without having to manually install and configure everything again.
+
+
+## Get project from GitHub
+
+```bash
+git clone git@github.com:vukilis/website.git
+```
+
+## The Nix Flake
+
+The entire dev environment is defined in a single `flake.nix` at the root of the project:
+
+```bash title="flake.nix"
+{
+  description = "website development environment";
+
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
+  outputs = { self, nixpkgs }:
+    let
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+
+      forAllSystems = f:
+        nixpkgs.lib.genAttrs systems (system:
+          f (import nixpkgs { inherit system; }));
+    in {
+      devShells = forAllSystems (pkgs: {
+        default = pkgs.mkShell {
+          packages = with pkgs; [
+            nodejs_22
+            pnpm
+          ];
+
+          shellHook = ''
+            echo "website Web Environment Loaded."
+            echo "Node version: $(node -v)"
+            echo "pnpm version: $(pnpm -v)"
+          '';
+        };
+      });
+    };
+}
+```
+
+Two packages, that's it. `nodejs_22` pins the exact Node.js version the project expects (defined in `package.json` as `>=22.0.0`). `pnpm` is the package manager I use. 
+
+The `forAllSystems` helper means the same flake works across Linux (x86 and ARM), and macOS (Intel and Apple Silicon) without any per-machine configuration.
+
+## Entering the Environment
+
+```bash
+nix develop
+```
+
+That's it. Nix builds or fetches the exact packages, drops you into a shell where `node` and `pnpm` are available, and prints a confirmation.
+
+### direnv Setup
+
+I also have a direnv setup (`.envrc` with `use flake`) so entering the project directory automatically loads the environment. No manual step required.
+
+```bash title="envrc"
+use flake
+```
+
+#### Install direnv
+
+```bash
+# Arch Linux
+sudo pacman -S direnv
+```
+
+#### Enable direnv in your shell
+
+```bash
+# Bash
+echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
+# Zsh
+echo 'eval "$(direnv hook zsh)"' >> ~/.zshrc
+```
+
+#### Restart your terminal, or reload the config:
+
+```bash
+# Bash
+source ~/.bashrc
+# Zsh
+source ~/.zshrc
+```
+
+#### Allow direnv in the project directory
+
+```bash
+direnv allow
+```
+
+- Expecting line output like this:
+
+```bash
+direnv: loading ~/website/.envrc
+direnv: using flake
+``` 
+
+> Once this is done, every time you `cd` into the project directory, direnv will automatically load the Nix environment.
+
+## Development
+
+```bash
+pnpm dev --host 0.0.0.0
+```
+
+> `--host 0.0.0.0` allows the dev server to be accessible from other devices on the same network, which is useful for testing on mobile or other computers.
+
+This runs `astro dev` - starts the local dev server with hot module replacement. Astro's dev server is fast, and since the Node environment is managed by Nix, I know exactly what version is running without checking.
+
+## Building
+
+```bash
+pnpm build
+```
+
+This runs `astro build`, which outputs a static site to `dist/`. The build is fully deterministic given the same Nix environment and `pnpm-lock.yaml`. If it builds on my machine, it builds on CI, and it builds on Cloudflare.
+
+## Previewing
+
+```bash
+pnpm preview --host 0.0.0.0
+```
+
+This runs `astro preview`, which serves the built `dist/` folder locally using a lightweight static server. I use this to sanity-check the production build before pushing, checking that asset paths are correct, that client-side navigation works, and that nothing is obviously broken.
+
+## Deployment
+
+<Image src={deployImg} alt="Deploying App" /> 
+
+Deployment is automated through Git. When changes are pushed to the repository, Cloudflare automatically fetches the changes, builds the project, and deploys the Worker.
+The whole process takes under a minute.
+
+```bash title="wrangler.toml"
+name = "website"
+compatibility_date = "2026-08-06"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "./dist"
+not_found_handling = "404-page"
+
+[placement]
+mode = "smart"
+
+[observability]
+enabled = false
+head_sampling_rate = 1
+
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+persist = true
+invocation_logs = true
+
+[observability.traces]
+enabled = false
+persist = true
+head_sampling_rate = 1
+```
+
+## The Full Workflow
+
+Here's what a typical workflow looks like:
+
+```bash
+git clone https://github.com/kpab/website-v2.git
+cd website
+nix develop                   # enter the Nix shell
+pnpm install                  # install dependencies
+pnpm dev --host 0.0.0.0       # start developing
+# ... make changes ...
+pnpm build                    # verify the build works
+pnpm preview --host 0.0.0.0   # preview production build locally
+```
+
+Every machine that runs `nix develop` gets the same Node version, the same pnpm version, and the same environment variables (if you add them to the flake). No drift. No debugging environment issues.
+
+## Why This Approach Works for Me
+
+- **No global state.** Node and pnpm are scoped to the project shell.
+- **Reproducible.** `nix develop` gives the same result on any machine.
+- **Minimal.** The flake is ~30 lines. No Docker, no Makefile, no CI-specific build scripts.
+- **Fast iteration.** Astro's dev server and Nix's caching mean I'm editing and refreshing in seconds.
+- **Simple deployment.** One `wrangler deploy` command or `git push` and the site is live.
+
+Nix isn't for everyone, and the flake syntax has a learning curve. But for a personal project where I want zero environment friction, it's been the most reliable setup I've used.
+
+## Custom Script
+
+<Image src={scriptImg} alt="Custom management script" />  
+
+I made a custom bash script to automate creating new `blog post and project (IT, Design and Music)` with a template of meta information, 
+remove unwanted blog posts, run local dev server, build and preview the astro website.
+
+## Conclusion
+
+This setup has allowed me to focus on writing and designing my website without worrying about environment issues. Nix provides a consistent and reproducible development environment, while Astro makes building and deploying the site straightforward. With this workflow, I can confidently develop and deploy my website with minimal friction.
