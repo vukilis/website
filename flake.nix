@@ -1,5 +1,5 @@
 {
-  description = "website-v2 development environment";
+  description = "website development environment";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
@@ -24,7 +24,7 @@
           ];
 
           shellHook = ''
-            echo "website-v2 Web Environment Loaded."
+            echo "website Web Environment Loaded."
             echo "Node version: $(node -v)"
             echo "pnpm version: $(pnpm -v)"
           '';
