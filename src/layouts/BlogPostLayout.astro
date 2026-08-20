@@ -2,7 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import TableOfContents from '../components/blog/TableOfContents.astro';
-import PostComments from "../components/blog/PostComments.astro";
+import CommentSystem from "../components/blog/CommentSystem.astro";
 import PostShare from "../components/blog/PostShare.astro";
 import RelatedPosts from "../components/blog/RelatedPosts.astro";
 import '../styles/blog/expressive-code.css';
@@ -122,7 +122,9 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
       {entry && <RelatedPosts currentEntry={entry} />}
       <br />
       <br />
-      <PostComments />
+
+      <h2 class="comment-section-title">Comments</h2>
+      <CommentSystem />
     </div>
   </article>
 </BaseLayout>
@@ -176,6 +178,7 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
   .post-content :global(th) { background: rgba(241, 196, 15, 0.08); padding: 0.75rem 1rem; text-align: left; font-weight: 600; color: var(--color-text); border-bottom: 1px solid rgba(241, 196, 15, 0.2); }
   .post-content :global(td) { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(241, 196, 15, 0.08); color: var(--color-text-dim); }
   .post-content :global(tr:hover td) { background: rgba(241, 196, 15, 0.03); }
+  .comment-section-title {padding-top: 2rem; animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.25s both; font-family: var(--font-heading); font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--color-text); background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-pink)); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   @keyframes fadeInDown {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -194,6 +197,7 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
     .post-content :global(h2) { font-size: 1.5rem; }
     .post-content :global(h3) { font-size: 1.15rem; }
     .tag { padding: 0.2rem 0.6rem; font-size: 0.7rem; }
+    .comment-section-title { font-size: 1.4rem; margin-bottom: 1.25rem; }
   }
   @media (max-width: 480px) {
     .post-content { padding: 1.5rem 1.25rem; }

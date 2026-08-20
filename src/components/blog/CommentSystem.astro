@@ -1,0 +1,202 @@
+<section class="comments-section">
+  <div class="comments-tabs" role="tablist" aria-label="Comment system">
+    <button class="tab active" role="tab" data-tab="giscus" aria-selected="true" aria-controls="panel-giscus" id="tab-giscus">
+      <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Giscus
+    </button>
+    <button class="tab" role="tab" data-tab="telegram" aria-selected="false" aria-controls="panel-telegram" id="tab-telegram" tabindex="-1">
+      <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      Telegram
+    </button>
+  </div>
+
+  <div class="tab-panels">
+    <div class="tab-panel active" id="panel-giscus" role="tabpanel" aria-labelledby="tab-giscus">
+      <div class="giscus mx-auto mt-10 w-full"></div>
+    </div>
+    <div class="tab-panel" id="panel-telegram" role="tabpanel" aria-labelledby="tab-telegram" hidden>
+      <div id="telegram-comments" class="telegram-comments mx-auto mt-10 w-full"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    let giscusLoaded = false;
+    let telegramLoaded = false;
+
+    function getTheme() {
+      return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    }
+
+    function loadGiscus(theme) {
+      theme = theme || getTheme();
+      const container = document.querySelector('.giscus');
+      if (!container) return;
+      container.innerHTML = '';
+      const script = document.createElement('script');
+      script.src = 'https://giscus.app/client.js';
+      script.setAttribute('data-repo', 'vukilis/website');
+      script.setAttribute('data-repo-id', 'R_kgDOTflwxg');
+      script.setAttribute('data-category', 'Blog Post Comments');
+      script.setAttribute('data-category-id', 'DIC_kwDOTflwxs4DBsdu');
+      script.setAttribute('data-mapping', 'url');
+      script.setAttribute('data-strict', '0');
+      script.setAttribute('data-reactions-enabled', '1');
+      script.setAttribute('data-emit-metadata', '0');
+      script.setAttribute('data-input-position', 'bottom');
+      script.setAttribute('data-theme', theme);
+      script.setAttribute('data-lang', 'en');
+      script.setAttribute('data-loading', 'lazy');
+      script.setAttribute('crossorigin', 'anonymous');
+      script.setAttribute('async', '');
+      container.appendChild(script);
+      giscusLoaded = true;
+    }
+
+    function loadTelegram() {
+      if (telegramLoaded) return;
+      const container = document.getElementById('telegram-comments');
+      if (!container) return;
+      container.innerHTML = '';
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://comments.app/js/widget.js?3';
+      script.setAttribute('data-comments-app-website', 'IDn-9QVS');
+      script.setAttribute('data-limit', '5');
+      script.setAttribute('data-dark', '1');
+      script.setAttribute('data-colorful', '1');
+      container.appendChild(script);
+      telegramLoaded = true;
+    }
+
+    function switchTab(tabName) {
+      const tabs = document.querySelectorAll('.comments-section .tab');
+      const panels = document.querySelectorAll('.comments-section .tab-panel');
+
+      tabs.forEach(tab => {
+        const isTarget = tab.dataset.tab === tabName;
+        tab.classList.toggle('active', isTarget);
+        tab.setAttribute('aria-selected', String(isTarget));
+        tab.setAttribute('tabindex', isTarget ? '0' : '-1');
+      });
+
+      panels.forEach(panel => {
+        const isTarget = panel.id === `panel-${tabName}`;
+        panel.classList.toggle('active', isTarget);
+        panel.hidden = !isTarget;
+      });
+
+      if (tabName === 'giscus' && !giscusLoaded) {
+        loadGiscus();
+      } else if (tabName === 'telegram' && !telegramLoaded) {
+        loadTelegram();
+      }
+    }
+
+    document.addEventListener('click', (e) => {
+      const tab = e.target.closest('.tab');
+      if (!tab) return;
+      const commentsSection = tab.closest('.comments-section');
+      if (!commentsSection) return;
+      switchTab(tab.dataset.tab);
+    });
+
+    loadGiscus();
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => loadGiscus());
+    }
+
+    document.addEventListener('astro:page-load', () => {
+      giscusLoaded = false;
+      telegramLoaded = false;
+      switchTab('giscus');
+      loadGiscus();
+    });
+
+    document.addEventListener('theme-changed', (e) => {
+      giscusLoaded = false;
+      loadGiscus(e.detail.theme);
+    });
+  })();
+</script>
+
+<style>
+  .comments-tabs {
+    display: inline-flex;
+    gap: 0.25rem;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    padding: 0.25rem;
+  }
+
+  .tab {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--color-text-muted);
+    padding: 0.5rem 1.25rem;
+    border-radius: 0.5rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+  }
+
+  .tab:hover {
+    color: var(--color-text);
+    background: var(--color-bg-elevated);
+  }
+
+  .tab.active {
+    background: var(--color-primary);
+    color: var(--color-bg-dark);
+    box-shadow: 0 0 20px var(--color-shadow);
+  }
+
+  .tab.active:hover {
+    background: var(--color-primary-hover);
+    color: var(--color-bg-dark);
+  }
+
+  .tab-icon {
+    width: 1em;
+    height: 1em;
+  }
+
+  .tab-panels {
+    margin-top: 1.5rem;
+  }
+
+  .tab-panel {
+    display: none;
+    animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+
+  .tab-panel.active {
+    display: block;
+  }
+
+  .telegram-comments {
+    min-height: 200px;
+  }
+
+  @media (max-width: 768px) {
+    .comments-tabs {
+      width: 100%;
+    }
+    .tab {
+      flex: 1;
+      justify-content: center;
+      padding: 0.6rem 0.5rem;
+      font-size: 0.8rem;
+    }
+  }
+</style>
