@@ -5,7 +5,7 @@ import Navigation from '../../../../components/Navigation.astro';
 import BlogSearch from '../../../../components/blog/BlogSearch.astro';
 import BlogFilter from '../../../../components/blog/BlogFilter.astro';
 import BlogSort from '../../../../components/blog/BlogSort.astro';
-import Pagination from '../../../../components/Pagination.astro';
+import Pagination from '../../../../components/other/Pagination.astro';
 import '../../../../styles/blog/layout.css';
 
 export async function getStaticPaths({ paginate }: { paginate: (...args: any[]) => Promise<any[]> }) {
