@@ -62,7 +62,7 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
               </div>
 
               <div class="dropdown-links-group">
-                <a href={`${base}homelab_diagram/`} class:list={['dropdown-link', { active: relativePath.startsWith('/homelab') }]} role="menuitem">
+                <a href={`${base}homelab/`} class:list={['dropdown-link', { active: relativePath.startsWith('/homelab') }]} role="menuitem">
                   <span class="dropdown-icon" aria-hidden="true">
                     <i class="fa-solid fa-server"></i>
                   </span>
@@ -132,7 +132,7 @@ const relativePath = currentPath.replace(base.slice(0, -1), '') || '/';
     <a href={`${base}colab/`} class:list={['mobile-nav-link', { active: relativePath.startsWith('/colab') }]}>
       <span class="perm">drwxr-xr-x</span> <span class="link-name">colab</span>
     </a>
-    <a href={`${base}homelab_diagram/`} class:list={['mobile-nav-link', { active: relativePath.startsWith('/homelab') }]}>
+    <a href={`${base}homelab/`} class:list={['mobile-nav-link', { active: relativePath.startsWith('/homelab') }]}>
       <span class="perm">drwxr-xr-x</span> <span class="link-name">homelab</span>
     </a>
     <a href={`${base}yerbamate/`} class:list={['mobile-nav-link', { active: relativePath.startsWith('/yerbamate') }]}>

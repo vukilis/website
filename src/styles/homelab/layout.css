@@ -1,0 +1,618 @@
+.homelab-page {
+  position: relative;
+  min-height: 100vh;
+  padding: calc(var(--nav-height) + 5rem) 2rem 5rem;
+  overflow: hidden;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.homelab-header {
+  text-align: center;
+  margin-bottom: 5.5rem;
+}
+
+.page-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+
+.page-subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-dim);
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
+}
+
+.category-card {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  color: white;
+  perspective: 1000px;
+  touch-action: manipulation;
+}
+
+.card-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  min-height: 420px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--color-bg-card);
+  isolation: isolate;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07),
+              0 12px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s ease;
+}
+
+.card-inner.tilt-active {
+  transition: transform 0.12s ease-out,
+              box-shadow 0.12s ease-out,
+              border-color 0.3s ease;
+}
+
+.category-card:hover .card-inner {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.category-card-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+  opacity: 0.85;
+}
+
+.category-card:hover .category-card-image {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+.category-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(15, 23, 42, 0.95) 0%,
+    rgba(15, 23, 42, 0.7) 40%,
+    rgba(15, 23, 42, 0.2) 100%
+  );
+  transition: background 0.3s ease;
+}
+
+.category-card:hover .category-card-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(15, 23, 42, 0.98) 0%,
+    rgba(15, 23, 42, 0.75) 40%,
+    rgba(15, 23, 42, 0.3) 100%
+  );
+}
+
+.category-card-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex-grow: 1;
+  justify-content: flex-end;
+  margin-top: auto;
+}
+
+.category-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: white;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.category-description {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+.category-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  transition: all 0.3s ease;
+  align-self: flex-start;
+}
+
+.category-card:hover .category-arrow {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  transform: translateX(8px);
+  box-shadow: 0 8px 24px rgba(241, 196, 15, 0.4);
+}
+
+.card-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  mix-blend-mode: overlay;
+  background: radial-gradient(
+    circle at var(--gx, 50%) var(--gy, 50%),
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.07) 20%,
+    transparent 50%
+  );
+}
+
+.card-glare::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    var(--ga, 135deg),
+    transparent 20%,
+    rgba(255, 255, 255, 0.05) 42%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 58%,
+    transparent 80%
+  );
+}
+
+@media (max-width: 768px) {
+  .homelab-page {
+    padding-top: calc(var(--nav-height) + 2rem);
+  }
+
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .category-card {
+    perspective: none;
+  }
+
+  .card-inner {
+    min-height: 320px;
+    padding: 2rem;
+    transform-style: flat;
+    backface-visibility: visible;
+    transition: none;
+    will-change: auto;
+  }
+
+  .card-glare {
+    display: none;
+  }
+
+  .homelab-header {
+    margin-bottom: 3rem;
+  }
+}
+
+/* ============================================================
+   ANIMATED CARD — YUBIKEY × SERVER INSERTION SCENE
+   ============================================================ */
+
+.animated-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Lighter overlay so the SVG scene stays visible */
+.card-animated .category-card-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(15, 23, 42, 0.98) 0%,
+    rgba(15, 23, 42, 0.88) 18%,
+    rgba(15, 23, 42, 0.4) 35%,
+    rgba(15, 23, 42, 0.12) 55%,
+    rgba(15, 23, 42, 0.04) 100%
+  );
+  transition: background 0.4s ease;
+}
+
+.card-animated:hover .category-card-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(15, 23, 42, 0.98) 0%,
+    rgba(15, 23, 42, 0.82) 18%,
+    rgba(15, 23, 42, 0.3) 35%,
+    rgba(15, 23, 42, 0.08) 55%,
+    rgba(15, 23, 42, 0.03) 100%
+  );
+}
+
+/* ---- YubiKey slide-in ---- */
+.yubikey {
+  will-change: transform;
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.card-animated:hover .yubikey {
+  transform: translateX(248px);
+}
+
+/* ---- LED base transitions ---- */
+.led,
+.drive-led,
+.yk-led {
+  transition: fill 0.4s ease, filter 0.4s ease;
+}
+
+/* Idle breathing on power LED */
+.led-power {
+  animation: idleBreathe 4s ease-in-out infinite;
+}
+
+@keyframes idleBreathe {
+  0%, 100% { fill: #1a2a1a; }
+  50%      { fill: #1e3e28; }
+}
+
+/* Hover: sequential LED activation */
+.card-animated:hover .led-power {
+  fill: #22c55e;
+  filter: url(#glow-sm);
+  animation: none;
+  transition-delay: 0.45s;
+}
+
+.card-animated:hover .led-hdd {
+  fill: #3b82f6;
+  filter: url(#glow-sm);
+  transition-delay: 0.55s;
+  animation: ledBlink 0.8s ease-in-out 0.55s infinite;
+}
+
+.card-animated:hover .led-net {
+  fill: #f59e0b;
+  filter: url(#glow-sm);
+  transition-delay: 0.65s;
+  animation: ledBlink 1.2s ease-in-out 0.65s infinite;
+}
+
+@keyframes ledBlink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.25; }
+}
+
+/* Drive bay LEDs */
+.card-animated:hover .dl-1 {
+  fill: #22c55e;
+  filter: url(#glow-sm);
+  transition-delay: 0.5s;
+}
+
+.card-animated:hover .dl-2 {
+  fill: #22c55e;
+  filter: url(#glow-sm);
+  transition-delay: 0.6s;
+}
+
+.card-animated:hover .dl-3 {
+  fill: #22c55e;
+  filter: url(#glow-sm);
+  transition-delay: 0.7s;
+}
+
+/* YubiKey LED */
+.card-animated:hover .yk-led {
+  fill: #22c55e;
+  filter: url(#glow-sm);
+  transition-delay: 0.55s;
+}
+
+/* YubiKey touch sensor glow */
+.yk-touch {
+  transition: all 0.4s ease;
+}
+
+.card-animated:hover .yk-touch {
+  stroke: #ffe066;
+  stroke-width: 2;
+  filter: url(#glow-sm);
+  transition-delay: 0.6s;
+}
+
+.yk-touch-inner {
+  transition: all 0.4s ease;
+}
+
+.card-animated:hover .yk-touch-inner {
+  fill: #f1c40f;
+  opacity: 0.8;
+  transition-delay: 0.7s;
+}
+
+/* Power button lights up */
+.power-icon,
+.power-icon-arc {
+  transition: stroke 0.4s ease;
+}
+
+.card-animated:hover .power-icon,
+.card-animated:hover .power-icon-arc {
+  stroke: #22c55e;
+  transition-delay: 0.45s;
+}
+
+/* ---- Fan spin ---- */
+.fan-blades {
+  transform-origin: 300px 237px;
+}
+
+.card-animated:hover .fan-blades {
+  animation: fanSpin 0.4s linear 0.5s infinite;
+}
+
+@keyframes fanSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ---- Server glow border ---- */
+.server-glow {
+  transition: opacity 0.6s ease;
+}
+
+.card-animated:hover .server-glow {
+  opacity: 0.4;
+  transition-delay: 0.7s;
+  animation: glowPulse 2s ease-in-out 0.7s infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.25; }
+  50%      { opacity: 0.55; }
+}
+
+/* ---- Scan line ---- */
+.scan-line {
+  transition: opacity 0.3s ease;
+}
+
+.card-animated:hover .scan-line {
+  animation: scanDown 2.5s ease-in-out 0.3s infinite;
+}
+
+@keyframes scanDown {
+  0%   { transform: translateY(0);    opacity: 0; }
+  5%   { opacity: 0.2; }
+  90%  { opacity: 0.2; }
+  100% { transform: translateY(270px); opacity: 0; }
+}
+
+/* ---- Insertion spark ---- */
+.insertion-spark {
+  transform: scale(0);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.card-animated:hover .insertion-spark {
+  transform: scale(1);
+  opacity: 0.7;
+  transition-delay: 0.5s;
+  animation: sparkPulse 1.5s ease-in-out 0.5s infinite;
+}
+
+@keyframes sparkPulse {
+  0%, 100% { transform: scale(0.8); opacity: 0.5; }
+  50%      { transform: scale(2);   opacity: 0.1; }
+}
+
+/* ---- Particles ---- */
+.particle {
+  fill: #f1c40f;
+  opacity: 0;
+}
+
+.card-animated:hover .particle {
+  animation: particleFloat 2s ease-out var(--delay, 0s) forwards;
+}
+
+@keyframes particleFloat {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(1);
+  }
+  12% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx, 0px), var(--dy, -80px)) scale(0.15);
+  }
+}
+
+/* ---- Data streams ---- */
+.data-streams {
+  transition: opacity 0.6s ease;
+}
+
+.card-animated:hover .data-streams {
+  opacity: 0.7;
+  transition-delay: 0.85s;
+}
+
+.stream-line {
+  stroke-dasharray: 5 20;
+  stroke-dashoffset: 25;
+}
+
+.card-animated:hover .stream-line {
+  animation: dataFlow 1.2s linear var(--delay, 0s) infinite;
+}
+
+@keyframes dataFlow {
+  from { stroke-dashoffset: 25; }
+  to   { stroke-dashoffset: 0; }
+}
+
+.stream-dot {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.card-animated:hover .stream-dot {
+  animation: dotPulse 1.2s ease-in-out var(--delay, 0s) infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.7); }
+  50%      { opacity: 1;   transform: scale(1.6); }
+}
+
+/* ---- ACCESS GRANTED text ---- */
+.auth-text {
+  transition: opacity 0.6s ease;
+}
+
+.card-animated:hover .auth-text {
+  opacity: 0.85;
+  transition-delay: 1s;
+  animation: textFlicker 3s ease-in-out 1s infinite;
+}
+
+@keyframes textFlicker {
+  0%, 100% { opacity: 0.85; }
+  48%      { opacity: 0.85; }
+  50%      { opacity: 0.35; }
+  52%      { opacity: 0.85; }
+  78%      { opacity: 0.85; }
+  80%      { opacity: 0.5; }
+  82%      { opacity: 0.85; }
+}
+
+/* ============================================================
+   MOBILE — STRIP EVERYTHING HEAVY
+   Only: YubiKey slide + flat LED color changes (no filters,
+   no spin, no particles, no scan, no spark, no streams, no text)
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+  /* YubiKey: always inserted, zero animation */
+  .yubikey {
+    will-change: auto;
+    transform: translateX(248px);
+    transition: none;
+  }
+
+  /* Lock it on hover too so nothing moves */
+  .card-animated:hover .yubikey {
+    transform: translateX(248px);
+  }
+
+  /* LEDs: always lit, no filters, no blink */
+  .led-power {
+    animation: none !important;
+    fill: #22c55e;
+  }
+
+  .led-hdd  { fill: #3b82f6; }
+  .led-net  { fill: #f59e0b; }
+  .dl-1,
+  .dl-2,
+  .dl-3     { fill: #22c55e; }
+  .yk-led   { fill: #22c55e; }
+  .yk-touch { stroke: #ffe066; }
+  .yk-touch-inner { fill: #f1c40f; opacity: 0.7; }
+  .power-icon,
+  .power-icon-arc { stroke: #22c55e; }
+
+  /* Block all hover overrides from doing anything extra */
+  .card-animated:hover .led-power,
+  .card-animated:hover .led-hdd,
+  .card-animated:hover .led-net,
+  .card-animated:hover .dl-1,
+  .card-animated:hover .dl-2,
+  .card-animated:hover .dl-3,
+  .card-animated:hover .yk-led,
+  .card-animated:hover .yk-touch,
+  .card-animated:hover .yk-touch-inner,
+  .card-animated:hover .power-icon,
+  .card-animated:hover .power-icon-arc {
+    filter: none !important;
+    animation: none !important;
+    transition-delay: 0s !important;
+  }
+
+  /* Kill every heavy effect */
+  /* .card-animated:hover .fan-blades       { animation: none !important; } */
+  .card-animated:hover .scan-line        { animation: none !important; opacity: 0 !important; }
+  .card-animated:hover .insertion-spark  { animation: none !important; opacity: 0 !important; transform: scale(0) !important; }
+  .card-animated:hover .particle         { animation: none !important; opacity: 0 !important; }
+  .card-animated:hover .data-streams     { opacity: 0 !important; transition: none !important; }
+  .card-animated:hover .stream-line      { animation: none !important; }
+  .card-animated:hover .stream-dot       { animation: none !important; opacity: 0 !important; }
+  .card-animated:hover .server-glow      { animation: none !important; opacity: 0 !important; }
+  .card-animated:hover .auth-text        { animation: none !important; opacity: 0 !important; transition: none !important; }
+
+  /* Overlay for smaller cards */
+  .card-animated .category-card-overlay {
+    background: linear-gradient(
+      to top,
+      rgba(15, 23, 42, 0.98) 0%,
+      rgba(15, 23, 42, 0.7) 30%,
+      rgba(15, 23, 42, 0.2) 60%,
+      rgba(15, 23, 42, 0.08) 100%
+    );
+  }
+
+  .card-animated:hover .category-card-overlay {
+    background: linear-gradient(
+      to top,
+      rgba(15, 23, 42, 0.98) 0%,
+      rgba(15, 23, 42, 0.65) 30%,
+      rgba(15, 23, 42, 0.15) 60%,
+      rgba(15, 23, 42, 0.05) 100%
+    );
+  }
+}

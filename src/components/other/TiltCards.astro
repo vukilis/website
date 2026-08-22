@@ -1,0 +1,93 @@
+<script>
+  (function() {
+    if (!window.__tiltCardsState) {
+      window.__tiltCardsState = { initialized: false };
+    }
+
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    if (isMobile || isTouch) return;
+
+    function init() {
+      const MAX_TILT = 12;
+      const Z_LIFT = 10;
+
+      document.querySelectorAll('.category-card').forEach(card => {
+        const inner = card.querySelector('.card-inner');
+        const glare = card.querySelector('.card-glare');
+        if (!inner || !glare) return;
+
+        function onEnter() {
+          inner.classList.add('tilt-active');
+        }
+
+        function onMove(e) {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const cx = rect.width / 2;
+          const cy = rect.height / 2;
+
+          const rotateY = ((x - cx) / cx) * MAX_TILT;
+          const rotateX = ((cy - y) / cy) * MAX_TILT;
+
+          inner.style.transform =
+            `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(${Z_LIFT}px)`;
+
+          const sx = -rotateY * 1.5;
+          const sy = rotateX * 1.5 + 20;
+          inner.style.boxShadow =
+            `${sx}px ${sy}px 50px rgba(0,0,0,0.3), 0 4px 10px rgba(0,0,0,0.15)`;
+
+          const px = (x / rect.width * 100);
+          const py = (y / rect.height * 100);
+          const angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI);
+
+          glare.style.setProperty('--gx', px + '%');
+          glare.style.setProperty('--gy', py + '%');
+          glare.style.setProperty('--ga', angle + 'deg');
+          glare.style.opacity = '1';
+        }
+
+        function onLeave() {
+          inner.classList.remove('tilt-active');
+          inner.style.transform = 'rotateX(0) rotateY(0) translateZ(0)';
+          inner.style.boxShadow = '';
+          glare.style.opacity = '0';
+        }
+
+        card.addEventListener('mouseenter', onEnter);
+        card.addEventListener('mousemove', onMove);
+        card.addEventListener('mouseleave', onLeave);
+      });
+    }
+
+    function cleanup() {
+      document.querySelectorAll('.category-card').forEach(card => {
+        const inner = card.querySelector('.card-inner');
+        const glare = card.querySelector('.card-glare');
+        if (inner) {
+          inner.classList.remove('tilt-active');
+          inner.style.transform = '';
+          inner.style.boxShadow = '';
+        }
+        if (glare) {
+          glare.style.opacity = '0';
+        }
+      });
+    }
+
+    if (!window.__tiltCardsState.initialized) {
+      document.addEventListener('astro:before-swap', cleanup);
+      document.addEventListener('astro:page-load', init);
+      window.__tiltCardsState.initialized = true;
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>

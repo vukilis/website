@@ -1,3 +1,7 @@
+/* ============================================================
+   BASE PAGE
+   ============================================================ */
+
 .projects-page {
   animation: fadeInUp 0.8s ease-out;
 }
@@ -97,71 +101,137 @@
   line-height: 1.6;
 }
 
+/* ============================================================
+   3D CARD GRID
+   ============================================================ */
+
 .category-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
+/* Outer: invisible perspective container + link */
 .category-card {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  color: white;
+  perspective: 1000px;
+  touch-action: manipulation;
+}
+
+/* Inner: the physical card that tilts */
+.card-inner {
   position: relative;
   display: flex;
   flex-direction: column;
   padding: 2.5rem;
   border-radius: 1.5rem;
   overflow: hidden;
-  text-decoration: none;
-  color: white;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   min-height: 420px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: var(--color-bg-card);
+  isolation: isolate;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07),
+              0 12px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s ease;
 }
 
-.category-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
-  border-color: rgba(255, 255, 255, 0.15);
+/* Fast transitions while cursor is on the card */
+.card-inner.tilt-active {
+  transition: transform 0.12s ease-out,
+              box-shadow 0.12s ease-out,
+              border-color 0.3s ease;
 }
 
-.category-card-image {
+.category-card:hover .card-inner {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ============================================================
+   GLOSSY GLARE
+   ============================================================ */
+
+.card-glare {
   position: absolute;
   inset: 0;
-  background-size: cover;
-  background-position: center;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
-  opacity: 0.85;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  mix-blend-mode: overlay;
+  background: radial-gradient(
+    circle at var(--gx, 50%) var(--gy, 50%),
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.07) 20%,
+    transparent 50%
+  );
 }
 
-.category-card:hover .category-card-image {
-  transform: scale(1.05);
-  opacity: 1;
+/* Light band that crosses the card surface */
+.card-glare::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    var(--ga, 135deg),
+    transparent 20%,
+    rgba(255, 255, 255, 0.05) 42%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 58%,
+    transparent 80%
+  );
+}
+
+/* ============================================================
+   CARD LAYERS
+   ============================================================ */
+
+.animated-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
 .category-card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(15, 23, 42, 0.95) 0%,
-    rgba(15, 23, 42, 0.7) 40%,
-    rgba(15, 23, 42, 0.2) 100%
-  );
-  transition: background 0.3s ease;
-}
-
-.category-card:hover .category-card-overlay {
+  z-index: 1;
   background: linear-gradient(
     to top,
     rgba(15, 23, 42, 0.98) 0%,
-    rgba(15, 23, 42, 0.75) 40%,
-    rgba(15, 23, 42, 0.3) 100%
+    rgba(15, 23, 42, 0.85) 20%,
+    rgba(15, 23, 42, 0.3) 45%,
+    rgba(15, 23, 42, 0.08) 100%
+  );
+  transition: background 0.4s ease;
+}
+
+.card-anim-0:hover .category-card-overlay,
+.card-anim-1:hover .category-card-overlay,
+.card-anim-2:hover .category-card-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(15, 23, 42, 0.98) 0%,
+    rgba(15, 23, 42, 0.8) 20%,
+    rgba(15, 23, 42, 0.2) 45%,
+    rgba(15, 23, 42, 0.04) 100%
   );
 }
 
 .category-card-content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -210,6 +280,284 @@
   box-shadow: 0 8px 24px rgba(241, 196, 15, 0.4);
 }
 
+/* ============================================================
+   IT — NETWORK GRAPH
+   ============================================================ */
+
+/* Connection lines draw outward from hub */
+.net-line {
+  stroke: rgba(59, 130, 246, 0.25);
+  stroke-width: 1;
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  transition: stroke-dashoffset 0.6s ease var(--i, 0s);
+}
+
+.card-anim-0:hover .net-line {
+  stroke-dashoffset: 0;
+}
+
+/* Dimmer cross-connections */
+.net-line-dim {
+  stroke: rgba(59, 130, 246, 0.1);
+  stroke-dasharray: 4 6;
+  stroke-dashoffset: 200;
+  opacity: 0;
+  transition: stroke-dashoffset 0.8s ease var(--i, 0s), opacity 0.5s ease var(--i, 0s);
+}
+
+.card-anim-0:hover .net-line-dim {
+  stroke-dashoffset: 0;
+  opacity: 1;
+}
+
+/* Outer nodes pop in */
+.net-node {
+  opacity: 0;
+  transform: scale(0);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.card-anim-0:hover .net-node {
+  opacity: 1;
+  transform: scale(1);
+  transition-delay: var(--i, 0s);
+}
+
+/* Node labels fade in slightly after node */
+.net-label {
+  opacity: 0;
+  transition: opacity 0.3s ease 0.12s;
+}
+
+.card-anim-0:hover .net-label {
+  opacity: 1;
+}
+
+/* Node LEDs light up */
+.node-led {
+  transition: opacity 0.3s ease;
+}
+
+.card-anim-0:hover .node-led {
+  opacity: 1;
+  filter: url(#node-glow);
+}
+
+/* Central hub glow + pulse ring */
+.net-hub {
+  transition: filter 0.4s ease;
+}
+
+.card-anim-0:hover .net-hub {
+  filter: url(#hub-glow);
+}
+
+.net-hub-ring {
+  opacity: 0;
+  transform: scale(0.8);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.card-anim-0:hover .net-hub-ring {
+  opacity: 0.5;
+  transform: scale(1);
+  animation: ringPulse 2s ease-in-out 0.3s infinite;
+}
+
+@keyframes ringPulse {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50%      { transform: scale(1.4); opacity: 0.05; }
+}
+
+/* Data particles travel from hub to nodes */
+.net-particle {
+  opacity: 0;
+}
+
+.card-anim-0:hover .net-particle {
+  animation: particleTravel 1.4s ease-in-out var(--i, 0s) infinite;
+}
+
+@keyframes particleTravel {
+  0%   { opacity: 0; transform: translate(0, 0) scale(0.4); }
+  8%   { opacity: 1; transform: scale(1); }
+  82%  { opacity: 0.7; }
+  100% { opacity: 0; transform: translate(var(--tx, 0px), var(--ty, 0px)) scale(0.4); }
+}
+
+/* Status text */
+.net-status {
+  transition: opacity 0.5s ease;
+}
+
+.card-anim-0:hover .net-status {
+  opacity: 0.85;
+  transition-delay: 1.2s;
+  animation: statusFlicker 4s ease-in-out 1.7s infinite;
+}
+
+@keyframes statusFlicker {
+  0%, 100% { opacity: 0.85; }
+  47%      { opacity: 0.85; }
+  49%      { opacity: 0.35; }
+  51%      { opacity: 0.85; }
+  80%      { opacity: 0.85; }
+  82%      { opacity: 0.5; }
+  84%      { opacity: 0.85; }
+}
+
+/* ============================================================
+   DESIGN — GEOMETRIC COMPOSITION
+   Always shows the composition. On hover: shapes glow,
+   triangle & square rotate, dots bounce, lines brighten.
+   ============================================================ */
+
+/* Circles: always drawn, glow on hover */
+.geo-circle {
+  transition: filter 0.5s ease;
+}
+
+.card-anim-1:hover .geo-primary {
+  filter: url(#geo-glow);
+}
+
+.card-anim-1:hover .geo-secondary {
+  filter: url(#geo-glow);
+  transition-delay: 0.1s;
+}
+
+.geo-small-circle {
+  transition: filter 0.5s ease;
+}
+
+.card-anim-1:hover .geo-small-circle {
+  filter: url(#geo-glow);
+  transition-delay: 0.15s;
+}
+
+/* Triangle: static, rotates on hover */
+.geo-tri {
+  transform-origin: 125px 94px;
+}
+
+.card-anim-1:hover .geo-tri {
+  animation: triSpin 10s linear infinite;
+}
+
+@keyframes triSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Square: static, rotates opposite on hover */
+.geo-sq {
+  transform-origin: 378px 96px;
+}
+
+.card-anim-1:hover .geo-sq {
+  animation: sqSpin 14s linear infinite;
+}
+
+@keyframes sqSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+/* Connecting lines: always drawn, brighten on hover */
+.geo-conn {
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 1;
+  stroke-dasharray: 150;
+  stroke-dashoffset: 0;
+  transition: stroke 0.4s ease var(--i, 0s);
+}
+
+.card-anim-1:hover .geo-conn {
+  stroke: rgba(255, 255, 255, 0.2);
+}
+
+/* Accent dots: always visible, bounce on hover */
+.geo-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.card-anim-1:hover .geo-dot {
+  animation: dotBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) var(--i, 0s);
+}
+
+@keyframes dotBounce {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.45); }
+  100% { transform: scale(1); }
+}
+
+/* Plus marks: always visible, brighten on hover */
+.geo-plus {
+  transition: opacity 0.4s ease var(--i, 0s);
+}
+
+.card-anim-1:hover .geo-plus {
+  opacity: 0.8 !important;
+}
+
+/* ============================================================
+   MUSIC — EQUALIZER
+   ============================================================ */
+
+.eq-bar {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  transform: scaleY(0.08);
+  transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.card-anim-2:hover .eq-bar {
+  transform: scaleY(var(--target, 1));
+  transition-delay: var(--i, 0s);
+}
+
+.waveform {
+  transition: opacity 0.5s ease;
+}
+
+.card-anim-2:hover .waveform {
+  opacity: 0.5;
+}
+
+.music-note {
+  opacity: 0;
+}
+
+.card-anim-2:hover .music-note {
+  animation: noteFloat 2.2s ease-out var(--i, 0s) infinite;
+}
+
+@keyframes noteFloat {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.8);
+  }
+  12% {
+    opacity: 0.85;
+    transform: translate(calc(var(--dx, 0px) * 0.1), calc(var(--dy, -80px) * 0.1)) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx, 0px), var(--dy, -80px)) scale(0.3);
+  }
+}
+
+/* ============================================================
+   PLACEHOLDER PAGE
+   ============================================================ */
+
 .placeholder-header {
   text-align: center;
   padding: 4rem 0;
@@ -249,6 +597,10 @@
   color: var(--color-primary);
 }
 
+/* ============================================================
+   MOBILE — NO 3D, NO GLARE, STATIC SVGs
+   ============================================================ */
+
 @media (max-width: 768px) {
   .projects-page,
   .placeholder-page {
@@ -257,10 +609,151 @@
 
   .category-grid {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
 
-  .category-card {
+  .card-inner {
     min-height: 320px;
     padding: 2rem;
+    transition: none;
+    will-change: auto;
+  }
+
+  .projects-header {
+    margin-bottom: 3rem;
+  }
+
+  /* Kill 3D entirely */
+  .category-card {
+    perspective: none;
+  }
+
+  .card-inner {
+    transform-style: flat;
+    backface-visibility: visible;
+  }
+
+  .card-glare {
+    display: none;
+  }
+
+  /* ---- IT: full network graph, no particles ---- */
+  .net-line {
+    stroke-dashoffset: 0 !important;
+    transition: none !important;
+  }
+
+  .net-line-dim {
+    stroke-dashoffset: 0 !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+
+  .net-node {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+    transition: none !important;
+  }
+
+  .net-label {
+    opacity: 1 !important;
+    transition: none !important;
+  }
+
+  .node-led {
+    opacity: 1 !important;
+    filter: none !important;
+    transition: none !important;
+  }
+
+  .net-hub {
+    filter: none !important;
+    transition: none !important;
+  }
+
+  .net-hub-ring {
+    opacity: 0.3 !important;
+    transform: scale(1) !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .net-particle {
+    opacity: 0 !important;
+    animation: none !important;
+  }
+
+  .net-status {
+    opacity: 0.8 !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .card-anim-0:hover .net-line      { transition: none !important; }
+  .card-anim-0:hover .net-line-dim { transition: none !important; }
+  .card-anim-0:hover .net-node      { transition: none !important; }
+  .card-anim-0:hover .net-label     { transition: none !important; }
+  .card-anim-0:hover .node-led     { filter: none !important; animation: none !important; }
+  .card-anim-0:hover .net-hub      { filter: none !important; }
+  .card-anim-0:hover .net-hub-ring { animation: none !important; }
+  .card-anim-0:hover .net-particle  { animation: none !important; }
+  .card-anim-0:hover .net-status    { animation: none !important; }
+
+  /* ---- Design: static composition, no rotation ---- */
+  .geo-circle,
+  .geo-small-circle {
+    filter: none !important;
+    transition: none !important;
+  }
+
+  .geo-conn {
+    stroke: rgba(255, 255, 255, 0.08) !important;
+    transition: none !important;
+  }
+
+  .geo-dot {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .card-anim-1:hover .geo-circle      { filter: none !important; }
+  .card-anim-1:hover .geo-small-circle { filter: none !important; }
+  .card-anim-1:hover .geo-tri        { animation: none !important; }
+  .card-anim-1:hover .geo-sq         { animation: none !important; }
+  .card-anim-1:hover .geo-conn       { stroke: rgba(255,255,255,0.08) !important; }
+  .card-anim-1:hover .geo-dot        { animation: none !important; }
+  .card-anim-1:hover .geo-plus       { transition: none !important; }
+
+  /* ---- Music static ---- */
+  .eq-bar {
+    transform: scaleY(var(--target, 1)) !important;
+    transition: none !important;
+  }
+
+  .waveform {
+    opacity: 0.4 !important;
+    transition: none !important;
+  }
+
+  .music-note {
+    opacity: 0 !important;
+    animation: none !important;
+  }
+
+  .card-anim-2:hover .eq-bar     { transition: none !important; }
+  .card-anim-2:hover .waveform   { opacity: 0.4 !important; }
+  .card-anim-2:hover .music-note { opacity: 0 !important; animation: none !important; }
+
+  /* Overlay */
+  .card-anim-0 .category-card-overlay,
+  .card-anim-1 .category-card-overlay,
+  .card-anim-2 .category-card-overlay {
+    background: linear-gradient(
+      to top,
+      rgba(15, 23, 42, 0.98) 0%,
+      rgba(15, 23, 42, 0.7) 30%,
+      rgba(15, 23, 42, 0.2) 60%,
+      rgba(15, 23, 42, 0.08) 100%
+    );
   }
 }

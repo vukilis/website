@@ -1,26 +1,24 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navigation from '../../components/Navigation.astro';
+import TiltCards from '../../components/other/TiltCards.astro';
 import '../../styles/projects/layout.css';
 
 const categories = [
   {
     title: 'IT',
-    description: 'Windows & Linux tooling, homelab experiments and web development projects',
+    description: 'Tooling, homelab experiments and web development projects',
     href: '/projects/it/',
-    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80',
   },
   {
     title: 'DESIGN',
     description: 'Motion design, animation and visual experiments projects',
     href: '/projects/design/',
-    image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=1200&q=80',
   },
   {
     title: 'MUSIC',
     description: 'Song writing, AI sound design and music projects',
     href: '/projects/music/',
-    image: 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?auto=format&fit=crop&w=1200&q=80',
   },
 ];
 ---
@@ -36,30 +34,216 @@ const categories = [
     <div class="container">
       <header class="projects-header">
         <h1 class="page-title">Projects</h1>
-        <p class="page-subtitle">
-          Select a category to explore
-        </p>
+        <p class="page-subtitle">Select a category to explore</p>
       </header>
 
       <div class="category-grid">
-        {categories.map((category) => (
-          <a href={category.href} class="category-card">
-            <div class="category-card-image" style={`background-image: url('${category.image}');`}></div>
-            <div class="category-card-overlay"></div>
-            <div class="category-card-content">
-              <h2 class="category-title">{category.title}</h2>
-              <p class="category-description">{category.description}</p>
-              <span class="category-arrow">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12 5 19 12 12 19"></polyline>
+        {categories.map((category, index) => (
+          <a href={category.href} class={`category-card card-anim-${index}`}>
+            <div class="card-inner">
+              {index === 0 ? (
+                <svg class="animated-scene" viewBox="0 0 500 350" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <filter id="node-glow">
+                      <feGaussianBlur stdDeviation="4" result="b"/>
+                      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                    </filter>
+                    <filter id="hub-glow">
+                      <feGaussianBlur stdDeviation="6" result="b"/>
+                      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                    </filter>
+                    <pattern id="net-dots" width="20" height="20" patternUnits="userSpaceOnUse">
+                      <circle cx="10" cy="10" r="0.5" fill="rgba(255,255,255,0.03)"/>
+                    </pattern>
+                  </defs>
+
+                  <rect width="500" height="350" fill="url(#net-dots)"/>
+
+                  <!-- Primary connections: hub → outer nodes -->
+                  <line class="net-line" style="--i:0.1s" x1="250" y1="170" x2="105" y2="82"/>
+                  <line class="net-line" style="--i:0.15s" x1="250" y1="170" x2="395" y2="88"/>
+                  <line class="net-line" style="--i:0.2s" x1="250" y1="170" x2="85" y2="238"/>
+                  <line class="net-line" style="--i:0.25s" x1="250" y1="170" x2="415" y2="228"/>
+                  <line class="net-line" style="--i:0.3s" x1="250" y1="170" x2="250" y2="58"/>
+                  <line class="net-line" style="--i:0.35s" x1="250" y1="170" x2="250" y2="288"/>
+
+                  <!-- Cross connections: outer ↔ outer -->
+                  <line class="net-line net-line-dim" style="--i:0.4s" x1="105" y1="82" x2="250" y2="58"/>
+                  <line class="net-line net-line-dim" style="--i:0.45s" x1="395" y1="88" x2="250" y2="58"/>
+                  <line class="net-line net-line-dim" style="--i:0.5s" x1="85" y1="238" x2="250" y2="288"/>
+                  <line class="net-line net-line-dim" style="--i:0.55s" x1="415" y1="228" x2="250" y2="288"/>
+
+                  <!-- Outer nodes -->
+                  <g class="net-node" style="--i:0.18s">
+                    <circle cx="105" cy="82" r="12" fill="#0c1322" stroke="#3b82f6" stroke-width="1.5"/>
+                    <circle cx="105" cy="82" r="3" fill="#3b82f6" class="node-led" opacity="0.2"/>
+                    <text class="net-label" x="105" y="60" text-anchor="middle" fill="#475569" font-size="8.5" font-family="'Courier New', monospace" letter-spacing="1">API</text>
+                  </g>
+                  <g class="net-node" style="--i:0.22s">
+                    <circle cx="395" cy="88" r="12" fill="#0c1322" stroke="#3b82f6" stroke-width="1.5"/>
+                    <circle cx="395" cy="88" r="3" fill="#3b82f6" class="node-led" opacity="0.2"/>
+                    <text class="net-label" x="395" y="66" text-anchor="middle" fill="#475569" font-size="8.5" font-family="'Courier New', monospace" letter-spacing="1">DB</text>
+                  </g>
+                  <g class="net-node" style="--i:0.26s">
+                    <circle cx="85" cy="238" r="12" fill="#0c1322" stroke="#3b82f6" stroke-width="1.5"/>
+                    <circle cx="85" cy="238" r="3" fill="#3b82f6" class="node-led" opacity="0.2"/>
+                    <text class="net-label" x="85" y="264" text-anchor="middle" fill="#475569" font-size="8.5" font-family="'Courier New', monospace" letter-spacing="1">CDN</text>
+                  </g>
+                  <g class="net-node" style="--i:0.3s">
+                    <circle cx="415" cy="228" r="12" fill="#0c1322" stroke="#3b82f6" stroke-width="1.5"/>
+                    <circle cx="415" cy="228" r="3" fill="#3b82f6" class="node-led" opacity="0.2"/>
+                    <text class="net-label" x="415" y="254" text-anchor="middle" fill="#475569" font-size="8.5" font-family="'Courier New', monospace" letter-spacing="1">AUTH</text>
+                  </g>
+                  <g class="net-node" style="--i:0.34s">
+                    <circle cx="250" cy="58" r="10" fill="#0c1322" stroke="#22c55e" stroke-width="1.5"/>
+                    <circle cx="250" cy="58" r="3" fill="#22c55e" class="node-led" opacity="0.2"/>
+                    <text class="net-label" x="250" y="36" text-anchor="middle" fill="#475569" font-size="8.5" font-family="'Courier New', monospace" letter-spacing="1">CI/CD</text>
+                  </g>
+                  <g class="net-node" style="--i:0.38s">
+                    <circle cx="250" cy="288" r="10" fill="#0c1322" stroke="#22c55e" stroke-width="1.5"/>
+                    <circle cx="250" cy="288" r="3" fill="#22c55e" class="node-led" opacity="0.2"/>
+                    <text class="net-label" x="250" y="312" text-anchor="middle" fill="#475569" font-size="8.5" font-family="'Courier New', monospace" letter-spacing="1">LOG</text>
+                  </g>
+
+                  <!-- Central hub -->
+                  <circle class="net-hub-ring" cx="250" cy="170" r="26" fill="none" stroke="#22c55e" stroke-width="1" opacity="0"/>
+                  <circle class="net-hub" cx="250" cy="170" r="18" fill="#0c1322" stroke="#22c55e" stroke-width="2"/>
+                  <circle cx="250" cy="170" r="5" fill="#22c55e" opacity="0.6"/>
+
+                  <!-- Data particles: hub → each node -->
+                  <circle class="net-particle" style="--i:0.6s;--tx:-145px;--ty:-88px"  cx="250" cy="170" r="2.5" fill="#3b82f6"/>
+                  <circle class="net-particle" style="--i:0.72s;--tx:145px;--ty:-82px"  cx="250" cy="170" r="2.5" fill="#3b82f6"/>
+                  <circle class="net-particle" style="--i:0.84s;--tx:-165px;--ty:68px"  cx="250" cy="170" r="2.5" fill="#3b82f6"/>
+                  <circle class="net-particle" style="--i:0.96s;--tx:165px;--ty:58px"  cx="250" cy="170" r="2.5" fill="#3b82f6"/>
+                  <circle class="net-particle" style="--i:0.65s;--tx:0px;--ty:-112px"   cx="250" cy="170" r="2.5" fill="#22c55e"/>
+                  <circle class="net-particle" style="--i:0.77s;--tx:0px;--ty:118px"    cx="250" cy="170" r="2.5" fill="#22c55e"/>
+                  <!-- Return particles (slightly offset timing) -->
+                  <circle class="net-particle" style="--i:1.1s;--tx:-145px;--ty:-88px"  cx="250" cy="170" r="2" fill="#60a5fa"/>
+                  <circle class="net-particle" style="--i:1.22s;--tx:145px;--ty:-82px"  cx="250" cy="170" r="2" fill="#60a5fa"/>
+                  <circle class="net-particle" style="--i:1.34s;--tx:-165px;--ty:68px"  cx="250" cy="170" r="2" fill="#60a5fa"/>
+                  <circle class="net-particle" style="--i:1.15s;--tx:0px;--ty:-112px"   cx="250" cy="170" r="2" fill="#4ade80"/>
+
+                  <!-- Status text -->
+                  <text class="net-status" x="250" y="340" text-anchor="middle" fill="#22c55e" font-size="9" font-family="'Courier New', monospace" letter-spacing="2.5" opacity="0">ALL SYSTEMS ONLINE</text>
                 </svg>
-              </span>
+              ) : index === 1 ? (
+                <svg class="animated-scene" viewBox="0 0 500 350" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <filter id="geo-glow">
+                      <feGaussianBlur stdDeviation="4" result="b"/>
+                      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                    </filter>
+                    <pattern id="geo-grid" width="25" height="25" patternUnits="userSpaceOnUse">
+                      <path d="M 25 0 L 0 0 0 25" fill="none" stroke="rgba(139,92,246,0.03)" stroke-width="0.5"/>
+                    </pattern>
+                  </defs>
+
+                  <rect width="500" height="350" fill="url(#geo-grid)"/>
+
+                  <!-- Large circle -->
+                  <circle class="geo-circle geo-primary" cx="190" cy="168" r="90" fill="none" stroke="#ec4899" stroke-width="2"/>
+
+                  <!-- Medium circle -->
+                  <circle class="geo-circle geo-secondary" cx="330" cy="172" r="55" fill="none" stroke="#8b5cf6" stroke-width="1.5"/>
+
+                  <!-- Small circle -->
+                  <circle class="geo-small-circle" cx="260" cy="295" r="22" fill="none" stroke="#22c55e" stroke-width="1.2"/>
+
+                  <!-- Triangle -->
+                  <g class="geo-tri">
+                    <polygon points="125,58 168,130 82,130" fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-linejoin="round"/>
+                  </g>
+
+                  <!-- Square -->
+                  <g class="geo-sq">
+                    <rect x="362" y="80" width="32" height="32" rx="2" fill="none" stroke="#f59e0b" stroke-width="1.5" transform="rotate(15, 378, 96)"/>
+                  </g>
+
+                  <!-- Connecting lines -->
+                  <line class="geo-conn" style="--i:0.35s" x1="190" y1="168" x2="330" y2="172"/>
+                  <line class="geo-conn" style="--i:0.4s" x1="190" y1="168" x2="125" y2="95"/>
+                  <line class="geo-conn" style="--i:0.45s" x1="330" y1="172" x2="378" y2="96"/>
+                  <line class="geo-conn" style="--i:0.5s" x1="190" y1="258" x2="260" y2="273"/>
+                  <line class="geo-conn" style="--i:0.55s" x1="330" y1="227" x2="260" y2="273"/>
+
+                  <!-- Accent dots -->
+                  <circle class="geo-dot" style="--i:0.25s" cx="190" cy="78" r="5" fill="#ec4899"/>
+                  <circle class="geo-dot" style="--i:0.3s" cx="385" cy="172" r="4" fill="#8b5cf6"/>
+                  <circle class="geo-dot" style="--i:0.35s" cx="110" cy="250" r="5.5" fill="#3b82f6"/>
+                  <circle class="geo-dot" style="--i:0.4s" cx="350" cy="255" r="3.5" fill="#f59e0b"/>
+                  <circle class="geo-dot" style="--i:0.45s" cx="260" cy="320" r="4.5" fill="#22c55e"/>
+                  <circle class="geo-dot" style="--i:0.5s" cx="75" cy="140" r="3" fill="#ec4899" opacity="0.6"/>
+                  <circle class="geo-dot" style="--i:0.55s" cx="440" cy="140" r="3" fill="#8b5cf6" opacity="0.6"/>
+
+                  <!-- Decorative plus marks -->
+                  <g class="geo-plus" style="--i:0.5s" transform="translate(68, 185)">
+                    <line x1="-7" y1="0" x2="7" y2="0" stroke="#475569" stroke-width="0.8"/>
+                    <line x1="0" y1="-7" x2="0" y2="7" stroke="#475569" stroke-width="0.8"/>
+                  </g>
+                  <g class="geo-plus" style="--i:0.6s" transform="translate(435, 265)">
+                    <line x1="-6" y1="0" x2="6" y2="0" stroke="#475569" stroke-width="0.8"/>
+                    <line x1="0" y1="-6" x2="0" y2="6" stroke="#475569" stroke-width="0.8"/>
+                  </g>
+                  <g class="geo-plus" style="--i:0.55s" transform="translate(440, 65)">
+                    <line x1="-5" y1="0" x2="5" y2="0" stroke="#475569" stroke-width="0.8"/>
+                    <line x1="0" y1="-5" x2="0" y2="5" stroke="#475569" stroke-width="0.8"/>
+                  </g>
+                </svg>
+              ) : (
+                <svg class="animated-scene" viewBox="0 0 500 350" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="bar-grad" x1="0%" y1="100%" x2="0%" y2="0%">
+                      <stop offset="0%" stop-color="#6366f1"/>
+                      <stop offset="50%" stop-color="#a855f7"/>
+                      <stop offset="100%" stop-color="#ec4899"/>
+                    </linearGradient>
+                  </defs>
+                  <line x1="0" y1="70" x2="500" y2="70" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+                  <line x1="0" y1="110" x2="500" y2="110" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+                  <line x1="0" y1="150" x2="500" y2="150" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+                  <line x1="0" y1="190" x2="500" y2="190" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+                  <g class="vinyl" opacity="0.06">
+                    <circle cx="415" cy="60" r="35" fill="none" stroke="white" stroke-width="0.5"/>
+                    <circle cx="415" cy="60" r="27" fill="none" stroke="white" stroke-width="0.5"/>
+                    <circle cx="415" cy="60" r="19" fill="none" stroke="white" stroke-width="0.5"/>
+                    <circle cx="415" cy="60" r="11" fill="none" stroke="white" stroke-width="0.5"/>
+                    <circle cx="415" cy="60" r="4" fill="rgba(255,255,255,0.15)"/>
+                  </g>
+                  <path class="waveform" d="M 0,115 C 25,95 50,135 75,115 C 100,95 125,135 150,115 C 175,95 200,135 225,115 C 250,95 275,135 300,115 C 325,95 350,135 375,115 C 400,95 425,135 450,115 C 475,95 500,115 500,115" fill="none" stroke="rgba(168,85,247,0.2)" stroke-width="1.5"/>
+                  <rect class="eq-bar" style="--target:0.3;--i:0.05s"  x="84"  y="90" width="28" height="160" rx="4" fill="url(#bar-grad)"/>
+                  <rect class="eq-bar" style="--target:0.55;--i:0.1s"  x="122" y="90" width="28" height="160" rx="4" fill="url(#bar-grad)"/>
+                  <rect class="eq-bar" style="--target:0.82;--i:0.15s" x="160" y="90" width="28" height="160" rx="4" fill="url(#bar-grad)"/>
+                  <rect class="eq-bar" style="--target:1.0;--i:0.2s"  x="198" y="90" width="28" height="160" rx="4" fill="url(#bar-grad)"/>
+                  <rect class="eq-bar" style="--target:0.88;--i:0.25s" x="236" y="90" width="28" height="160" rx="4" fill="url(#bar-grad)"/>
+                  <rect class="eq-bar" style="--target:0.95;--i:0.3s"  x="274" y="90" width="28" height="160" rx="4" fill="url(#bar-grad)"/>
+                  <rect class="eq-bar" style="--target:0.72;--i:0.35s" x="312" y="90" width="28" height="160" rx="4" fill="url(#bar-grad)"/>
+                  <rect class="eq-bar" style="--target:0.5;--i:0.4s"  x="350" y="90" width="28" height="160" rx="4" fill="url(#bar-grad)"/>
+                  <rect class="eq-bar" style="--target:0.35;--i:0.45s" x="388" y="90" width="28" height="160" rx="4" fill="url(#bar-grad)"/>
+                  <text class="music-note" style="--i:0.5s;--dx:-12px;--dy:-85px"  x="75"  y="85" fill="#f1c40f" font-size="20" font-family="serif" opacity="0">♪</text>
+                  <text class="music-note" style="--i:0.7s;--dx:8px;--dy:-100px"   x="240" y="78" fill="#f1c40f" font-size="16" font-family="serif" opacity="0">♫</text>
+                  <text class="music-note" style="--i:0.9s;--dx:15px;--dy:-90px"   x="390" y="82" fill="#f1c40f" font-size="18" font-family="serif" opacity="0">♪</text>
+                  <text class="music-note" style="--i:1.1s;--dx:-8px;--dy:-110px"  x="150" y="72" fill="#f1c40f" font-size="14" font-family="serif" opacity="0">♫</text>
+                </svg>
+              )}
+
+              <div class="card-glare"></div>
+              <div class="category-card-overlay"></div>
+              <div class="category-card-content">
+                <h2 class="category-title">{category.title}</h2>
+                <p class="category-description">{category.description}</p>
+                <span class="category-arrow">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </span>
+              </div>
             </div>
           </a>
         ))}
       </div>
     </div>
-  </main>
-</BaseLayout>
 
+      <TiltCards />
+    </main>
+</BaseLayout>
