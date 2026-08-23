@@ -87,7 +87,7 @@
   min-width: 2rem;
   height: 2rem;
   padding: 0 0.5rem;
-  color: var(--color-primary);
+  color: var(--color-accent-purple);
   font-size: 0.8rem;
   font-weight: 600;
   font-family: var(--font-body, 'DM Sans', sans-serif);

@@ -162,7 +162,7 @@
   justify-content: center;
   width: 1.6rem;
   height: 1.6rem;
-  color: var(--toc-text-accent);
+  color: var(--color-accent-purple);
   flex-shrink: 0;
   filter: drop-shadow(0 0 8px rgba(241, 196, 15, 0.35));
 }
@@ -175,7 +175,7 @@
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--toc-text-accent);
+  color: var(--color-accent-purple);
   white-space: nowrap;
   text-shadow: 0 0 16px rgba(241, 196, 15, 0.25);
 }
@@ -338,7 +338,7 @@
 }
 
 .toc-link:hover .toc-dot {
-  background: linear-gradient(135deg, var(--toc-accent-purple), var(--toc-accent-pink));
+  background: var(--color-accent-purple);
   box-shadow:
     0 0 10px var(--toc-dot-glow),
     0 0 22px rgba(241, 196, 15, 0.25);
@@ -362,7 +362,7 @@
 }
 
 .toc-link.toc-active .toc-dot {
-  background: linear-gradient(135deg, var(--toc-accent-purple), var(--toc-accent-pink));
+  background: var(--color-accent-purple);
   box-shadow:
     0 0 14px var(--toc-dot-glow),
     0 0 28px rgba(241, 196, 15, 0.35),

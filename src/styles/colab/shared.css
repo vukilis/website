@@ -81,8 +81,9 @@
 }
 
 .sysadmin-icon { color: var(--color-primary); }
-.physical-icon { color: var(--color-accent-pink, #ec4899); }
-.script-micro-icon { color: var(--color-accent-purple, #8b5cf6); }
+.physical-icon { color: var(--color-primary); }
+.cloud-icon { color: var(--color-primary); }
+.script-micro-icon { color: var(--color-primary); }
 
 .service-title {
   font-family: var(--font-heading);
@@ -339,11 +340,16 @@
 
 [data-theme="light"] .workflow-icon {
   background: var(--color-primary-soft);
-  border-color: rgba(37, 99, 235, 0.2);
+  border-color: var(--color-accent-purple);
+  color: var(--color-accent-purple);
 }
 
-[data-theme="light"] .physical-icon { color: #d4a80e; }
-[data-theme="light"] .script-micro-icon { color: #d4a80e; }
+[data-theme="light"] .physical-icon { color: var(--color-accent-purple); }
+[data-theme="light"] .script-micro-icon { color: var(--color-accent-purple); }
+[data-theme="light"] .service-icon { color: var(--color-accent-purple); }
+[data-theme="light"] .sysadmin-icon { color: var(--color-accent-purple); }
+
+
 
 /* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {

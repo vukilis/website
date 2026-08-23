@@ -83,11 +83,11 @@
 
 [data-theme="light"] .intro-card-icon {
   background: var(--color-primary-soft);
-  border-color: rgba(241, 196, 15, 0.35);
+  border-color: var(--color-accent-purple);
 }
 
 [data-theme="light"] .intro-card-icon i {
-  color: var(--color-primary);
+  color: var(--color-accent-purple);
 }
 
 [data-theme="light"] .intro-highlight {
@@ -111,14 +111,6 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   filter: drop-shadow(0 0 6px rgba(241, 196, 15, 0.35));
-}
-
-[data-theme="light"] .intro-highlight-link {
-  color: var(--color-primary);
-}
-
-[data-theme="light"] .intro-highlight-link:hover {
-  color: var(--color-primary-hover);
 }
 
 [data-theme="light"] .header-note {
@@ -292,7 +284,7 @@
 .intro-highlight-link {
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--color-accent-purple);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -301,6 +293,7 @@
 
 .intro-highlight-link:hover {
   text-decoration: underline;
+  color: var(--color-primary-hover);
 }
 
 .intro-highlight-text {
@@ -311,18 +304,14 @@
 }
 
 .intro-highlight-text a {
-  color: var(--color-primary);
+  color: var(--color-accent-purple);
   text-decoration: none;
   font-weight: 500;
 }
 
-[data-theme='light'] .intro-highlight-text a {
-  color: var(--color-primary);
-}
-
 .intro-highlight-text a:hover {
+  color: var(--color-primary-hover);
   text-decoration: underline;
-  color: var(--color-accent-purple);
 }
 
 .header-note {

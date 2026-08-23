@@ -93,7 +93,7 @@
 
 .tag {
   padding: 0.25rem 0.625rem;
-  background: rgba(241, 196, 15, 0.1);
+  background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
   border-radius: 0.25rem;
   font-size: 0.75rem;
@@ -106,13 +106,13 @@
 .tag:hover {
   background: rgba(241, 196, 15, 0.12);
   border-color: rgba(241, 196, 15, 0.4);
-  color: var(--color-primary);
+  color: var(--color-accent-purple);
 }
 
 .tag.active {
   background: rgba(241, 196, 15, 0.2);
   border-color: rgba(241, 196, 15, 0.5);
-  color: var(--color-accent-blue, #f1c40f);
+  color: var(--color-accent-purple);
 }
 
 .read-more {

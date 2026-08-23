@@ -153,9 +153,6 @@
   text-shadow: none;
   font-weight: 500;
 }
-[data-theme="light"] .category-description {
-  color: #6b4f00;
-}
 
 .category-arrow {
   display: inline-flex;

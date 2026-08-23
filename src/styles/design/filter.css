@@ -34,7 +34,7 @@
   display: inline-flex;
   align-items: center;
   padding: 0.35rem 0.875rem;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: .5rem;
   font-size: 0.8rem;
@@ -49,13 +49,13 @@
 .filter-chip:hover {
   background: rgba(241, 196, 15, 0.12);
   border-color: rgba(241, 196, 15, 0.4);
-  color: var(--color-accent-blue, #f1c40f);
+  color: var(--color-accent-purple);
 }
 
 .filter-chip.active {
   background: rgba(241, 196, 15, 0.2);
   border-color: rgba(241, 196, 15, 0.5);
-  color: var(--color-accent-blue, #f1c40f);
+  color: var(--color-accent-purple);
 }
 
 .filter-chip-count {
@@ -74,7 +74,7 @@
 }
 
 .filter-chip.active .filter-chip-count {
-  color: var(--color-accent-blue, #f1c40f);
+  color: var(--color-accent-purple);
 }
 
 @media (prefers-reduced-motion: reduce) {

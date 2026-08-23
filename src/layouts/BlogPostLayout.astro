@@ -150,12 +150,12 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
   .post-meta-right { margin-left: auto; display: inline-flex; align-items: center; gap: 0.75rem; }
   .post-updated { color: var(--color-accent-cyan); font-style: italic; }
   .post-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
-  .tag { display: inline-flex; align-items: center; padding: 0.25rem 0.75rem; background: rgba(241, 196, 15, 0.1); border: 1px solid var(--color-border); border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; color: var(--color-accent-blue); font-family: var(--font-body); text-decoration: none; cursor: pointer; transition: all 0.2s ease; }
-  .tag:hover { background: rgba(241, 196, 15, 0.12); border-color: rgba(241, 196, 15, 0.4); color: var(--color-primary); }
-  .tag.active { background: rgba(241, 196, 15, 0.2); border-color: rgba(241, 196, 15, 0.5); color: var(--color-accent-blue); }
-  .tag-category { padding: 0.35rem 0.875rem; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--color-border); border-radius: .5rem; font-size: 0.8rem; font-weight: 600; font-family: var(--font-body, 'DM Sans', sans-serif); letter-spacing: .04em; color: var(--color-text-dim); cursor: pointer; transition: all .2s cubic-bezier(.4, 0, .2, 1); outline: none; }
-  .tag-category:hover { background: rgba(241, 196, 15, 0.12); border-color: rgba(241, 196, 15, 0.4); color: var(--color-accent-blue, #f1c40f); }
-  .tag-category.active { background: rgba(241, 196, 15, 0.2); border-color: rgba(241, 196, 15, 0.5); color: var(--color-accent-blue, #f1c40f); }
+  .tag { display: inline-flex; align-items: center; padding: 0.25rem 0.75rem; background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; color: var(--color-text-dim); font-family: var(--font-body); text-decoration: none; cursor: pointer; transition: all 0.2s ease; }
+  .tag:hover { background: rgba(241, 196, 15, 0.12); border-color: rgba(241, 196, 15, 0.4); color: var(--color-accent-purple); }
+  .tag.active { background: rgba(241, 196, 15, 0.2); border-color: rgba(241, 196, 15, 0.5); color: var(--color-accent-purple); }
+  .tag-category { padding: 0.35rem 0.875rem; background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: .5rem; font-size: 0.8rem; font-weight: 600; font-family: var(--font-body, 'DM Sans', sans-serif); letter-spacing: .04em; color: var(--color-text-dim); cursor: pointer; transition: all .2s cubic-bezier(.4, 0, .2, 1); outline: none; }
+  .tag-category:hover { background: rgba(241, 196, 15, 0.12); border-color: rgba(241, 196, 15, 0.4); color: var(--color-accent-purple); }
+  .tag-category.active { background: rgba(241, 196, 15, 0.2); border-color: rgba(241, 196, 15, 0.5); color: var(--color-accent-purple); }
   .post-layout { display: grid; grid-template-columns: 1fr 260px; gap: 3rem; align-items: start; }
   .post-content { background: var(--color-bg-card); border: 1px solid var(--color-primary-soft); border-radius: 1rem; padding: 3rem; animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.15s both; position: relative; overflow: hidden; }
   .post-content::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(241, 196, 15, 0.3), transparent); }
@@ -166,7 +166,7 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
   .post-content :global(h4) { font-size: 1.1rem; color: #8a7f72; font-weight: 600; }
   .post-content :global(p) { line-height: 1.85; margin-bottom: 1.5rem; color: var(--color-text-dim); font-size: 0.95rem; margin-top: 1.5rem;}
   .post-content :global(a) { color: var(--color-accent-purple); text-decoration: none; border-bottom: 1px solid var(--color-accent-purple); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 500; overflow-wrap: anywhere; }
-  .post-content :global(a:hover) { color: var(--color-accent-pink); border-color: var(--color-accent-pink); }
+  .post-content :global(a:hover) { color: var(--color-primary); border-color: var(--color-accent-primary); }
   .post-content :global(code) { background: rgba(241, 196, 15, 0.1); padding: 0.2rem 0rem; border-radius: 0.25rem; font-family: 'Courier New', monospace; font-size: 0.9em; color: var(--color-accent-purple); }
   .post-content :global(ul), .post-content :global(ol) { margin: 1.5rem 0; padding-left: 2rem; color: var(--color-text-dim); }
   .post-content :global(li) { margin-bottom: 0.5rem; line-height: 1.7; }

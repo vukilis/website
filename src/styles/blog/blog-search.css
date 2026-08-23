@@ -74,7 +74,7 @@
   width: 1.6rem;
   height: 1.6rem;
   border-radius: 0.4rem;
-  border: none;
+  border: 1px solid var(--color-border);
   background: var(--search-clear-bg, rgba(255, 255, 255, 0.05));
   color: var(--color-text-dim, #b8a88a);
   cursor: pointer;
@@ -84,8 +84,8 @@
 }
 
 .search-clear:hover {
-  background: var(--search-clear-hover-bg, rgba(241, 196, 15, 0.18));
-  color: var(--color-primary, #f1c40f);
+  background: rgba(241, 196, 15, 0.12);
+  color: var(--color-accent-purple);
   transform: scale(1.05);
 }
 
@@ -97,7 +97,7 @@
   padding: 0.15rem 0.35rem;
   border-radius: 0.35rem;
   background: var(--search-clear-bg, rgba(255, 255, 255, 0.05));
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-border);
   color: var(--color-text-dim, #b8a88a);
   font-family: var(--font-body, 'Inter', 'DM Sans', system-ui, sans-serif);
   font-size: 0.72rem;
@@ -110,7 +110,7 @@
 .blog-search:focus-within .search-shortcut {
   background: rgba(241, 196, 15, 0.12);
   border-color: rgba(241, 196, 15, 0.25);
-  color: var(--color-primary, #f1c40f);
+  color: var(--color-accent-purple);
 }
 
 .search-shortcut kbd {
@@ -268,7 +268,7 @@
 
 .search-highlight {
   background: rgba(241, 196, 15, 0.22);
-  color: var(--color-primary, #f1c40f);
+  color: var(--color-accent-purple);
   border-radius: 0.2rem;
   padding: 0.05rem 0.2rem;
   font-weight: 600;

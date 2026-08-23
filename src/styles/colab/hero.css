@@ -330,7 +330,7 @@
 }
 
 .prompt-symbol {
-  color: var(--color-primary);
+  color: var(--color-accent-purple);
   font-weight: 700;
 }
 
@@ -341,7 +341,7 @@
 }
 
 .cursor-blink {
-  color: var(--color-primary);
+  color: var(--color-accent-purple);
   animation: blink 1s step-end infinite;
   font-weight: 400;
 }

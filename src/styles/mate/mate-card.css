@@ -176,7 +176,7 @@
   width: 100%;
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--color-primary);
+  color: var(--color-accent-purple);
   margin-top: auto;
   gap: 0.5rem;
   transition: color 0.2s ease;
