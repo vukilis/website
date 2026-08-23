@@ -209,12 +209,14 @@
   z-index: 1;
   background: linear-gradient(
     to top,
-    rgba(15, 23, 42, 0.98) 0%,
-    rgba(15, 23, 42, 0.85) 20%,
-    rgba(15, 23, 42, 0.3) 45%,
-    rgba(15, 23, 42, 0.08) 100%
+    var(--overlay-color-top) 0%,
+    var(--overlay-color-mid) 20%,
+    var(--overlay-color-mid2) 45%,
+    var(--overlay-color-bot) 100%
   );
-  transition: background 0.4s ease;
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  transition: background 0.4s ease, backdrop-filter 0.4s ease;
 }
 
 .card-anim-0:hover .category-card-overlay,
@@ -222,10 +224,10 @@
 .card-anim-2:hover .category-card-overlay {
   background: linear-gradient(
     to top,
-    rgba(15, 23, 42, 0.98) 0%,
-    rgba(15, 23, 42, 0.8) 20%,
-    rgba(15, 23, 42, 0.2) 45%,
-    rgba(15, 23, 42, 0.04) 100%
+    var(--overlay-color-top) 0%,
+    var(--overlay-color-mid) 20%,
+    var(--overlay-color-mid2) 45%,
+    var(--overlay-color-bot) 100%
   );
 }
 
@@ -245,17 +247,25 @@
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 700;
   margin-bottom: 0.75rem;
-  color: white;
+  color: var(--color-text);
   letter-spacing: -0.02em;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
 }
 
 .category-description {
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--color-text);
   line-height: 1.6;
   margin-bottom: 2rem;
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] .category-title, [data-theme="light"] .category-description {
+  text-shadow: none;
+  font-weight: 500;
+}
+[data-theme="light"] .category-description {
+  color: #6b4f00;
 }
 
 .category-arrow {
@@ -278,6 +288,10 @@
   border-color: var(--color-primary);
   transform: translateX(8px);
   box-shadow: 0 8px 24px rgba(241, 196, 15, 0.4);
+}
+
+[data-theme="light"] .category-arrow {
+  background: var(--color-text-muted);
 }
 
 /* ============================================================
@@ -750,10 +764,10 @@
   .card-anim-2 .category-card-overlay {
     background: linear-gradient(
       to top,
-      rgba(15, 23, 42, 0.98) 0%,
-      rgba(15, 23, 42, 0.7) 30%,
-      rgba(15, 23, 42, 0.2) 60%,
-      rgba(15, 23, 42, 0.08) 100%
+      var(--overlay-color-top) 0%,
+      var(--overlay-color-mid) 30%,
+      var(--overlay-color-mid2) 60%,
+      var(--overlay-color-bot) 100%
     );
   }
 }
