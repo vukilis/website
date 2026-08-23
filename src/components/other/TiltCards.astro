@@ -9,11 +9,11 @@
 
     if (isMobile || isTouch) return;
 
-    function init() {
-      const MAX_TILT = 12;
-      const Z_LIFT = 10;
+     function init() {
+       const MAX_TILT = 12;
+       const Z_LIFT = 10;
 
-      document.querySelectorAll('.category-card').forEach(card => {
+       document.querySelectorAll('.category-card, .blog-card, .skill-card').forEach(card => {
         const inner = card.querySelector('.card-inner');
         const glare = card.querySelector('.card-glare');
         if (!inner || !glare) return;
@@ -63,8 +63,8 @@
       });
     }
 
-    function cleanup() {
-      document.querySelectorAll('.category-card').forEach(card => {
+     function cleanup() {
+       document.querySelectorAll('.category-card, .blog-card, .skill-card').forEach(card => {
         const inner = card.querySelector('.card-inner');
         const glare = card.querySelector('.card-glare');
         if (inner) {

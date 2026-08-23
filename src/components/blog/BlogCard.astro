@@ -45,7 +45,8 @@ const categoriesJson = JSON.stringify(categories ?? []);
   data-tags={tagsJson}
   data-categories={categoriesJson}
 >
-  <div class="blog-meta-row">
+  <div class="card-inner">
+    <div class="blog-meta-row">
     <time class="blog-date">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -76,24 +77,26 @@ const categoriesJson = JSON.stringify(categories ?? []);
       ))}
     </div>
   )}
-  <a href={postUrl} class="read-more">
-    <span class="read-more-text">
-      Read article
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="5" y1="12" x2="19" y2="12"></line>
-        <polyline points="12 5 19 12 12 19"></polyline>
-      </svg>
-    </span>
-    {readingTime && (
-      <span class="blog-reading-time">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <polyline points="12 6 12 12 16 14"></polyline>
+    <a href={postUrl} class="read-more">
+      <span class="read-more-text">
+        Read article
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
         </svg>
-        {readingTime} min
       </span>
-    )}
-  </a>
+      {readingTime && (
+        <span class="blog-reading-time">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          {readingTime} min
+        </span>
+      )}
+    </a>
+    <div class="card-glare"></div>
+  </div>
 </div>
 
 <script is:inline>

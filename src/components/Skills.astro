@@ -11,100 +11,109 @@ const base = import.meta.env.BASE_URL;
     <div class="skills-grid">
       <!-- AI & VibeCoding -->
       <div class="skill-card" data-category="ai">
-        <div class="card-glow"></div>
-        <div class="card-content">
-          <div class="card-header">
-            <div class="icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+        <div class="card-inner">
+          <div class="card-glow"></div>
+          <div class="card-content">
+            <div class="card-header">
+              <div class="icon-wrap">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              </div>
+              <h3>AI & VibeCoding</h3>
             </div>
-            <h3>AI & VibeCoding</h3>
+            <p class="card-desc">Write production-ready Linux scripts, infra-as-code, CI/CD pipelines, and full-stack applications.</p>
+            <div class="skill-tags" data-visible="6">
+              <span class="tag">Python</span>
+              <span class="tag">n8n</span>
+              <span class="tag">AI</span>
+              <span class="tag">Frontend</span>
+              <span class="tag">Backend</span>
+              <span class="tag">Bash</span>
+              <span class="tag tag-hidden">PowerShell</span>
+              <span class="tag tag-hidden">SQL</span>
+              <span class="tag tag-hidden">HTML/CSS</span>
+              <span class="tag tag-hidden">JSON</span>
+              <span class="tag tag-hidden">HCL</span>
+              <button class="tag-toggle" aria-label="Show more tags">
+                <span class="toggle-icon" aria-hidden="true">+</span>
+                <span class="toggle-count"></span>
+              </button>
+            </div>
           </div>
-          <p class="card-desc">Write production-ready Linux scripts, infra-as-code, CI/CD pipelines, and full-stack applications.</p>
-          <div class="skill-tags" data-visible="6">
-            <span class="tag">Python</span>
-            <span class="tag">n8n</span>
-            <span class="tag">AI</span>
-            <span class="tag">Frontend</span>
-            <span class="tag">Backend</span>
-            <span class="tag">Bash</span>
-            <span class="tag tag-hidden">PowerShell</span>
-            <span class="tag tag-hidden">SQL</span>
-            <span class="tag tag-hidden">HTML/CSS</span>
-            <span class="tag tag-hidden">JSON</span>
-            <span class="tag tag-hidden">HCL</span>
-            <button class="tag-toggle" aria-label="Show more tags">
-              <span class="toggle-icon" aria-hidden="true">+</span>
-              <span class="toggle-count"></span>
-            </button>
-          </div>
+          <div class="card-glare"></div>
         </div>
       </div>
 
       <!-- Infrastructure (merged Data) -->
       <div class="skill-card" data-category="devops">
-        <div class="card-glow"></div>
-        <div class="card-content">
-          <div class="card-header">
-            <div class="icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+        <div class="card-inner">
+          <div class="card-glow"></div>
+          <div class="card-content">
+            <div class="card-header">
+              <div class="icon-wrap">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+              </div>
+              <h3>Infrastructure</h3>
             </div>
-            <h3>Infrastructure</h3>
+            <p class="card-desc">Running, scaling, and hardening cloud and on-premise systems so they stay resilient under pressure — but nothing beats good cable management.</p>
+            <div class="skill-tags" data-visible="6">
+              <span class="tag">Docker</span>
+              <span class="tag">Kubernetes</span>
+              <span class="tag">AWS</span>
+              <span class="tag">Linux</span>
+              <span class="tag">Git</span>
+              <span class="tag">Azure</span>
+              <span class="tag tag-hidden">NGINX</span>
+              <span class="tag tag-hidden">CI/CD</span>
+              <span class="tag tag-hidden">Terraform</span>
+              <span class="tag tag-hidden">Ansible</span>
+              <span class="tag tag-hidden">VMware</span>
+              <span class="tag tag-hidden">Proxmox</span>
+              <span class="tag tag-hidden">Grafana</span>
+              <span class="tag tag-hidden">Cable Management</span>
+              <span class="tag tag-hidden">PostgreSQL</span>
+              <span class="tag tag-hidden">MongoDB</span>
+              <span class="tag tag-hidden">MariaDB</span>
+              <span class="tag tag-hidden">Supabase</span>
+              <span class="tag tag-hidden">MySQL</span>
+              <span class="tag tag-hidden">Redis</span>
+              <span class="tag tag-hidden">DynamoDB</span>
+              <span class="tag tag-hidden">SQLite</span>
+              <button class="tag-toggle" aria-label="Show more tags">
+                <span class="toggle-icon" aria-hidden="true">+</span>
+                <span class="toggle-count"></span>
+              </button>
+            </div>
           </div>
-          <p class="card-desc">Running, scaling, and hardening cloud and on-premise systems so they stay resilient under pressure — but nothing beats good cable management.</p>
-          <div class="skill-tags" data-visible="6">
-            <span class="tag">Docker</span>
-            <span class="tag">Kubernetes</span>
-            <span class="tag">AWS</span>
-            <span class="tag">Linux</span>
-            <span class="tag">Git</span>
-            <span class="tag">Azure</span>
-            <span class="tag tag-hidden">NGINX</span>
-            <span class="tag tag-hidden">CI/CD</span>
-            <span class="tag tag-hidden">Terraform</span>
-            <span class="tag tag-hidden">Ansible</span>
-            <span class="tag tag-hidden">VMware</span>
-            <span class="tag tag-hidden">Proxmox</span>
-            <span class="tag tag-hidden">Grafana</span>
-            <span class="tag tag-hidden">Cable Management</span>
-            <span class="tag tag-hidden">PostgreSQL</span>
-            <span class="tag tag-hidden">MongoDB</span>
-            <span class="tag tag-hidden">MariaDB</span>
-            <span class="tag tag-hidden">Supabase</span>
-            <span class="tag tag-hidden">MySQL</span>
-            <span class="tag tag-hidden">Redis</span>
-            <span class="tag tag-hidden">DynamoDB</span>
-            <span class="tag tag-hidden">SQLite</span>
-            <button class="tag-toggle" aria-label="Show more tags">
-              <span class="toggle-icon" aria-hidden="true">+</span>
-              <span class="toggle-count"></span>
-            </button>
-          </div>
+          <div class="card-glare"></div>
         </div>
       </div>
 
       <!-- Design & Music -->
       <div class="skill-card" data-category="design">
-        <div class="card-glow"></div>
-        <div class="card-content">
-          <div class="card-header">
-            <div class="icon-wrap">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+        <div class="card-inner">
+          <div class="card-glow"></div>
+          <div class="card-content">
+            <div class="card-header">
+              <div class="icon-wrap">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+              </div>
+              <h3>Design & Music</h3>
             </div>
-            <h3>Design & Music</h3>
+            <p class="card-desc">Crafting visuals and original lyrics — from motion graphics to AI-generated music.</p>
+            <div class="skill-tags" data-visible="6">
+              <span class="tag">After Effects</span>
+              <span class="tag">Photoshop</span>
+              <span class="tag">Motion Design</span>
+              <span class="tag">AI</span>
+              <span class="tag">suno</span>
+              <span class="tag">songwriter</span>
+              <button class="tag-toggle" aria-label="Show more tags">
+                <span class="toggle-icon" aria-hidden="true">+</span>
+                <span class="toggle-count"></span>
+              </button>
+            </div>
           </div>
-          <p class="card-desc">Crafting visuals and original lyrics — from motion graphics to AI-generated music.</p>
-          <div class="skill-tags" data-visible="6">
-            <span class="tag">After Effects</span>
-            <span class="tag">Photoshop</span>
-            <span class="tag">Motion Design</span>
-            <span class="tag">AI</span>
-            <span class="tag">suno</span>
-            <span class="tag">songwriter</span>
-            <button class="tag-toggle" aria-label="Show more tags">
-              <span class="toggle-icon" aria-hidden="true">+</span>
-              <span class="toggle-count"></span>
-            </button>
-          </div>
+          <div class="card-glare"></div>
         </div>
       </div>
     </div>
@@ -134,17 +143,16 @@ const base = import.meta.env.BASE_URL;
   @media (max-width: 768px) {
     .skills-showcase { padding: 60px 18px; }
   }
-  .skills-showcase .skill-card { position: relative; background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: 16px; overflow: hidden; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; height: 100%; }
-  .skills-showcase .skill-card:nth-child(1) { animation-delay: 0.1s; }
-  .skills-showcase .skill-card:nth-child(2) { animation-delay: 0.2s; }
-  .skills-showcase .skill-card:nth-child(3) { animation-delay: 0.3s; }
-  .skills-showcase .skill-card:hover { border-color: var(--color-border-hover); transform: translateY(-4px); box-shadow: 0 20px 60px -10px var(--color-shadow); }
-  .skills-showcase .card-glow { position: absolute; inset: 0; opacity: 0; transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none; }
+  .skills-showcase .skill-card { position: relative; perspective: 1000px; touch-action: manipulation; height: 100%; }
+  .skills-showcase .skill-card .card-inner { position: relative; display: flex; flex-direction: column; padding: 28px; border-radius: 16px; background: var(--color-bg-card); border: 1px solid var(--color-border); overflow: hidden; height: 100%; isolation: isolate; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 12px 24px rgba(0, 0, 0, 0.12); transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease; }
+  .skills-showcase .skill-card .card-inner.tilt-active { transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, border-color 0.3s ease; }
+  .skills-showcase .skill-card:hover .card-inner { border-color: var(--color-border-hover); box-shadow: 0 20px 60px -10px var(--color-shadow); }
+  .skills-showcase .card-glow { position: absolute; inset: 0; opacity: 0; transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none; z-index: 0; }
   .skills-showcase .skill-card[data-category="ai"] .card-glow { background: radial-gradient(600px circle at 80% 20%, rgba(241, 196, 15, 0.08), transparent 40%); }
   .skills-showcase .skill-card[data-category="devops"] .card-glow { background: radial-gradient(600px circle at 20% 80%, rgba(241, 196, 15, 0.08), transparent 40%); }
   .skills-showcase .skill-card[data-category="design"] .card-glow { background: radial-gradient(600px circle at 80% 80%, rgba(241, 196, 15, 0.08), transparent 40%); }
   .skills-showcase .skill-card:hover .card-glow { opacity: 1; }
-  .skills-showcase .card-content { position: relative; z-index: 1; padding: 28px; display: flex; flex-direction: column; flex: 1; }
+  .skills-showcase .card-content { position: relative; z-index: 1; display: flex; flex-direction: column; flex: 1; }
   .skills-showcase .card-header { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
   .skills-showcase .icon-wrap { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: var(--color-bg-elevated); border: 1px solid var(--color-border); flex-shrink: 0; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
   .skills-showcase .skill-card[data-category="ai"] .icon-wrap { color: var(--color-accent-purple); }
@@ -208,6 +216,59 @@ const base = import.meta.env.BASE_URL;
   @media (max-width: 768px) {
     .view-all { flex-direction: column; align-items: stretch; gap: 0.75rem; padding: 0 1.5rem; }
     .btn { width: 100%; padding: 1rem 1.5rem; font-size: 1rem; }
+  }
+
+  .card-glare {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    mix-blend-mode: overlay;
+    background: radial-gradient(
+      circle at var(--gx, 50%) var(--gy, 50%),
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.07) 20%,
+      transparent 50%
+    );
+  }
+
+  .card-glare::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      var(--ga, 135deg),
+      transparent 20%,
+      rgba(255, 255, 255, 0.05) 42%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.05) 58%,
+      transparent 80%
+    );
+  }
+
+  @media (max-width: 768px) {
+    .skills-showcase .skill-card {
+      perspective: none;
+    }
+
+    .skills-showcase .skill-card .card-inner {
+      transform-style: flat;
+      backface-visibility: visible;
+      transition: none;
+      will-change: auto;
+    }
+
+    .skills-showcase .skill-card:hover .card-inner {
+      transform: none;
+    }
+
+    .card-glare {
+      display: none;
+    }
   }
 </style>
 
