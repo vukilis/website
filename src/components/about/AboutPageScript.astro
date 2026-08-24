@@ -237,44 +237,6 @@ const {
   }
 
   // ============================================
-  // CLUB HIMNO YOUTUBE MODAL
-  // ============================================
-
-  function initClubHimno() {
-    const modal = document.getElementById('clubYoutubeModal');
-    const closeBtn = document.getElementById('clubYoutubeClose');
-    const frame = document.getElementById('clubYoutubeFrame');
-    if (!modal || !closeBtn || !frame) return;
-
-    function openModal(videoId) {
-      frame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
-      modal.classList.add('open');
-    }
-
-    function closeModal() {
-      modal.classList.remove('open');
-      frame.src = '';
-    }
-
-    document.querySelectorAll('.club-sound-btn').forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const videoId = btn.dataset.himno;
-        if (videoId) openModal(videoId);
-      });
-    });
-
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
-    });
-  }
-
-  // ============================================
   // STEAM WIDGET
   // ============================================
 
@@ -401,7 +363,6 @@ const {
     initAboutPage();
     initCarousel();
     initModal();
-    initClubHimno();
   }
 
   function handleAboutNavigate() {
@@ -413,13 +374,11 @@ const {
       initAboutPage();
       initCarousel();
       initModal();
-      initClubHimno();
     });
   } else {
     initAboutPage();
     initCarousel();
     initModal();
-    initClubHimno();
   }
 
   document.addEventListener('astro:page-load', handleAboutNavigate);
