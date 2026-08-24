@@ -215,7 +215,6 @@
     var(--overlay-color-bot) 100%
   );
   backdrop-filter: blur(1px);
-  -webkit-backdrop-filter: blur(1px);
   transition: background 0.4s ease, backdrop-filter 0.4s ease;
 }
 
