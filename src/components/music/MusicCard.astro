@@ -28,7 +28,8 @@ const { item, index } = Astro.props;
   data-category={item.cat.join(',')}
   data-pub-date={new Date(item.pubDate).toISOString()}
 >
-  <div class="card-visual">
+  <div class="card-inner">
+    <div class="card-visual">
     {index === 0 && <span class="latest-badge">Latest Release</span>}
     <img
       src={item.cover}
@@ -71,5 +72,7 @@ const { item, index } = Astro.props;
     <div id={`lyrics-${item.id}`} class="lyrics-panel" hidden>
       <pre class="lyrics-text">{item.lyrics}</pre>
     </div>
+    <div class="card-glare"></div>
+  </div>
   </div>
 </article>

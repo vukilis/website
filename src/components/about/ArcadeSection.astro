@@ -29,12 +29,15 @@ import '../../styles/about/ArcadeSection.css';
         <div class="games-grid">
           {games.map((game, i) => (
             <a href={game.url} target="_blank" rel="noopener" class="game-card" style={`--glow:${game.color};--i:${i}`}>
-              <div class="card-media">
-                <div class="card-bg" style={`background-image:url('${game.img}')`} aria-hidden="true"></div>
-                <div class="card-glitch" aria-hidden="true"></div>
-                <div class="card-number">{String(i + 1).padStart(2, '0')}</div>
+              <div class="card-inner">
+                <div class="card-media">
+                  <div class="card-bg" style={`background-image:url('${game.img}')`} aria-hidden="true"></div>
+                  <div class="card-glitch" aria-hidden="true"></div>
+                  <div class="card-number">{String(i + 1).padStart(2, '0')}</div>
+                </div>
+                <span class="game-name">{game.name}</span>
+                <div class="card-glare"></div>
               </div>
-              <span class="game-name">{game.name}</span>
             </a>
           ))}
         </div>
@@ -44,12 +47,15 @@ import '../../styles/about/ArcadeSection.css';
         <div class="games-grid">
           {shows.map((show, i) => (
             <a href={show.url} target="_blank" rel="noopener" class="show-card" style={`--glow:${show.color};--i:${i}`}>
-              <div class="card-media">
-                <div class="card-bg" style={`background-image:url('${show.img}')`} aria-hidden="true"></div>
-                <div class="card-glitch" aria-hidden="true"></div>
-                <span class="card-number">{String(i + 1).padStart(2, '0')}</span>
+              <div class="card-inner">
+                <div class="card-media">
+                  <div class="card-bg" style={`background-image:url('${show.img}')`} aria-hidden="true"></div>
+                  <div class="card-glitch" aria-hidden="true"></div>
+                  <span class="card-number">{String(i + 1).padStart(2, '0')}</span>
+                </div>
+                <span class="show-name">{show.name}</span>
+                <div class="card-glare"></div>
               </div>
-              <span class="show-name">{show.name}</span>
             </a>
           ))}
         </div>
@@ -59,12 +65,15 @@ import '../../styles/about/ArcadeSection.css';
         <div class="games-grid">
           {movies.map((movie, i) => (
             <a href={movie.url} target="_blank" rel="noopener" class="movie-card" style={`--glow:${movie.color};--i:${i}`}>
-              <div class="card-media">
-                <div class="card-bg" style={`background-image:url('${movie.img}')`} aria-hidden="true"></div>
-                <div class="card-glitch" aria-hidden="true"></div>
-                <span class="card-number">{String(i + 1).padStart(2, '0')}</span>
+              <div class="card-inner">
+                <div class="card-media">
+                  <div class="card-bg" style={`background-image:url('${movie.img}')`} aria-hidden="true"></div>
+                  <div class="card-glitch" aria-hidden="true"></div>
+                  <span class="card-number">{String(i + 1).padStart(2, '0')}</span>
+                </div>
+                <span class="movie-name">{movie.name}</span>
+                <div class="card-glare"></div>
               </div>
-              <span class="movie-name">{movie.name}</span>
             </a>
           ))}
         </div>
@@ -75,15 +84,18 @@ import '../../styles/about/ArcadeSection.css';
           {clubs.map((club, i) => {
             const imgSrc = typeof club.img === 'string' ? club.img : club.img.src;
             return (
-            <div class="club-card-wrapper" style={`--i:${i}`}>
-              <a href={club.url} target="_blank" rel="noopener" class="club-card" style={`--glow:${club.color}`}>
-                <div class="card-media">
-                  <div class="card-bg" style={`background-image:url('${imgSrc}')`} aria-hidden="true"></div>
-                  <div class="card-glitch" aria-hidden="true"></div>
-                  <span class="card-number">{String(i + 1).padStart(2, '0')}</span>
-                </div>
-                <span class="club-name">{club.name}</span>
-              </a>
+            <div class="club-card-wrapper club-tilt" style={`--glow:${club.color};--i:${i}`}>
+              <div class="card-inner">
+                <a href={club.url} target="_blank" rel="noopener" class="club-card">
+                  <div class="card-media">
+                    <div class="card-bg" style={`background-image:url('${imgSrc}')`} aria-hidden="true"></div>
+                    <div class="card-glitch" aria-hidden="true"></div>
+                    <span class="card-number">{String(i + 1).padStart(2, '0')}</span>
+                  </div>
+                  <span class="club-name">{club.name}</span>
+                </a>
+                <div class="card-glare"></div>
+              </div>
               {club.himno && (
                 <button type="button" class="club-sound-btn" data-himno={club.himno} aria-label="Play anthem" title="Play anthem">
                   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>

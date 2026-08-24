@@ -63,29 +63,44 @@
 }
 .game-card {
   position: relative;
+  perspective: 1000px;
+  touch-action: manipulation;
+  height: 100%;
+  animation: cardAppear 0.5s ease backwards;
+  animation-delay: calc(var(--i) * 0.08s);
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.game-card .card-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
   border: 1px solid var(--color-border);
   border-radius: 12px;
   background: var(--color-bg-card);
   padding: 1.25rem;
   text-align: center;
-  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
   overflow: hidden;
-  animation: cardAppear 0.5s ease backwards;
-  animation-delay: calc(var(--i) * 0.08s);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  color: inherit;
+  isolation: isolate;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.6s cubic-bezier(0.4,0,0.2,1),
+              border-color 0.3s ease;
 }
-@keyframes cardAppear {
-  from { opacity: 0; transform: translateY(20px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+.game-card .card-inner.tilt-active {
+  transition: transform 0.12s ease-out,
+              box-shadow 0.12s ease-out,
+              border-color 0.3s ease;
 }
-.game-card:hover {
+.game-card:hover .card-inner {
   border-color: var(--glow);
   box-shadow: 0 0 20px color-mix(in srgb, var(--glow) 20%, transparent), 0 8px 24px rgba(0,0,0,0.4);
-  transform: translateY(-6px);
 }
 .card-bg {
   position: absolute; inset: 0;
@@ -110,6 +125,59 @@
 .show-card:hover .card-glitch,
 .movie-card:hover .card-glitch,
 .club-card:hover .card-glitch { opacity: 1; }
+
+.card-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  mix-blend-mode: overlay;
+  background: radial-gradient(
+    circle at var(--gx, 50%) var(--gy, 50%),
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.07) 20%,
+    transparent 50%
+  );
+}
+
+.card-glare::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    var(--ga, 135deg),
+    transparent 20%,
+    rgba(255, 255, 255, 0.05) 42%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 58%,
+    transparent 80%
+  );
+}
+
+@media (max-width: 768px) {
+  .game-card, .show-card, .movie-card, .club-tilt {
+    perspective: none;
+  }
+
+  .game-card .card-inner, .show-card .card-inner, .movie-card .card-inner, .club-tilt .card-inner {
+    transform-style: flat;
+    backface-visibility: visible;
+    transition: none;
+    will-change: auto;
+  }
+
+  .game-card:hover .card-inner, .show-card:hover .card-inner, .movie-card:hover .card-inner, .club-tilt:hover .card-inner {
+    transform: none;
+  }
+
+  .card-glare {
+    display: none;
+  }
+}
 .card-media {
   position: relative;
   width: 100%;
@@ -137,50 +205,99 @@
   text-align: center;
   padding: 0.5rem 0.5rem 0;
 }
-.club-card-wrapper {
-  position: relative;
-  animation: cardAppear 0.5s ease backwards;
-  animation-delay: calc(var(--i) * 0.08s);
-}
-.club-card {
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  background: var(--color-bg-card);
-  padding: 1.25rem;
-  text-align: center;
-  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  color: inherit;
-}
 .show-card, .movie-card {
   position: relative;
+  perspective: 1000px;
+  touch-action: manipulation;
+  height: 100%;
+  animation: cardAppear 0.5s ease backwards;
+  animation-delay: calc(var(--i) * 0.08s);
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.show-card .card-inner, .movie-card .card-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
   border: 1px solid var(--color-border);
   border-radius: 12px;
   background: var(--color-bg-card);
   padding: 1.25rem;
   text-align: center;
-  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
   overflow: hidden;
+  isolation: isolate;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.6s cubic-bezier(0.4,0,0.2,1),
+              border-color 0.3s ease;
+}
+.show-card .card-inner.tilt-active, .movie-card .card-inner.tilt-active {
+  transition: transform 0.12s ease-out,
+              box-shadow 0.12s ease-out,
+              border-color 0.3s ease;
+}
+.show-card:hover .card-inner {
+  border-color: var(--glow, #f59e0b);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--glow, #f59e0b) 25%, transparent), 0 8px 24px rgba(0,0,0,0.4);
+}
+.movie-card:hover .card-inner {
+  border-color: var(--glow, #ff00ff);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--glow, #ff00ff) 25%, transparent), 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.club-card-wrapper {
+  position: relative;
+  height: 100%;
   animation: cardAppear 0.5s ease backwards;
   animation-delay: calc(var(--i) * 0.08s);
+}
+.club-card-wrapper.club-tilt {
+  perspective: 1000px;
+  touch-action: manipulation;
+}
+.club-tilt .card-inner {
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-bg-card);
+  padding: 1.25rem;
+  text-align: center;
+  overflow: hidden;
+  isolation: isolate;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.6s cubic-bezier(0.4,0,0.2,1),
+              border-color 0.3s ease;
+}
+.club-tilt .card-inner.tilt-active {
+  transition: transform 0.12s ease-out,
+              box-shadow 0.12s ease-out,
+              border-color 0.3s ease;
+}
+.club-tilt:hover .card-inner {
+  border-color: var(--glow, #ffffff);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--glow, #ffffff) 25%, transparent), 0 8px 24px rgba(0,0,0,0.4);
+}
+.club-tilt .card-inner .club-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-decoration: none;
   color: inherit;
+  flex: 1;
 }
-.show-card:hover, .movie-card:hover {
-  border-color: #f59e0b;
-  box-shadow: 0 0 20px rgba(245,158,11,0.2), 0 8px 24px rgba(0,0,0,0.4);
-  transform: translateY(-6px);
-}
-.show-card:hover { border-color: var(--glow, #f59e0b); box-shadow: 0 0 20px color-mix(in srgb, var(--glow, #f59e0b) 25%, transparent), 0 8px 24px rgba(0,0,0,0.4); }
-.movie-card:hover { border-color: var(--glow, #ff00ff); box-shadow: 0 0 20px color-mix(in srgb, var(--glow, #ff00ff) 25%, transparent), 0 8px 24px rgba(0,0,0,0.4); }
-.club-card:hover { border-color: var(--glow, #ffffff); box-shadow: 0 0 20px color-mix(in srgb, var(--glow, #ffffff) 25%, transparent), 0 8px 24px rgba(0,0,0,0.4); }
 
 .club-sound-btn {
   position: absolute;
@@ -347,36 +464,36 @@
 [data-theme="light"] .arcade-sub {
   color: #b45309;
 }
-[data-theme="light"] .game-card {
+[data-theme="light"] .game-card .card-inner {
   border-color: rgba(0, 0, 0, 0.06);
   color: #0F172A;
 }
-[data-theme="light"] .game-card:hover {
+[data-theme="light"] .game-card:hover .card-inner {
   border-color: var(--glow);
   box-shadow: 0 0 20px color-mix(in srgb, var(--glow) 15%, transparent), 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 [data-theme="light"] .card-number {
   color: rgba(0, 0, 0, 0.15);
 }
-[data-theme="light"] .show-card, [data-theme="light"] .movie-card {
+[data-theme="light"] .show-card .card-inner, [data-theme="light"] .movie-card .card-inner {
   background: #FFFFFF;
   border-color: rgba(0, 0, 0, 0.06);
   color: #0F172A;
 }
-[data-theme="light"] .club-card {
+[data-theme="light"] .club-tilt .card-inner {
   background: #FFFFFF;
   border-color: rgba(0, 0, 0, 0.06);
   color: #0F172A;
 }
-[data-theme="light"] .show-card:hover {
+[data-theme="light"] .show-card:hover .card-inner {
   border-color: color-mix(in srgb, var(--glow, #f59e0b) 50%, transparent);
   box-shadow: 0 0 20px color-mix(in srgb, var(--glow, #f59e0b) 15%, transparent), 0 8px 24px rgba(0, 0, 0, 0.08);
 }
-[data-theme="light"] .movie-card:hover {
+[data-theme="light"] .movie-card:hover .card-inner {
   border-color: color-mix(in srgb, var(--glow, #c026d3) 50%, transparent);
   box-shadow: 0 0 20px color-mix(in srgb, var(--glow, #c026d3) 15%, transparent), 0 8px 24px rgba(0, 0, 0, 0.08);
 }
-[data-theme="light"] .club-card:hover {
+[data-theme="light"] .club-tilt:hover .card-inner {
   border-color: color-mix(in srgb, var(--glow, #ffffff) 50%, transparent);
   box-shadow: 0 0 20px color-mix(in srgb, var(--glow, #ffffff) 15%, transparent), 0 8px 24px rgba(0, 0, 0, 0.08);
 }

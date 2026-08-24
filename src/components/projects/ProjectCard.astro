@@ -23,7 +23,8 @@ const imageSrc = image?.startsWith('/') ? `${base}${image.slice(1)}` : image;
 
 {draft ? null : (
   <article class="project-card" class:list={{ featured }}>
-    <div class="project-card-content">
+    <div class="card-inner">
+      <div class="project-card-content">
       {featured && <span class="featured-badge">Featured</span>}
       {status === 'active' && <span class="active-badge">Active</span>}
       {status === 'archived' && <span class="archived-badge">Archived</span>}
@@ -85,6 +86,8 @@ const imageSrc = image?.startsWith('/') ? `${base}${image.slice(1)}` : image;
           </div>
         )}
       </div>
+      <div class="card-glare"></div>
     </div>
+  </div>
   </article>
 )}
