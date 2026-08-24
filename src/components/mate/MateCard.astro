@@ -2,17 +2,17 @@
 import '../../styles/mate/mate-card.css';
 
 interface Props {
-  image: string;
-  name: string;
-  type: string;
-  rating: string;
-  complexity: string;
-  body: string;
-  durability: string;
-  effect: string;
-  level: string;
-  category: string;
-  slug: string;
+  image?: string;
+  name?: string;
+  type?: string;
+  rating?: string;
+  complexity?: string;
+  body?: string;
+  durability?: string;
+  effect?: string;
+  level?: string;
+  category?: string;
+  slug?: string;
   index?: number;
 }
 
@@ -79,7 +79,9 @@ const levelInfo = levelConfig[level] || { name: level, color: '#94a3b8' };
         { key: 'Durability', value: durability },
         { key: 'Effect', value: effectScore },
         { key: 'Level', value: level },
-      ].map(({ key, value }) => (
+      ]
+      .filter(({ value }) => value !== undefined && value !== null)
+      .map(({ key, value }) => (
         <div class="mate-card__stat">
           <dt>{key}</dt>
           <dd>

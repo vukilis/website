@@ -2,16 +2,16 @@
 import '../../styles/mate/mate.css';
 
 interface Props {
-  name: string;
+  name?: string;
   category?: string;
   image?: string;
-  rating: string;
-  type: string;
-  complexity: string;
-  body: string;
-  durability: string;
-  effect: string;
-  level: string;
+  rating?: string;
+  type?: string;
+  complexity?: string;
+  body?: string;
+  durability?: string;
+  effect?: string;
+  level?: string;
 }
 
 const {
@@ -60,7 +60,9 @@ const levelInfo = levelConfig[level] || { name: level, color: '#94a3b8' };
             { key: 'Durability', value: durability },
             { key: 'Effect', value: effectScore },
             { key: 'Level', value: level },
-          ].map(({ key, value }) => (
+          ]
+            .filter(({ value }) => value !== undefined && value !== null)
+            .map(({ key, value }) => (
             <div class="mate-stat">
               <dt>{key}</dt>
               <dd>
