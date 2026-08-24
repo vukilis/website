@@ -50,7 +50,8 @@ const levelInfo = levelConfig[level] || { name: level, color: '#94a3b8' };
   data-category={category.toLowerCase()}
   data-rating={Number(rating)}
 >
-  <div class="mate-card__cover">
+  <div class="card-inner">
+    <div class="mate-card__cover">
     <img
       src={image}
       alt={name}
@@ -113,5 +114,7 @@ const levelInfo = levelConfig[level] || { name: level, color: '#94a3b8' };
         </svg>
       </span>
     </span>
+    <div class="card-glare"></div>
+  </div>
   </div>
 </a>

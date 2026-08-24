@@ -1,5 +1,14 @@
 .mate-card {
   position: relative;
+  display: block;
+  text-decoration: none;
+  perspective: 1000px;
+  touch-action: manipulation;
+  height: 100%;
+}
+
+.mate-card .card-inner {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -11,27 +20,66 @@
   padding: 0;
   cursor: pointer;
   overflow: hidden;
-  transform: translateY(0);
-  text-decoration: none;
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+  isolation: isolate;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s ease;
 }
 
-.mate-card:hover {
-  transform: translateY(-4px);
+.mate-card .card-inner.tilt-active {
+  transition: transform 0.12s ease-out,
+              box-shadow 0.12s ease-out,
+              border-color 0.3s ease;
+}
+
+.mate-card:hover .card-inner {
   border-color: rgba(141, 182, 0, 0.35);
   box-shadow:
     0 10px 25px rgba(0, 0, 0, 0.35),
     0 0 0 1px rgba(141, 182, 0, 0.12);
 }
 
-[data-theme="light"] .mate-card:hover {
+[data-theme="light"] .mate-card:hover .card-inner {
   border-color: rgba(141, 182, 0, 0.35);
   box-shadow:
     0 10px 25px rgba(0, 0, 0, 0.08),
     0 0 0 1px rgba(141, 182, 0, 0.2);
+}
+
+.card-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  mix-blend-mode: overlay;
+  background: radial-gradient(
+    circle at var(--gx, 50%) var(--gy, 50%),
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.07) 20%,
+    transparent 50%
+  );
+}
+
+.card-glare::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    var(--ga, 135deg),
+    transparent 20%,
+    rgba(255, 255, 255, 0.05) 42%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 58%,
+    transparent 80%
+  );
 }
 
 .mate-card__cover {
@@ -199,5 +247,26 @@
 @media (max-width: 640px) {
   .mate-card__cover {
     aspect-ratio: 4 / 3;
+  }
+}
+
+@media (max-width: 768px) {
+  .mate-card {
+    perspective: none;
+  }
+
+  .mate-card .card-inner {
+    transform-style: flat;
+    backface-visibility: visible;
+    transition: none;
+    will-change: auto;
+  }
+
+  .mate-card:hover .card-inner {
+    transform: none;
+  }
+
+  .card-glare {
+    display: none;
   }
 }

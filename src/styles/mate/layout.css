@@ -76,13 +76,6 @@
   transform: translateX(-3px);
 }
 
-@media (max-width: 640px) {
-  .reviews-list {
-    grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
-    gap: 1.1rem;
-  }
-}
-
 /* Particles */
 .yerba-review-page {
   position: relative;
