@@ -246,20 +246,21 @@
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 700;
   margin-bottom: 0.75rem;
-  color: var(--color-text);
+  color: var(--color-accent-purple);
   letter-spacing: -0.02em;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
 }
 
 .category-description {
-  font-size: 1rem;
-  color: var(--color-text);
+  font-size: 1.1rem;
+  color: var(--color-accent-pink);
   line-height: 1.6;
   margin-bottom: 2rem;
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
 }
 
 [data-theme="light"] .category-title, [data-theme="light"] .category-description {
+  color: var(--color-text);
   text-shadow: none;
   font-weight: 500;
 }

@@ -1,0 +1,158 @@
+---
+title: "Homelab Documentation"
+url: /homelab-documentation
+pubDate: 2026-08-25T04:48:43+02:00
+lastmod: 2026-08-25T04:48:43+02:00
+share:
+  enable: true
+  link: true
+  twitter: true
+  reddit: true
+
+draft: false
+license: "MIT"
+
+tags: ["homelab", "proxmox", "docker", "ansible", "terraform", "komodo", "network", "server"]
+categories: [Linux, Virtualization]
+description: "This document specifies the full architecture, network topology, container stacks, and security configurations deployed in the homelab environment..."
+---
+
+import { Image } from 'astro:assets';
+
+![Homelab Diagram](https://pub-0bfee21847d045719fbf99633ea24028.r2.dev/it/homelab-diagram.webp)
+
+# Homelab Architecture & Setup Documentation
+
+This document specifies the full architecture, network topology, container stacks, and security configurations deployed in the homelab environment.
+
+---
+
+## 1. Network Topology & Core Infrastructure
+
+Network architecture comprises a robust gateway and routing layer, which helps ensure proper segregation and security at the local level.
+
+* **ISP & Gateway:** Connected via an **ISP Modem** (`192.168.100.1`), feeding into a **Router L3** (`192.168.0.1`) running **AdGuard Home** for network-wide DNS filtering and management.
+* **Switching:** The **L2 Switch** connects multiple devices within the local network, including server, workstation and other network endpoints. The main server is configured with **network bonding (LACP)** across multiple switch ports, providing link aggregation, increased bandwidth, and improved redundancy.
+
+### IP Allocation Plan (`192.168.0.0/24`)
+
+| Resource Type | ID Range | IP Range / Examples | Description |
+| :--- | :--- | :--- | :--- |
+| **Templates** | `vm:100, lxc:200` | `vm:192.168.0.50, lxc:192.168.0.200` | Base golden images for rapid provisioning. |
+| **LXC Containers** | `201-254` | `192.168.0.201` - `192.168.0.254` | Lightweight containerized services. |
+| **Virtual Machines** | `51-99` | `192.168.0.51` - `192.168.0.99` | Full OS virtualization testbeds. |
+| **Devices** | — | `192.168.0.101` - `192.168.0.199` | Static hardware clients (PCs, TV, IoT). |
+| **Test Instances** | `301-399` | Last usable IP address | Temporary test allocations. |
+
+**Naming Convention:** Standardized format using `id [number] - name [service] tags [colors]` with lowercase naming based on service or host type.
+
+---
+
+## 2. Proxmox Server & Virtualization Node
+
+* **Host Machine:** **Proxmox VE MiniPC Server**.
+* **Virtual Machines (VMs):**
+  * **Minecraft Server**: Dedicated testing environment for Minecraft server configurations.
+  * **Experimental Tinkering VM**: Isolated environment for testing new setups, updates, and practicing break-fix recovery scenarios without risk to production.
+* **LXC Container Stack:** A comprehensive suite of containerized services running on Proxmox:
+  * **Logs & Monitoring:** `uptimekuma`, `netdata`, `grafana`, `wud`, `grafana`, `beszel`, `dozzle`, `watchyourlan`, `smokeping`, `gotify`
+  * **Media & Entertainment:** `qbittorrent`, `medusa`, `navidrome`,  `filebrowser`
+  * **Security & Auth:** `adguard`, `authentik`, `vaultwarden`, `twingate`
+  * **Utilities:** `usememos`, `wikidocs`, `wallos`, `it-tools`, `jetlog`, `traccar`, `mealie`, `linkstack`, `mealie`
+  * **Management:** `komodo`, `nginxproxymanager`, `cloudflared`, `n8n`,  `semaphore`, `speedtest-tracker`, `turnkey-fileserver`, `home-assistant`
+---
+
+## 3. Infrastructure as Code (IaC) & Automation
+
+The infrastructure is fully managed through code:
+
+* **Terraform:** Used for automated provisioning of Proxmox VMs and LXC containers, defining network topology and hardware configurations declaratively.
+* **Ansible:** Acts as the primary orchestration engine for post-provisioning configuration, system hardening, and continuous updates across all VMs and LXC nodes.
+
+---
+
+## 4. Security, Hardening & Identity Management
+
+> Security is enforced at multiple layers, from host SSH hardening to hardware-bound FIDO2 authentication and least-privilege proxy policies.
+
+### System Hardening
+  * Proxmox host is strictly hardened to allow **SSH login via keys only** (root password login disabled).
+  * The Debian LXC includes a comprehensive set of **diagnostic and troubleshooting tools** for secure infrastructure management.
+  * *Lynis Hardening Index:* `77`
+
+### Docker Security
+  * A hardened **Wollomatic Docker Socket Proxy** is used to enforce a **"least-privilege"** policy for Docker API access.
+  * Docker API calls are filtered to allow only the operations required by the management stacks.
+  * Unnecessary **Linux kernel capabilities are dropped**, reducing the potential impact of a compromised container or management service.
+  * Management stacks are isolated from direct access to the Docker socket and underlying Docker daemon.
+
+### Hardware-Backed Authentication
+  * A **Yubico Security Key C NFC** is used as a hardware-bound, **phishing-resistant authentication key** across the homelab.
+  * **FIDO2/WebAuthn** replaces traditional password-based authentication with a cryptographic challenge-response mechanism.
+  * **Authentik** and other supported services require physical possession of the security key, with authentication performed through a **USB-C touch or NFC tap**.
+  * This provides strong protection against **credential theft, phishing, and password-based attacks**.
+
+---
+
+## 4. Twingate & Zero Trust Network Access
+
+### Secure Remote Access
+  * **Twingate ZTNA (Zero Trust Network Access)** is used to provide secure remote access to internal homelab infrastructure without exposing internal services directly to the public internet.
+  * A dedicated **Twingate Connector** runs on a server node within the homelab and establishes an outbound connection to the Twingate cloud service.
+  * Remote clients authenticate with the **Twingate service** and are granted access to the internal resources.
+  * No inbound ports need to be exposed on the public internet for remote access, reducing the external attack surface.
+  * The server node acts as the secure bridge between the **internal network** and the **Twingate cloud**, while internal services remain on the private network.
+
+---
+
+## 5. Komodo & GitOps
+
+### Automated GitOps Deployments
+  * **Komodo** is used to automate Docker stack deployments through a **GitOps workflow**.
+  * Docker stack configurations are stored and managed in a **Git repository**, providing version control and a complete history of configuration changes.
+  * When changes are **pushed to the Git repository**, Komodo automatically detects the update and triggers the deployment process.
+  * Komodo pulls the latest configuration and applies the changes to the corresponding **Docker stacks**, eliminating the need for manual deployments.
+  * Deployment status, container health, and other relevant events are monitored and integrated into the **n8n notification workflow**.
+  * All important deployment notifications are delivered through **Gotify**, providing centralized visibility into the deployment process.
+
+---
+
+## 6. Monitoring, Backup & Notifications
+
+* **Logs & Real-time Monitoring:** Continuous health checks and metrics visualization handled via **Netdata**, **Uptime Kuma**, **Grafana**, **SmokePing**, **WUD (What's Up Docker)**, **Dozzle**, **Beszel**, **WatchYourLan** and **Speedtest Tracker**.
+* **Backup Infrastructure:** Backup jobs are scheduled to run every Friday at 21:00.
+* **Notification Pipeline:** **Gotify** acts as the central notification engine, routing system alerts, container state changes, and update notifications directly to mobile devices.
+
+---
+
+## 7. n8n Automation & Notifications
+
+### Workflow Automation
+  * **n8n** is used as the central automation and notification layer for monitoring homelab infrastructure, security events, service status, and scheduled checks.
+  * AI-powered workflows process incoming events, enrich relevant information, and trigger actionable notifications.
+
+### Network Monitoring
+  * **Internet Speed:** Automated speed tests run every **6 hours** to monitor download/upload performance and detect potential connectivity issues.
+  * **AdGuard Home:** Security-related events and newly detected threats are processed by n8n and forwarded as notifications.
+  * **WatchYourLAN:** New devices detected on the local network trigger notifications, providing visibility into newly connected or unknown clients.
+
+### Infrastructure & Deployment Monitoring
+  * **Komodo:** Monitors server health, container status, deployments, and other infrastructure events.
+  * **Proxmox Backup Server:** Backup jobs, failures, warnings, and other important backup events are monitored and processed by n8n.
+  * **Wallos:** Payment and subscription-related events are integrated into the notification workflow.
+
+### Centralized Notifications
+  * All monitored services are integrated into **n8n**, providing a centralized event-processing and automation layer.
+  * Every notification is delivered through **Gotify**, providing a single and consistent notification channel across the entire homelab.
+  * This creates a unified alerting pipeline covering **network health, security, infrastructure, deployments, backups, and payment events**.
+
+---
+
+## 8. Proxmox Backup Server
+
+###  Backup Schedule
+  * **Proxmox Backup Server (PBS)** is used as the centralized backup solution for the homelab infrastructure.
+  * Backup jobs are scheduled to run **every Friday at 21:00**.
+  * The scheduled jobs provide regular backups of critical virtual machines and containers, helping ensure data recovery in the event of hardware failure, configuration issues, or accidental data loss.
+  * Backup status, including successful jobs, warnings, and failures, is monitored and integrated into the **n8n notification workflow**.
+  * All relevant backup notifications are delivered through **Gotify** for centralized and timely alerting.

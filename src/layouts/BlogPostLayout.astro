@@ -198,11 +198,14 @@ const formattedUpdatedDate = lastmod?.toLocaleDateString('en-US', {
     .post-content :global(h3) { font-size: 1.15rem; }
     .tag { padding: 0.2rem 0.6rem; font-size: 0.7rem; }
     .comment-section-title { font-size: 1.4rem; margin-bottom: 1.25rem; }
+    .post-content :global(th), .post-content :global(td) { padding: 0.5rem 0.5rem; }
   }
   @media (max-width: 480px) {
     .post-content { padding: 1.5rem 1.25rem; }
     .post-meta { gap: 0.5rem; }
     .post-meta-right { padding-top: 0.4rem; }
+    .post-content :global(table) { font-size: 0.6rem; }
+    .post-content :global(th), .post-content :global(td) { padding: 0.5rem 0.5rem; }
   }
 </style>
 

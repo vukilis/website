@@ -81,20 +81,6 @@
   border-color: rgba(255, 255, 255, 0.12);
 }
 
-.category-card-image {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
-  opacity: 0.85;
-}
-
-.category-card:hover .category-card-image {
-  transform: scale(1.05);
-  opacity: 1;
-}
-
 .category-card-overlay {
   position: absolute;
   inset: 0;
@@ -106,15 +92,6 @@
   );
   backdrop-filter: blur(1px);
   transition: background 0.4s ease, backdrop-filter 0.4s ease;
-}
-
-.category-card:hover .category-card-overlay {
-  background: linear-gradient(
-    to top,
-    var(--overlay-color-top) 0%,
-    var(--overlay-color-mid) 40%,
-    var(--overlay-color-bot) 100%
-  );
 }
 
 .category-card-content {
@@ -133,14 +110,14 @@
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 700;
   margin-bottom: 0.75rem;
-  color: var(--color-text);
+  color: var(--color-accent-purple);
   letter-spacing: -0.02em;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
 }
 
 .category-description {
-  font-size: 1rem;
-  color: var(--color-text);
+  font-size: 1.1rem;
+  color: var(--color-accent-pink);
   line-height: 1.6;
   margin-bottom: 2rem;
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
@@ -148,6 +125,7 @@
 
 [data-theme="light"] .category-title,
 [data-theme="light"] .category-description {
+  color: var(--color-text);
   text-shadow: none;
   font-weight: 500;
 }
@@ -174,10 +152,6 @@
   box-shadow: 0 8px 24px rgba(241, 196, 15, 0.4);
 }
 
-[data-theme="light"] .category-arrow {
-  background: var(--color-text-muted);
-}
-
 .card-glare {
   position: absolute;
   inset: 0;
@@ -195,54 +169,8 @@
   );
 }
 
-.card-glare::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(
-    var(--ga, 135deg),
-    transparent 20%,
-    rgba(255, 255, 255, 0.05) 42%,
-    rgba(255, 255, 255, 0.1) 50%,
-    rgba(255, 255, 255, 0.05) 58%,
-    transparent 80%
-  );
-}
-
-@media (max-width: 768px) {
-  .homelab-page {
-    padding-top: calc(var(--nav-height) + 2rem);
-  }
-
-  .category-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .category-card {
-    perspective: none;
-  }
-
-  .card-inner {
-    min-height: 320px;
-    padding: 2rem;
-    transform-style: flat;
-    backface-visibility: visible;
-    transition: none;
-    will-change: auto;
-  }
-
-  .card-glare {
-    display: none;
-  }
-
-  .homelab-header {
-    margin-bottom: 3rem;
-  }
-}
-
 /* ============================================================
-   ANIMATED CARD — YUBIKEY × SERVER INSERTION SCENE
+   ANIMATED CARD — EQUIPMENT MANIFEST (OUTLINE)
    ============================================================ */
 
 .animated-scene {
@@ -253,7 +181,6 @@
   z-index: 0;
 }
 
-/* Lighter overlay so the SVG scene stays visible */
 .card-animated .category-card-overlay {
   background: linear-gradient(
     to top,
@@ -266,18 +193,6 @@
   transition: background 0.4s ease;
 }
 
-.card-animated:hover .category-card-overlay {
-  background: linear-gradient(
-    to top,
-    var(--overlay-color-top) 0%,
-    var(--overlay-color-mid) 18%,
-    var(--overlay-color-mid2) 35%,
-    var(--overlay-color-mid3) 55%,
-    var(--overlay-color-bot) 100%
-  );
-}
-
-/* ---- YubiKey slide-in ---- */
 .yubikey {
   will-change: transform;
   transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -287,77 +202,64 @@
   transform: translateX(248px);
 }
 
-/* ---- LED base transitions ---- */
 .led,
 .drive-led,
 .yk-led {
-  transition: fill 0.4s ease, filter 0.4s ease;
+  transition: stroke 0.4s ease, filter 0.4s ease;
 }
 
-/* Idle breathing on power LED */
 .led-power {
-  animation: idleBreathe 4s ease-in-out infinite;
+  animation: idleBreatheStroke 4s ease-in-out infinite;
 }
 
-@keyframes idleBreathe {
-  0%, 100% { fill: #1a2a1a; }
-  50%      { fill: #1e3e28; }
+@keyframes idleBreatheStroke {
+  0%, 100% { stroke: #334155; }
+  50%      { stroke: #22c55e; }
 }
 
-/* Hover: sequential LED activation */
 .card-animated:hover .led-power {
-  fill: #22c55e;
+  stroke: #22c55e;
   filter: url(#glow-sm);
   animation: none;
   transition-delay: 0.45s;
 }
 
 .card-animated:hover .led-hdd {
-  fill: #3b82f6;
+  stroke: #3b82f6;
   filter: url(#glow-sm);
   transition-delay: 0.55s;
-  animation: ledBlink 0.8s ease-in-out 0.55s infinite;
 }
 
 .card-animated:hover .led-net {
-  fill: #f59e0b;
+  stroke: #f59e0b;
   filter: url(#glow-sm);
   transition-delay: 0.65s;
-  animation: ledBlink 1.2s ease-in-out 0.65s infinite;
 }
 
-@keyframes ledBlink {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.25; }
-}
-
-/* Drive bay LEDs */
 .card-animated:hover .dl-1 {
-  fill: #22c55e;
+  stroke: #22c55e;
   filter: url(#glow-sm);
   transition-delay: 0.5s;
 }
 
 .card-animated:hover .dl-2 {
-  fill: #22c55e;
+  stroke: #22c55e;
   filter: url(#glow-sm);
   transition-delay: 0.6s;
 }
 
 .card-animated:hover .dl-3 {
-  fill: #22c55e;
+  stroke: #22c55e;
   filter: url(#glow-sm);
   transition-delay: 0.7s;
 }
 
-/* YubiKey LED */
 .card-animated:hover .yk-led {
-  fill: #22c55e;
+  stroke: #22c55e;
   filter: url(#glow-sm);
   transition-delay: 0.55s;
 }
 
-/* YubiKey touch sensor glow */
 .yk-touch {
   transition: all 0.4s ease;
 }
@@ -369,17 +271,6 @@
   transition-delay: 0.6s;
 }
 
-.yk-touch-inner {
-  transition: all 0.4s ease;
-}
-
-.card-animated:hover .yk-touch-inner {
-  fill: #f1c40f;
-  opacity: 0.8;
-  transition-delay: 0.7s;
-}
-
-/* Power button lights up */
 .power-icon,
 .power-icon-arc {
   transition: stroke 0.4s ease;
@@ -391,7 +282,6 @@
   transition-delay: 0.45s;
 }
 
-/* ---- Fan spin ---- */
 .fan-blades {
   transform-origin: 300px 237px;
 }
@@ -405,39 +295,6 @@
   to   { transform: rotate(360deg); }
 }
 
-/* ---- Server glow border ---- */
-.server-glow {
-  transition: opacity 0.6s ease;
-}
-
-.card-animated:hover .server-glow {
-  opacity: 0.4;
-  transition-delay: 0.7s;
-  animation: glowPulse 2s ease-in-out 0.7s infinite;
-}
-
-@keyframes glowPulse {
-  0%, 100% { opacity: 0.25; }
-  50%      { opacity: 0.55; }
-}
-
-/* ---- Scan line ---- */
-.scan-line {
-  transition: opacity 0.3s ease;
-}
-
-.card-animated:hover .scan-line {
-  animation: scanDown 2.5s ease-in-out 0.3s infinite;
-}
-
-@keyframes scanDown {
-  0%   { transform: translateY(0);    opacity: 0; }
-  5%   { opacity: 0.2; }
-  90%  { opacity: 0.2; }
-  100% { transform: translateY(270px); opacity: 0; }
-}
-
-/* ---- Insertion spark ---- */
 .insertion-spark {
   transform: scale(0);
   transform-box: fill-box;
@@ -447,7 +304,7 @@
 
 .card-animated:hover .insertion-spark {
   transform: scale(1);
-  opacity: 0.7;
+  opacity: 0.8;
   transition-delay: 0.5s;
   animation: sparkPulse 1.5s ease-in-out 0.5s infinite;
 }
@@ -457,173 +314,139 @@
   50%      { transform: scale(2);   opacity: 0.1; }
 }
 
-/* ---- Particles ---- */
-.particle {
-  fill: #f1c40f;
-  opacity: 0;
+/* ============================================================
+   ANIMATED CARD — HOMELAB DIAGRAM (OUTLINE NETWORK TOPOLOGY)
+   ============================================================ */
+
+.animated-scene-diagram {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
-.card-animated:hover .particle {
-  animation: particleFloat 2s ease-out var(--delay, 0s) forwards;
+.card-diagram .category-card-overlay {
+  background: linear-gradient(
+    to top,
+    var(--overlay-color-top) 0%,
+    var(--overlay-color-mid) 18%,
+    var(--overlay-color-mid2) 35%,
+    var(--overlay-color-mid3) 55%,
+    var(--overlay-color-bot) 100%
+  );
 }
 
-@keyframes particleFloat {
-  0% {
-    opacity: 0;
-    transform: translate(0, 0) scale(1);
-  }
-  12% {
-    opacity: 0.9;
-  }
-  100% {
-    opacity: 0;
-    transform: translate(var(--dx, 0px), var(--dy, -80px)) scale(0.15);
-  }
+.card-diagram:hover .npath {
+  stroke: #38bdf8;
+  opacity: 0.9;
+  filter: url(#glow-diag);
+  transition: stroke 0.4s ease, opacity 0.4s ease;
 }
 
-/* ---- Data streams ---- */
-.data-streams {
-  transition: opacity 0.6s ease;
+.card-diagram:hover .core-node polygon {
+  stroke: #3b82f6;
+  filter: url(#glow-diag);
+  transition: stroke 0.4s ease;
 }
 
-.card-animated:hover .data-streams {
-  opacity: 0.7;
-  transition-delay: 0.85s;
+.card-diagram:hover .core-dot {
+  stroke: #60a5fa;
+  filter: url(#glow-diag);
+  animation: pulseCore 1.5s ease-in-out infinite;
 }
 
-.stream-line {
-  stroke-dasharray: 5 20;
-  stroke-dashoffset: 25;
+@keyframes pulseCore {
+  0%, 100% { r: 5; }
+  50%      { r: 7; }
 }
 
-.card-animated:hover .stream-line {
-  animation: dataFlow 1.2s linear var(--delay, 0s) infinite;
+.card-diagram:hover .peripheral-node rect {
+  stroke: #64748b;
+  transition: stroke 0.3s ease;
 }
 
-@keyframes dataFlow {
-  from { stroke-dashoffset: 25; }
-  to   { stroke-dashoffset: 0; }
+.card-diagram:hover .inode {
+  filter: url(#glow-diag);
+  transition: stroke 0.3s ease;
 }
 
-.stream-dot {
-  opacity: 0;
-  transform-box: fill-box;
+.card-diagram:hover .i-1 { stroke: #38bdf8; transition-delay: 0.1s; }
+.card-diagram:hover .i-2 { stroke: #34d399; transition-delay: 0.2s; }
+.card-diagram:hover .i-3 { stroke: #818cf8; transition-delay: 0.3s; }
+.card-diagram:hover .i-4 { stroke: #f472b6; transition-delay: 0.4s; }
+
+
+/* ============================================================
+   ANIMATED CARD — HOMELAB DOCUMENTATION (OUTLINE)
+   ============================================================ */
+
+.animated-scene-docs {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: center;
 }
 
-.card-animated:hover .stream-dot {
-  animation: dotPulse 1.2s ease-in-out var(--delay, 0s) infinite;
+.category-card:hover .animated-scene-docs {
+  transform: scale(1.05);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes dotPulse {
-  0%, 100% { opacity: 0.3; transform: scale(0.7); }
-  50%      { opacity: 1;   transform: scale(1.6); }
+.card-docs .category-card-overlay {
+  background: linear-gradient(
+    to top,
+    var(--overlay-color-top) 0%,
+    var(--overlay-color-mid) 18%,
+    var(--overlay-color-mid2) 35%,
+    var(--overlay-color-mid3) 55%,
+    var(--overlay-color-bot) 100%
+  );
 }
 
-/* ---- ACCESS GRANTED text ---- */
-.auth-text {
-  transition: opacity 0.6s ease;
+.dline {
+  transition: stroke 0.4s ease;
+  opacity: 0.6;
 }
 
-.card-animated:hover .auth-text {
-  opacity: 0.85;
-  transition-delay: 1s;
-  animation: textFlicker 3s ease-in-out 1s infinite;
-}
-
-@keyframes textFlicker {
-  0%, 100% { opacity: 0.85; }
-  48%      { opacity: 0.85; }
-  50%      { opacity: 0.35; }
-  52%      { opacity: 0.85; }
-  78%      { opacity: 0.85; }
-  80%      { opacity: 0.5; }
-  82%      { opacity: 0.85; }
-}
-
-/* ============================================================
-   MOBILE — STRIP EVERYTHING HEAVY
-   Only: YubiKey slide + flat LED color changes (no filters,
-   no spin, no particles, no scan, no spark, no streams, no text)
-   ============================================================ */
+.card-docs:hover .dl0  { stroke: #94a3b8; transition-delay: 0.1s; }
+.card-docs:hover .dl1  { stroke: #94a3b8; transition-delay: 0.15s; }
+.card-docs:hover .dl2  { stroke: #94a3b8; transition-delay: 0.2s; }
+.card-docs:hover .dl3  { stroke: #64748b; transition-delay: 0.3s; }
+.card-docs:hover .dl4  { stroke: #94a3b8; transition-delay: 0.35s; }
+.card-docs:hover .dl5  { stroke: #94a3b8; transition-delay: 0.4s; }
+.card-docs:hover .dl6  { stroke: #94a3b8; transition-delay: 0.45s; }
+.card-docs:hover .dl7  { stroke: #64748b; transition-delay: 0.55s; }
+.card-docs:hover .dl8  { stroke: #94a3b8; transition-delay: 0.6s; }
+.card-docs:hover .dl9  { stroke: #64748b; transition-delay: 0.65s; }
+.card-docs:hover .dl10 { stroke: #94a3b8; transition-delay: 0.7s; }
+.card-docs:hover .dl11 { stroke: #94a3b8; transition-delay: 0.75s; }
 
 @media (max-width: 768px) {
+  .homelab-page {
+    padding-top: calc(var(--nav-height) + 2rem);
+  }
 
-  /* YubiKey: always inserted, zero animation */
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-inner {
+    min-height: 320px;
+    padding: 2rem;
+  }
+
   .yubikey {
-    will-change: auto;
     transform: translateX(248px);
     transition: none;
   }
 
-  /* Lock it on hover too so nothing moves */
   .card-animated:hover .yubikey {
     transform: translateX(248px);
   }
 
-  /* LEDs: always lit, no filters, no blink */
-  .led-power {
-    animation: none !important;
-    fill: #22c55e;
-  }
-
-  .led-hdd  { fill: #3b82f6; }
-  .led-net  { fill: #f59e0b; }
-  .dl-1,
-  .dl-2,
-  .dl-3     { fill: #22c55e; }
-  .yk-led   { fill: #22c55e; }
-  .yk-touch { stroke: #ffe066; }
-  .yk-touch-inner { fill: #f1c40f; opacity: 0.7; }
-  .power-icon,
-  .power-icon-arc { stroke: #22c55e; }
-
-  /* Block all hover overrides from doing anything extra */
-  .card-animated:hover .led-power,
-  .card-animated:hover .led-hdd,
-  .card-animated:hover .led-net,
-  .card-animated:hover .dl-1,
-  .card-animated:hover .dl-2,
-  .card-animated:hover .dl-3,
-  .card-animated:hover .yk-led,
-  .card-animated:hover .yk-touch,
-  .card-animated:hover .yk-touch-inner,
-  .card-animated:hover .power-icon,
-  .card-animated:hover .power-icon-arc {
-    filter: none !important;
-    animation: none !important;
-    transition-delay: 0s !important;
-  }
-
-  /* Kill every heavy effect */
-  /* .card-animated:hover .fan-blades       { animation: none !important; } */
-  .card-animated:hover .scan-line        { animation: none !important; opacity: 0 !important; }
-  .card-animated:hover .insertion-spark  { animation: none !important; opacity: 0 !important; transform: scale(0) !important; }
-  .card-animated:hover .particle         { animation: none !important; opacity: 0 !important; }
-  .card-animated:hover .data-streams     { opacity: 0 !important; transition: none !important; }
-  .card-animated:hover .stream-line      { animation: none !important; }
-  .card-animated:hover .stream-dot       { animation: none !important; opacity: 0 !important; }
-  .card-animated:hover .server-glow      { animation: none !important; opacity: 0 !important; }
-  .card-animated:hover .auth-text        { animation: none !important; opacity: 0 !important; transition: none !important; }
-
-  /* Overlay for smaller cards */
-  .card-animated .category-card-overlay {
-    background: linear-gradient(
-      to top,
-      var(--overlay-color-top) 0%,
-      var(--overlay-color-mid) 30%,
-      var(--overlay-color-mid2) 60%,
-      var(--overlay-color-bot) 100%
-    );
-  }
-
-  .card-animated:hover .category-card-overlay {
-    background: linear-gradient(
-      to top,
-      var(--overlay-color-top) 0%,
-      var(--overlay-color-mid) 30%,
-      var(--overlay-color-mid2) 60%,
-      var(--overlay-color-bot) 100%
-    );
-  }
+  .dline { stroke: #94a3b8; }
 }

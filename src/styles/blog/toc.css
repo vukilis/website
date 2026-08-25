@@ -129,7 +129,7 @@
 .toc-body {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  /* overflow: hidden; */
   transition: max-height var(--toc-transition-base), opacity var(--toc-transition-base);
 }
 
@@ -221,7 +221,7 @@
 .toc-body {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  /* overflow: hidden; */
   transition: max-height var(--toc-transition-base), opacity var(--toc-transition-base);
 }
 
