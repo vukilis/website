@@ -244,7 +244,7 @@ const {
       });
     </script>
     <BackToTopButton />
-    <LightGalleryInit />
+    {Astro.url.pathname !== '/homelab/diagram/' && <LightGalleryInit />}
     <DamageNumbers />
     <TiltCards />
     <!-- Scroll restoration -->

@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navigation from '../../components/Navigation.astro';
 import Mate from '../../components/mate/Mate.astro';
+import CommentSystem from "../../components/blog/CommentSystem.astro";
 import '../../styles/mate/layout.css';
 
 export async function getStaticPaths() {
@@ -42,6 +43,11 @@ const { Content } = await render(entry);
       >
         <Content />
       </Mate>
+      <br />
+      <br />
+      
+      <h2 class="comment-section-title">Comments</h2>
+      <CommentSystem />
     </div>
   </main>
 </BaseLayout>

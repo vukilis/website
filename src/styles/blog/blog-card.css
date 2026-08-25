@@ -39,7 +39,7 @@
 }
 
 .blog-card:hover .card-inner {
-  border-color: var(--color-primary);
+  border-color: var(--color-accent-purple);
 }
 
 .blog-card:hover .card-inner {

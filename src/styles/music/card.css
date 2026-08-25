@@ -41,7 +41,7 @@
 }
 
 .music-card:hover .card-inner {
-  border-color: var(--color-border-hover);
+  border-color: var(--color-accent-purple);
   box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.6);
 }
 
