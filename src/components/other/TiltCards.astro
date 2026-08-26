@@ -13,7 +13,7 @@
         const MAX_TILT = 10;
         const Z_LIFT = 10;
 
-        document.querySelectorAll('.category-card, .blog-card, .skill-card, .project-card, .art-card, .music-card, .nms-card, .game-card, .show-card, .movie-card, .club-tilt, .mate-card').forEach(card => {
+        document.querySelectorAll('.category-card, .blog-card, .skill-card, .project-card, .art-card, .music-card, .nms-card, .game-card, .show-card, .movie-card, .club-tilt, .mate-card, .feature-card').forEach(card => {
         const inner = card.querySelector('.card-inner');
         const glare = card.querySelector('.card-glare');
         if (!inner || !glare) return;
@@ -64,7 +64,7 @@
     }
 
       function cleanup() {
-        document.querySelectorAll('.category-card, .blog-card, .skill-card, .project-card, .art-card, .music-card, .nms-card, .game-card, .show-card, .movie-card, .club-tilt, .mate-card').forEach(card => {
+        document.querySelectorAll('.category-card, .blog-card, .skill-card, .project-card, .art-card, .music-card, .nms-card, .game-card, .show-card, .movie-card, .club-tilt, .mate-card, .feature-card').forEach(card => {
         const inner = card.querySelector('.card-inner');
         const glare = card.querySelector('.card-glare');
         if (inner) {

@@ -6,30 +6,91 @@ import Hero from '../components/Hero.astro';
 import Skills from '../components/Skills.astro';
 import BlogCard from '../components/blog/BlogCard.astro';
 import { fromPost } from '../components/blog/ReadingTime.astro';
-// import PaginationDots from '../components/other/PaginationDots.astro';
+import RadioPlayer from '../components/other/RadioPlayer.astro';
 
 const base = import.meta.env.BASE_URL;
 const allBlogPosts = await getCollection('blog', ({ data }) => !data.draft);
 const recentPosts = allBlogPosts
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
+
+const totalPosts = allBlogPosts.length;
+const tagSet = new Set<string>();
+allBlogPosts.forEach((p) => (p.data.tags ?? []).forEach((t) => tagSet.add(t)));
+const allTags = Array.from(tagSet).sort();
+void allTags; // tags cloud removed; kept for future use
+
+const yearStarted = 2023;
+const yearsOfBuilding = new Date().getFullYear() - yearStarted;
+
+const stats = [
+  { label: 'Years Building', value: `${yearsOfBuilding}+` },
+  { label: 'Articles Written', value: `${totalPosts}` },
+  { label: 'Uptime Mindset', value: '100%' },
+  { label: 'Sip of Mate', value: '∞' },
+];
+
+const marqueeItems = [
+  'Ideas are bulletproof',
+  'Remember, remember',
+  'V for Vuk1lis',
+  'DevOps',
+  'Linux',
+  'VibeCoding',
+  'Homelab',
+  'AI Workflows',
+  'Motion Design',
+  'Songwriting',
+  'CI/CD',
+  'Cloud',
+  'Automation',
+  'Self-hosted',
+  'Yerba Mate',
+];
+
+const featured = [
+  {
+    href: `${base}homelab/`,
+    title: 'Homelab',
+    desc: 'Equipment Manifest, Homelab Diagram, and full Homelab Documentation.',
+    icon: 'server',
+  },
+  {
+    href: `${base}yerbamate/`,
+    title: 'Yerba Mate',
+    desc: 'A digital shine of the leaf that fuels the commits.',
+    icon: 'leaf',
+  },
+  {
+    href: `${base}about/`,
+    title: 'About',
+    desc: 'The face behind the mask — story, ethos, and the man called V.',
+    icon: 'mask',
+  },
+];
 ---
 
-<BaseLayout title="Vuk1lis | Personal Website & Portfolio" description="Vuk1lis is a DevOps engineer, Linux enthusiast, and VibeCoder crafting immersive digital experiences where dark aesthetics meet surgical performance." keywords="vukilis, portfolio, creative developer, devops engineer, linux enthusiast, immersive experiences, dark aesthetics, web development, personal website, tech blog, coding, automation, frontend, backend, open source, github, projects, skills, recent posts, vuk1lis">
+<BaseLayout title="Vuk1lis | V For Vendetta Universe" description="Vuk1lis is a DevOps engineer, Linux enthusiast, and VibeCoder crafting immersive digital experiences where dark aesthetics meet surgical performance." keywords="vukilis, portfolio, creative developer, devops engineer, linux enthusiast, immersive experiences, dark aesthetics, web development, personal website, tech blog, coding, automation, frontend, backend, open source, github, projects, skills, recent posts, vuk1lis, v for vendetta">
   <Navigation />
-  <Hero />
-  <Skills />
-  <!-- <PaginationDots sections={[
-    { id: 'hero', label: 'Home' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'posts', label: 'Posts' },
-    { id: 'footer', label: 'Footer' },
-  ]} /> -->
 
+  <!-- Page-wide themed atmosphere -->
+  <div class="vendetta-bg" aria-hidden="true">
+    <div class="vendetta-vendetta-v v-monogram">
+      <span>V</span>
+    </div>
+  </div>
+
+  <Hero />
+
+  <!-- Recent posts (first plan) -->
   <section id="posts" class="recent-posts">
     <div class="container">
-      <h2 class="section-title">Recent Posts</h2>
-      <p class="section-subtitle">Discover my latest articles, guides, tutorials, and how-to posts from recent projects</p>
+      <header class="section-header">
+        <span class="eyebrow">// latest dispatches</span>
+        <h2 class="section-title">Recent Posts</h2>
+        <p class="section-subtitle">Discover my latest articles, guides, tutorials, and how-to posts</p>
+      </header>
+
       <div class="posts-grid">
         {recentPosts.map((post) => (
           <BlogCard
@@ -44,6 +105,7 @@ const recentPosts = allBlogPosts
           />
         ))}
       </div>
+
       <div class="view-all">
         <a href={`${base}blog/`} class="btn btn-secondary">
           View All Posts
@@ -62,28 +124,254 @@ const recentPosts = allBlogPosts
       </div>
     </div>
   </section>
+
+  <!-- Manifesto quote -->
+  <section class="manifesto" aria-label="manifesto">
+    <div class="container">
+      <blockquote class="manifesto-quote">
+        <span class="quote-mark">“</span>
+        Viola, viator. A rose by any other name would smell as sweet. Verbi gratia, by any other name would I still be all that I am?
+        <span class="quote-mark">”</span>
+      </blockquote>
+      <div class="manifesto-sig">— V</div>
+    </div>
+  </section>
+
+  <!-- Marquee strip -->
+  <section class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      {[...marqueeItems, ...marqueeItems].map((item) => (
+        <span class="marquee-item">
+          <span class="marquee-ornament">⚜</span>
+          {item}
+        </span>
+      ))}
+    </div>
+  </section>
+
+  <!-- Stats / identity strip -->
+  <section class="stats" id="stats">
+    <div class="container">
+      <header class="section-header">
+        <span class="eyebrow">// the numbers</span>
+        <h2 class="section-title">By the Numbers</h2>
+        <p class="section-subtitle">A snapshot of the work, the hours, and the fuel behind it</p>
+      </header>
+      <div class="stats-grid">
+        {stats.map((s) => (
+          <div class="stat">
+            <div class="stat-value">{s.value}</div>
+            <div class="stat-label">{s.label}</div>
+            <div class="stat-flame" aria-hidden="true"></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Skills />
+
+  <!-- Featured / explore the site -->
+  <section class="featured" id="explore">
+    <div class="container">
+      <header class="section-header">
+        <span class="eyebrow">// explore</span>
+        <h2 class="section-title">Dive Deeper</h2>
+        <p class="section-subtitle">Some signals of this site are worth following</p>
+      </header>
+
+      <div class="featured-grid">
+        {featured.map((f) => (
+          <a href={f.href} class="feature-card">
+            <div class="card-inner">
+              <div class="feature-icon" aria-hidden="true">
+                {f.icon === 'rocket' && (
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+                )}
+                {f.icon === 'server' && (
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                )}
+                {f.icon === 'spark' && (
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                )}
+                {f.icon === 'leaf' && (
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19.2 2.96c1.4 1 2 5.04 2 7.04 0 5.52-4.48 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>
+                )}
+                {f.icon === 'mask' && (
+                  <svg viewBox="0 3 20 16" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8c0-2 2-3 4-3 1.5 0 2.5.5 3 1 .5-.5 1.5-1 3-1 2 0 4 1 4 3v3c0 4-3 7-7 7s-7-3-7-7V8z"/><path d="M9 10h.01M15 10h.01"/><path d="M9 15c1 1 2 1 3 1s2 0 3-1"/></svg>
+                )}
+              </div>
+              <div class="feature-body">
+                <h3 class="feature-title">
+                  {f.title}
+                  <svg class="feature-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </h3>
+                <p class="feature-desc">{f.desc}</p>
+              </div>
+              <div class="feature-shine"></div>
+              <div class="card-glare"></div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Radio -->
+  <section class="radio-section" id="radio">
+    <div class="container">
+      <header class="section-header">
+        <span class="eyebrow">// on air</span>
+        <h2 class="section-title">The Masked Frequency</h2>
+        <p class="section-subtitle">A transmission for those who listen</p>
+      </header>
+      <div class="radio-card">
+        <div class="radio-card-glow"></div>
+        <RadioPlayer />
+      </div>
+    </div>
+  </section>
 </BaseLayout>
 
-<style>
-  .recent-posts { justify-content: center; position: relative; overflow: hidden; padding: calc(var(--nav-height) + 2rem) 2rem 14rem; }
+<style is:global>
   .container { max-width: 1200px; width: 100%; margin: 0 auto; }
-  .section-title { font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; text-align: center; margin-bottom: 0.75rem; color: var(--color-text); }
-  .section-subtitle { text-align: center; font-size: 1.1rem; color: var(--color-text-dim); max-width: 480px; margin: 0rem auto 4rem; line-height: 1.6; }
-  .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+
+  /* ============ V FOR VENDETTA ATMOSPHERE ============ */
+  .vendetta-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+
+  /* Giant 3D V monogram, behind everything */
+  .v-monogram { position: absolute; left: 50%; top: 60%; transform: translate(-50%, -50%); font-family: 'Cinzel', 'Trajan Pro', 'Times New Roman', serif; font-size: clamp(40rem, 95vw, 110rem); font-weight: 900; line-height: 0.8; color: transparent; -webkit-text-stroke: 1px rgba(241, 196, 15, 0.06); text-stroke: 1px rgba(241, 196, 15, 0.06); user-select: none; animation: vBreathe 10s ease-in-out infinite, vTilt 60s linear infinite; transform-style: preserve-3d; }
+  .v-monogram span { display: block; background: radial-gradient(ellipse at 50% 30%, rgba(241, 196, 15, 0.04), transparent 60%); -webkit-background-clip: text; background-clip: text; }
+  @keyframes vBreathe { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+  @keyframes vTilt { 0% { transform: translate(-50%, -50%) perspective(2000px) rotateY(0deg) rotateX(0deg); } 50% { transform: translate(-50%, -50%) perspective(2000px) rotateY(8deg) rotateX(2deg); } 100% { transform: translate(-50%, -50%) perspective(2000px) rotateY(0deg) rotateX(0deg); } }
+/* ============ SECTION HEADING ============ */
+  .section-header { display: flex; flex-direction: column; text-align: center; margin-bottom: 3.5rem; position: relative; }
+  .eyebrow { display: inline-block; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.8rem; color: var(--color-accent-purple); letter-spacing: 0.1em; margin-bottom: 0.75rem; text-transform: lowercase; text-shadow: 0 0 12px rgba(241, 196, 15, 0.4); }
+  .section-title { font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.75rem; color: var(--color-text); }
+  .section-subtitle { font-size: 1.05rem; color: var(--color-text-dim); max-width: 540px; margin: 0 auto; line-height: 1.6; }
+
+  /* ============ RECENT POSTS ============ */
+  .recent-posts { justify-content: center; position: relative; overflow: hidden; padding: calc(var(--nav-height) + 1rem) 2rem 7rem; }
+  .recent-posts .section-title { font-size: clamp(2.4rem, 5.5vw, 3.4rem); }
+  .recent-posts .container { position: relative; z-index: 1; }
+  .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.75rem; margin-bottom: 3.5rem; }
   .view-all { display: flex; gap: .875rem; justify-content: center; align-items: center; flex-wrap: wrap; margin-bottom: 3rem; }
   .btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.875rem 1.75rem; font-size: 0.9375rem; font-weight: 600; font-family: var(--font-body, system-ui, sans-serif); letter-spacing: -0.01em; text-decoration: none; border-radius: 0.875rem; cursor: pointer; border: 1px solid transparent; white-space: nowrap; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; }
   .btn-icon { transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; }
   .btn-secondary:hover .btn-icon { transform: translateX(3px); }
-  .btn-secondary { background: var(--color-bg-card); color: var(--color-text, #e2e8f0); border: 1px solid rgba(148, 163, 184, 0.2); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); width: 12rem; }
-  .btn-secondary::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, transparent 60%); opacity: 0; transition: opacity 0.25s ease; }
-  .btn-secondary:hover { border-color: rgba(148, 163, 184, 0.35); color: var(--color-text, #f8fafc); transform: translateY(-2px); box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.2); }
+  .btn-secondary { background: var(--color-bg-card); color: var(--color-text, #faf7f0); border: 1px solid rgba(100, 84, 21, 0.2); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); width: 12rem; }
+  .btn-secondary::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(135deg, rgba(241, 196, 15, 0.08) 0%, transparent 60%); opacity: 0; transition: opacity 0.25s ease; }
+  .btn-secondary:hover { border-color: rgba(255, 255, 255, 0.2); color: var(--color-text, #faf7f0); transform: translateY(-2px); box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.2); }
   .btn-secondary:hover::after { opacity: 1; }
   .btn-secondary:active { transform: translateY(0); background: rgba(255, 255, 255, 0.03); }
-  .btn-secondary:focus-visible { outline: 2px solid var(--color-primary, #3b82f6); outline-offset: 3px; }
+  .btn-secondary:focus-visible { outline: 2px solid var(--color-primary, #f1c40f); outline-offset: 3px; }
   @media (max-width: 768px) {
-    .recent-posts { padding: 4rem 1.5rem 6rem; }
-    .posts-grid { grid-template-columns: 1fr; }
+    .recent-posts { padding: calc(var(--nav-height) + 0.5rem) 1.5rem 4rem; }
+    .posts-grid { grid-template-columns: 1fr; gap: 1.25rem; }
     .view-all { flex-direction: column; align-items: stretch; gap: 0.75rem; padding: 0 1.5rem; }
     .btn { width: 100%; padding: 1rem 1.5rem; font-size: 1rem; }
   }
+
+  /* ============ MANIFESTO ============ */
+  .manifesto { padding: 4rem 2rem 2rem; position: relative; z-index: 1; }
+  .manifesto-quote { position: relative; max-width: 900px; margin: 0 auto; padding: 2.5rem 3rem; font-family: 'Cinzel', 'Trajan Pro', 'Times New Roman', serif; font-size: clamp(1.2rem, 2.4vw, 1.7rem); font-style: italic; font-weight: 500; text-align: center; color: var(--color-text); line-height: 1.5; letter-spacing: 0.01em; border-top: 1px solid rgba(241, 196, 15, 0.4); border-bottom: 1px solid rgba(241, 196, 15, 0.4); text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6); }
+  .manifesto-quote::before, .manifesto-quote::after { content: '⚜'; position: absolute; left: 50%; transform: translateX(-50%); color: var(--color-accent-purple); font-size: 1rem; text-shadow: 0 0 12px rgba(241, 196, 15, 0.8); }
+  .manifesto-quote::before { top: -0.6rem; background: var(--color-bg-dark); padding: 0 0.5rem; }
+  .manifesto-quote::after { bottom: -0.6rem; background: var(--color-bg-dark); padding: 0 0.5rem; }
+  .quote-mark { font-family: 'Cinzel', serif; font-size: 3em; color: var(--color-accent-purple); opacity: 0.4; line-height: 0; vertical-align: -0.3em; margin: 0 0.2rem; text-shadow: 0 0 20px rgba(241, 196, 15, 0.6); }
+  .manifesto-sig { text-align: center; margin-top: 1.5rem; font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--color-accent-purple); letter-spacing: 0.4em; text-shadow: 0 0 20px rgba(241, 196, 15, 0.6); }
+  @media (max-width: 768px) { .manifesto-quote { padding: 2rem 1.5rem; } }
+
+  /* ============ MARQUEE ============ */
+  .marquee { position: relative; overflow: hidden; border-top: 1px solid var(--color-accent-purple); border-bottom: 1px solid var(--color-accent-purple); background: linear-gradient(180deg, rgba(241, 196, 15, 0.04), transparent); padding: 1.2rem 0; margin-top: 3rem; mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); }
+  .marquee-track { display: flex; gap: 2.5rem; width: max-content; animation: marquee 50s linear infinite; }
+  .marquee-item { display: inline-flex; align-items: center; gap: 0.75rem; font-family: 'Cinzel', 'Times New Roman', serif; font-size: 0.95rem; color: var(--color-accent-purple); letter-spacing: 0.15em; white-space: nowrap; text-transform: uppercase; text-shadow: 0 0 10px rgba(241, 196, 15, 0.4); }
+  .marquee-ornament { font-size: 0.8em; opacity: 0.7; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+
+  /* ============ STATS ============ */
+  .stats { padding: 5rem 2rem 3rem; position: relative; z-index: 1; }
+  .stats .section-header { margin-bottom: 3rem; }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; padding: 2.5rem 2rem; border: 1px solid var(--color-accent-purple); border-radius: 4px; background: linear-gradient(160deg, var(--color-bg-card) 0%, var(--color-bg-elevated) 60%, transparent 100%); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); position: relative; overflow: hidden; box-shadow: 0 0 80px -20px var(--color-shadow), inset 0 1px 0 var(--color-primary-soft), inset 0 0 80px -20px var(--color-primary-soft); }
+  .stats-grid::before { content: ''; position: absolute; inset: 0; background: radial-gradient(700px circle at 0% 0%, var(--color-primary-soft), transparent 55%), radial-gradient(500px circle at 100% 100%, var(--color-primary-soft), transparent 55%); pointer-events: none; opacity: 0.6; }
+  .stat { text-align: center; position: relative; padding: 0.5rem; }
+  .stat-value { font-family: 'Cinzel', 'Trajan Pro', 'Times New Roman', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; background: linear-gradient(180deg, var(--color-accent-purple) 0%, var(--color-primary) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.1; text-shadow: 0 0 30px rgba(241, 196, 15, 0.4); position: relative; z-index: 1; }
+  .stat-label { margin-top: 0.5rem; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-dim); position: relative; z-index: 1; }
+  .stat-flame { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 60px; height: 12px; background: radial-gradient(ellipse at center, var(--color-primary) 0%, transparent 70%); filter: blur(4px); opacity: 0.5; z-index: 0; }
+  @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr); padding: 1.75rem 1.25rem; gap: 1.5rem; } }
+
+  /* ============ FEATURED ============ */
+  .featured { padding: 6rem 2rem; position: relative; z-index: 1; }
+  .featured-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .feature-card { position: relative; display: block; text-decoration: none; color: inherit; perspective: 1500px; }
+  .feature-card .card-inner { position: relative; display: flex; flex-direction: column; gap: 1.25rem; padding: 2.25rem 1.85rem; border-radius: 1rem; background: linear-gradient(160deg, var(--color-bg-card) 0%, var(--color-bg-elevated) 100%); border: 1px solid transparent; overflow: hidden; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 12px 24px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(241, 196, 15, 0.1); }
+  .feature-card .card-inner.tilt-active { transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, border-color 0.3s ease; }
+  .feature-card:hover .card-inner { border-color: var(--color-accent-purple); box-shadow: 0 8px 30px rgba(241, 196, 15, 0.15), 0 20px 60px -10px rgba(241, 196, 15, 0.3); }
+  .feature-icon { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: radial-gradient(circle, rgba(241, 196, 15, 0.15) 0%, transparent 70%); border: 1px solid rgba(241, 196, 15, 0.4); color: var(--color-accent-purple); transition: transform 0.4s ease; box-shadow: 0 0 20px rgba(241, 196, 15, 0.2); }
+  .feature-card:hover .feature-icon { transform: rotate(-12deg) scale(1.15); box-shadow: 0 0 30px rgba(241, 196, 15, 0.5); }
+  .feature-title { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; font-family: 'Cinzel', var(--font-heading); font-size: 1.4rem; font-weight: 700; margin: 0; color: var(--color-text); letter-spacing: 0.02em; }
+  .feature-arrow { transition: transform 0.3s ease, color 0.3s ease; color: var(--color-text-dim); }
+  .feature-card:hover .feature-arrow { transform: translate(2px, -2px) rotate(0deg); color: var(--color-primary); }
+  .feature-desc { font-size: 1rem; color: var(--color-text-dim); line-height: 1.6; margin: 0; }
+  .feature-shine { position: absolute; inset: -1px; background: linear-gradient(135deg, transparent 40%, rgba(241, 196, 15, 0.15) 50%, transparent 60%); opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: -1; }
+  .feature-card .card-glare { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 3; opacity: 0; transition: opacity 0.3s ease; mix-blend-mode: overlay; background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 240, 200, 0.25) 0%, rgba(255, 240, 200, 0.08) 20%, transparent 50%); }
+  @media (max-width: 1024px) { .featured-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .featured-grid { grid-template-columns: 1fr; } .featured { padding: 4rem 1.5rem; } }
+  @media (max-width: 768px) { .feature-card { perspective: none; } .feature-card .card-inner { transform-style: flat; backface-visibility: visible; transition: none; will-change: auto; } .feature-card:hover .card-inner { transform: none; } .feature-card .card-glare { display: none; } }
+
+  /* ============ RADIO ============ */
+  .radio-section { padding: 3rem 2rem 6rem; position: relative; z-index: 1; }
+  .radio-card { position: relative; max-width: 640px; margin: 0 auto; padding: 2.25rem 2.5rem; border-radius: 8px; background: linear-gradient(160deg, var(--color-bg-card) 0%, var(--color-bg-elevated) 100%); border: 1px solid var(--color-accent-purple); overflow: hidden; isolation: isolate; box-shadow: 0 0 60px -20px rgba(241, 196, 15, 0.3), inset 0 1px 0 rgba(241, 196, 15, 0.1); }
+  .radio-card-glow { position: absolute; inset: 0; background: radial-gradient(500px circle at 50% 0%, var(--color-primary-soft), transparent 60%); pointer-events: none; z-index: -1; }
+  .radio-card .radio-player-instance { margin-top: 0; }
+  .radio-card .radio-inner { background: rgba(0, 0, 0, 0.3); border: 1px solid var(--color-accent-purple); border-radius: 8px; padding: 0.85rem 1.1rem; }
+  @media (max-width: 600px) { .radio-section { padding: 2rem 1.5rem 4rem; } .radio-card { padding: 1.5rem 1rem; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+  }
+
+  /* ============ LIGHT THEME OVERRIDES ============ */
+  [data-theme="light"] .vendetta-grain { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.55 0 0 0 0 0.45 0 0 0 0 0.05 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E"); opacity: 0.04; mix-blend-mode: multiply; }
+  [data-theme="light"] .v-monogram { -webkit-text-stroke: 1px rgba(212, 168, 14, 0.12); text-stroke: 1px rgba(212, 168, 14, 0.12); }
+  [data-theme="light"] .vendetta-candle { background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(212, 168, 14, 0.1), transparent 70%); }
+  [data-theme="light"] .vendetta-rose { color: #b91c1c; opacity: 0.14; text-shadow: none; }
+  [data-theme="light"] .vendetta-ink { background-image: radial-gradient(circle at 20% 30%, rgba(212, 168, 14, 0.04) 0%, transparent 8%), radial-gradient(circle at 80% 70%, rgba(212, 168, 14, 0.05) 0%, transparent 6%), radial-gradient(circle at 50% 50%, rgba(212, 168, 14, 0.03) 0%, transparent 10%); }
+  [data-theme="light"] .manifesto-quote { text-shadow: none; }
+  [data-theme="light"] .manifesto-quote::before, [data-theme="light"] .manifesto-quote::after { background: var(--color-bg-dark); }
+  [data-theme="light"] .stats-grid { background: linear-gradient(160deg, #fdfaf2 0%, #ffffff 60%, rgba(212, 168, 14, 0.06) 100%); box-shadow: 0 4px 24px -8px rgba(100, 84, 21, 0.2), inset 0 1px 0 rgba(212, 168, 14, 0.2), inset 0 0 80px -20px rgba(212, 168, 14, 0.12); }
+  [data-theme="light"] .stats-grid::before { background: radial-gradient(700px circle at 0% 0%, rgba(212, 168, 14, 0.18), transparent 55%), radial-gradient(500px circle at 100% 100%, rgba(212, 168, 14, 0.14), transparent 55%); opacity: 0.7; }
+  [data-theme="light"] .stat-value { background: linear-gradient(180deg, #6b4f00 0%, #b8860b 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: none; }
+  [data-theme="light"] .feature-card .card-inner { background: linear-gradient(160deg, #fdfaf2 0%, #ffffff 100%); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 12px 24px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(212, 168, 14, 0.15); }
+  [data-theme="light"] .feature-card:hover .card-inner { box-shadow: 0 8px 30px rgba(212, 168, 14, 0.15), 0 20px 60px -10px rgba(212, 168, 14, 0.2); }
+  [data-theme="light"] .feature-card .card-glare { mix-blend-mode: multiply; background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(212, 168, 14, 0.2) 0%, rgba(212, 168, 14, 0.05) 20%, transparent 50%); }
+  [data-theme="light"] .marquee { background: linear-gradient(180deg, rgba(212, 168, 14, 0.06), transparent); border-color: rgba(212, 168, 14, 0.3); }
+  [data-theme="light"] .radio-card { background: linear-gradient(160deg, #fdfaf2 0%, #ffffff 100%); }
+  [data-theme="light"] .radio-card .radio-inner { background: rgba(255, 255, 255, 0.6); }
+  [data-theme="light"] .recent-posts::before { background: radial-gradient(900px circle at 50% 0%, rgba(212, 168, 14, 0.12), transparent 55%); }
+  [data-theme="light"] .btn-secondary { border-color: rgba(100, 84, 21, 0.25); }
+  [data-theme="light"] .stat-flame { background: radial-gradient(ellipse at center, rgba(212, 168, 14, 0.5) 0%, transparent 70%); }
+  [data-theme="light"] .vendetta-mask { filter: drop-shadow(0 0 30px rgba(212, 168, 14, 0.3)); opacity: 0.08; }
 </style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    if (window.matchMedia('(pointer: coarse), (prefers-reduced-motion: reduce)').matches) return;
+
+    // Parallax on V monogram based on scroll
+    const monogram = document.querySelector('.v-monogram') as HTMLElement | null;
+
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        if (monogram) monogram.style.setProperty('--sy', `${y * 0.15}px`);
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+  });
+</script>
