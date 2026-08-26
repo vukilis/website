@@ -1,0 +1,145 @@
+---
+import { icon } from '@fortawesome/fontawesome-svg-core';
+import {
+  faArrowLeft,
+  faArrowUpRightFromSquare,
+  faBolt,
+  faBoxOpen,
+  faCircleInfo,
+  faCompass,
+  faComputerMouse,
+  faCubes,
+  faDatabase,
+  faDesktop,
+  faDisplay,
+  faEnvelope,
+  faExpand,
+  faFan,
+  faHardDrive,
+  faHeadphones,
+  faHeart,
+  faKey,
+  faKeyboard,
+  faMemory,
+  faMicrochip,
+  faMicrophone,
+  faMugHot,
+  faMugSaucer,
+  faMusic,
+  faNetworkWired,
+  faPalette,
+  faPlug,
+  faPowerOff,
+  faServer,
+  faShieldHalved,
+  faSquare,
+  faTemperatureLow,
+  faTrophy,
+  faWandMagicSparkles,
+  faWaveSquare,
+  faWifi,
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  faGithub,
+  faInstagram,
+  faKoFi,
+  faLinkedin,
+  faPaypal,
+  faSteam,
+  faYoutube,
+} from '@fortawesome/free-brands-svg-icons';
+
+type IconStyle = 'solid' | 'brands';
+
+interface Props {
+  name: string;
+  style?: IconStyle;
+  class?: string;
+  color?: string;
+  ariaHidden?: boolean;
+}
+
+const { name, style = 'solid', class: className = '', color, ariaHidden = true } = Astro.props;
+
+const solidIcons: Record<string, any> = {
+  'arrow-left': faArrowLeft,
+  'arrow-up-right-from-square': faArrowUpRightFromSquare,
+  bolt: faBolt,
+  'box-open': faBoxOpen,
+  'circle-info': faCircleInfo,
+  compass: faCompass,
+  'computer-mouse': faComputerMouse,
+  cubes: faCubes,
+  database: faDatabase,
+  desktop: faDesktop,
+  display: faDisplay,
+  envelope: faEnvelope,
+  expand: faExpand,
+  fan: faFan,
+  'hard-drive': faHardDrive,
+  headphones: faHeadphones,
+  heart: faHeart,
+  key: faKey,
+  keyboard: faKeyboard,
+  memory: faMemory,
+  microchip: faMicrochip,
+  microphone: faMicrophone,
+  'mug-hot': faMugHot,
+  'mug-saucer': faMugSaucer,
+  music: faMusic,
+  'network-wired': faNetworkWired,
+  palette: faPalette,
+  plug: faPlug,
+  'power-off': faPowerOff,
+  server: faServer,
+  'shield-halved': faShieldHalved,
+  square: faSquare,
+  'temperature-low': faTemperatureLow,
+  trophy: faTrophy,
+  'wand-magic-sparkles': faWandMagicSparkles,
+  'wave-square': faWaveSquare,
+  wifi: faWifi,
+};
+
+const brandIcons: Record<string, any> = {
+  github: faGithub,
+  instagram: faInstagram,
+  'ko-fi': faKoFi,
+  linkedin: faLinkedin,
+  paypal: faPaypal,
+  steam: faSteam,
+  youtube: faYoutube,
+};
+
+const source = style === 'brands' ? brandIcons : solidIcons;
+const iconDef = source[name];
+
+if (!iconDef) {
+  throw new Error(`[Icon] Unknown ${style} icon: "${name}"`);
+}
+
+const svg = icon(iconDef).html.join('');
+---
+<span
+  class:list={['fa-icon', className]}
+  aria-hidden={ariaHidden ? 'true' : undefined}
+  style={color ? `color: ${color}` : undefined}
+  set:html={svg}
+/>
+
+<style>
+  .fa-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    vertical-align: middle;
+  }
+
+  .fa-icon :global(svg) {
+    width: 1em;
+    height: 1em;
+    display: block;
+    fill: currentColor;
+  }
+</style>

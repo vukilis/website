@@ -52,7 +52,7 @@ const featured = [
   {
     href: `${base}homelab/`,
     title: 'Homelab',
-    desc: 'Equipment Manifest, Homelab Diagram, and full Homelab Documentation.',
+    desc: 'Equipment Manifest, Diagram, and full Documentation.',
     icon: 'server',
   },
   {
@@ -304,12 +304,13 @@ const featured = [
   /* ============ FEATURED ============ */
   .featured { padding: 6rem 2rem; position: relative; z-index: 1; }
   .featured-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-  .feature-card { position: relative; display: block; text-decoration: none; color: inherit; perspective: 1500px; }
-  .feature-card .card-inner { position: relative; display: flex; flex-direction: column; gap: 1.25rem; padding: 2.25rem 1.85rem; border-radius: 1rem; background: linear-gradient(160deg, var(--color-bg-card) 0%, var(--color-bg-elevated) 100%); border: 1px solid transparent; overflow: hidden; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 12px 24px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(241, 196, 15, 0.1); }
+  .feature-card { position: relative; display: block; text-decoration: none; color: inherit; perspective: 1500px; height: 100%; }
+  .feature-card .card-inner { position: relative; display: flex; flex-direction: column; gap: 1.25rem; padding: 2.25rem 1.85rem; border-radius: 1rem; background: linear-gradient(160deg, var(--color-bg-card) 0%, var(--color-bg-elevated) 100%); border: 1px solid transparent; overflow: hidden; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 12px 24px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(241, 196, 15, 0.1); height: 100%; }
   .feature-card .card-inner.tilt-active { transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, border-color 0.3s ease; }
   .feature-card:hover .card-inner { border-color: var(--color-accent-purple); box-shadow: 0 8px 30px rgba(241, 196, 15, 0.15), 0 20px 60px -10px rgba(241, 196, 15, 0.3); }
   .feature-icon { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: radial-gradient(circle, rgba(241, 196, 15, 0.15) 0%, transparent 70%); border: 1px solid rgba(241, 196, 15, 0.4); color: var(--color-accent-purple); transition: transform 0.4s ease; box-shadow: 0 0 20px rgba(241, 196, 15, 0.2); }
   .feature-card:hover .feature-icon { transform: rotate(-12deg) scale(1.15); box-shadow: 0 0 30px rgba(241, 196, 15, 0.5); }
+  .feature-body { flex: 1; }
   .feature-title { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; font-family: 'Cinzel', var(--font-heading); font-size: 1.4rem; font-weight: 700; margin: 0; color: var(--color-text); letter-spacing: 0.02em; }
   .feature-arrow { transition: transform 0.3s ease, color 0.3s ease; color: var(--color-text-dim); }
   .feature-card:hover .feature-arrow { transform: translate(2px, -2px) rotate(0deg); color: var(--color-primary); }

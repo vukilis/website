@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Navigation from '../../../components/Navigation.astro';
+import Icon from '../../../components/other/Icon.astro';
 import '../../../styles/homelab/devices.css';
 
 type ComponentEntry = {
@@ -36,27 +37,27 @@ const systems: SystemBuild[] = [
     status: 'OPERATIONAL',
     sysId: 'SYS-001',
     classification: 'PERSONAL EQUIPMENT',
-    icon: 'fa-desktop',
+    icon: 'desktop',
     entries: [
-      { type: 'component', label: 'Platform', name: 'CachyOS Arch Linux', specs: 'Operating System · DWM · Xlibre · SDDM · Kitty · ZSH · VS Code', icon: 'fa-cubes' },
-      { type: 'component', label: 'Chassis', name: 'Lian Li Air Mini', specs: 'Mid-tower · ATX · SFF', icon: 'fa-box-open' },
-      { type: 'component', label: 'Processor', name: 'Intel Core i7-13700K', specs: '16C/24T · Up to 5.4 GHz · LGA 1700', icon: 'fa-microchip' },
-      { type: 'component', label: 'Graphics', name: 'ZOTAC GTX 1060 3GB AMP!', specs: '3GB GDDR5 · PCIe 3.0 · 120W TDP', icon: 'fa-display' },
-      { type: 'component', label: 'Motherboard', name: 'MSI Z690 Tomahawk', specs: 'DDR5 · PCIe 4.0 · WiFi', icon: 'fa-microchip ' },
-      { type: 'component', label: 'Memory', name: 'Kingston Fury Renegade', specs: 'DDR5 · 2×16GB · 6000 MT/s', icon: 'fa-memory' },
-      { type: 'component', label: 'Cooling', name: 'Arctic Liquid Freezer II 280', specs: '280mm AIO · A-RGB', icon: 'fa-temperature-low' },
-      { type: 'component', label: 'Power Supply', name: 'FSP HYDRO G PRO', specs: '1000W · 80+ Gold', icon: 'fa-bolt' },
-      { type: 'component', label: 'Case Fans', name: 'Arctic P12 Pro + 3× Lian Li OEM', specs: '120mm A-RGB · 140mm×2 + 120mm×1', icon: 'fa-fan' },
+      { type: 'component', label: 'Platform', name: 'CachyOS Arch Linux', specs: 'Operating System · DWM · Xlibre · SDDM · Kitty · ZSH · VS Code', icon: 'cubes' },
+      { type: 'component', label: 'Chassis', name: 'Lian Li Air Mini', specs: 'Mid-tower · ATX · SFF', icon: 'box-open' },
+      { type: 'component', label: 'Processor', name: 'Intel Core i7-13700K', specs: '16C/24T · Up to 5.4 GHz · LGA 1700', icon: 'microchip' },
+      { type: 'component', label: 'Graphics', name: 'ZOTAC GTX 1060 3GB AMP!', specs: '3GB GDDR5 · PCIe 3.0 · 120W TDP', icon: 'display' },
+      { type: 'component', label: 'Motherboard', name: 'MSI Z690 Tomahawk', specs: 'DDR5 · PCIe 4.0 · WiFi', icon: 'microchip' },
+      { type: 'component', label: 'Memory', name: 'Kingston Fury Renegade', specs: 'DDR5 · 2×16GB · 6000 MT/s', icon: 'memory' },
+      { type: 'component', label: 'Cooling', name: 'Arctic Liquid Freezer II 280', specs: '280mm AIO · A-RGB', icon: 'temperature-low' },
+      { type: 'component', label: 'Power Supply', name: 'FSP HYDRO G PRO', specs: '1000W · 80+ Gold', icon: 'bolt' },
+      { type: 'component', label: 'Case Fans', name: 'Arctic P12 Pro + 3× Lian Li OEM', specs: '120mm A-RGB · 140mm×2 + 120mm×1', icon: 'fan' },
       {
         type: 'subsection',
         title: 'Storage',
         items: [
-          { name: 'Samsung 980 PRO 500GB', specs: 'NVMe PCIe 4.0 · 6900 MB/s', icon: 'fa-hard-drive' },
-          { name: 'Kingston 480GB', specs: 'SATA III · 500 MB/s', icon: 'fa-hard-drive' },
-          { name: 'WD Blue 2TB', specs: 'HDD · 7200 RPM · 256MB Cache', icon: 'fa-database' },
-          { name: 'WD Blue 1TB', specs: 'HDD · 7200 RPM · 256MB Cache', icon: 'fa-database' },
-          { name: 'SanDisk 120GB', specs: 'SATA III · 440 MB/s · Backup', icon: 'fa-hard-drive' },
-          { name: 'Verbatim 320GB', specs: '2.5" HDD · USB 2.0 · External', icon: 'fa-hard-drive' },
+          { name: 'Samsung 980 PRO 500GB', specs: 'NVMe PCIe 4.0 · 6900 MB/s', icon: 'hard-drive' },
+          { name: 'Kingston 480GB', specs: 'SATA III · 500 MB/s', icon: 'hard-drive' },
+          { name: 'WD Blue 2TB', specs: 'HDD · 7200 RPM · 256MB Cache', icon: 'database' },
+          { name: 'WD Blue 1TB', specs: 'HDD · 7200 RPM · 256MB Cache', icon: 'database' },
+          { name: 'SanDisk 120GB', specs: 'SATA III · 440 MB/s · Backup', icon: 'hard-drive' },
+          { name: 'Verbatim 320GB', specs: '2.5" HDD · USB 2.0 · External', icon: 'hard-drive' },
         ],
       },
     ],
@@ -67,17 +68,17 @@ const systems: SystemBuild[] = [
     status: 'ONLINE',
     sysId: 'SYS-003',
     classification: 'INFRASTRUCTURE',
-    icon: 'fa-server',
+    icon: 'server',
     entries: [
-      { type: 'component', label: 'System', name: 'Firebat T8 Pro Plus', specs: 'Intel N100 · DDR5 16GB · 512GB NVMe', icon: 'fa-server' },
-      { type: 'component', label: 'Platform', name: 'Proxmox VE', specs: 'Virtualization Hypervisor', icon: 'fa-cubes' },
-      { type: 'component', label: 'I/O', name: 'On-board Ports', specs: '3× HDMI · 3× USB · 2× RJ45 1GbE', icon: 'fa-plug' },
+      { type: 'component', label: 'System', name: 'Firebat T8 Pro Plus', specs: 'Intel N100 · DDR5 16GB · 512GB NVMe', icon: 'server' },
+      { type: 'component', label: 'Platform', name: 'Proxmox VE', specs: 'Virtualization Hypervisor', icon: 'cubes' },
+      { type: 'component', label: 'I/O', name: 'On-board Ports', specs: '3× HDMI · 3× USB · 2× RJ45 1GbE', icon: 'plug' },
       {
         type: 'subsection',
         title: 'Storage',
         items: [
-          { name: 'Wicgtyp N900 512GB', specs: 'NVMe PCIe 3.0', icon: 'fa-hard-drive' },
-          { name: 'Seagate 250GB', specs: '2.5" HDD · USB 3.0 · External', icon: 'fa-hard-drive' },
+          { name: 'Wicgtyp N900 512GB', specs: 'NVMe PCIe 3.0', icon: 'hard-drive' },
+          { name: 'Seagate 250GB', specs: '2.5" HDD · USB 3.0 · External', icon: 'hard-drive' },
         ],
       },
     ],
@@ -88,11 +89,11 @@ const systems: SystemBuild[] = [
     status: 'SECURED',
     sysId: 'SYS-004',
     classification: 'CRITICAL INFRASTRUCTURE',
-    icon: 'fa-shield-halved',
+    icon: 'shield-halved',
     entries: [
-      { type: 'component', label: 'Switch', name: 'Horaco 2.5GbE Managed Switch', specs: '8× 2.5GbE · 1× 10Gb SFP+ · VLANs', icon: 'fa-network-wired' },
-      { type: 'component', label: 'Router', name: 'TP-Link Archer C6 V2', specs: '867 Mbps (AC) · 400 Mbps (N) · MU-MIMO', icon: 'fa-wifi' },
-      { type: 'component', label: 'Authentication', name: 'Yubico Secure Key C NFC', specs: 'USB-C · FIDO2 · Passkeys · NFC', icon: 'fa-key' },
+      { type: 'component', label: 'Switch', name: 'Horaco 2.5GbE Managed Switch', specs: '8× 2.5GbE · 1× 10Gb SFP+ · VLANs', icon: 'network-wired' },
+      { type: 'component', label: 'Router', name: 'TP-Link Archer C6 V2', specs: '867 Mbps (AC) · 400 Mbps (N) · MU-MIMO', icon: 'wifi' },
+      { type: 'component', label: 'Authentication', name: 'Yubico Secure Key C NFC', specs: 'USB-C · FIDO2 · Passkeys · NFC', icon: 'key' },
     ],
   },
   {
@@ -101,15 +102,15 @@ const systems: SystemBuild[] = [
     status: 'ACTIVE',
     sysId: 'SYS-002',
     classification: 'INTERFACE EQUIPMENT',
-    icon: 'fa-keyboard',
+    icon: 'keyboard',
     entries: [
-      { type: 'component', label: 'Display', name: 'BenQ GW2270', specs: '21.5" · 1920×1080 · VA Panel', icon: 'fa-desktop' },
-      { type: 'component', label: 'Pointer', name: 'MCHOSE L7 Ultra+', specs: 'PAW3950 · 39g · Tri-mode · USB-C', icon: 'fa-computer-mouse' },
-      { type: 'component', label: 'Keyboard', name: 'AJAZZ AK820', specs: '75% · Sea Salt Switches · PBT · USB-C', icon: 'fa-keyboard' },
-      { type: 'component', label: 'Audio Output', name: 'Beyerdynamic DT 770 PRO', specs: '80Ω · 5–35,000 Hz · Closed · HeSuVi EQ', icon: 'fa-headphones' },
-      { type: 'component', label: 'Audio Input', name: 'Microphone YU8', specs: 'USB-C / XLR · Dynamic · RGB', icon: 'fa-microphone' },
-      { type: 'component', label: 'Surface', name: 'ASUS TUF Gaming Mouse Pad', specs: '500×1200mm · RGB · Anti-slip Rubber', icon: 'fa-square' },
-      { type: 'component', label: 'Desk', name: 'MITTZON', specs: 'Electric · 160x80cm · Cable Management', icon: 'fa-square' },
+      { type: 'component', label: 'Display', name: 'BenQ GW2270', specs: '21.5" · 1920×1080 · VA Panel', icon: 'desktop' },
+      { type: 'component', label: 'Pointer', name: 'MCHOSE L7 Ultra+', specs: 'PAW3950 · 39g · Tri-mode · USB-C', icon: 'computer-mouse' },
+      { type: 'component', label: 'Keyboard', name: 'AJAZZ AK820', specs: '75% · Sea Salt Switches · PBT · USB-C', icon: 'keyboard' },
+      { type: 'component', label: 'Audio Output', name: 'Beyerdynamic DT 770 PRO', specs: '80Ω · 5–35,000 Hz · Closed · HeSuVi EQ', icon: 'headphones' },
+      { type: 'component', label: 'Audio Input', name: 'Microphone YU8', specs: 'USB-C / XLR · Dynamic · RGB', icon: 'microphone' },
+      { type: 'component', label: 'Surface', name: 'ASUS TUF Gaming Mouse Pad', specs: '500×1200mm · RGB · Anti-slip Rubber', icon: 'square' },
+      { type: 'component', label: 'Desk', name: 'MITTZON', specs: 'Electric · 160x80cm · Cable Management', icon: 'square' },
     ],
   },
 ];
@@ -137,7 +138,7 @@ const totalComponents = systems.reduce((acc, s) => acc + countComponents(s.entri
 
       <div class="container">
         <a href="/homelab/" class="back-link">
-          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          <Icon name="arrow-left" />
           Back to Homelab
         </a>
 
@@ -177,7 +178,7 @@ const totalComponents = systems.reduce((acc, s) => acc + countComponents(s.entri
             <div class="sys-header">
               <div class="sys-icon-wrap">
                 <div class="sys-icon-ring">
-                  <i class={`fa-solid ${sys.icon}`} aria-hidden="true"></i>
+                  <Icon name={sys.icon} />
                 </div>
               </div>
               <div class="sys-identity">
@@ -197,7 +198,7 @@ const totalComponents = systems.reduce((acc, s) => acc + countComponents(s.entri
                   return (
                     <div class="comp-row">
                       <span class="comp-label">
-                        <i class={`fa-solid ${entry.icon}`} aria-hidden="true"></i>
+                        <Icon name={entry.icon} />
                         {entry.label}
                       </span>
                       <span class="comp-pipe" aria-hidden="true"></span>
@@ -232,7 +233,7 @@ const totalComponents = systems.reduce((acc, s) => acc + countComponents(s.entri
 
             <div class="sys-footer">
               <span class="sys-footer-left">
-                <i class="fa-solid fa-power-off" aria-hidden="true"></i>
+                <Icon name="power-off" />
                 <span>Powered</span>
               </span>
               <span class="sys-footer-right">

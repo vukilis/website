@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navigation from '../../components/Navigation.astro';
 import Mate from '../../components/mate/Mate.astro';
 import CommentSystem from "../../components/blog/CommentSystem.astro";
+import Icon from '../../components/other/Icon.astro';
 import '../../styles/mate/layout.css';
 
 export async function getStaticPaths() {
@@ -27,7 +28,7 @@ const { Content } = await render(entry);
   <main class="yerba-review-page">
     <div class="container" data-lightgallery>
       <a href="/yerbamate/" class="back-link" id="back-to-mates">
-        <i class="fa-solid fa-arrow-left"></i> Back to Reviews
+        <Icon name="arrow-left" /> Back to Reviews
       </a>
       <Mate
         name={entry.data.name}

@@ -1,12 +1,13 @@
 ---
 import '../../styles/homelab/header.css';
 import HomelabStatus from './HomelabStatus.astro';
+import Icon from '../other/Icon.astro';
 ---
 
 <header class="homelab-header">
   <div class="header-top-nav">
     <a href="/homelab/" class="back-link">
-      <i class="fa-solid fa-arrow-left"></i> Back to Homelab
+      <Icon name="arrow-left" /> Back to Homelab
     </a>
   </div>
 
@@ -21,7 +22,7 @@ import HomelabStatus from './HomelabStatus.astro';
     <div class="intro-cards">
       <div class="intro-card">
         <div class="intro-card-icon">
-          <i class="fa-solid fa-server"></i>
+          <Icon name="server" />
         </div>
         <div class="intro-card-content">
           <span class="intro-card-title">Infrastructure</span>
@@ -30,7 +31,7 @@ import HomelabStatus from './HomelabStatus.astro';
       </div>
       <div class="intro-card">
         <div class="intro-card-icon">
-          <i class="fa-solid fa-network-wired"></i>
+          <Icon name="network-wired" />
         </div>
         <div class="intro-card-content">
           <span class="intro-card-title">Services</span>
@@ -42,13 +43,13 @@ import HomelabStatus from './HomelabStatus.astro';
 
   <div class="intro-highlight">
     <div class="intro-highlight-icon">
-      <i class="fa-solid fa-bolt"></i>
+      <Icon name="bolt" />
     </div>
     <div class="intro-highlight-content">
       <div class="intro-highlight-header">
         <span class="intro-highlight-title">Ideas Are Virtualized</span>
         <a href="https://www.reddit.com/r/homelab/" target="_blank" rel="noopener noreferrer" class="intro-highlight-link">
-          r/homelab <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          r/homelab <Icon name="arrow-up-right-from-square" />
         </a>
       </div>
       <p class="intro-highlight-text">
@@ -60,7 +61,7 @@ import HomelabStatus from './HomelabStatus.astro';
   </div>
 
   <p class="header-note">
-    <i class="fa-solid fa-circle-info"></i>
+    <Icon name="circle-info" />
     Zoom, pan, and explore the full homelab topology. For better experience, use a desktop or laptop device. The diagram is interactive and may take a few seconds to load.
   </p>
 </header>

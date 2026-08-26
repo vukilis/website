@@ -1,8 +1,10 @@
 ---
+import Icon from './Icon.astro';
+
 interface SponsoringLink {
   name: string;
   url: string;
-  icon: string;
+  icon: 'github' | 'mug-saucer' | 'ko-fi' | 'paypal';
   color?: string;
 }
 
@@ -11,25 +13,21 @@ const defaultLinks: SponsoringLink[] = [
     name: 'GitHub Sponsors',
     url: 'https://github.com/sponsors/vukilis',
     icon: 'github',
-    color: '#ac51e0',
   },
   {
     name: 'Ko-fi',
     url: 'https://ko-fi.com/vukilis',
     icon: 'ko-fi',
-    color: '#FF5E5B',
   },
   {
     name: 'Buy Me a Coffee',
     url: 'https://www.buymeacoffee.com/vukilis',
-    icon: 'buymeacoffee',
-    color: 'var(--color-accent-purple)',
+    icon: 'mug-saucer',
   },
   {
     name: 'PayPal',
     url: 'https://paypal.me/vuklekic',
     icon: 'paypal',
-    color: '#003087',
   },
 ];
 
@@ -40,11 +38,11 @@ interface Props {
 
 const { links = defaultLinks, class: className = '' } = Astro.props;
 
-const iconClasses: Record<string, string> = {
-  github: 'fa-brands fa-github',
-  buymeacoffee: 'fa-solid fa-mug-saucer',
-  'ko-fi': 'fa-brands fa-ko-fi',
-  paypal: 'fa-brands fa-paypal',
+const iconStyle: Record<SponsoringLink['icon'], 'solid' | 'brands'> = {
+  github: 'brands',
+  'ko-fi': 'brands',
+  paypal: 'brands',
+  'mug-saucer': 'solid',
 };
 ---
 
@@ -58,23 +56,65 @@ const iconClasses: Record<string, string> = {
       aria-label={link.name}
       title={link.name}
     >
-      {link.icon ? (
-        <i
-          class={['fa-fw', iconClasses[link.icon] || ''].join(' ')}
-          aria-hidden="true"
-          style={link.color ? `color: ${link.color}` : ''}
-        />
-      ) : null}
+      <Icon
+        name={link.icon}
+        style={iconStyle[link.icon]}
+        color={link.color}
+        class="sponsoring-icon"
+      />
     </a>
   ))}
 </div>
 
 <style>
-  .sponsoring-links { display: flex; gap: 0.625rem; align-items: center; justify-content: flex-start; }
-  .sponsoring-link { display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border-radius: 0.5rem; background: rgba(241, 196, 15, 0.08); border: 1px solid var(--color-border); color: var(--color-text-dim); text-decoration: none; transition: all 0.2s ease; }
-  .sponsoring-link:hover { border-color: var(--color-primary); background: rgba(241, 196, 15, 0.15); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(241, 196, 15, 0.15); color: var(--color-text); }
-  .sponsoring-link i { width: 18px; font-size: 18px; line-height: 1; display: block; }
+  .sponsoring-links {
+    display: flex;
+    gap: 0.625rem;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .sponsoring-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.5rem;
+    background: rgba(241, 196, 15, 0.08);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-dim);
+    text-decoration: none;
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .sponsoring-link:hover {
+    border-color: var(--color-primary);
+    background: rgba(241, 196, 15, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(241, 196, 15, 0.15);
+    color: var(--color-text);
+  }
+
+  :global(.sponsoring-link .fa-icon) {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+
+  :global(.sponsoring-link .fa-icon svg) {
+    width: 18px;
+    height: 18px;
+  }
+
   @media (max-width: 768px) {
-    .sponsoring-links { justify-content: center; }
+    .sponsoring-links {
+      justify-content: center;
+    }
   }
 </style>

@@ -1,5 +1,6 @@
 ---
 import '../../styles/design/gallery.css';
+import Icon from '../other/Icon.astro';
 
 interface Props {
   item: {
@@ -57,7 +58,7 @@ const label = categories.find((c) => c.id === item.cat[0])?.label;
       </div>
     ) : (
       <div class="hover-overlay" aria-hidden="true">
-        <span><i class="fa-solid fa-expand"></i> Preview</span>
+        <span><Icon name="expand" /> Preview</span>
       </div>
     )}
   </div>

@@ -4,6 +4,7 @@ import Navigation from '../components/Navigation.astro';
 import ProjectFilter from '../components/projects/ProjectFilter.astro';
 import ProjectCard from '../components/projects/ProjectCard.astro';
 import Pagination from '../components/other/Pagination.astro';
+import Icon from '../components/other/Icon.astro';
 import '../styles/projects/layout.css';
 import '../styles/projects/filter.css';
 
@@ -33,7 +34,7 @@ const { page, allProjectsForFilter, activeCategory, title, subtitle, paginationB
       <header class="projects-header">
         <div class="header-top-nav">
           <a href="/projects/" class="back-link">
-            <i class="fa-solid fa-arrow-left"></i> Back to Projects
+            <Icon name="arrow-left" /> Back to Projects
           </a>
         </div>
 

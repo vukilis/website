@@ -1,10 +1,11 @@
 ---
 import '../../styles/music/header.css';
+import Icon from '../other/Icon.astro';
 ---
 <header class="design-header">
   <div class="header-top-nav">
     <a href="/projects/" class="back-link">
-      <i class="fa-solid fa-arrow-left"></i> Back to Projects
+      <Icon name="arrow-left" /> Back to Projects
     </a>
   </div>
 
@@ -19,7 +20,7 @@ import '../../styles/music/header.css';
     <div class="intro-cards">
       <div class="intro-card">
         <div class="intro-card-icon">
-          <i class="fa-solid fa-music"></i>
+          <Icon name="music" />
         </div>
         <div class="intro-card-content">
           <span class="intro-card-title">Expression</span>
@@ -28,7 +29,7 @@ import '../../styles/music/header.css';
       </div>
       <div class="intro-card">
         <div class="intro-card-icon">
-          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <Icon name="wand-magic-sparkles" />
         </div>
         <div class="intro-card-content">
           <span class="intro-card-title">AI</span>
@@ -40,13 +41,13 @@ import '../../styles/music/header.css';
 
   <div class="intro-highlight">
     <div class="intro-highlight-icon">
-      <i class="fa-solid fa-wave-square"></i>
+      <Icon name="wave-square" />
     </div>
     <div class="intro-highlight-content">
       <div class="intro-highlight-header">
         <span class="intro-highlight-title">If My Songs Had Music</span>
         <a href="https://suno.com/" target="_blank" rel="noopener noreferrer" class="intro-highlight-link">
-          Suno AI <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          Suno AI <Icon name="arrow-up-right-from-square" />
         </a>
       </div>
       <p class="intro-highlight-text">
@@ -56,7 +57,7 @@ import '../../styles/music/header.css';
   </div>
 
   <p class="header-note">
-    <i class="fa-solid fa-circle-info"></i>
+    <Icon name="circle-info" />
     Select a song card to play. Use "Show Lyrics" to display the lyrics.
   </p>
 </header>

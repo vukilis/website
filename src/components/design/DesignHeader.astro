@@ -1,10 +1,11 @@
 ---
 import '../../styles/design/header.css';
+import Icon from '../other/Icon.astro';
 ---
 <header class="design-header">
   <div class="header-top-nav">
     <a href="/projects/" class="back-link">
-      <i class="fa-solid fa-arrow-left"></i> Back to Projects
+      <Icon name="arrow-left" /> Back to Projects
     </a>
   </div>
 
@@ -19,7 +20,7 @@ import '../../styles/design/header.css';
     <div class="intro-cards">
       <div class="intro-card">
         <div class="intro-card-icon">
-          <i class="fa-solid fa-palette"></i>
+          <Icon name="palette" />
         </div>
         <div class="intro-card-content">
           <span class="intro-card-title">Steam</span>
@@ -28,7 +29,7 @@ import '../../styles/design/header.css';
       </div>
       <div class="intro-card">
         <div class="intro-card-icon">
-          <i class="fa-solid fa-heart"></i>
+          <Icon name="heart" />
         </div>
         <div class="intro-card-content">
           <span class="intro-card-title">Passion</span>
@@ -40,22 +41,22 @@ import '../../styles/design/header.css';
 
   <div class="intro-highlight">
     <div class="intro-highlight-icon">
-      <i class="fa-solid fa-trophy"></i>
+      <Icon name="trophy" />
     </div>
     <div class="intro-highlight-content">
       <div class="intro-highlight-header">
         <span class="intro-highlight-title">Awarded Profile of the Week!</span>
         <a href="https://steamcommunity.com/groups/ArtworkProfiles" target="_blank" rel="noopener noreferrer" class="intro-highlight-link">
-          ArtworkProfiles <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          ArtworkProfiles <Icon name="arrow-up-right-from-square" />
         </a>
       </div>
       <p class="intro-highlight-text">
-        Recognized multiple times as one of the Top 5 profiles on SteamCommunity.com. Also featured as an example of a high-quality retro-themed Steam profile. Inspired by <a href="https://newretrowave.com/" target="_blank" rel="noopener noreferrer">NewRetroWave <i class="fa-solid fa-arrow-up-right-from-square"></i></a>.
+        Recognized multiple times as one of the Top 5 profiles on SteamCommunity.com. Also featured as an example of a high-quality retro-themed Steam profile.         Inspired by <a href="https://newretrowave.com/" target="_blank" rel="noopener noreferrer">NewRetroWave <Icon name="arrow-up-right-from-square" /></a>.
       </p>
     </div>
   </div>
 
   <p class="header-note">
-    <i class="fa-solid fa-circle-info"></i> Backgrounds and character art belong to their respective original creators.
+    <Icon name="circle-info" /> Backgrounds and character art belong to their respective original creators.
   </p>
 </header>

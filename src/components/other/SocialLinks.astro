@@ -1,8 +1,10 @@
 ---
+import Icon from './Icon.astro';
+
 interface SocialLink {
   name: string;
   url: string;
-  icon: string;
+  icon: 'github' | 'linkedin' | 'instagram' | 'youtube' | 'steam' | 'envelope';
   color?: string;
 }
 
@@ -11,37 +13,31 @@ const defaultLinks: SocialLink[] = [
     name: 'GitHub',
     url: 'https://github.com/vukilis',
     icon: 'github',
-    color: '#ac51e0',
   },
   {
     name: 'LinkedIn',
     url: 'https://linkedin.com/in/vuk-lekic',
     icon: 'linkedin',
-    color: '#0A66C2',
   },
   {
     name: 'Instagram',
     url: 'https://instagram.com/only_vukilis',
     icon: 'instagram',
-    color: '#E4405F',
   },
   {
     name: 'YouTube',
     url: 'https://youtube.com/@vukilis',
     icon: 'youtube',
-    color: '#FF0000',
   },
   {
     name: 'Steam',
     url: 'https://steamcommunity.com/id/vuk1lis',
     icon: 'steam',
-    color: '#575757',
   },
   {
     name: 'Email',
     url: 'mailto:vuk.lekic@vukilis.com',
-    icon: 'mail',
-    color: '#EA4335',
+    icon: 'envelope',
   },
 ];
 
@@ -52,13 +48,13 @@ interface Props {
 
 const { links = defaultLinks, class: className = '' } = Astro.props;
 
-const iconClasses: Record<string, string> = {
-  github: 'fa-brands fa-github',
-  linkedin: 'fa-brands fa-linkedin',
-  instagram: 'fa-brands fa-instagram',
-  youtube: 'fa-brands fa-youtube',
-  steam: 'fa-brands fa-steam',
-  mail: 'fa-solid fa-envelope',
+const iconStyle: Record<SocialLink['icon'], 'solid' | 'brands'> = {
+  github: 'brands',
+  linkedin: 'brands',
+  instagram: 'brands',
+  youtube: 'brands',
+  steam: 'brands',
+  envelope: 'solid',
 };
 ---
 
@@ -66,29 +62,71 @@ const iconClasses: Record<string, string> = {
   {links.map((link) => (
     <a
       href={link.url}
-      target="_blank"
-      rel="noopener noreferrer"
+      target={link.url.startsWith('mailto:') ? undefined : '_blank'}
+      rel={link.url.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
       class="social-link"
       aria-label={link.name}
       title={link.name}
     >
-      {link.icon ? (
-        <i
-          class={['fa-fw', iconClasses[link.icon] || ''].join(' ')}
-          aria-hidden="true"
-          style={link.color ? `color: ${link.color}` : ''}
-        />
-      ) : null}
+      <Icon
+        name={link.icon}
+        style={iconStyle[link.icon]}
+        color={link.color}
+        class="social-icon"
+      />
     </a>
   ))}
 </div>
 
 <style>
-  .social-links { display: flex; gap: 0.625rem; align-items: center; flex-wrap: wrap; }
-  .social-link { display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border-radius: 0.5rem; background: rgba(241, 196, 15, 0.08); border: 1px solid var(--color-border); color: var(--color-text-dim); text-decoration: none; transition: all 0.2s ease; }
-  .social-link:hover { border-color: var(--color-primary); background: rgba(241, 196, 15, 0.15); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(241, 196, 15, 0.15); color: var(--color-text); }
-  .social-link i { width: 18px; font-size: 18px; line-height: 1; display: block; }
+  .social-links {
+    display: flex;
+    gap: 0.625rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.5rem;
+    background: rgba(241, 196, 15, 0.08);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-dim);
+    text-decoration: none;
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .social-link:hover {
+    border-color: var(--color-primary);
+    background: rgba(241, 196, 15, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(241, 196, 15, 0.15);
+    color: var(--color-text);
+  }
+
+  :global(.social-link .fa-icon) {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+
+  :global(.social-link .fa-icon svg) {
+    width: 18px;
+    height: 18px;
+  }
+
   @media (max-width: 768px) {
-    .social-links { justify-content: center; }
+    .social-links {
+      justify-content: center;
+    }
   }
 </style>
