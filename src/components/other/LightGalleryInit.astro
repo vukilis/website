@@ -1,87 +1,159 @@
 ---
-// src/components/other/LightGalleryInit.astro
+import 'lightgallery/css/lightgallery-bundle.min.css';
 ---
 
 <script>
-  import lightGallery from 'lightgallery';
-  import lgFullscreen from 'lightgallery/plugins/fullscreen';
-  import lgRotate from 'lightgallery/plugins/rotate';
-  import lgZoom from 'lightgallery/plugins/zoom';
-  import lgThumbnail from 'lightgallery/plugins/thumbnail';
-  import lgVideo from 'lightgallery/plugins/video';
+(() => {
+  const w = window as any;
+  if (w.__lgInit) return;
+  w.__lgInit = true;
 
-  let globalInstance: any = null;
+  const G = '[data-lightgallery]';
+  const I = 'a[data-gallery-image="true"]';
+  let load: Promise<any> | null = null;
+  let lg: any = null;
+  let current: HTMLElement | null = null;
 
-  function initLightGallery() {
-    // 1. Clean up any existing global instance before re-initializing
-    if (globalInstance && typeof globalInstance.destroy === 'function') {
-      try {
-        globalInstance.destroy(true);
-      } catch (err) {}
-      globalInstance = null;
+  const loadLG = () => load ??= Promise.all([
+    import('lightgallery'),
+    import('lightgallery/plugins/fullscreen'),
+    import('lightgallery/plugins/rotate'),
+    import('lightgallery/plugins/zoom'),
+    import('lightgallery/plugins/thumbnail'),
+    import('lightgallery/plugins/video'),
+  ]).then(([c, f, r, z, t, v]) => ({
+    core: c.default,
+    fullscreen: f.default,
+    rotate: r.default,
+    zoom: z.default,
+    thumbnail: t.default,
+    video: v.default,
+  }));
+
+  const prepare = () =>
+    document.querySelectorAll<HTMLElement>(G).forEach(box =>
+      box.querySelectorAll<HTMLImageElement>('img').forEach(img => {
+        if (img.closest(I) || img.closest('a')) return;
+
+        const src = img.getAttribute('src') || img.currentSrc;
+        if (!src) return;
+
+        const s = src.toLowerCase();
+        if (
+          s.includes('.svg') ||
+          s.startsWith('data:image/svg') ||
+          s.includes('shields.io') ||
+          s.includes('/badge') ||
+          s.includes('badge.')
+        ) return;
+
+        const a = document.createElement('a');
+        a.href = img.dataset.full || src;
+        a.dataset.galleryImage = 'true';
+
+        if (img.alt)
+          a.dataset.subHtml = `<h4>${img.alt}</h4>`;
+
+        img.before(a);
+        a.appendChild(img);
+      })
+    );
+
+  const destroy = () => {
+    try { lg?.destroy(true); } catch {}
+    lg = null;
+    current = null;
+  };
+
+  async function open(
+    box: HTMLElement,
+    clicked: HTMLAnchorElement
+  ) {
+    if (lg && current !== box) destroy();
+
+    const items = () =>
+      [...box.querySelectorAll<HTMLAnchorElement>(I)];
+
+    if (lg) {
+      lg.openGallery(
+        Math.max(items().indexOf(clicked), 0)
+      );
+      return;
     }
 
-    // 2. Target all images on the page
-    const imgs = document.querySelectorAll('img');
-    if (!imgs.length) return;
+    const m = await loadLG();
 
-    // 3. Wrap images dynamically for native LightGallery handling
-    imgs.forEach((img) => {
-      // Skip badges, icons, or images already wrapped in links
-      if (
-        img.src.includes('img.shields.io') || 
-        img.src.includes('badge') || 
-        img.closest('a')
-      ) {
-        return;
-      }
+    if (!document.documentElement.contains(box))
+      return;
 
-      const a = document.createElement('a');
-      a.href = img.src;
-      a.setAttribute('data-sub-html', img.alt ? `<h4>${img.alt}</h4>` : '');
-      img.parentNode?.insertBefore(a, img);
-      a.appendChild(img);
-    });
+    lg = m.core(box, {
+      selector: I,
 
-    // 4. Initialize LightGallery on document.body (or a wrapper) targeting all anchor tags
-    globalInstance = lightGallery(document.body, {
-      selector: 'a[href$=".jpg"], a[href$=".jpeg"], a[href$=".png"], a[href$=".webp"], a[href$=".avif"]', // Or target all 'a' tags that wrap images
       speed: 500,
+
       download: true,
       counter: true,
       escKey: true,
       swipeThreshold: 50,
-      plugins: [lgFullscreen, lgRotate, lgZoom, lgThumbnail, lgVideo],
+
+      plugins: [
+        m.fullscreen,
+        m.rotate,
+        m.zoom,
+        m.thumbnail,
+        m.video
+      ],
+
       zoom: true,
       enableZoomAfter: 200,
       scale: 1.2,
       actualSize: true,
       showZoomInOutIcons: true,
+
       fullScreen: true,
+
       rotate: true,
       rotateSpeed: 400,
+
       thumbnail: true,
       animateThumb: true,
       thumbWidth: 120,
       thumbHeight: '80px',
       thumbMargin: 8,
-      appendThumbnailsTo: '.lg-components',
       toggleThumb: true,
+
       allowMediaOverlap: true,
     });
+
+    current = box;
+
+    lg.openGallery(
+      Math.max(items().indexOf(clicked), 0)
+    );
   }
 
-  // Hook into standard load and Astro view transitions properly
-  document.addEventListener('DOMContentLoaded', initLightGallery);
-  document.addEventListener('astro:page-load', initLightGallery);
-  
-  // Clean up instance right before Astro swaps out the page content
-  document.addEventListener('astro:before-preparation', () => {
-    if (globalInstance && typeof globalInstance.destroy === 'function') {
-      try {
-        globalInstance.destroy(true);
-      } catch {}
-      globalInstance = null;
-    }
+  document.addEventListener('click', e => {
+    const link = (e.target as HTMLElement)
+      .closest<HTMLAnchorElement>(I);
+
+    const box = link?.closest<HTMLElement>(G);
+
+    if (!link || !box) return;
+
+    e.preventDefault();
+    void open(box, link);
   });
+
+  document.addEventListener(
+    'astro:before-swap',
+    destroy
+  );
+
+  document.addEventListener(
+    'astro:page-load',
+    prepare
+  );
+
+  prepare();
+})();
 </script>

@@ -4,12 +4,12 @@ import { ClientRouter } from 'astro:transitions';
 import SiteBackdrop from '../components/other/SiteBackdrop.astro';
 import BackToTopButton from '../components/other/BackToTopButton.astro';
 import Footer from '../components/Footer.astro';
-import LightGalleryInit from '../components/other/LightGalleryInit.astro';
 import DamageNumbers from '../components/other/DamageNumbers.astro';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import HeroParticles from '../components/colab/HeroParticles.astro';
 import Loader from '../components/other/Loader.astro';
 import TiltCards from '../components/other/TiltCards.astro';
+import LightGalleryInit from '../components/other/LightGalleryInit.astro';
 
 import {
   GoogleTagmanager,
@@ -64,10 +64,6 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.9.0/css/lightgallery-bundle.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.9.0/css/lg-thumbnail.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.9.0/css/lg-pager.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.9.0/css/lg-share.min.css" />
     <title>{title}</title>
     
     <script is:inline>
@@ -98,6 +94,7 @@ const {
     </script>
     
     <ClientRouter prefetch={false} />
+    <LightGalleryInit />
     <script is:inline async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7134772077337777"
      crossorigin="anonymous"></script>
     <script defer src="https://cloud.umami.is/script.js" data-website-id="6253d22e-47b0-4cf0-aea1-f20de51d328f"></script>
@@ -153,20 +150,14 @@ const {
 
         let applyTheme = (theme, shouldPersist = true) => {
           ensureTransitionStyle();
-          
-          // Force the browser to apply the 'no-transition' style BEFORE changing the theme
-          void document.body.offsetWidth; 
-
           html.setAttribute('data-theme', theme);
-          const toggleBtn = document.getElementById('theme-toggle');
-          if (toggleBtn) {
-            toggleBtn.setAttribute('aria-pressed', String(theme === 'dark'));
-            toggleBtn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+          const btn = document.getElementById('theme-toggle');
+          if (btn) {
+            btn.setAttribute('aria-pressed', String(theme === 'dark'));
+            btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
           }
-          if (shouldPersist) {
-            try { localStorage.setItem(STORAGE_KEY, theme); } catch (e) {}
-          }
-          requestAnimationFrame(() => requestAnimationFrame(() => removeTransitionStyle()));
+          if (shouldPersist) try { localStorage.setItem(STORAGE_KEY, theme); } catch {}
+          requestAnimationFrame(removeTransitionStyle);
         };
 
         const toggle = () => {
@@ -244,7 +235,6 @@ const {
       });
     </script>
     <BackToTopButton />
-    {Astro.url.pathname !== '/homelab/diagram/' && <LightGalleryInit />}
     <DamageNumbers />
     <TiltCards />
     <!-- Scroll restoration -->

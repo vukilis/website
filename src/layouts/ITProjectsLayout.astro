@@ -45,7 +45,7 @@ const { page, allProjectsForFilter, activeCategory, title, subtitle, paginationB
 
       <ProjectFilter allProjects={allProjectsForFilter} activeCategory={activeCategory} baseUrl="/projects/it/" />
 
-      <div class="projects-grid">
+      <div class="projects-grid" data-lightgallery>
         {page?.data && page.data.length > 0 ? (
           page.data.map((project: any) => (
             <ProjectCard
