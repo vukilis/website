@@ -22,21 +22,21 @@ const { class: className = '' } = Astro.props;
 
     <div class="radio-controls">
       <!-- Previous Track Button -->
-      <button class="radio-btn radio-prev prev-btn" aria-label="Previous track" title="Previous Track">
+      <button class="radio-btn radio-prev prev-btn-radio" aria-label="Previous track" title="Previous Track">
         <svg viewBox="0 0 24 24" fill="currentColor" class="prev-icon">
           <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
         </svg>
       </button>
 
       <!-- Play/Pause Button -->
-      <button class="radio-btn radio-play play-btn" aria-label="Play/Pause radio" title="Play/Pause">
-        <svg viewBox="0 0 24 24" fill="currentColor" class="play-icon"><path d="M8 5v14l11-7z"/></svg>
-        <svg viewBox="0 0 24 24" fill="currentColor" class="pause-icon" style="display:none"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+      <button class="radio-btn radio-play play-btn-radio" aria-label="Play/Pause radio" title="Play/Pause">
+        <svg viewBox="0 0 24 24" fill="currentColor" class="play-icon-radio"><path d="M8 5v14l11-7z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor" class="pause-icon-radio" style="display:none"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" class="loading-icon spin" style="display:none"><path d="M12 2a10 10 0 0 1 10 10"/></svg>
       </button>
       
       <!-- Next Track Button -->
-      <button class="radio-btn radio-next next-btn" aria-label="Next track" title="Next Track">
+      <button class="radio-btn radio-next next-btn-radio" aria-label="Next track" title="Next Track">
         <svg viewBox="0 0 24 24" fill="currentColor" class="next-icon">
           <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
         </svg>
@@ -215,12 +215,12 @@ const { class: className = '' } = Astro.props;
 
   // 2. Setup UI Instances on every Astro page load
   function setupRadioInstance(radio) {
-    const playBtn = radio.querySelector('.play-btn');
-    const prevBtn = radio.querySelector('.prev-btn');
-    const nextBtn = radio.querySelector('.next-btn');
+    const playBtn = radio.querySelector('.play-btn-radio');
+    const prevBtn = radio.querySelector('.prev-btn-radio');
+    const nextBtn = radio.querySelector('.next-btn-radio');
     const switchBtn = radio.querySelector('.switch-btn');
-    const playIcon = radio.querySelector('.play-icon');
-    const pauseIcon = radio.querySelector('.pause-icon');
+    const playIcon = radio.querySelector('.play-icon-radio');
+    const pauseIcon = radio.querySelector('.pause-icon-radio');
     const loadingIcon = radio.querySelector('.loading-icon');
     const trackName = radio.querySelector('.track-name');
     const playlistName = radio.querySelector('.playlist-name');
