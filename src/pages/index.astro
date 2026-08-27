@@ -72,14 +72,6 @@ const featured = [
 
 <BaseLayout title="Vuk1lis | V For Vendetta Universe" description="Vuk1lis is a DevOps engineer, Linux enthusiast, and VibeCoder crafting immersive digital experiences where dark aesthetics meet surgical performance." keywords="vukilis, portfolio, creative developer, devops engineer, linux enthusiast, immersive experiences, dark aesthetics, web development, personal website, tech blog, coding, automation, frontend, backend, open source, github, projects, skills, recent posts, vuk1lis, v for vendetta">
   <Navigation />
-
-  <!-- Page-wide themed atmosphere -->
-  <div class="vendetta-bg" aria-hidden="true">
-    <div class="vendetta-vendetta-v v-monogram">
-      <span>V</span>
-    </div>
-  </div>
-
   <Hero />
 
   <!-- Recent posts (first plan) -->
@@ -239,11 +231,7 @@ const featured = [
   /* ============ V FOR VENDETTA ATMOSPHERE ============ */
   .vendetta-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
 
-  /* Giant 3D V monogram, behind everything */
-  .v-monogram { position: absolute; left: 50%; top: 60%; transform: translate(-50%, -50%); font-family: 'Cinzel', 'Trajan Pro', 'Times New Roman', serif; font-size: clamp(40rem, 95vw, 110rem); font-weight: 900; line-height: 0.8; color: transparent; -webkit-text-stroke: 1px rgba(241, 196, 15, 0.06); text-stroke: 1px rgba(241, 196, 15, 0.06); user-select: none; animation: vBreathe 10s ease-in-out infinite, vTilt 60s linear infinite; transform-style: preserve-3d; }
-  .v-monogram span { display: block; background: radial-gradient(ellipse at 50% 30%, rgba(241, 196, 15, 0.04), transparent 60%); -webkit-background-clip: text; background-clip: text; }
-  @keyframes vBreathe { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
-  @keyframes vTilt { 0% { transform: translate(-50%, -50%) perspective(2000px) rotateY(0deg) rotateX(0deg); } 50% { transform: translate(-50%, -50%) perspective(2000px) rotateY(8deg) rotateX(2deg); } 100% { transform: translate(-50%, -50%) perspective(2000px) rotateY(0deg) rotateX(0deg); } }
+  /* Giant 3D V monogram is now global (defined in src/styles/global.css) */
 /* ============ SECTION HEADING ============ */
   .section-header { display: flex; flex-direction: column; text-align: center; margin-bottom: 3.5rem; position: relative; }
   .eyebrow { display: inline-block; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.8rem; color: var(--color-accent-purple); letter-spacing: 0.1em; margin-bottom: 0.75rem; text-transform: lowercase; text-shadow: 0 0 12px rgba(241, 196, 15, 0.4); }
@@ -334,11 +322,6 @@ const featured = [
   }
 
   /* ============ LIGHT THEME OVERRIDES ============ */
-  [data-theme="light"] .vendetta-grain { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.55 0 0 0 0 0.45 0 0 0 0 0.05 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E"); opacity: 0.04; mix-blend-mode: multiply; }
-  [data-theme="light"] .v-monogram { -webkit-text-stroke: 1px rgba(212, 168, 14, 0.12); text-stroke: 1px rgba(212, 168, 14, 0.12); }
-  [data-theme="light"] .vendetta-candle { background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(212, 168, 14, 0.1), transparent 70%); }
-  [data-theme="light"] .vendetta-rose { color: #b91c1c; opacity: 0.14; text-shadow: none; }
-  [data-theme="light"] .vendetta-ink { background-image: radial-gradient(circle at 20% 30%, rgba(212, 168, 14, 0.04) 0%, transparent 8%), radial-gradient(circle at 80% 70%, rgba(212, 168, 14, 0.05) 0%, transparent 6%), radial-gradient(circle at 50% 50%, rgba(212, 168, 14, 0.03) 0%, transparent 10%); }
   [data-theme="light"] .manifesto-quote { text-shadow: none; }
   [data-theme="light"] .manifesto-quote::before, [data-theme="light"] .manifesto-quote::after { background: var(--color-bg-dark); }
   [data-theme="light"] .stats-grid { background: linear-gradient(160deg, #fdfaf2 0%, #ffffff 60%, rgba(212, 168, 14, 0.06) 100%); box-shadow: 0 4px 24px -8px rgba(100, 84, 21, 0.2), inset 0 1px 0 rgba(212, 168, 14, 0.2), inset 0 0 80px -20px rgba(212, 168, 14, 0.12); }
@@ -360,16 +343,11 @@ const featured = [
   document.addEventListener('astro:page-load', () => {
     if (window.matchMedia('(pointer: coarse), (prefers-reduced-motion: reduce)').matches) return;
 
-    // Parallax on V monogram based on scroll
-    const monogram = document.querySelector('.v-monogram') as HTMLElement | null;
-
     let ticking = false;
     const onScroll = () => {
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => {
-        const y = window.scrollY;
-        if (monogram) monogram.style.setProperty('--sy', `${y * 0.15}px`);
         ticking = false;
       });
     };

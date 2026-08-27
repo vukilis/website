@@ -289,3 +289,17 @@ ins.adsbygoogle:empty {
   border-radius: 0.25rem;
 }
 
+/* ============================================
+   GLOBAL V MONOGRAM (every page)
+   ============================================ */
+.vendetta-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.v-monogram { position: absolute; left: 50%; top: 60%; transform: translate(-50%, -50%); font-family: 'Cinzel', 'Trajan Pro', 'Times New Roman', serif; font-size: clamp(40rem, 95vw, 110rem); font-weight: 900; line-height: 0.8; color: transparent; -webkit-text-stroke: 1px rgba(241, 196, 15, 0.06); text-stroke: 1px rgba(241, 196, 15, 0.06); user-select: none; animation: vBreathe 10s ease-in-out infinite, vTilt 60s linear infinite; transform-style: preserve-3d; }
+.v-monogram span { display: block; background: radial-gradient(ellipse at 50% 30%, rgba(241, 196, 15, 0.04), transparent 60%); -webkit-background-clip: text; background-clip: text; }
+@keyframes vBreathe { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+@keyframes vTilt { 0% { transform: translate(-50%, -50%) perspective(2000px) rotateY(0deg) rotateX(0deg); } 50% { transform: translate(-50%, -50%) perspective(2000px) rotateY(8deg) rotateX(2deg); } 100% { transform: translate(-50%, -50%) perspective(2000px) rotateY(0deg) rotateX(0deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .v-monogram { animation: none !important; }
+}
+[data-theme="light"] .v-monogram { -webkit-text-stroke: 1px rgba(212, 168, 14, 0.12); text-stroke: 1px rgba(212, 168, 14, 0.12); }
+

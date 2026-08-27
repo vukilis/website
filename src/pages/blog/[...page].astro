@@ -10,11 +10,11 @@ import '../../styles/blog/layout.css';
 
 export async function getStaticPaths({ paginate }: { paginate: (...args: any[]) => Promise<any[]> }) {
   const allPosts = await getCollection('blog', ({ data }) => !data.draft);
-  const sorted = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  const sorted = allPosts.sort((a: any, b: any) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
   return paginate(sorted, {
     pageSize: 12,
-    format: (p) => `/blog/${!p || p === '/' || p === 1 ? '' : p}`
+    format: (p: any) => `/blog/${!p || p === '/' || p === 1 ? '' : p}`
   });
 }
 
@@ -42,11 +42,28 @@ const queryString = sortParam ? `sort=${encodeURIComponent(sortParam)}` : '';
         <p class="page-subtitle">
           This blog is made to document all my work, store a different guides and how-to articles.
         </p>
+        <div class="blog-stats">
+          <div class="blog-stat">
+            <div class="blog-stat-value">{sortedAllPosts.length}</div>
+            <div class="blog-stat-label">Articles</div>
+            <div class="blog-stat-flame" aria-hidden="true"></div>
+          </div>
+          <div class="blog-stat">
+            <div class="blog-stat-value">{new Set(sortedAllPosts.flatMap(p => p.data.tags ?? [])).size}</div>
+            <div class="blog-stat-label">Tags</div>
+            <div class="blog-stat-flame" aria-hidden="true"></div>
+          </div>
+          <div class="blog-stat">
+            <div class="blog-stat-value">{new Set(sortedAllPosts.flatMap(p => p.data.categories ?? [])).size}</div>
+            <div class="blog-stat-label">Categories</div>
+            <div class="blog-stat-flame" aria-hidden="true"></div>
+          </div>
+        </div>
       </header>
 
-      <BlogSearch allPosts={sortedAllPosts} />
-      <BlogFilter allPosts={sortedAllPosts} activeCategory={undefined} />
-      <BlogSort allPosts={sortedAllPosts} currentPage={page.currentPage} />
+      <BlogSearch allPosts={sortedAllPosts as any} />
+      <BlogFilter allPosts={sortedAllPosts as any} />
+      <BlogSort allPosts={sortedAllPosts as any} currentPage={page.currentPage} />
 
       <Pagination page={page} baseUrl="/blog" showFirstLast={true} maxVisible={5} queryString={queryString} />
     </div>
