@@ -1,8 +1,10 @@
 ---
 import '../../styles/about/NomansskySection.css';
+import TiltCards from '../other/TiltCards.astro';
 ---
 
 <section class="nomanssky" id="universe">
+
   <div class="nms-content">
     <div class="nms-header">
       <p class="nms-pretitle">Knowledge is a weapon. Awareness is a shield.</p>
@@ -12,98 +14,138 @@ import '../../styles/about/NomansskySection.css';
 
     <div class="nms-grid">
 
-      <!-- Homelab -->
-      <article class="nms-card nms-homelab">
-        <div class="nms-badge">HOMELAB</div>
-        <h3>Homelab Network Diagram</h3>
-        <a href="/homelab/diagram/" class="homelab-diagram">
-          <div class="h-preview">
-            <img src="https://assets.vukilis.com/it/homelab-diagram.webp" alt="Homelab Network Diagram Preview" class="h-preview-img" />
-            <span class="h-preview-badge">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-              PREVIEW
-            </span>
-          </div>
-        </a>
-        <p class="nms-desc">Self-hosted infrastructure. Proxmox cluster, Authentik for SSO, AdGuard Home for DNS and many more.</p>
-      </article>
-
       <!-- GitHub Terminal -->
       <article class="nms-card nms-github">
-        <div class="nms-badge">Github Info</div>
-        <h3>GitHub README</h3>
-        <div class="terminal" id="githubTerminal">
-          <div class="term-header">
-            <span class="term-btn"></span><span class="term-btn"></span><span class="term-btn"></span>
-            <span class="term-title">vukilis@github:~/README.md</span>
-            <button class="term-expand" id="termExpandBtn" aria-label="Expand README">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-            </button>
+        <div class="card-inner">
+          <div class="card-glare"></div>
+          <div class="nms-card-head">
+            <div class="nms-badge"><span class="badge-dot"></span>GITHUB INFO</div>
+            <span class="nms-card-index">01</span>
           </div>
-          <div class="term-body" id="readmeContent">
-            <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">curl -s https://raw.githubusercontent.com/vukilis/vukilis/main/README.md</span></div>
-            <div class="term-line term-loading">Establishing uplink<span class="term-blink">_</span></div>
+          <h3>GitHub README</h3>
+          <div class="terminal" id="githubTerminal">
+            <div class="term-header">
+              <span class="term-btn"></span><span class="term-btn"></span><span class="term-btn"></span>
+              <span class="term-title">vukilis@github:~/README.md</span>
+              <button class="term-expand" id="termExpandBtn" aria-label="Expand README">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+              </button>
+            </div>
+            <div class="term-body" id="readmeContent">
+              <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">curl -s https://raw.githubusercontent.com/vukilis/vukilis/main/README.md</span></div>
+              <div class="term-line term-loading">Establishing uplink<span class="term-blink">_</span></div>
+            </div>
           </div>
+          <p class="nms-desc">Live activity logs, repository contributions, and open-source project metrics.</p>
+        </div>
+      </article>
+      
+      <!-- Homelab -->
+      <article class="nms-card nms-homelab">
+        <div class="card-inner">
+          <div class="card-glare"></div>
+          <div class="nms-card-head">
+            <div class="nms-badge"><span class="badge-dot"></span>HOMELAB</div>
+            <span class="nms-card-index">02</span>
+          </div>
+          <h3>Homelab Network Diagram</h3>
+          <a href="/homelab/diagram/" class="homelab-diagram">
+            <div class="h-preview">
+              <img src="https://assets.vukilis.com/it/homelab-diagram.webp" alt="Homelab Network Diagram Preview" class="h-preview-img" />
+              <span class="h-preview-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                <span>OPEN</span>
+              </span>
+              <span class="h-preview-hud">
+                <span class="hud-tick"></span>
+                <span class="hud-tick"></span>
+                <span class="hud-tick"></span>
+                <span class="hud-tick"></span>
+              </span>
+            </div>
+          </a>
+          <p class="nms-desc">Self-hosted infrastructure. Proxmox cluster, Authentik for SSO, AdGuard Home for DNS and many more.</p>
         </div>
       </article>
 
       <!-- Steam Status -->
       <article class="nms-card nms-steam">
-        <div class="nms-badge">STEAM STATUS</div>
-        <h3>Steam Beacon</h3>
-        <a href="https://steamcommunity.com/id/vuk1lis/" target="_blank" rel="noopener" class="steam-diagram" aria-label="Open Steam profile">
-          <div class="s-preview">
-            <span class="home-avatar">
-              <img class="steam-icon" src="https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/steam.webp" alt="Steam" width="30" title="Steam Status">
-            </span>
-            <span class="s-preview-badge">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-              PREVIEW
-            </span>
-            <div class="steam-status-label" id="steamStatusLabel">OFFLINE</div>
+        <div class="card-inner">
+          <div class="card-glare"></div>
+          <div class="nms-card-head">
+            <div class="nms-badge"><span class="badge-dot"></span>STEAM STATUS</div>
+            <span class="nms-card-index">03</span>
           </div>
-        </a>
-        <p class="nms-desc">
-          <span class="status-legend">
-            <span class="status-item"><span class="status-dot" style="--dot:#33ff33"></span>Online</span>
-            <span class="status-item"><span class="status-dot" style="--dot:#ff3333"></span>Busy</span>
-            <span class="status-item"><span class="status-dot" style="--dot:#ffff33"></span>Away</span>
-            <span class="status-item"><span class="status-dot" style="--dot:#33ccff"></span>Trading</span>
-            <span class="status-item"><span class="status-dot" style="--dot:#ff00ff"></span>Playing</span>
-            <span class="status-item"><span class="status-dot" style="--dot:#888"></span>Offline</span>
-          </span>
-        </p>
+          <h3>Steam Beacon</h3>
+          <a href="https://steamcommunity.com/id/vuk1lis/" target="_blank" rel="noopener" class="steam-diagram" aria-label="Open Steam profile">
+            <div class="s-preview">
+              <span class="home-avatar">
+                <img class="steam-icon" src="https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/steam.webp" alt="Steam" width="30" title="Steam Status">
+              </span>
+              <span class="s-preview-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                <span>OPEN</span>
+              </span>
+              <div class="steam-status-label" id="steamStatusLabel">OFFLINE</div>
+            </div>
+          </a>
+          <p class="nms-desc">
+            <span class="status-legend">
+              <span class="status-item"><span class="status-dot dot-green"></span>Online</span>
+              <span class="status-item"><span class="status-dot dot-red"></span>Busy</span>
+              <span class="status-item"><span class="status-dot dot-yellow"></span>Away</span>
+              <span class="status-item"><span class="status-dot dot-blue"></span>Trading</span>
+              <span class="status-item"><span class="status-dot dot-pink"></span>Playing</span>
+              <span class="status-item"><span class="status-dot dot-grey"></span>Offline</span>
+            </span>
+          </p>
+        </div>
       </article>
 
       <!-- Yerba Mate -->
       <article class="nms-card nms-yerba">
-        <div class="nms-badge">MATE REVIEW</div>
-        <h3>Yerba Mate Review</h3>
-        <a href="/yerbamate/" class="yerba-diagram">
-          <div class="y-preview">
-            <span class="yerba-emoji" aria-hidden="true">🧉</span>
-            <span class="y-preview-badge">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-              PREVIEW
-            </span>
-            <div class="yerba-status-label">MATE</div>
+        <div class="card-inner">
+          <div class="card-glare"></div>
+          <div class="nms-card-head">
+            <div class="nms-badge"><span class="badge-dot"></span>MATE REVIEW</div>
+            <span class="nms-card-index">04</span>
           </div>
-        </a>
-        <p class="nms-desc">A full review about yerba mate - from traditional gourd rituals to modern energy boosts.</p>
+          <h3>Yerba Mate Review</h3>
+          <a href="/yerbamate/" class="yerba-diagram">
+            <div class="y-preview">
+              <div class="y-preview-stars">
+                <span class="y-star"></span>
+                <span class="y-star"></span>
+                <span class="y-star"></span>
+                <span class="y-star"></span>
+                <span class="y-star"></span>
+              </div>
+              <span class="yerba-emoji" aria-hidden="true">🧉</span>
+              <span class="y-preview-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                <span>OPEN</span>
+              </span>
+              <div class="yerba-status-label">MATE</div>
+            </div>
+          </a>
+          <p class="nms-desc">A full review about yerba mate - from traditional gourd rituals to modern energy boosts.</p>
+        </div>
       </article>
 
     </div>
   </div>
 </section>
+
+<TiltCards />

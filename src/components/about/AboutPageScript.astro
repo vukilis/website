@@ -257,27 +257,16 @@ const {
           'TRADING',
           'PLAYING',
         ];
-        const statusColors = {
-          0: '#888',
-          1: '#33ff33',
-          2: '#ff3333',
-          3: '#ffff33',
-          4: '#ffff33',
-          5: '#33ccff',
-          6: '#ff00ff',
-        };
         const isPlaying = data.game && data.game.trim().length > 0;
         const statusText = isPlaying
           ? 'PLAYING'
           : statusMap[data.status] || 'OFFLINE';
-        const color = isPlaying
-          ? '#ff00ff'
-          : statusColors[data.status] || '#33ff33';
+        const statusKey = statusText.toLowerCase();
 
         statusLabel.textContent = statusText;
         const preview = document.querySelector('.s-preview');
-        if (preview) preview.style.setProperty('--hud-color', color);
-        if (statusLabel) statusLabel.style.color = color;
+        if (preview) preview.style.setProperty('--steam-status', statusKey);
+        if (statusLabel) statusLabel.dataset.status = statusKey;
       } catch (err) {
         console.error('Steam status fetch failed:', err);
       }
