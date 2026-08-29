@@ -27,7 +27,7 @@ import { Image } from 'astro:assets';
 Here is a diagram illustrating the hierarchy of (Hardware -> Microcode -> Kernel -> OS):
 
 <div style="width: 100%; margin: 10px auto; text-align: center;">
-    <Image src={diagramImg} alt="Hierarchy of system interactions" />
+    <Image src={diagramImg} alt="Hierarchy of system interactions" widths={[640, 960, 1280, 1600]} sizes="(max-width: 768px) 100vw, 900px" formats={['avif', 'webp']} quality={80} loading="lazy" />
 </div>
 
 ## Automated Method

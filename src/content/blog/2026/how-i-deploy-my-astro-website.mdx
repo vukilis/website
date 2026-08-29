@@ -23,7 +23,7 @@ import websiteImg from '../../../assets/images/2026/how_i_deploy_my_astro_websit
 import deployImg from '../../../assets/images/2026/how_i_deploy_my_astro_website/deploy.png';
 import scriptImg from '../../../assets/images/2026/how_i_deploy_my_astro_website/script.png';
 
-<Image src={websiteImg} alt="Website" />  
+<Image src={websiteImg} alt="Website" widths={[640, 960, 1280, 1600]} sizes="(max-width: 768px) 100vw, 900px" formats={['avif', 'webp']} quality={80} loading="lazy" />  
 
 Whenever I start working on a new project, I want to spend as little time as possible thinking about and managing the installation of specific versions of Node.js, Python, Go, and other dependencies. That's why I prefer using `Nix`.
 
@@ -167,7 +167,7 @@ This runs `astro preview`, which serves the built `dist/` folder locally using a
 
 ## Deployment
 
-<Image src={deployImg} alt="Deploying App" /> 
+<Image src={deployImg} alt="Deploying App" widths={[640, 960, 1280, 1600]} sizes="(max-width: 768px) 100vw, 900px" formats={['avif', 'webp']} quality={80} loading="lazy" /> 
 
 Deployment is automated through Git. When changes are pushed to the repository, Cloudflare automatically fetches the changes, builds the project, and deploys the Worker.
 The whole process takes under a minute.
@@ -229,7 +229,7 @@ Nix isn't for everyone, and the flake syntax has a learning curve. But for a per
 
 ## Custom Script
 
-<Image src={scriptImg} alt="Custom management script" />  
+<Image src={scriptImg} alt="Custom management script" widths={[640, 960, 1280, 1600]} sizes="(max-width: 768px) 100vw, 900px" formats={['avif', 'webp']} quality={80} loading="lazy" />  
 
 I made a custom bash script to automate creating new `blog post and project (IT, Design and Music)` with a template of meta information, 
 remove unwanted blog posts, run local dev server, build and preview the astro website.

@@ -32,7 +32,7 @@ import { Image } from 'astro:assets';
 ## Getting Started
 
 <div style="width: 30%; margin: 10px auto; text-align: center;">
-    <Image src={yubicoImg} alt="Yubico" />
+    <Image src={yubicoImg} alt="Yubico" widths={[640, 960, 1280, 1600]} sizes="(max-width: 768px) 100vw, 900px" formats={['avif', 'webp']} quality={80} loading="lazy" />
 </div>
 
 For a long time, my standard workflow relied on traditional password authentication paired with TOTP (Time-based One-Time Passwords). While TOTP is a solid layer of defense, it still carries minor frictions and vulnerabilities to sophisticated phishing. To **level up** my security posture, I decided to transition to hardware-backed authentication.
@@ -44,7 +44,7 @@ The first step is to register the hardware key to your user profile. This ensure
 ### Step 1: Enrolling Your Device
 
 <div style="width: 100%; margin: 10px auto; text-align: center;">
-    <Image src={webauthImg} alt="Enrolling Your Device" />
+    <Image src={webauthImg} alt="Enrolling Your Device" widths={[640, 960, 1280, 1600]} sizes="(max-width: 768px) 100vw, 900px" formats={['avif', 'webp']} quality={80} loading="lazy" />
 </div>
 
 1. Navigate to Settings: Click on `Settings` icon.
@@ -64,7 +64,7 @@ Instead of building a new flow from scratch, we will modify the default-authenti
 By keeping both classes, Authentik will intelligently offer the WebAuthn prompt first if a key is detected, but still allow you to **"Switch to another method"** to use TOTP if you do not have your **Yubikey**. This provides the perfect balance of high security and a fallback safety net.
 
 <div style="width: 100%; margin: 10px auto; text-align: center;">
-    <Image src={defaultAuthenticationFlowImg} alt="Configuring the Authentication Flow" />
+    <Image src={defaultAuthenticationFlowImg} alt="Configuring the Authentication Flow" widths={[640, 960, 1280, 1600]} sizes="(max-width: 768px) 100vw, 900px" formats={['avif', 'webp']} quality={80} loading="lazy" />
 </div>
 
 - **Adjusting Stage Bindings**
@@ -85,13 +85,13 @@ By keeping both classes, Authentik will intelligently offer the WebAuthn prompt 
     - `TOTP Authenticator (This keeps your mobile app as a backup)`
 
 <div style="width: 100%; margin: 10px auto; text-align: center;">
-    <Image src={devicesSlassesImg} alt="Devices slasses" />
+    <Image src={devicesSlassesImg} alt="Devices slasses" widths={[640, 960, 1280, 1600]} sizes="(max-width: 768px) 100vw, 900px" formats={['avif', 'webp']} quality={80} loading="lazy" />
 </div>
 
 6. Not configured action: `Force the user to configure an authenticator`.
 
 <div style="width: 100%; margin: 10px auto; text-align: center;">
-    <Image src={configuredActionImg} alt="Configured action" />
+    <Image src={configuredActionImg} alt="Configured action" widths={[640, 960, 1280, 1600]} sizes="(max-width: 768px) 100vw, 900px" formats={['avif', 'webp']} quality={80} loading="lazy" />
 </div>
 
 7. Configuration stages: Ensure only the following are selected:
@@ -99,19 +99,19 @@ By keeping both classes, Authentik will intelligently offer the WebAuthn prompt 
     - `default-authenticator-totp-setup (TOTP Authenticator Setup Stage)`
 
 <div style="width: 100%; margin: 10px auto; text-align: center;">
-    <Image src={configurationStagesImg} alt="Configuration stages" />
+    <Image src={configurationStagesImg} alt="Configuration stages" widths={[640, 960, 1280, 1600]} sizes="(max-width: 768px) 100vw, 900px" formats={['avif', 'webp']} quality={80} loading="lazy" />
 </div>
 
 8. WebAuthn User verification: Select `User verification must occur`.
 
 <div style="width: 100%; margin: 10px auto; text-align: center;">
-    <Image src={userVerificationImg} alt="WebAuthn User verification" />
+    <Image src={userVerificationImg} alt="WebAuthn User verification" widths={[640, 960, 1280, 1600]} sizes="(max-width: 768px) 100vw, 900px" formats={['avif', 'webp']} quality={80} loading="lazy" />
 </div>
 
 ### Step 3: Testing the Login Flow
 
 <div style="width: 100%; margin: 10px auto; text-align: center;">
-    <Image src={loginImg} alt="Testing the Login Flow" />
+    <Image src={loginImg} alt="Testing the Login Flow" widths={[640, 960, 1280, 1600]} sizes="(max-width: 768px) 100vw, 900px" formats={['avif', 'webp']} quality={80} loading="lazy" />
 </div>
 
 Once you have updated your flows, it is time to verify that Authentik is correctly challenging for your hardware key.
