@@ -4,37 +4,15 @@ import 'lightgallery/css/lightgallery-bundle.min.css';
 
 <script>
 (() => {
-  const w = window as any;
-  if (w.__lgInit) return;
-  w.__lgInit = true;
-
   const G = '[data-lightgallery]';
   const I = 'a[data-gallery-image="true"]';
-  let load: Promise<any> | null = null;
-  let lg: any = null;
-  let current: HTMLElement | null = null;
+  const instances = new Map();
 
-  const loadLG = () => load ??= Promise.all([
-    import('lightgallery'),
-    import('lightgallery/plugins/fullscreen'),
-    import('lightgallery/plugins/rotate'),
-    import('lightgallery/plugins/zoom'),
-    import('lightgallery/plugins/thumbnail'),
-    import('lightgallery/plugins/video'),
-  ]).then(([c, f, r, z, t, v]) => ({
-    core: c.default,
-    fullscreen: f.default,
-    rotate: r.default,
-    zoom: z.default,
-    thumbnail: t.default,
-    video: v.default,
-  }));
-
-  const prepare = () =>
-    document.querySelectorAll<HTMLElement>(G).forEach(box =>
+  const initLightGallery = async () => {
+    // 1. Prepare and wrap images
+    document.querySelectorAll<HTMLElement>(G).forEach(box => {
       box.querySelectorAll<HTMLImageElement>('img').forEach(img => {
         if (img.closest(I) || img.closest('a')) return;
-
         const src = img.getAttribute('src') || img.currentSrc;
         if (!src) return;
 
@@ -54,106 +32,71 @@ import 'lightgallery/css/lightgallery-bundle.min.css';
         if (img.alt)
           a.dataset.subHtml = `<h4>${img.alt}</h4>`;
 
-        img.before(a);
+        img.parentNode?.insertBefore(a, img);
         a.appendChild(img);
-      })
-    );
-
-  const destroy = () => {
-    try { lg?.destroy(true); } catch {}
-    lg = null;
-    current = null;
-  };
-
-  async function open(
-    box: HTMLElement,
-    clicked: HTMLAnchorElement
-  ) {
-    if (lg && current !== box) destroy();
-
-    const items = () =>
-      [...box.querySelectorAll<HTMLAnchorElement>(I)];
-
-    if (lg) {
-      lg.openGallery(
-        Math.max(items().indexOf(clicked), 0)
-      );
-      return;
-    }
-
-    const m = await loadLG();
-
-    if (!document.documentElement.contains(box))
-      return;
-
-    lg = m.core(box, {
-      selector: I,
-
-      speed: 500,
-
-      download: true,
-      counter: true,
-      escKey: true,
-      swipeThreshold: 50,
-
-      plugins: [
-        m.fullscreen,
-        m.rotate,
-        m.zoom,
-        m.thumbnail,
-        m.video
-      ],
-
-      zoom: true,
-      enableZoomAfter: 200,
-      scale: 1.2,
-      actualSize: true,
-      showZoomInOutIcons: true,
-
-      fullScreen: true,
-
-      rotate: true,
-      rotateSpeed: 400,
-
-      thumbnail: true,
-      animateThumb: true,
-      thumbWidth: 120,
-      thumbHeight: '80px',
-      thumbMargin: 8,
-      toggleThumb: true,
-
-      allowMediaOverlap: true,
+      });
     });
 
-    current = box;
+    // 2. Load LightGallery modules in the background
+    const [c, f, r, z, t, v] = await Promise.all([
+      import('lightgallery'),
+      import('lightgallery/plugins/fullscreen'),
+      import('lightgallery/plugins/rotate'),
+      import('lightgallery/plugins/zoom'),
+      import('lightgallery/plugins/thumbnail'),
+      import('lightgallery/plugins/video'),
+    ]);
 
-    lg.openGallery(
-      Math.max(items().indexOf(clicked), 0)
-    );
-  }
+    const core = c.default;
+    const plugins = [f.default, r.default, z.default, t.default, v.default];
 
-  document.addEventListener('click', e => {
-    const link = (e.target as HTMLElement)
-      .closest<HTMLAnchorElement>(I);
+    // 3. Initialize LightGallery on each container natively
+    document.querySelectorAll<HTMLElement>(G).forEach(box => {
+      if (instances.has(box)) return;
 
-    const box = link?.closest<HTMLElement>(G);
+      const lgInstance = core(box, {
+        selector: I,
+        speed: 500,
+        download: true,
+        counter: true,
+        escKey: true,
+        swipeThreshold: 50,
+        plugins,
+        zoom: true,
+        enableZoomAfter: 200,
+        scale: 1.2,
+        actualSize: true,
+        showZoomInOutIcons: true,
+        fullScreen: true,
+        rotate: true,
+        rotateSpeed: 400,
+        thumbnail: true,
+        animateThumb: true,
+        thumbWidth: 120,
+        thumbHeight: '80px',
+        thumbMargin: 8,
+        toggleThumb: true,
+        allowMediaOverlap: true,
+      });
 
-    if (!link || !box) return;
+      instances.set(box, lgInstance);
+    });
+  };
 
-    e.preventDefault();
-    void open(box, link);
-  });
+  const destroy = () => {
+    instances.forEach(lg => {
+      try { lg.destroy(true); } catch {}
+    });
+    instances.clear();
+  };
 
-  document.addEventListener(
-    'astro:before-swap',
-    destroy
-  );
+  // Clean up instances before Astro swaps pages
+  document.addEventListener('astro:before-swap', destroy);
 
-  document.addEventListener(
-    'astro:page-load',
-    prepare
-  );
+  // Re-initialize cleanly on page load / view transitions
+  document.addEventListener('astro:page-load', initLightGallery);
 
-  prepare();
+  // Initial load execution
+  void initLightGallery();
 })();
 </script>
