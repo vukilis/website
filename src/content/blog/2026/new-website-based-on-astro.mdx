@@ -19,9 +19,15 @@ description: "Why I migrated my personal website from Hugo to Astro, and what th
 ---
 
 import { Image } from 'astro:assets';
-import astroImg from '../../../assets/images/2026/new_website_based_on_astro/website.png';
+import astroImg from '../../../assets/images/2026/new_website_based_on_astro/website.webp';
 
-<Image src={astroImg} alt="Astro Website" />
+<Image src={astroImg} 
+    alt="Astro Website" 
+    widths={[640, 960, 1280, 1600]}
+    sizes="(max-width: 768px) 100vw, 900px"
+    formats={['avif', 'webp']}
+    quality={80}
+    loading="lazy"/>
 
 I've been running this site on Hugo for quite a while now. The LoveIt theme served me well, and Hugo always did exactly what it promised: build fast and ship faster.
 
