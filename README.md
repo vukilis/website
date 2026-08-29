@@ -1,4 +1,6 @@
-<img src="https://status.vukilis.com/api/badge/1/status?style=for-the-badge"/>
+<img src="https://status.vukilis.com/api/badge/1/status?style=for-the-badge"/> ![Astro](https://img.shields.io/badge/astro-0C1222?style=for-the-badge&logo=astro&logoColor=FF5D01)  ![Cloudflare](https://img.shields.io/badge/Cloudflare-FFF?style=for-the-badge&logo=cloudflare&logoColor=orange)
+
+![website](https://vukilis.com/_astro/website.C5VTyx-N_kkvEN.webp)
 
 ## website
 [`vukilis.com`](http://vukilis.com)
