@@ -1,0 +1,99 @@
+---
+title: "Convert MP4 To GIF"
+url: /convert-mp4-to-gif
+pubDate: 2026-08-30T16:00:00+02:00
+lastmod: 2026-08-30T16:00:00+02:00
+share:
+  enable: true
+  link: true
+  twitter: true
+  reddit: true
+  bluesky: true
+  hackernews: true
+
+draft: false
+license: "MIT"
+
+tags: [mp4, gif, covert, ffmpeg, photoshop, steam, cli]
+categories: [Other]
+description: "I want to show you my 3 main methods for converting .mp4 files to .gif, whether for Steam, web, or keeping the best possible quality for..."
+---
+
+import { Image } from 'astro:assets';
+import coverImg from '../../../assets/images/2026/convert-mp4-to-gif/cover.png';
+
+<Image
+    src={coverImg}
+    alt="MP4-TO-GIF"
+    widths={[640, 960, 1280, 1600]}
+    sizes="(max-width: 768px) 100vw, 900px"
+    formats={['avif', 'webp']}
+    quality={80}
+    loading="lazy"
+  /> 
+
+I want to show you my 3 main methods for converting .mp4 files to .gif format. 
+Whether I want to create a GIF for Steam, web, or keep a copy with the best possible quality, 
+I choose the method that best suits my needs.
+
+## FPS Recommended
+
+| Source FPS | Exact GIF-compatible FPS? |               GIF delay |
+| ---------: | :-----------------------: | ----------------------: |
+|     60 FPS |             ❌             | 10/20 ms approximations |
+|     50 FPS |             ✅             |                   20 ms |
+|     30 FPS |             ❌             |             30 or 40 ms |
+|     25 FPS |             ✅             |                   40 ms |
+|     24 FPS |             ❌             |             40 or 50 ms |
+|     20 FPS |             ✅             |                   50 ms |
+|     15 FPS |             ❌             |               ~60/70 ms |
+
+
+GIF timing is limited to 1/100-second units. If your source video is 60 FPS, each frame should be ~16.67 ms. That value does not map exactly to GIF timing, so the resulting animation can play too fast or too slow.
+
+### The fix
+
+If accurate timing is the priority, `50, 25, and 20` FPS are particularly convenient GIF frame rates.
+
+## 1. Method: EZGIF
+
+1. Go to <a href="https://ezgif.com/video-to-gif" target="_blank" rel="noopener noreferrer">ezgif.com/video-to-gif</a>
+2. Upload your MP4 file.
+3. Click **Convert to GIF!**
+4. Download your gif.
+
+> No software installation is required. The site handles the conversion in the browser. Output settings like frame rate and size can be adjusted before converting.  
+> Good for making a GIF under 5MB if you are uploading it to Steam.
+
+## 2. Method: Photoshop
+
+1. Open **Photoshop**.
+2. Drop video to Photoshop.
+5. Go to **File > Export > Save for Web (Legacy)**.
+6. Set format to **GIF**: 
+    - choose looping forever
+    - color reduction algorithm: Adaptive 
+    - dither algorithm: Noise 
+    - Transparency, Pattern Transparency Dither 
+    - Color: 256, Convert to sRGB 
+7. Click **Save**.
+
+> Photoshop gives full control over colors, dithering, and frame timing.
+
+
+## 3. Method: FFMPEG
+
+
+```bash
+ffmpeg -i ./video.mp4 -vf "fps=50,split[s0][s1];[s0]palettegen=max_colors=256:stats_mode=full[p];[s1][p]paletteuse=dither=sierra2_4a" -gifflags -transdiff output.gif
+```
+
+## What the command does
+
+- `fps=50` forces the output to 50 FPS
+- `palettegen` generates an optimal 256-color palette from the source
+- `paletteuse` applies that palette with ordered dithering
+- `-gifflags -transdiff` enables delta-frame compression for a smaller file
+
+> Requires ffmpeg installed. Fast, scriptable, and produces high-quality output. Good for terminal users.  
+> Too good for Steam ☹️
