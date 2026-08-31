@@ -1,0 +1,26 @@
+---
+import '../../../styles/colab/shared.css';
+import WebDesignTemplates from './WebDesignTemplates.astro';
+import WebDesignBlocks from './WebDesignBlocks.astro';
+import WebDesignPerformance from './WebDesignPerformance.astro';
+import WebDesignDelivery from './WebDesignDelivery.astro';
+---
+
+<section class="service-section" id="services">
+  <div class="section-bg">
+    <div class="bg-grid"></div>
+  </div>
+  <div class="container">
+    <div class="service-header centered">
+      <h2 class="service-title">What I Deliver</h2>
+      <p class="service-desc">From wireframes to deployment — the core pillars of every web design project I ship</p>
+    </div>
+
+    <div class="infra-grid">
+      <WebDesignTemplates />
+      <WebDesignBlocks />
+      <WebDesignPerformance />
+      <WebDesignDelivery />
+    </div>
+  </div>
+</section>

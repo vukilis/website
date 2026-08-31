@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import WebHero from '../../components/colab/web-design/WebDesignHero.astro';
+import WebDesignSection from '../../components/colab/web-design/WebDesignSection.astro';
+import WebDesignOfferServices from '../../components/colab/web-design/WebDesignOfferServices.astro';
+import ContactMe from '../../components/colab/ContactMe.astro';
+import ColabScript from '../../components/colab/ColabScript.astro';
+---
+
+<BaseLayout
+  title="WebDev Colab - Vuk1lis"
+  description="Modern frontend websites built for real businesses with thoughtful design, responsive layouts, and production-ready code."
+  keywords="frontend web design, frontend development, modern websites, web design studio, responsive websites, production-ready frontend, custom websites, landing pages, business websites, frameworks, react, tailwind css, next, vuk1lis, vukilis, ai, agents, claude code"
+>
+  <Navigation />
+
+  <main class="colab-page" id="main-content">
+    <WebHero />
+    <WebDesignSection />
+    <WebDesignOfferServices />
+    <ContactMe />
+  </main>
+  <ColabScript />
+</BaseLayout>

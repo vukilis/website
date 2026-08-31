@@ -249,10 +249,78 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   position: relative;
   padding: calc(var(--nav-height, 80px) + 2rem) 2rem 4rem;
   overflow: hidden;
+}
+
+.colab-hero-top {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  z-index: 10;
+  position: relative;
+}
+
+.colab-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0;
+  color: var(--color-accent-purple);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  margin: 1.5rem 0 0;
+}
+
+.colab-back-link::before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, var(--color-accent-purple), var(--color-primary));
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 1px;
+}
+
+.colab-back-link:hover {
+  color: var(--color-primary);
+  transform: translateX(-4px);
+}
+
+.colab-back-link:hover::before {
+  width: 100%;
+}
+
+.colab-back-link :global(.fa-icon) {
+  transition: transform 0.2s ease;
+}
+
+.colab-back-link:hover :global(.fa-icon) {
+  transform: translateX(-3px);
+}
+
+[data-theme="light"] .colab-back-link {
+  color: var(--color-text);
+}
+
+[data-theme="light"] .colab-back-link::before {
+  background: linear-gradient(90deg, var(--color-text), var(--color-accent-purple));
+}
+
+[data-theme="light"] .colab-back-link:hover {
+  color: var(--color-accent-purple);
+}
+
+@media (max-width: 768px) {
+  .colab-back-link {
+    margin: 1rem 0 0;
+  }
 }
 
 .hero-content {
@@ -261,6 +329,12 @@
   max-width: 900px;
   width: 100%;
   animation: fadeInUp 0.8s ease-out;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 50px;
 }
 
 @keyframes fadeInUp {
@@ -405,7 +479,7 @@
 
 .scroll-text {
   font-size: 0.75rem;
-  color: var(--color-text-dim);
+  color: var(--color-accent-purple);
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -413,7 +487,7 @@
 .scroll-line {
   width: 1px;
   height: 40px;
-  background: linear-gradient(to bottom, var(--color-primary), transparent);
+  background: linear-gradient(to bottom, var(--color-accent-purple), transparent);
   animation: scrollPulse 2s ease-in-out infinite;
 }
 

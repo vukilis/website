@@ -1,0 +1,166 @@
+/* ═══════════════════════════════════════════════
+   PAGE — shared by /colab/devops/ and /colab/web-design/
+   ═══════════════════════════════════════════════ */
+
+.colab-subpage {
+  --a: var(--color-primary);
+  --ar: 241, 196, 15;
+  padding: calc(var(--nav-height) + 3.5rem) 2rem 6rem;
+  min-height: 100vh;
+  position: relative;
+}
+
+[data-theme="light"] .colab-subpage {
+  --a: var(--color-primary-hover);
+  --ar: 212, 168, 14;
+}
+
+.page-grid {
+  position: relative;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.dot-bg {
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(var(--ar), 0.015) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+/* ═══════════════════════════════════════════════
+   BACK LINK
+   ═══════════════════════════════════════════════ */
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0;
+  color: var(--color-accent-purple);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.back-link::before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, var(--color-accent-purple), var(--color-primary));
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 1px;
+}
+
+.back-link:hover {
+  color: var(--color-primary);
+  transform: translateX(-4px);
+}
+
+.back-link:hover::before {
+  width: 100%;
+}
+
+.back-link :global(.fa-icon) {
+  transition: transform 0.2s ease;
+}
+
+.back-link:hover :global(.fa-icon) {
+  transform: translateX(-3px);
+}
+
+[data-theme="light"] .back-link {
+  color: var(--color-text);
+}
+
+[data-theme="light"] .back-link::before {
+  background: linear-gradient(90deg, var(--color-text), var(--color-accent-purple));
+}
+
+[data-theme="light"] .back-link:hover {
+  color: var(--color-accent-purple);
+}
+
+/* ═══════════════════════════════════════════════
+   HEADER
+   ═══════════════════════════════════════════════ */
+
+.subpage-header {
+  text-align: center;
+  margin: 2rem auto 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header-rule {
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  margin: 1rem auto;
+}
+
+.subpage-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.subpage-subtitle {
+  font-size: 1.05rem;
+  color: var(--color-text-dim);
+  margin: 0;
+  line-height: 1.6;
+  font-weight: 400;
+  max-width: 600px;
+}
+
+.subpage-meta {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.meta-sep {
+  opacity: 0.4;
+}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .colab-subpage {
+    padding: calc(var(--nav-height) + 1rem) 1rem 3rem;
+  }
+
+  .subpage-title {
+    font-size: clamp(2rem, 8vw, 2.5rem);
+  }
+
+  .subpage-subtitle {
+    font-size: 0.95rem;
+  }
+}

@@ -1,26 +1,29 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
-
-import ColabHero from '../components/colab/ColabHero.astro';
-import InfrastructureSection from '../components/colab/InfrastructureSection.astro';
-import OfferServices from '../components/colab/OfferServices.astro';
-import ContactMe from '../components/colab/ContactMe.astro';
-import ColabScript from '../components/colab/ColabScript.astro';
+import TiltCards from '../components/other/TiltCards.astro';
+import '../styles/projects/layout.css';
+import '../styles/colab/colab-cards.css';
+import ColabCards from '../components/colab/ColabCards.astro';
 ---
 
 <BaseLayout
   title="Colab - Vuk1lis"
-  description="Collaboration services: DevOps, System Administration, Scripting, Microservices, and Physical Infrastructure installation."
-  keywords="vukilis, collaboration, devops, system administration, scripting, microservices, physical infrastructure, IT services, linux, windows, cloud deployment, automation, infrastructure installation, tech collaboration, freelance devops, system admin, server setup, network setup, consulting, technical services"
+  description="Collaboration services: DevOps, System Administration, Scripting, Microservices, Physical Infrastructure, and Web Design."
+  keywords="vukilis, collaboration, devops, system administration, scripting, microservices, physical infrastructure, web design, frontend templates, IT services, linux, windows, cloud deployment, automation, infrastructure installation, tech collaboration, freelance devops, system admin, server setup, network setup, consulting, technical services"
 >
   <Navigation />
 
-  <main class="colab-page" id="main-content">
-    <ColabHero />
-    <InfrastructureSection />
-    <OfferServices />
-    <ContactMe />
-  </main>
-  <ColabScript />
+  <main class="projects-page" id="main-content">
+    <div class="container">
+      <header class="projects-header">
+        <h1 class="page-title">Collaboration</h1>
+        <p class="page-subtitle">Select a service to explore</p>
+      </header>
+
+      <ColabCards />
+    </div>
+
+      <TiltCards />
+    </main>
 </BaseLayout>

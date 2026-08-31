@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import DevopsHero from '../../components/colab/devops/DevopsHero.astro';
+import InfrastructureSection from '../../components/colab/devops/InfrastructureSection.astro';
+import OfferServices from '../../components/colab/devops/OfferServices.astro';
+import ContactMe from '../../components/colab/ContactMe.astro';
+import ColabScript from '../../components/colab/ColabScript.astro';
+---
+
+<BaseLayout
+  title="DevOps Colab - Vuk1lis"
+  description="DevOps collaboration services: Linux administration, cloud architecture, scripting, microservices, and physical infrastructure installation."
+  keywords="vukilis, devops, system administration, scripting, microservices, physical infrastructure, IT services, linux, windows, cloud deployment, automation, infrastructure installation, freelance devops, system admin, server setup, network setup, consulting, technical services"
+>
+  <Navigation />
+
+  <main class="colab-page" id="main-content">
+    <DevopsHero />
+    <InfrastructureSection />
+    <OfferServices />
+    <ContactMe />
+  </main>
+  <ColabScript />
+</BaseLayout>

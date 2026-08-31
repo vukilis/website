@@ -1,9 +1,15 @@
 ---
-import '../../styles/colab/hero.css';
+import Icon from '../../other/Icon.astro';
+import '../../../styles/colab/devops/hero.css';
 ---
 
 <section class="colab-hero">
-  <div class="hero-bg-scene" id="hero-bg-scene">
+  <div class="hero-bg-scene" id="hero-bg-scene"></div>
+  <div class="colab-hero-top">
+    <a href="/colab/" class="colab-back-link">
+      <Icon name="arrow-left" />
+      Back to Colab
+    </a>
   </div>
   <div class="hero-content">
     <div class="terminal-window">
@@ -22,7 +28,7 @@ import '../../styles/colab/hero.css';
       </div>
     </div>
     <h1 class="colab-title">
-      <span class="title-line">Collaboration</span>
+      <span class="title-line">Infrastructure</span>
       <span class="title-line accent">& Services</span>
     </h1>
     <div class="subtitle-wrapper">

@@ -1,0 +1,76 @@
+---
+import '../../../styles/colab/web-design/web-design-blocks.css';
+---
+
+<div class="service-block" id="wd-performance">
+  <div class="block-header">
+    <div class="service-icon wd-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>
+      </svg>
+    </div>
+    <div>
+      <h3 class="block-title">Performance First</h3>
+      <p class="service-desc">Zero bloat with fast load times and a modern look that never compromises performance</p>
+    </div>
+  </div>
+  <div class="animation-stage">
+    <svg class="wd-perf-svg" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="wd-perf-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#22c55e"/>
+          <stop offset="50%" stop-color="#84cc16"/>
+          <stop offset="100%" stop-color="#4ade80"/>
+        </linearGradient>
+      </defs>
+
+      <g class="wd-perf-gauge">
+        <circle cx="150" cy="150" r="100" fill="none" stroke="#1a1a2e" stroke-width="14"/>
+
+        <circle cx="150" cy="150" r="100" fill="none" stroke="url(#wd-perf-grad)" stroke-width="14"
+                stroke-dasharray="628.32" stroke-dashoffset="0"
+                transform="rotate(-90 150 150)" stroke-linecap="round"
+                class="wd-perf-ring"/>
+
+        <circle cx="150" cy="150" r="100" fill="none" stroke="#22c55e" stroke-width="14"
+                stroke-dasharray="40 588.32"
+                transform="rotate(-90 150 150)" stroke-linecap="round"
+                class="wd-perf-ring-trail"/>
+
+        <circle cx="150" cy="150" r="113" fill="none" stroke="#22c55e" stroke-width="2"
+                stroke-dasharray="4 8" opacity="0.35"
+                class="wd-perf-ticks"/>
+
+        <g class="wd-perf-score-group">
+          <text x="150" y="142" text-anchor="middle" fill="#22c55e" font-size="42" font-weight="700" font-family="monospace" class="wd-perf-score wd-perf-score-5">100</text>
+        </g>
+
+        <text x="150" y="182" text-anchor="middle" fill="#888" font-size="9" font-family="monospace" letter-spacing="3">PERFORMANCE</text>
+      </g>
+
+      <g class="wd-perf-bar wd-perf-bar-1">
+        <rect x="40" y="40" width="3" height="20" rx="1" fill="#a855f7" opacity="0.6"/>
+        <rect x="46" y="40" width="3" height="35" rx="1" fill="#a855f7" opacity="0.7"/>
+        <rect x="52" y="40" width="3" height="15" rx="1" fill="#a855f7" opacity="0.5"/>
+        <rect x="58" y="40" width="3" height="28" rx="1" fill="#a855f7" opacity="0.6"/>
+      </g>
+
+      <g class="wd-perf-tick wd-perf-tick-1">
+        <line x1="50" y1="218" x2="50" y2="228" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+        <text x="50" y="240" text-anchor="middle" fill="#888" font-size="6" font-family="monospace">0ms</text>
+      </g>
+      <g class="wd-perf-tick wd-perf-tick-2">
+        <line x1="100" y1="280" x2="110" y2="270" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+        <text x="105" y="290" text-anchor="middle" fill="#888" font-size="6" font-family="monospace">load</text>
+      </g>
+      <g class="wd-perf-tick wd-perf-tick-3">
+        <line x1="200" y1="280" x2="190" y2="270" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+        <text x="195" y="290" text-anchor="middle" fill="#888" font-size="6" font-family="monospace">live</text>
+      </g>
+      <g class="wd-perf-tick wd-perf-tick-4">
+        <line x1="250" y1="218" x2="250" y2="228" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
+        <text x="250" y="240" text-anchor="middle" fill="#888" font-size="6" font-family="monospace">a11y</text>
+      </g>
+    </svg>
+  </div>
+</div>
