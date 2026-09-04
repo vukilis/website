@@ -162,8 +162,8 @@
 }
 
 .modal-video.video-short {
-  width: 360px;
-  height: 640px;
+  width: 45vh;
+  height: auto;
   max-width: 80vw;
   max-height: 80vh;
   aspect-ratio: 9 / 16;
