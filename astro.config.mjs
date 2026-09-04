@@ -7,6 +7,7 @@ import { visit } from 'unist-util-visit';
 import mdx from '@astrojs/mdx';
 import expressiveCode from 'astro-expressive-code';
 import { unified } from '@astrojs/markdown-remark';
+import mermaid from 'astro-mermaid';
 
 function rehypeLazyImages() {
   return (tree) => {
@@ -23,12 +24,23 @@ export default defineConfig({
   site: 'https://vukilis.com',
   trailingSlash: 'always',
 
-  markdown: unified({
+  markdown: {
     remarkPlugins: [[remarkToc, { heading: 'contents' }]],
     rehypePlugins: [rehypeSlug, rehypeLazyImages, [rehypeAutolinkHeadings, { behavior: 'append' }]],
-  }),
+    syntaxHighlight: {
+      excludeLangs: ['mermaid'],
+    },
+  },
 
   prefetch: false,
 
-  integrations: [expressiveCode(), sitemap(), mdx()],
+  integrations: [
+    expressiveCode(),
+    sitemap(),
+    mdx(),
+    mermaid({
+      theme: 'forest',
+      autoTheme: true,
+    }),
+  ],
 });
