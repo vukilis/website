@@ -65,7 +65,7 @@ const sortParam = url.searchParams.get('sort');
 const queryString = sortParam ? `sort=${encodeURIComponent(sortParam)}` : '';
 ---
 
-<BaseLayout title={`Blog / ${activeCategoryName.charAt(0).toUpperCase() + activeCategoryName.slice(1)} - Vuk1lis`} description={`Articles in category ${activeCategoryName}. ${categoryPosts.length} posts found.`} keywords={`vukilis, blog, category, ${activeCategoryName}, articles, guides, tutorials, tech content, programming, devops, linux, web dev, coding, automation, software engineering, infrastructure, cloud, technical writing`}>
+<BaseLayout title={`Blog / ${activeCategoryName.charAt(0).toUpperCase() + activeCategoryName.slice(1)} | Vuk1lis`} description={`Articles in category ${activeCategoryName}. ${categoryPosts.length} posts found.`} keywords={`vukilis, blog, category, ${activeCategoryName}, articles, guides, tutorials, tech content, programming, devops, linux, web dev, coding, automation, software engineering, infrastructure, cloud, technical writing`}>
 <Navigation />
 
   <main class="blog-page" id="main-content">
