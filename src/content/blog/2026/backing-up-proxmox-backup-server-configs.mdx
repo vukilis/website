@@ -1,0 +1,112 @@
+---
+title: "Backing Up Proxmox Backup Server Configs"
+url: /backing-up-proxmox-backup-server-configs
+pubDate: 2026-09-06T02:49:43+02:00
+lastmod: 2026-09-06T02:49:43+02:00
+share:
+  enable: true
+  link: true
+  twitter: true
+  reddit: true
+
+draft: false
+license: "MIT"
+
+tags: [proxmox, backup, homelab, pbs, hypervisor, linux, recovery]
+categories: [Linux, Virtualization]
+description: "Your backup chunks are useless without the configs to restore them. Here's how to back up your Proxmox Backup Server configuration..."
+---
+
+import { Image } from 'astro:assets';
+import proxmoxImg from '../../../assets/icons/proxmox.webp';
+
+<Image
+  src={proxmoxImg}
+  alt="Proxmox Logo"
+  widths={[640, 960, 1280, 1600]}
+  sizes="(max-width: 768px) 100vw, 900px"
+  formats={['avif', 'webp']}
+  quality={80}
+  loading="lazy"
+  style="width: 200px; height: auto;"
+/>
+
+Your backup chunks are useless without the configs to restore them. Here's how to back up your Proxmox Backup Server configuration before hardware fails.
+
+Backing up VMs and containers is only half the battle. If your Proxmox Backup Server hardware fails, having your backup chunks isn't enough, you also need the configuration files, encryption keys, and API tokens required to restore access.
+
+## What's Actually Inside PBS Backup
+
+Since I made the guide on [How to Backup Proxmox With Samba](/blog/2025/how-to-backup-proxmox-with-samba/), my backup and server settings landed right in `/etc/proxmox-backup/` and `/root/` after installation. 
+A PBS backup doesn't just store your LXC containers and VMs, it also captures the complete server identity and storage configuration.
+
+The `/etc/proxmox-backup/` directory contains:
+
+- Datastore definitions and storage paths
+- **TLS fingerprints** and server configurations
+
+The `/root/` directory contains:
+
+- User accounts, access controls, and API tokens
+- Custom scripts or SSH keys in the root environment
+
+### Verifying Your PBS Fingerprint
+
+Your Proxmox Backup Server uses a **TLS fingerprint** to authenticate connections from Proxmox VE nodes. If you lose this value after a restore, you'll need to manually accept the fingerprint again in the Proxmox VE storage configuration. Back it up alongside your configs.
+
+Run this on the PBS node to print the current fingerprint:
+
+```ini frame="terminal"
+proxmox-backup-manager cert info | grep Fingerprint
+```
+
+On the Proxmox VE node, you can cross-check which fingerprint is stored for a given PBS storage:
+
+```ini frame="terminal"
+grep -A 10 "pbs: your-storage-id" /etc/pve/storage.cfg
+```
+
+> Replace `your-storage-id` with the actual ID you gave the PBS storage in Proxmox VE.
+
+Because `/etc/proxmox-backup/` backup includes proxy.pem (the server's SSL certificate and key), restoring that backup onto a rebuilt Proxmox Backup Server means it will use the exact same certificate it had before.
+Since the certificate is identical, the fingerprint doesn't change. Proxmox VE will continue to recognize it, and you won't need to manually update or re-configure the fingerprint in your PVE storage settings
+
+### PVE disaster recovery
+
+Backing up the `/etc/pve/` directory on your Proxmox VE host safeguards your entire virtual environment's blueprint. Because `/etc/pve/` is a specialized clustered file system, it holds much more than just basic settings.
+
+- What lives in `/etc/pve/`: This directory contains all your virtual machine and container configuration files, cluster settings, user permissions, and the critical storage.cfg file.
+- Why the PBS Fingerprint matters here: The `storage.cfg` file contains the saved **TLS fingerprint** of your Proxmox Backup Server. This fingerprint is the digital "trusted ID card" that allows PVE to securely recognize and talk to your backup server.
+- The recovery benefit: If your PVE node completely fails and you install a fresh instance of Proxmox VE, restoring your `/etc/pve/` backup instantly brings back your storage.cfg file and its embedded PBS fingerprint.
+
+Because that trusted fingerprint is restored automatically with the configuration, your newly installed PVE host will immediately trust your Proxmox Backup Server again. You bypass the need to manually log into your backup server, extract the new fingerprint, and update your PVE storage settings.
+
+How to backup your PVE host configuration is covered in my [Proxmox Migration to a New Server](/blog/2025/proxmox-migration-to-a-new-server/).
+
+## Creating a Backup Archive
+
+Run this command to create a compressed, date-stamped archive of your PBS configurations and root environment while ignoring transient lock files:
+
+```ini frame="terminal"
+tar -cvzf "/root/pbs_meta_backup_$(date +%F).tar.gz" --exclude='*.lck' --exclude='*.lock' /etc/proxmox-backup/ /root/
+```
+
+> This archive can be stored on a separate server, cloud storage, or even a USB drive for disaster recovery.
+
+### Command Breakdown
+
+- `cvzf` - Creates a verbose, gzip-compressed archive file
+- `$(date +%F)` - Automatically appends the current date for historical versioning
+- `--exclude` - Skips temporary system lock files to prevent state conflicts
+
+## When to Run It
+
+Software updates modify binaries rather than core configurations, meaning you do not need to run this after every update. Update your backup archive when you:
+
+- Add a new datastore or modify storage parameters
+- Create new users, API tokens, or permission rules
+- Modify scripts or keys inside `/root/`
+
+## Conclusion
+
+Backing up your Proxmox Backup Server configurations is a critical step in ensuring data durability and system recoverability. By following the steps outlined in this guide, you can safeguard your server identity and storage settings against hardware failures or other disasters.
