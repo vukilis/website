@@ -2,23 +2,15 @@
   "name": "astro-darkness",
   "type": "module",
   "version": "1.1.0",
-  "description": "A dark-themed Astro portfolio/blog template with Three.js particles and modern animations",
-  "keywords": [
-    "astro",
-    "theme",
-    "blog",
-    "portfolio",
-    "dark-mode",
-    "three.js",
-    "typescript"
-  ],
-  "author": "kpab",
+  "description": "Vuk1lis is a DevOps engineer, Linux enthusiast, and VibeCoder crafting immersive digital experiences where dark aesthetics meet surgical performance.",
+  "keywords": ["vukilis", "portfolio", "creative developer", "devops engineer", "linux enthusiast", "immersive experiences", "dark aesthetics", "web development", "personal website", "tech blog", "coding", "automation", "frontend", "backend", "open source", "github", "projects", "skills", "recent posts", "vuk1lis", "v for vukilis"],
+  "author": "Vuk1lis",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kpab/astro-darkness"
+    "url": "https://github.com/vukilis/website.git"
   },
-  "homepage": "https://kpab.github.io/astro-darkness",
+  "homepage": "https://vukilis.com",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
