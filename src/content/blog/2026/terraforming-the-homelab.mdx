@@ -1,0 +1,454 @@
+---
+title: "Terraforming The Homelab"
+url: /terraforming-the-homelab
+pubDate: 2026-09-13T14:00:00+02:00
+lastmod: 2026-09-13T14:00:00+02:00
+share:
+  enable: true
+  link: true
+  twitter: true
+  reddit: true
+
+draft: false
+license: "MIT"
+
+tags: [terraform, proxmox, homelab, lxc, vm, iac, infra, server, automation]
+categories: [Linux]
+description: "How I manage my entire Proxmox homelab infrastructure with Terraform, a two-layer module architecture for LXC containers and QEMU VMs."
+---
+
+import { Image } from 'astro:assets';
+import planImg from '../../../assets/images/2026/terraforming-the-homelab/terraform-plan.webp';
+import mainImg from '../../../assets/images/2026/terraforming-the-homelab/terraforming.webp';
+
+<Image
+  src={mainImg}
+  alt="Terraforming The Homelab"
+  widths={[640, 960, 1280, 1600]}
+  sizes="(max-width: 768px) 100vw, 900px"
+  formats={['avif', 'webp']}
+  quality={80}
+  loading="lazy"
+/> 
+
+I run most of my homelab services as LXC containers on Proxmox. To avoid clicking through the Proxmox UI every time I want to add or change something, I moved the whole setup into Terraform. Here is how it's structured.
+
+## Architecture
+
+The config follows a two-layer pattern:
+
+- **Live** - each environment has its own configuration with the values needed to set up the modules
+- **Modules** - reusable blueprints that define *how* to create a resource
+
+There are two independent live environments:
+
+- `live/containers/` - manages all LXC containers
+- `live/vms/` - manages all QEMU VMs
+
+Each maintains its own state file and can be applied independently.
+
+## Directory Structure
+
+```bash
+terraform/
+└── proxmox/
+    ├── live/                    # Implementation Layer (Environments)
+        └── containers/
+            ├── main.tf          # Calls the module and defines specific container instances
+            ├── outputs.tf       # Displays final container IDs and IPs after deployment
+            ├── provider.tf      # Proxmox API connection settings
+            └── variables.tf     # Environment-specific variable definitions
+        └── vms/
+            ├── main.tf          # Calls the module and defines specific VM instances
+            ├── outputs.tf       # Displays final VM IDs and IPs after deployment
+            ├── provider.tf      # Proxmox API connection settings
+            └── variables.tf     # Environment-specific variable definitions
+    ├── modules/                 # Blueprint Layer (Reusable Code)
+        └── proxmox_lxc/
+            ├── main.tf          # The core resource logic for "proxmox_lxc"
+            ├── outputs.tf       # Attributes exported from the module to the live layer
+            └── variables.tf     # The required inputs (RAM, CPU, Disk) for the module
+        └── proxmox_vms/
+            ├── main.tf          # The core resource logic for "proxmox_vms"
+            ├── outputs.tf       # Attributes exported from the module to the live layer
+            └── variables.tf     # The required inputs (RAM, CPU, Disk) for the module
+```
+
+## Provider
+
+**`Telmate/proxmox` v3.0.2-rc07** - a community provider for Proxmox VE. It manages both LXC containers (`proxmox_lxc`) and QEMU VMs (`proxmox_vm_qemu`). TLS verification is disabled (`pm_tls_insecure = true`) since Proxmox uses a self-signed certificate in the homelab.
+
+## Modules
+
+Terraform blueprints that define how to provision LXC containers and QEMU VMs on Proxmox.
+
+### LXC Module
+
+The `proxmox_lxc` module creates and manages LXC containers using the `telmate/proxmox` provider.
+
+Key provisioning behaviors:
+
+- SSH hardening via `null_resource` provisioners that SSH into the Proxmox node and set `PermitRootLogin prohibit-password`
+- Alpine-specific hardening that also installs `openssh` via `apk add` before configuring SSH
+- Randomized `sleep` based on VMID to prevent SSH connection collisions during parallel creation
+
+```ini frame="terminal"
+terraform {
+    required_providers {
+            proxmox = {
+            source  = "telmate/proxmox"
+            version = "3.0.2-rc07"
+        }
+    }
+}
+
+resource "proxmox_lxc" "container" {
+    ssh_public_keys = var.ssh_public_keys
+
+    target_node  = var.target_node
+    ostemplate   = var.ostemplate
+    start        = var.start_at_boot
+
+    vmid         = var.vmid
+    password     = var.root_password
+    unprivileged = var.unprivileged
+
+    # Resource Allocation
+    cores        = var.cores
+    cpulimit     = var.cpu_limit 
+    cpuunits     = var.cpu_units
+    memory       = var.memory
+    swap         = var.swap      
+
+    rootfs {
+        storage = var.storage
+        size    = var.disk_size
+    }
+
+    # Network Settings
+    network {
+        name   = var.network_name
+        bridge = var.network_bridge
+        ip     = var.ip_address
+        gw     = var.gateway
+    }
+
+    # Identity & DNS
+    hostname     = var.hostname
+    searchdomain = var.searchdomain
+    nameserver   = var.nameserver
+    tags         = join(";", var.tags)
+
+    # Other Settings
+    onboot = var.onboot
+
+    features {
+        nesting = var.nesting
+        keyctl  = var.keyctl
+    }
+}
+
+resource "null_resource" "ssh_config_provisioner" {
+    count = var.enable_ssh_hardening ? 1 : 0
+
+    triggers = {
+        container_vmid = proxmox_lxc.container.vmid
+    }
+    provisioner "local-exec" {
+        command = <<EOT
+            sleep $(( ( ${proxmox_lxc.container.vmid} % 5 ) + 1 ))
+
+            ssh -o StrictHostKeyChecking=no \
+                -o UserKnownHostsFile=/dev/null \
+                -o IdentitiesOnly=yes \
+                -o ConnectTimeout=10 \
+                -i "~/.ssh/vukilis" root@${var.pve_connection} \
+                "pct exec ${proxmox_lxc.container.vmid} -- sed -i 's/^#*PermitRootLogin.*/PermitRootLogin prohibit-password/' /etc/ssh/sshd_config && \
+                pct exec ${proxmox_lxc.container.vmid} -- systemctl restart ssh"
+        EOT
+    }
+}
+
+resource "null_resource" "alpine_ssh" {
+    count = var.alpine_ssh_hardening ? 1 : 0
+
+    triggers = {
+        container_vmid = proxmox_lxc.container.vmid
+    }
+    provisioner "local-exec" {
+        command = <<EOT
+            # Random sleep to prevent SSH collisions during bulk creation
+            sleep $(( ( ${proxmox_lxc.container.vmid} % 5 ) + 1 ))
+
+            ssh -o StrictHostKeyChecking=no \
+                -o UserKnownHostsFile=/dev/null \
+                -o IdentitiesOnly=yes \
+                -o ConnectTimeout=10 \
+                -i "~/.ssh/vukilis" root@${var.pve_connection} \
+                "pct exec ${proxmox_lxc.container.vmid} -- apk add --no-cache openssh && \
+                pct exec ${proxmox_lxc.container.vmid} -- sed -i 's/^#*PermitRootLogin.*/PermitRootLogin prohibit-password/' /etc/ssh/sshd_config && \
+                pct exec ${proxmox_lxc.container.vmid} -- rc-update add sshd default && \
+                pct exec ${proxmox_lxc.container.vmid} -- rc-service sshd restart"
+        EOT
+    }
+}
+```
+### VM Module
+
+The `proxmox_vms` module creates QEMU VMs by cloning a pre-existing Proxmox template. It uses `full_clone = true` for reliability, linked clones break if the template is modified or deleted.
+
+```ini frame="terminal"
+terraform {
+    required_providers {
+            proxmox = {
+            source  = "telmate/proxmox"
+            version = "3.0.2-rc07"
+        }
+    }
+}
+
+resource "proxmox_vm_qemu" "virtual_machine" {
+    name        = var.hostname
+    target_node = var.target_node
+    vmid        = var.vmid
+    description = var.description              
+    vm_state    = var.vm_state
+    boot        = var.boot
+
+    # OS Settings
+    clone      = var.source_template
+    full_clone = true
+
+    # Resource Allocation
+    cpu {
+        sockets = var.sockets
+        cores   = var.cores
+        type    = var.type     
+        numa    = var.numa  
+        units   = var.cpu_units
+        limit   = var.cpu_limit
+    }
+    memory  = var.memory
+    scsihw  = var.scsihw
+
+    # Disk Settings
+    disks {
+        scsi {
+            scsi0 { 
+                disk {
+                    size     = var.disk_size
+                    storage  = var.storage
+                    discard  = true
+                    iothread = true 
+                }
+            }
+        }
+
+        ide {
+            ide2 {
+                cloudinit {
+                        storage = var.storage
+                    }
+                }
+            }
+    }
+
+    # Network Settings
+    network {
+        id = 0
+        model  = var.model_type
+        bridge = var.network_bridge
+    }
+
+    # Cloud-Init & Identity
+    os_type                 = "cloud-init"
+    ipconfig0               = "ip=${var.ip_address},gw=${var.gateway}"
+    nameserver              = var.nameserver
+    searchdomain            = var.searchdomain
+    sshkeys                 = var.ssh_public_keys
+    ciuser                  = var.ci_user
+    cipassword              = var.root_password
+
+    # Additional Settings
+    hotplug                 = "disk,network,usb"
+    start_at_node_boot      = var.start_at_node_boot
+    agent                   = 1
+
+    tags = join(";", var.tags)
+}
+```
+
+## Remote State
+
+Both environments use remote state stored in a Cloudflare R2 bucket. This means:
+
+- State is centralized, not local
+- I can run Terraform from any machine with the right secrets
+- State locking is handled by the S3-compatible backend
+
+Secrets live in `secrets.auto.tfvars` files (git-ignored, auto-loaded by Terraform). Sensitive variables are marked with `sensitive = true`.
+
+## Infrastructure Fleet
+
+The running fleet of containers and VMs deployed through the live environments, each with its own resource allocation and network settings.
+
+### The Container Fleet
+
+The containers environment defines ~25 containers, each mapped to a specific service:
+
+| Service | VMID | Cores | Memory | Disk |
+|---|---:|---:|---:|---:|
+| uptime-kuma | 201 | 1 | 1024 MB | 10G |
+| homepage | 203 | 2 | 2048 MB | 10G |
+| medusa | 210 | 2 | 1024 MB | 10G |
+| ... | ... | ... | ... | ... |
+
+Code example:
+
+```ini frame="terminal"
+module "test-container-0" {
+  source = "../../modules/proxmox_lxc"
+
+  enable_ssh_hardening = true
+  alpine_ssh_hardening = false
+  pve_connection = var.pve_connection
+  ssh_public_keys = file(pathexpand("~/.ssh/vukilis.pub"))
+  target_node     = "homelab-vukilis"
+  ostemplate      = "local:vztmpl/debian-13-standard_13.1-2_amd64.tar.zst"
+  start_at_boot   = true
+
+  vmid          = 302
+  root_password = var.root_password
+  unprivileged  = "true"
+
+  # Resource Allocation
+  cores     = 2
+  cpu_limit = 0
+  cpu_units = 100
+  memory    = 1024
+  swap      = 512
+  disk_size = "10G"
+  storage   = "local-lvm"
+
+  # Network Settings
+  network_name   = "eth0"
+  network_bridge = "vmbr0"
+  ip_address     = "192.168.0.252/24"
+  gateway        = "192.168.0.1"
+
+  # Identity & DNS
+  hostname     = "test-container-0"
+  searchdomain = "adguard.vukilis.com"
+  nameserver   = "192.168.0.202 1.1.1.1 9.9.9.9"
+  tags         = ["ct", "terraform", "test"]
+
+  # Other Settings
+  onboot  = true
+  nesting = true
+  keyctl  = false
+}
+```
+
+Common settings across all containers:
+
+- Static IPs on `192.168.0.0/24`, gateway `192.168.0.1`
+- DNS: `192.168.0.202` (AdGuard)
+- Search domain: `adguard.vukilis.com`
+- `nesting = true` for Docker-in-LXC support
+- Auto-start on Proxmox boot
+
+#### Key Design Decisions
+
+1. **Separate live environments** - containers and VMs are managed independently. Changing container configs doesn't require planning VM changes and vice versa.
+
+2. **Provisioner-based SSH hardening** - instead of Cloud-Init scripts (which can be fragile), the module uses `null_resource` provisioners that SSH directly into the Proxmox node after container creation.
+
+3. **Alpine special-casing** - Alpine doesn't ship with SSH by default, so a dedicated `alpine_ssh_hardening` flag handles OpenSSH installation via `apk`.
+
+4. **Full clones for VMs** - `full_clone = true` ensures VMs are independent copies, avoiding the template-deletion problem that breaks linked clones.
+
+5. **Docker-in-LXC** - `nesting = true` and `keyctl = true` enable nested virtualization and kernel keyring access for containers running Docker.
+
+### The VMs Fleet
+
+The VMs environment is currently simpler, it defines a single test VM used for experimentation and validation. Unlike the containers, which run services directly. It's an isolated environment for testing new setups, updates, and practicing break-fix recovery scenarios without any risk to production.
+
+Code example:
+
+```ini frame="terminal"
+module "test-vm-0" {
+  source          = "../../modules/proxmox_vms"
+
+  hostname            = "test-vm-0"
+  target_node         = "homelab-vukilis"
+  vmid                = 351
+  description         = "Test VM for experimentation"              
+  vm_state            = "started"
+  boot                = "order=scsi0;net0"
+  start_at_node_boot  = true
+  source_template     = "debian-13-template-vm"
+  sockets             = 1
+  cores               = 2
+  type                = "x86-64-v2-AES"
+  numa                = false
+  cpu_units           = 100
+  cpu_limit           = 0
+  memory              = 2048
+  scsihw              = "virtio-scsi-single"
+  disk_size           = "20G"
+  storage             = "local-lvm"
+  model_type          = "virtio"
+  network_bridge      = "vmbr0"
+  ip_address          = "192.168.0.252/24"
+  gateway             = "192.168.0.1"
+  nameserver          = "192.168.0.202"
+  searchdomain        = "adguard.vukilis.com"
+  ssh_public_keys     = file(pathexpand("~/.ssh/vukilis.pub"))
+  ci_user             = "homelab"
+  root_password       = var.root_password
+  tags                = ["terraform", "vm", "test"]
+}
+```
+
+## Common Workflows
+
+Day-to-day commands for initializing, planning, applying, and maintaining the infrastructure.
+
+<Image
+  src={planImg}
+  alt="Terraform Plan"
+  widths={[640, 960, 1280, 1600]}
+  sizes="(max-width: 768px) 100vw, 900px"
+  formats={['avif', 'webp']}
+  quality={80}
+  loading="lazy"
+/> 
+
+```bash
+# Initialize locally Cloudflare R2 API
+export AWS_ACCESS_KEY_ID=""  
+export AWS_SECRET_ACCESS_KEY=""
+
+# Initialize
+cd terraform/proxmox/live/containers
+terraform init
+
+# Plan changes
+terraform plan -target=module.test-container-0
+
+# Apply changes
+terraform apply -target=module.test-container-0
+
+# Destroy a specific container
+terraform destroy -target=module.test-container-0
+
+# Format code
+terraform fmt -recursive
+terraform validate
+```
+
+## Related Links
+
+- [Homelab GitHub Repository](https://github.com/vukilis/homelab)
+- [Homelab Network Diagram](https://vukilis.com/homelab/diagram/)
+- [Homelab Documentation Blog Post](https://vukilis.com/blog/2026/homelab-documentation/)
