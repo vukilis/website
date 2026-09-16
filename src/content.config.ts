@@ -87,7 +87,7 @@ const yerbaMate = defineCollection({
     body: z.string().optional(),
     durability: z.string().optional(),
     effect: z.string().optional(),
-    level: z.string(),
+    level: z.string().optional(),
     pubDate: z.coerce.date(),
     draft: z.boolean().default(false),
   }),
