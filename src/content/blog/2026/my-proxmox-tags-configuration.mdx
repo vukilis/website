@@ -1,0 +1,97 @@
+---
+title: "My Proxmox Tags Configuration"
+url: /my-proxmox-tags-configuration
+pubDate: 2026-09-20T14:00:00+02:00
+lastmod: 2026-09-20T14:00:00+02:00
+share:
+  enable: true
+  link: true
+  twitter: true
+  reddit: true
+
+draft: false
+license: "MIT"
+
+tags: [proxmox, homelab, pve, hypervisor, linux, tags, organization, management]
+categories: [Virtualization]
+description: "Learn how I use tags in Proxmox to organize my virtual machines and containers, making management easier and more efficient."
+---
+
+## How I Organize and Manage Resources More Efficiently
+
+If you're running a homelab with Proxmox VE, you've probably experienced that moment of staring at a wall of VMs and containers wondering, "Wait, what is this thing even for?" I've been there. That's exactly why I put time into setting up a clean tagging system, it transforms Proxmox from a chaotic cluster into a visually organized, self-documenting infrastructure.
+
+Tags in Proxmox are one of those underrated features. They're simple on the surface, but when you pair them with a well-thought-out color scheme and a consistent naming convention, they become incredibly powerful. Here's how I configure mine for maximum clarity and efficiency.
+
+---
+
+## Getting Started
+
+Before customizing anything, you'll want to head over to your Datacenter view. This is where the global tag styling lives:
+
+1. Select **Datacenter** from the navigation tree
+2. Go to the **Options** tab
+3. Scroll down to **Tag Style Override**
+
+From here, you can set the visual style of your tags.
+
+### Visual Settings
+
+| Setting | Value |
+|---------|-------|
+| Tree Shape | Circle |
+| Ordering | Alphabetical |
+
+The **Circle** shape is my go-to because it keeps things compact and visually uniform. **Alphabetical** ordering ensures tags always appear in a predictable order, which matters when you're scanning through a list of VMs.
+
+---
+
+## Color Overrides
+
+This is where the magic happens. Proxmox lets you override the default tag colors with custom hex values. Below is the full color palette I use, along with a quick note on the thinking behind each one.
+
+| Tag | Background | Text | Notes |
+| --- | --- | --- | --- |
+| template | #edbee9 | #000000 | Soft pink for template VMs |
+| vm | #bea5b1 | #000000 | Neutral dusty rose for standard virtual machines |
+| community-script | #5fa074 | #FFFFFF | Deep green for community script services |
+| monitoring | #caebba | #000000 | Light mint for monitoring-related services |
+| media | #009dff | #FFFFFF | Bright blue for media services |
+| ct | #8d57ab | #FFFFFF | Purple for LXC containers |
+| management | #000000 | #FFFFFF | Black for management services |
+| security | #0007cc | #FFFFFF | Dark blue for security-focused services |
+| networking | #8ff578 | #000000 | Lime green for networking services |
+| utilities | #f95b06 | #FFFFFF | Orange for utility tools |
+| terraform | #6600ff | #FFFFFF | Royal purple for Terraform-managed resources |
+| test | #fe83c9 | #000000 | Pink for testing and staging environments |
+| identity-provider | #aebd4f | #000000 | Olive for identity and auth services |
+| dashboard | #ff6590 | #FFFFFF | Hot pink for dashboards services |
+| documentation | #66b883 | #000000 | Teal green for documentation-related services |
+| infrastructure | #b062a1 | #FFFFFF | Magenta for core infrastructure services |
+
+### How I think about tag colors
+
+I don't pick colors randomly. There's a loose system at play:
+
+- **Cool tones** (blues, purples, greens) for services and workloads
+- **Warm tones** (oranges, pinks) for utility and testing
+- **High contrast** combinations for critical or management-related tags
+
+The goal is that at a glance, you should be able to look at any VM list and immediately get a sense of what each machine does. No clicking, no reading descriptions, just color.
+
+---
+
+## The Result
+
+Once everything is set up, your Proxmox interface becomes a lot more pleasant to navigate. Tags are colorful, consistent, and instantly meaningful. For me, the biggest wins are:
+
+- **Faster navigation** - I can spot the container I need in seconds
+- **Less mental overhead** - I don't have to remember every VM's purpose
+- **Cleaner documentation** - The tag colors serve as a built-in legend
+- **Easier collaboration** - Anyone accessing my Proxmox instance can understand the layout immediately
+
+If you haven't messed with Proxmox's tag system yet, I highly recommend spending 15 minutes setting this up. It's one of those small quality-of-life improvements that pays off every single day.
+
+---
+
+*What's your Proxmox tagging strategy? I'd love to hear how others organize their homelabs.*
