@@ -1,0 +1,71 @@
+---
+title: "Convert PNG to WEBP"
+url: /png-to-webp
+pubDate: 2026-09-27T12:00:00+02:00
+lastmod: 2026-09-27T12:00:00+02:00
+share:
+  enable: true
+  link: true
+  twitter: true
+  reddit: true
+
+draft: false
+license: "MIT"
+
+tags: [png, webp, magick, convert, ezgif, image, cli]
+categories: [Other]
+description: "I want to show you my 2 main methods for converting .png files to .webp format. Whether I want a quick browser-based conversion or a full batch script from the terminal, I choose the method that best suits my needs."
+---
+
+import { Image } from 'astro:assets';
+import coverImg from '../../../assets/images/2026/convert-png-to-webp/cover.webp';
+
+<Image
+  src={coverImg}
+  alt="PNG-TO-WEBP"
+  widths={[640, 960, 1280, 1600]}
+  sizes="(max-width: 768px) 100vw, 900px"
+  formats={['avif', 'webp']}
+  quality={80}
+  loading="lazy"
+/> 
+
+I want to show you my 2 main methods for converting `.png` files to `.webp` format. 
+Whether I want a quick browser-based conversion or a full batch script from the terminal, 
+I choose the method that best suits my needs.
+
+## 1. Method: EZGIF
+
+1. Go to <a href="https://ezgif.com/png-to-webp" target="_blank" rel="noopener noreferrer">ezgif.com/png-to-webp</a>
+2. Upload your PNG file.
+3. Click **Convert to WEBP!**
+4. Download your webp.
+
+> No software installation is required. The site handles the conversion in the browser. Output settings like quality can be adjusted before converting.  
+> Good for quick single-file conversions when you don't want to open the terminal.
+
+## 2. Method: MAGICK
+
+### Bulk Conversion
+
+```bash
+for f in *.png; do
+ magick "$f" -resize 50% -quality 90 "${f%.png}.webp"
+done
+```
+
+### Single File Conversion
+
+```bash
+magick source.png -resize 80% -quality 80 destination.webp 
+```
+
+## What the command does
+
+- `magick` launches ImageMagick
+- `"$f"` safely handles filenames with spaces
+- `-resize` scales the image of its original size
+- `-quality` sets the WEBP quality
+- `"${f%.png}.webp"` replaces the `.png` extension with `.webp`
+
+> Requires ImageMagick installed. Fast, scriptable, and produces high-quality output. Good for terminal users who need to convert many files at once.
