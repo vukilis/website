@@ -1,0 +1,312 @@
+---
+title: "Theming the Limine Bootloader"
+url: /theming-the-limine-bootloader
+pubDate: 2026-10-12T18:12:00+02:00
+lastmod: 2026-10-12T18:12:00+02:00
+share:
+  enable: true
+  link: true
+  twitter: true
+  reddit: true
+
+draft: false
+license: "MIT"
+
+tags: [limine, bootloader, linux, ricing, customization, arch, fedora, debian, theming]
+categories: [Linux]
+description: "A step-by-step guide to customizing the Limine bootloader with custom background wallpapers, color palettes, and font styles."
+---
+
+import { Image } from 'astro:assets';
+import coverImg from '../../../assets/images/2026/theming-the-limine-bootloader/cover.webp';
+import splashImg from '../../../assets/images/2026/theming-the-limine-bootloader/limine-splash.webp';
+
+<Image
+  src={coverImg}
+  alt="Limine Splash"
+  widths={[640, 960, 1280, 1600]}
+  sizes="(max-width: 768px) 100vw, 900px"
+  formats={['avif', 'webp']}
+  quality={80}
+  loading="lazy"
+/> 
+
+[Limine](https://limine-bootloader.org/) is a modern, minimal, and fast bootloader that supports BIOS, UEFI, and PXE booting.
+Whatever you are running (Arch, Fedora, Debian, ...), the entire bootloader behavior, including its look and feel, is defined in a single file: `limine.conf`.
+
+This guide shows how I theme my Limine menu with a custom splash image, color palette, and font.
+
+### Find your `limine.conf`
+
+Limine scans the boot volume for the config file in this order:
+`<EFI app path>/limine.conf`, then `/boot/limine/limine.conf`, `/boot/limine.conf`, `/limine/limine.conf`, and `/limine.conf`.
+
+On most systems you will find it in one of these locations:
+
+```bash
+sudo find /boot -iname 'limine.conf' 2>/dev/null
+```
+
+> **Note:** The config file is re-read at every boot. You never have to reinstall or recompile Limine after editing `limine.conf`, only when the Limine binary itself is updated.
+
+## Splash Image
+
+<Image
+  src={splashImg}
+  alt="Limine Splash"
+  widths={[640, 960, 1280, 1600]}
+  sizes="(max-width: 768px) 100vw, 900px"
+  formats={['avif', 'webp']}
+  quality={80}
+  loading="lazy"
+/> 
+
+GitHub link to the my splash wallpaper : [limine-splash.png](https://github.com/vukilis/vukilis-dotfiles/blob/main/limine/limine-splash.png)
+
+Limine can display a full-screen background image (the splash / wallpaper) behind the boot menu.
+Supported formats are **BMP, PNG, JPEG, and QOI**.
+
+### Copy the image to the boot partition
+
+The image must live on the same partition Limine reads its config from (usually the FAT EFI system partition, or `/boot`).
+I keep my splash wallpaper in a root folder of limine with default name `limine-splash.png`
+
+### Reference it in `limine.conf`
+
+Add the `wallpaper` option:
+
+```ini frame="terminal"
+wallpaper: boot():/limine-splash.png
+```
+
+The path format is `resource(argument):/path`. `boot():` refers to the partition containing `limine.conf` on the boot drive.
+Other useful resources are `guid(uuid):`, `uuid(uuid):`, `fslabel(BOOT):`, and `hdd(drive:partition):`.
+
+> **Note:** Paths are matched case sensitively `with exceptions on FAT 8.3 and ISO9660 volumes`. If the image does not show up, check the filename casing first.
+
+### Control how the image is displayed
+
+By default the image is stretched to fill the screen. You can change the style and fill the uncovered area with a solid color:
+
+```ini frame="terminal"
+wallpaper_style: stretched
+backdrop: 1a1b26
+```
+
+- `wallpaper_style` - `stretched` (default), `centered`, or `tiled`
+- `backdrop` - `RRGGBB` color used for the parts of the screen not covered by the image (mainly visible with `centered`)
+
+You can also pin the menu resolution so the wallpaper always scales predictably:
+
+```ini frame="terminal"
+interface_resolution: 1920x1080
+```
+
+> **Note:** If the requested resolution is unavailable, Limine picks one automatically.
+
+### Per-entry images (optional)
+
+Any `wallpaper` option placed inside a menu entry overrides the global one, giving each OS its own splash:
+
+```ini frame="terminal"
+/Arch Linux
+    protocol: linux
+    kernel_path: boot():/vmlinuz-linux
+    cmdline: root=UUID=xxxx rw
+    module_path: boot():/initramfs-linux.img
+    wallpaper: boot():/limine-splash.png
+```
+
+If you list multiple *global* `wallpaper` options, Limine randomly picks one on every boot:
+
+```ini frame="terminal"
+wallpaper: boot():/limine-splash-one.png
+wallpaper: boot():/limine-splash-two.png
+```
+
+## 2. Color palettes, and font styles
+
+Limine renders the menu with a built-in graphical terminal, so the menu colors are the terminal colors.
+
+### Set the color palette
+
+The two palette options take 16 colors total, written as `;` separated `RRGGBB` values (no `#`, no spaces):
+
+```ini frame="terminal"
+# Arch Cyberpunk Theme
+# Neon Pink, Electric Blue, and Dark Background
+term_palette: 000000;ff0055;00ff9f;f3e600;00b8ff;b908ff;00fff9;ffffff
+term_palette_bright: 333333;ff0055;00ff9f;f3e600;00b8ff;b908ff;00fff9;ffffff
+```
+
+The order of the colors is fixed (same convention as terminal color schemes):
+
+- `term_palette` - black, red, green, brown, blue, magenta, cyan, gray
+- `term_palette_bright` - dark gray, bright red, bright green, yellow, bright blue, bright magenta, bright cyan, white
+
+> The values above are my Arch Cyberpunk theme: neon pink (`ff0055`), electric blue (`00b8ff`), neon green (`00ff9f`), and neon yellow (`f3e600`).
+
+### Set the foreground and background colors
+
+```ini frame="terminal"
+term_foreground: 00b8ff
+term_background: ffffffff
+term_foreground_bright: 00b8ff
+term_background_bright: ffffff
+```
+
+- `term_foreground` / `term_foreground_bright` - normal and bright text color
+- `term_background` - background color in `TTRRGGBB` format, where the first byte is transparency. `ffffffff` is a fully opaque white background; if you want the splash image to show through the menu, use a partially transparent value such as `801a1b26`
+- `term_background_bright` - background used for bright text
+
+### Style the branding and help text
+
+```ini frame="terminal"
+interface_branding: [ CYBERLINK :: CACHYOS ]
+interface_branding_colour: ff0055
+interface_help_colour: 00ff9f
+interface_help_colour_bright: 00b8ff
+```
+
+- `interface_branding` - string shown at the top of the menu (default: `Limine`)
+- `interface_branding_colour` - branding text color (default `00aaaa`)
+- `interface_help_colour` - color of the keybinding help text (default `00aa00`)
+- `interface_help_colour_bright` - accent color of the auto-boot countdown digit
+
+To hide the help text entirely:
+
+```ini frame="terminal"
+interface_help_hidden: yes
+```
+
+### Set terminal margins
+
+```ini frame="terminal"
+term_margin: 64
+term_margin_gradient: 4
+```
+
+- `term_margin` - margin in pixels around the terminal (defaults to `64` when a wallpaper is shown)
+- `term_margin_gradient` - thickness of the gradient fade around the terminal (clamped to the margin, defaults to `4` with a wallpaper)
+
+### Change the font
+
+Limine uses a built-in CP437 font, but you can load your own:
+
+```ini frame="terminal"
+term_font: boot():/unifont-16.psf
+term_font_size: 8x16
+term_font_scale: 2x2
+term_font_spacing: 2
+```
+
+- `term_font` - path to a raw font file: 256 consecutive glyph bitmaps of the Code Page 437 character set
+- `term_font_size` - glyph size in dots (`WxH`). The width must be `8`; the height must match the font file or the display will be garbled
+- `term_font_scale` - scaling factor `XxY` (each factor 1-8). `2x2` doubles the font size, useful on HiDPI screens
+- `term_font_spacing` - horizontal spacing in pixels between glyphs (default 1)
+
+> Fonts in the required format can be found in the [vga-text-mode-fonts](https://github.com/viler-int10h/vga-text-mode-fonts) collection. If the font fails to load, Limine silently falls back to the built-in font.
+
+## 3. Save and Restart
+
+### Save the file
+
+Save `limine.conf`. Since Limine reads the config file on every boot, there is nothing to rebuild, no service to restart, and no reinstall required for theme changes.
+
+Here is my actual `limine.conf` from an Arch Linux install:
+
+```ini frame="terminal"
+timeout: 5
+default_entry: 2
+remember_last_entry: yes
+cursor: no
+
+# Arch Cyberpunk Theme
+# Neon Pink, Electric Blue, and Dark Background
+term_palette: 000000;ff0055;00ff9f;f3e600;00b8ff;b908ff;00fff9;ffffff
+term_palette_bright: 333333;ff0055;00ff9f;f3e600;00b8ff;b908ff;00fff9;ffffff
+term_background: ffffffff
+term_foreground: 00b8ff
+term_background_bright: ffffffff
+term_foreground_bright: 00b8ff
+interface_branding: [ CYBERLINK :: CACHYOS ]
+wallpaper: boot():/limine-splash.png
+
+# Options for other systems and bootloaders can be added below. Just make sure to follow the syntax and structure as shown in the examples.
+
+# Options
+
+# /Options
+
+/+Other systems and bootloaders
+//Windows Boot Manager
+    protocol: efi_chainload
+    image_path: boot():/EFI/Microsoft/Boot/bootmgfw.efi
+/EFI fallback
+### This EFI entry is auto-generated by limine-entry-tool
+comment: Default EFI loader
+comment: order-priority=10
+protocol: efi
+path: boot():/EFI/BOOT/BOOTX64.EFI
+```
+
+What is going on in this file:
+
+- `timeout: 5` - boots the selected entry after 5 seconds unless a key is pressed (use `no` to disable autoboot)
+- `default_entry: 2` - the entry selected at startup, here a 1-based index (an entry path such as `Arch Linux/linux` also works)
+- `remember_last_entry: yes` - boots whatever was booted last time, taking precedence over `default_entry` (UEFI only)
+- `/+Other systems and bootloaders` - a directory entry that groups non-Linux entries; the `+` keeps it expanded by default in the menu
+- `//Windows Boot Manager` - a sub-entry (one level deeper than the directory) that chainloads the Windows boot manager using `protocol: efi_chainload` (alias of `efi`) and `image_path`
+- `/EFI fallback` - a top-level entry using `protocol: efi` that chainloads the default removable media loader at `boot():/EFI/BOOT/BOOTX64.EFI`
+- `comment` - extra text shown in the menu when the entry is selected; `order-priority` is used by `limine-entry-tool` to order auto-generated entries
+
+> **Note:** Depending on your setup, kernel and EFI fallback entries can be generated automatically by a helper such as `limine-entry-tool` whenever a kernel package is installed or removed. Either way, the theming options are written once, by hand, and survive those updates.
+
+### Reboot
+
+Reboot your machine and hold the menu open (or wait for the `timeout` to count down without pressing any key):
+
+```bash
+sudo reboot
+```
+
+The new splash image, palette, and font are applied immediately at the next boot.
+
+### Troubleshooting
+
+| Problem | Likely cause |
+| --- | --- |
+| Wallpaper or font does not appear | Wrong path, wrong resource (use `boot():`), or wrong filename casing |
+| Menu stays on a black screen | Invalid `RRGGBB` color value, or invalid `wallpaper_style` |
+| Menu shows text mode instead of graphics | `graphics: no` set, or the entry forces `textmode: yes` |
+| part of the image is cut off | Wallpaper is `centered`, set `backdrop` or `wallpaper_style: stretched` |
+
+> **Warning:** Always keep an LTS kernel installed alongside your main kernel, just in case. If a kernel update fails to boot, you can pick the LTS entry in the Limine menu and still get into your system to fix it.
+
+### After a Limine binary update
+
+Only the Limine *binary* needs reinstalling, not your config. If you update the `limine` package or replace `BOOTX64.EFI`, reinstall so the new files and the config path are put back in place:
+
+```bash
+# UEFI (Arch example, uses the limine package's installer)
+sudo limine-install
+
+# BIOS/MBR
+sudo limine bios-install /dev/sda
+```
+
+### Secure Boot users
+
+If you enrolled a BLAKE2b/BLAKE3 hash of `limine.conf` into the Limine EFI executable, every config edit invalidates it, so re-enroll the hash after each change, then reboot:
+
+```bash
+limine enroll-config
+```
+
+## Conclusion
+
+That's it! Your Limine bootloader now boots with your own splash image, palette, and font.
+
+Because everything lives in one plain text file, theming Limine is a 30-second edit and a reboot, no compilers and no image processing daemons involved.
+
+**Happy Ricing!**
