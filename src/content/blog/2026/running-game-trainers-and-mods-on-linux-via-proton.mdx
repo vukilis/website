@@ -1,0 +1,113 @@
+---
+title: "Running Game Trainers and Mods on Linux via Proton"
+url: /running-game-trainers-and-mods-on-linux-via-proton
+pubDate: 2026-10-19T14:41:07+02:00
+lastmod: 2026-10-19T14:41:07+02:00
+share:
+  enable: true
+  link: true
+  twitter: true
+  reddit: true
+
+draft: false
+license: "MIT"
+
+tags: [linux, gaming, proton, steam, modding, trainers]
+categories: [Linux]
+description: "Step-by-step guide to run Windows game trainers and mods on Linux using Proton via Steam launch options."
+---
+
+import { Image } from 'astro:assets';
+import coverImg from '../../../assets/images/2026/running-game-trainers-and-mods-on-linux-via-proton/cover.webp';
+
+<Image
+  src={coverImg}
+  alt="Running Game Trainers and Mods on Linux via Proton"
+  widths={[640, 960, 1280, 1600]}
+  sizes="(max-width: 768px) 100vw, 900px"
+  formats={['avif', 'webp']}
+  quality={80}
+  loading="lazy"
+/> 
+
+## Prerequisites
+
+- Proton already installed and available in Steam
+- Trainer `.exe` and/or mod files ready
+
+---
+
+## Step 1: Add Game to Steam Library
+
+**For Steam games:** Skip this step — the game is already in your library.
+
+**For non-Steam games (Epic, GOG, standalone, etc.):**
+
+1. Open Steam → **Add a Game** → **Add a Non-Steam Game**
+2. Browse and select the game's `.exe` (or main executable)
+
+---
+
+## Step 2: Set Proton Version
+
+1. Right-click the game in Steam → **Properties** → **Compatibility**
+2. Select your Proton version (e.g., `proton-cachyos-11.0`)
+
+---
+
+## Step 3: Configure Launch Options
+
+In **Properties** → **General**, paste into **Launch Options**:
+
+### For Trainers (e.g., Fling)
+```bash
+PROTON_REMOTE_DEBUG_CMD="/full/path/to/your/trainer.exe" gamemoderun /path/to/fgmod %command%
+```
+
+### Combined (Trainer + Mods)
+```bash
+WINEDLLOVERRIDES="winmm,version,dxgi,d3d11=n,b" PROTON_REMOTE_DEBUG_CMD="/full/path/to/trainer.exe" gamemoderun /path/to/fgmod %command%
+```
+
+Replace with your actual paths:
+- **`/full/path/to/your/trainer.exe`** — absolute path to trainer (e.g., `/home/user/Downloads/FlingTrainer.exe`)
+- **`/path/to/fgmod`** — path to GOverlay's fgmod (optional; remove `gamemoderun /path/to/fgmod` if not using)
+
+### How it works
+
+`PROTON_REMOTE_DEBUG_CMD` tells Proton to launch the specified executable **inside the same Wine prefix as the game**. Trainers like **Fling** will start alongside the game, scan for the game's process ID, and attach automatically — no manual PID entry needed.
+
+---
+
+## Step 4: Launch Game
+
+Start the game from Steam. The trainer/mod loader launches automatically and hooks the game process.
+
+---
+
+## Additional Launch Options
+
+Prepend these to your launch options (before `PROTON_REMOTE_DEBUG_CMD=...`) when needed:
+
+| Option | Purpose |
+|--------|---------|
+| `WINEDLLOVERRIDES="OnlineFix64,SteamOverlay64,winmm,dnet,steam_api64=n,b"` | Disables Steam overlay, OnlineFix, and related DLLs that can interfere with trainers/mods or cause crashes |
+| `WINEDLLOVERRIDES="winmm,version=n,b"` | Forces native Wine `winmm` and `version` DLLs; fixes audio/timing issues in some games |
+| `WINEDLLOVERRIDES="dinput8=n,b,xinput1_3=n,b"` | Forces native DirectInput/XInput; fixes controller/keyboard input not reaching the game |
+| `WINEDLLOVERRIDES="dxgi=n,b,d3d11=n,b"` | Forces native DXGI/D3D11; required for SpecialK, ReShade, and most DLL-based mods to inject properly |
+
+**Example with all overrides combined (trainer + mods):**
+```bash
+WINEDLLOVERRIDES="OnlineFix64,SteamOverlay64,winmm,dnet,steam_api64,version,dinput8,xinput1_3,dxgi,d3d11=n,b" PROTON_REMOTE_DEBUG_CMD="/full/path/to/trainer.exe" gamemoderun /path/to/fgmod %command%
+```
+
+---
+
+## Alternative: Manual Launch Trainers
+
+If `PROTON_REMOTE_DEBUG_CMD` doesn't work:
+
+```bash
+# Run after game is running (uses game's working directory)
+protontricks --cwd-app -c "wine '/full/path/to/trainer.exe'"
+```
