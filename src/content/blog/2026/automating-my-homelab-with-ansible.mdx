@@ -1,0 +1,361 @@
+---
+title: "Automating My Homelab with Ansible"
+url: /automating-my-homelab-with-ansible
+pubDate: 2026-10-29T12:00:00+02:00
+lastmod: 2026-10-29T12:00:00+02:00
+draft: false
+license: "MIT"
+description: "How I replaced manual server tweaks with Ansible playbooks to bootstrap and harden VMs and LXC containers on Proxmox in seconds."
+tags: [ansible, homelab, proxmox, lxc, vm, automation, infra, server, iac]
+categories: [Homelab]
+share:
+  enable: true
+  link: true
+  twitter: true
+  reddit: true
+  bluesky: true
+  hackernews: true
+---
+
+import { Image } from 'astro:assets';
+import coverImg from '../../../assets/images/2026/automating-my-homelab-with-ansible/cover.webp';
+
+<Image
+  src={coverImg}
+  alt="Automating My Homelab with Ansible"
+  widths={[640, 960, 1280, 1600]}
+  sizes="(max-width: 768px) 100vw, 900px"
+  formats={['avif', 'webp']}
+  quality={80}
+  loading="lazy"
+/>
+
+## The Problem: Manual Drift and Wasted Time
+
+My homelab runs on Proxmox with roughly 30 LXC containers hosting services like Uptime Kuma, Vaultwarden, Navidrome, Grafana, and n8n. For a long time I managed them by SSHing in, running `apt update && apt upgrade`, copying SSH keys by hand, and tweaking SSH configs on each node. 
+
+This approach had three problems:
+
+- **Configuration drift**: Containers diverged over time. One had `unattended-upgrades` enabled, another didn't. SSH hardening was inconsistent.
+- **Tedious onboarding**: Spinning up a new container meant 15-20 minutes of manual setup before it was useful.
+- **No audit trail**: I couldn't reproduce a container's state or verify what changed.
+
+I needed a way to define infrastructure as code, version it in Git, and apply it idempotently across every node.
+
+## Why Ansible
+
+I chose Ansible for three reasons:
+
+1. **Agentless over SSH** - No daemon to install on targets. Proxmox LXC containers already have SSH, Ansible connects, runs tasks, and leaves.
+2. **YAML syntax** - Playbooks and roles are readable. My `site.yml` is the single entry point, roles encapsulate reusable logic.
+3. **Git-native** - The entire project lives in a repo. `git diff` shows exactly what changed between container generations.
+
+## Project Structure
+
+Below is the detailed directory layout and the responsibility of each file:
+
+```text
+ansible/
+├── roles/                        
+│   └── common/                   # this hierarchy represents a "role"
+│       ├── tasks/                
+│       │   └── main.yml          # Main execution logic
+│       ├── handlers/             
+│       │   └── main.yml          # Service notification logic
+│       ├── templates/            
+│       │   └── config.j2         # Dynamic configuration files
+│       ├── files/                
+│       │   └── bar.txt           # Files for use with the copy resource
+│       │   └── foo.sh            # Script files for use with the script resource
+│       └── vars/                 
+│           └── main.yml          # Fixed role variables (highest priority)
+│
+├── ansible.cfg                   # Global configuration
+├── hosts                         # Playbook targeting specific roles/hosts
+├── site.yml                      # The "Master" Playbook
+└── users.yml                     # A playbook file focused on user/group management
+```
+
+## 1. SSH Agent Setup
+
+(Opcional) Before running any playbooks, ensure your SSH agent is running and your private key is loaded. This allows Ansible to authenticate with the remote nodes.
+
+```bash frame="terminal" title="Start SSH Agent"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/vukilis
+```
+
+### 2. Create And Activate The Virtual Environment
+
+```bash frame="terminal" title="Create Virtual Environment"
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install Requirements And Collections
+
+```bash frame="terminal" title="Install Dependencies"
+pip install ansible passlib
+ansible-galaxy collection install community.general ansible.posix community.docker
+```
+
+### 4. Verify Installation
+
+```bash frame="terminal" title="Check Ansible Version"
+ansible --version
+```
+
+> **Note:** Executable location should change to: `~/homelab/ansible/venv/bin/ansible`
+
+## Inventory Setup: Grouping by Function
+
+My `hosts` file organizes containers into logical groups:
+
+```ini frame="terminal" title="Inventory Structure"
+[containers]
+uptime-kuma ansible_host=192.168.0.201
+homepage ansible_host=192.168.0.203
+navidrome ansible_host=192.168.0.205
+filebrowser ansible_host=192.168.0.206
+vaultwarden ansible_host=192.168.0.207
+# ... 20 more services
+
+[test-containers]
+stremio ansible_host=192.168.0.251
+test-container-0 ansible_host=192.168.0.252
+
+[vms]
+# Future VM targets
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+```
+
+The `[containers]` group holds production services. `[test-containers]` group holds containers for testing. The `all:vars` section ensures Python 3 is used for fact gathering.
+
+## Key Playbooks and Roles
+
+The `site.yml` master playbook drives everything. It loads `users.yml` and `packages.yml`, then conditionally applies roles based on extra variables passed at runtime.
+
+```yaml frame="terminal" title="Master Playbook (site.yml)"
+---
+- hosts: "{{ hosts }}"
+  vars_files:
+    - users.yml
+    - packages.yml
+  remote_user: "{{ remote_user }}"
+  become: true
+  gather_facts: "{{ gather_facts | default(true) | bool }}"
+  pre_tasks:
+    - name: "Verified: The following roles will be executed"
+      debug:
+        msg: "Role [{{ item }}] is set to: {{ vars[item] | default(false) | bool }}"
+      loop:
+        - debian_containers
+        - alpine_containers
+        - debian_containers_hardened
+        - debian_install_docker
+        - alpine_install_docker
+        - debian_comodo_agent_docker
+        - alpine_comodo_agent_docker
+        - prepare_dozzle_agent
+      when: vars[item] | default(false) | bool
+      tags: [always]
+  roles:
+    - { role: debian-containers, when: debian_containers | default(false) | bool }
+    - { role: alpine-containers, when: alpine_containers | default(false) | bool }
+    - { role: debian-containers-hardened, when: debian_containers_hardened | default(false) | bool }
+    - { role: debian-install-docker, when: debian_install_docker | default(false) | bool }
+    - { role: alpine-install-docker, when: alpine_install_docker | default(false) | bool }
+    - { role: debian-comodo-agent-docker, when: debian_comodo_agent_docker | default(false) | bool }
+    - { role: alpine-comodo-agent-docker, when: alpine_comodo_agent_docker | default(false) | bool }
+    - { role: prepare-dozzle-agent, when: prepare_dozzle_agent | default(false) | bool }
+```
+
+### Infrastructure Layer: Debian Container Bootstrap
+
+The `debian-containers` role transforms a fresh Debian LXC template into a managed node:
+
+```yaml frame="terminal" title="roles/debian-containers/tasks/main.yml (excerpt)"
+- name: Update and upgrade apt packages
+  ansible.builtin.apt:
+    update_cache: yes
+    upgrade: dist
+    autoremove: yes
+    purge: yes
+
+- name: Install common utilities
+  ansible.builtin.apt:
+    name: "{{ pkgs_debian }}"
+    state: present
+    update_cache: yes
+
+- name: Set nano as the default system editor
+  community.general.alternatives:
+    name: editor
+    path: /bin/nano
+
+- name: Create the admin user
+  ansible.builtin.user:
+    name: "{{ item }}"
+    group: "{{ item }}"
+    groups: [users, sudo]
+    append: yes
+    shell: /bin/bash
+    create_home: yes
+    password: "{{ user_password_hash }}"
+  loop: "{{ users }}"
+
+- name: Deploy SSH Public Key for admin user
+  ansible.posix.authorized_key:
+    user: "{{ item }}"
+    state: present
+    key: "{{ lookup('file', '~/.ssh/vukilis.pub') }}"
+  loop: "{{ users }}"
+
+- name: Secure SSH Configuration
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  loop:
+    - { regexp: '^#?PermitRootLogin', line: 'PermitRootLogin no' }
+    - { regexp: '^#?PasswordAuthentication', line: 'PasswordAuthentication no' }
+  notify: Restart Services
+
+- name: Disable Root logins via shell
+  ansible.builtin.user:
+    name: root
+    shell: /usr/sbin/nologin
+    password_lock: yes
+```
+
+The `pkgs_debian` list in `packages.yml` includes monitoring tools (`htop`, `atop`, `iotop`), network utilities (`iperf3`, `tcpdump`, `bind9-dnsutils`), and essentials (`git`, `tmux`, `vim`, `curl`).
+
+### Hardening Layer: Security Baseline
+
+The `debian-containers-hardened` role applies a defense-in-depth baseline:
+
+- **Unattended upgrades** for security patches (Debian, Debian-Security, Docker, CISOfy origins)
+- **Lynis** audit tool installed from CISOfy repository
+- **Yescrypt** password hashing with cost factor 9
+- **SSH hardening**: `MaxAuthTries=3`, `MaxSessions=2`, `AllowTcpForwarding=no`, verbose logging
+- **Kernel sysctl**: IPv6 disabled, martian logging, SYN cookies, IP forwarding for Docker
+- **Log rotation**: Daily rotation, 100M max size, 7-day retention for syslog/auth
+- **Entropy**: `haveged` for cryptographic operations in virtualized environments
+- **Legal banners** on `/etc/issue`, `/etc/issue.net`, `/etc/motd`, and SSH banner
+
+```bash frame="terminal" title="Run Hardening Role"
+ansible-playbook site.yml -i hosts \
+  -e '{"hosts":"containers", "remote_user":"homelab", "debian_containers_hardened":true}' \
+  -K
+```
+
+> **Warning:** The `-K` flag prompts for the `sudo` password. Required when running as the `homelab` user.
+
+### Docker Layer: Container Runtime
+
+The `debian-install-docker` role adds Docker Engine, Compose plugin, and Buildx:
+
+```yaml frame="terminal" title="roles/debian-install-docker/tasks/main.yml (excerpt)"
+- name: Add Docker official GPG key
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/debian/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: '0644'
+
+- name: Add Docker repository to Apt sources
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_facts['distribution_release'] }} stable"
+    state: present
+    filename: docker
+
+- name: Install Docker Engine and Plugins
+  ansible.builtin.apt:
+    pkg:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+    update_cache: yes
+
+- name: Add homelab user to docker group
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups: docker
+    append: yes
+  loop: "{{ users }}"
+```
+
+### Agent Layer: Monitoring and Management
+
+- **Komodo agent** (`debian-comodo-agent-docker`): Deploys the Komodo container management agent for remote Docker oversight.
+- **Dozzle** (`prepare-dozzle-agent`): Prepares `/tmp` for Dozzle log viewer containers.
+
+## Handling Secrets: Role Vars
+
+Secrets live in role `vars/main.yml` files. This keeps them scoped to the role that needs them and avoids a separate vault workflow.
+
+> **Warning:** These vars files contain plaintext secrets. Exclude them from Git with `.gitignore` or use a secrets manager for production environments.
+>
+> **Note:** For encrypted secrets at rest, use Ansible Vault (`ansible-vault encrypt vars/main.yml`) and run playbooks with `--ask-vault-pass`.
+
+## Practical Example: Bootstrap a Fresh Container in Seconds
+
+Here's the end-to-end flow for a new Debian LXC container on Proxmox:
+
+```bash frame="terminal" title="Bootstrap New Debian Container"
+# 1. Create container in Proxmox via terraform
+# 2. Start container, note IP (e.g., 192.168.0.240)
+# 3. Add container to inventory hosts file under [containers] group
+
+# 4. Bootstrap as root
+ansible-playbook site.yml -i hosts \
+  -e '{"hosts":"new-service", "remote_user":"root", "debian_containers":true}'
+
+# 5. Apply hardening
+ansible-playbook site.yml -i hosts \
+  -e '{"hosts":"new-service", "remote_user":"homelab", "debian_containers_hardened":true}' -K
+
+# 6. Install Docker with the Comodo agent
+ansible-playbook site.yml -i hosts -e '{"hosts":"new-service", "remote_user":"homelab", "debian_install_docker":true, "debian_comodo_agent_docker":true}' -K
+
+# 7. Setup Dozzle agent for log monitoring
+ansible-playbook site.yml -i hosts -e '{"hosts":"containers", "remote_user":"homelab", "prepare_dozzle_agent":true}' -K
+```
+
+Total time: ~90 seconds. The container is patched, hardened, has my SSH key, `homelab` user with sudo, and Docker ready.
+
+## Lessons Learned and Best Practices
+
+| Practice | Why It Matters |
+|----------|----------------|
+| **Always dry-run first** (`--check`) | Catches syntax errors and shows what would change without applying |
+| **Keep roles modular** | `debian-containers` does baseline; `debian-containers-hardened` adds security. Compose via extra vars. |
+| **Use `gather_facts: false` for Alpine** | Alpine lacks Python by default; skip fact gathering or install Python first |
+| **Validate sudoers changes** | `validate: '/usr/sbin/visudo -cf %s'` prevents locking yourself out |
+| **Validate SSHD config** | `validate: '/usr/sbin/sshd -t -f %s'` ensures SSH restarts cleanly |
+| **Version control everything** | `git log --oneline` is your audit trail |
+
+> **Note:** For Alpine containers, set `gather_facts: false` and use `alpine-containers` role instead. Alpine uses `apk` and `openrc`; the role handles those differences.
+
+## Troubleshooting Common Issues
+
+| Symptom | Cause | Fix |
+|---------|-------|-----|
+| `Failed to connect via SSH` | Wrong user/key, container not started | Verify `ansible_host`, `remote_user`, SSH key loaded in agent |
+| `visudo: syntax error` | Malformed sudoers line | Run playbook with `--check` first; validate template |
+| `sshd -t failed` | Invalid SSH config | Check `lineinfile` regex matches; test config manually |
+| `Python not found` on Alpine | `gather_facts: true` default | Set `gather_facts: false` in extra vars |
+| `Vault password incorrect` | Wrong vault passphrase | Re-run with correct `--ask-vault-pass` or password file |
+
+## Conclusion
+
+Ansible turned my homelab from a collection of hand-tuned containers into a reproducible, version-controlled infrastructure. New services come online in minutes. Security baselines apply uniformly. Drift is eliminated because the playbook *is* the source of truth.
+
+The project lives at `~/homelab/ansible` on my workstation. Every change is a commit. Every container is a `git pull` away from current state.
+
+**Happy Homelabbing!**
