@@ -7,6 +7,7 @@ import Skills from '../components/Skills.astro';
 import BlogCard from '../components/blog/BlogCard.astro';
 import { fromPost } from '../components/blog/ReadingTime.astro';
 import RadioPlayer from '../components/other/RadioPlayer.astro';
+import SectionRail from '../components/home/SectionRail.astro';
 
 const base = import.meta.env.BASE_URL;
 const allBlogPosts = await getCollection('blog', ({ data }) => !data.draft);
@@ -23,10 +24,17 @@ void allTags; // tags cloud removed; kept for future use
 const yearStarted = 2023;
 const yearsOfBuilding = new Date().getFullYear() - yearStarted;
 
-const stats = [
-  { label: 'Years Building', value: `${yearsOfBuilding}+` },
-  { label: 'Articles Written', value: `${totalPosts}` },
-  { label: 'Uptime Mindset', value: '99%' },
+interface Stat {
+  label: string;
+  value: string;
+  count?: number;
+  suffix?: string;
+}
+
+const stats: Stat[] = [
+  { label: 'Years Building', value: `${yearsOfBuilding}+`, count: yearsOfBuilding, suffix: '+' },
+  { label: 'Articles Written', value: `${totalPosts}`, count: totalPosts, suffix: '' },
+  { label: 'Uptime Mindset', value: '99%', count: 99, suffix: '%' },
   { label: 'Sip of Mate', value: '∞' },
 ];
 
@@ -68,37 +76,63 @@ const featured = [
     icon: 'mask',
   },
 ];
+
+const manifestoText = 'Viola, viator. A rose by any other name would smell as sweet. Verbi gratia, by any other name would I still be all that I am?';
+const manifestoWords = manifestoText.split(/\s+/);
+const accentStart = manifestoWords.findIndex((word) => word === 'all');
 ---
 
 <BaseLayout title="V For Vuk1lis | Vuk1lis Universe" description="Vuk1lis is a DevOps engineer, Linux enthusiast, and VibeCoder crafting immersive digital experiences where dark aesthetics meet surgical performance." keywords="vukilis, portfolio, creative developer, devops engineer, linux enthusiast, immersive experiences, dark aesthetics, web development, personal website, tech blog, coding, automation, frontend, backend, open source, github, projects, skills, recent posts, vuk1lis, v for vukilis">
+  <script is:inline>
+    (function () {
+      try {
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce) {
+          document.documentElement.classList.remove('motion-ready');
+          return;
+        }
+        document.documentElement.classList.add('motion-ready');
+        window.__homeRevealInit = false;
+        setTimeout(function () {
+          if (!window.__homeRevealInit) {
+            document.documentElement.classList.remove('motion-ready');
+          }
+        }, 3500);
+      } catch (e) {}
+    })();
+  </script>
+
   <Navigation />
+  <SectionRail />
   <Hero />
 
-  <!-- Recent posts (first plan) -->
+  <!-- Recent posts -->
   <section id="posts" class="recent-posts">
     <div class="container">
-      <header class="section-header">
-        <span class="eyebrow">// latest dispatches</span>
-        <h2 class="section-title">Recent Posts</h2>
+      <header class="section-header" data-reveal>
+        <span class="eyebrow">// latest dispatches<span class="eyebrow-caret" aria-hidden="true"></span></span>
+        <h2 class="section-title" id="posts-title">Recent Posts</h2>
         <p class="section-subtitle">Discover my latest articles, guides, tutorials, and how-to posts</p>
       </header>
 
       <div class="posts-grid">
-        {recentPosts.map((post) => (
-          <BlogCard
-            title={post.data.title}
-            description={post.data.description}
-            pubDate={post.data.pubDate}
-            lastmod={post.data.lastmod}
-            slug={post.id}
-            tags={post.data.tags}
-            categories={post.data.categories}
-            readingTime={fromPost(post)}
-          />
+        {recentPosts.map((post, index) => (
+          <div class="post-reveal" data-reveal style={`--reveal-delay:${index * 90}ms`}>
+            <BlogCard
+              title={post.data.title}
+              description={post.data.description}
+              pubDate={post.data.pubDate}
+              lastmod={post.data.lastmod}
+              slug={post.id}
+              tags={post.data.tags}
+              categories={post.data.categories}
+              readingTime={fromPost(post)}
+            />
+          </div>
         ))}
       </div>
 
-      <div class="view-all">
+      <div class="view-all" data-reveal style="--reveal-delay:140ms">
         <a href={`${base}blog/`} class="btn btn-secondary">
           View All Posts
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
@@ -118,14 +152,18 @@ const featured = [
   </section>
 
   <!-- Manifesto quote -->
-  <section class="manifesto" aria-label="manifesto">
+  <section id="manifesto" class="manifesto" aria-label="manifesto">
     <div class="container">
-      <blockquote class="manifesto-quote">
-        <span class="quote-mark">“</span>
-        Viola, viator. A rose by any other name would smell as sweet. Verbi gratia, by any other name would I still be all that I am?
-        <span class="quote-mark">”</span>
+      <blockquote class="manifesto-quote" data-word-reveal>
+        <span class="quote-mark" aria-hidden="true">“</span>
+        <span class="manifesto-text">
+          {manifestoWords.map((word, index) => (
+            <span class:list={['word', index >= accentStart ? 'word-accent' : '']} style={`--i:${index}`}>{word} </span>
+          ))}
+        </span>
+        <span class="quote-mark" aria-hidden="true">”</span>
       </blockquote>
-      <div class="manifesto-sig">— V</div>
+      <div class="manifesto-sig" data-reveal style="--reveal-delay:260ms">— V</div>
     </div>
   </section>
 
@@ -142,18 +180,18 @@ const featured = [
   </section>
 
   <!-- Stats / identity strip -->
-  <section class="stats" id="stats">
+  <section id="stats" class="stats" aria-labelledby="stats-title">
     <div class="container">
-      <header class="section-header">
-        <span class="eyebrow">// the numbers</span>
-        <h2 class="section-title">By the Numbers</h2>
+      <header class="section-header" data-reveal>
+        <span class="eyebrow">// the numbers<span class="eyebrow-caret" aria-hidden="true"></span></span>
+        <h2 class="section-title" id="stats-title">By the Numbers</h2>
         <p class="section-subtitle">A snapshot of the work, the hours, and the fuel behind it</p>
       </header>
       <div class="stats-grid">
-        {stats.map((s) => (
-          <div class="stat">
-            <div class="stat-value">{s.value}</div>
-            <div class="stat-label">{s.label}</div>
+        {stats.map((stat, index) => (
+          <div class="stat" data-reveal style={`--reveal-delay:${index * 80}ms`}>
+            <div class="stat-value" data-count={stat.count ?? undefined} data-suffix={stat.suffix ?? ''}>{stat.value}</div>
+            <div class="stat-label">{stat.label}</div>
             <div class="stat-flame" aria-hidden="true"></div>
           </div>
         ))}
@@ -164,7 +202,7 @@ const featured = [
   <Skills />
 
   <!-- Featured / explore the site -->
-  <section class="featured" id="explore">
+  <section class="featured" id="explore" data-reveal>
     <div class="container">
       <header class="section-header">
         <span class="eyebrow">// explore</span>
@@ -174,7 +212,7 @@ const featured = [
 
       <div class="featured-grid">
         {featured.map((f) => (
-          <a href={f.href} class="feature-card">
+          <a href={f.href} class="feature-card" data-reveal style="--reveal-delay:140ms">
             <div class="card-inner">
               <div class="feature-icon" aria-hidden="true">
                 {f.icon === 'server' && (
@@ -206,12 +244,12 @@ const featured = [
   <!-- Radio -->
   <section class="radio-section" id="radio">
     <div class="container">
-      <header class="section-header">
+      <header class="section-header" data-reveal>
         <span class="eyebrow">// on air</span>
         <h2 class="section-title">The Masked Frequency</h2>
         <p class="section-subtitle">A transmission for those who listen</p>
       </header>
-      <div class="radio-card">
+      <div class="radio-card" data-reveal style="--reveal-delay:140ms">
         <div class="radio-card-glow"></div>
         <RadioPlayer />
       </div>
@@ -221,6 +259,38 @@ const featured = [
 
 <style is:global>
   .container { max-width: 1200px; width: 100%; margin: 0 auto; }
+
+  /* ============ MOTION SYSTEM ============ */
+  html.motion-ready [data-reveal] {
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+      opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  html.motion-ready [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  html.motion-ready [data-word-reveal] .word {
+    opacity: 0;
+    transform: translateY(0.42em);
+    filter: blur(4px);
+  }
+
+  html.motion-ready [data-word-reveal].is-visible .word {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--i, 0) * 18ms);
+  }
 
   /* ============ V FOR VENDETTA ATMOSPHERE ============ */
   .vendetta-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
@@ -261,6 +331,15 @@ const featured = [
   .manifesto-quote::before { top: -0.6rem; background: var(--color-bg-dark); padding: 0 0.5rem; }
   .manifesto-quote::after { bottom: -0.6rem; background: var(--color-bg-dark); padding: 0 0.5rem; }
   .quote-mark { font-family: 'Cinzel', serif; font-size: 3em; color: var(--color-accent-purple); opacity: 0.4; line-height: 0; vertical-align: -0.3em; margin: 0 0.2rem; text-shadow: 0 0 20px rgba(241, 196, 15, 0.6); }
+  html.motion-ready [data-word-reveal] .quote-mark {
+    opacity: 0;
+    transform: translateY(6px) scale(0.92);
+  }
+  html.motion-ready [data-word-reveal].is-visible .quote-mark {
+    opacity: 0.4;
+    transform: none;
+    transition: opacity 0.9s ease 0.15s, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+  }
   .manifesto-sig { text-align: center; margin-top: 1.5rem; font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--color-accent-purple); letter-spacing: 0.4em; text-shadow: 0 0 20px rgba(241, 196, 15, 0.6); }
   @media (max-width: 768px) { .manifesto-quote { padding: 2rem 1.5rem; } }
 
@@ -334,17 +413,149 @@ const featured = [
 </style>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
-    if (window.matchMedia('(pointer: coarse), (prefers-reduced-motion: reduce)').matches) return;
+  (() => {
+    let revealObserver: IntersectionObserver | null = null;
+    let wordObserver: IntersectionObserver | null = null;
+    let countObserver: IntersectionObserver | null = null;
 
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        ticking = false;
+    const prefersReducedMotion = () =>
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3);
+
+    const animateCount = (element: HTMLElement) => {
+      if (element.dataset.counted === 'true') return;
+      element.dataset.counted = 'true';
+
+      const target = Number(element.dataset.count);
+      if (!Number.isFinite(target)) return;
+
+      const suffix = element.dataset.suffix || '';
+
+      if (prefersReducedMotion()) {
+        element.textContent = `${target}${suffix}`;
+        return;
+      }
+
+      const duration = 1400;
+      const startedAt = performance.now();
+
+      const step = (now: number) => {
+        const progress = Math.min((now - startedAt) / duration, 1);
+        element.textContent = `${Math.round(target * easeOutCubic(progress))}${suffix}`;
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        } else {
+          element.textContent = `${target}${suffix}`;
+        }
+      };
+
+      window.requestAnimationFrame(step);
+    };
+
+    const revealAll = () => {
+      document
+        .querySelectorAll<HTMLElement>('[data-reveal], [data-word-reveal]')
+        .forEach((element) => element.classList.add('is-visible'));
+
+      document.querySelectorAll<HTMLElement>('[data-count]').forEach((element) => {
+        if (element.dataset.counted === 'true') return;
+        element.dataset.counted = 'true';
+        element.textContent = `${element.dataset.count}${element.dataset.suffix || ''}`;
       });
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
-  });
+
+    const cleanup = () => {
+      revealObserver?.disconnect();
+      wordObserver?.disconnect();
+      countObserver?.disconnect();
+      revealObserver = null;
+      wordObserver = null;
+      countObserver = null;
+    };
+
+    const init = () => {
+      const hasMotionTargets = document.querySelector('[data-reveal], [data-word-reveal]');
+      if (!hasMotionTargets) return;
+
+      if (prefersReducedMotion() || !('IntersectionObserver' in window)) {
+        document.documentElement.classList.remove('motion-ready');
+        revealAll();
+        return;
+      }
+
+      document.documentElement.classList.add('motion-ready');
+      state.__homeRevealInit = true;
+
+      revealObserver?.disconnect();
+      wordObserver?.disconnect();
+      countObserver?.disconnect();
+
+      revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            revealObserver?.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.14, rootMargin: '0px 0px -8% 0px' }
+      );
+
+      document.querySelectorAll<HTMLElement>('[data-reveal]').forEach((element) => {
+        if (!element.classList.contains('is-visible')) {
+          revealObserver?.observe(element);
+        }
+      });
+
+      wordObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            wordObserver?.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
+      );
+
+      document.querySelectorAll<HTMLElement>('[data-word-reveal]').forEach((element) => {
+        if (!element.classList.contains('is-visible')) {
+          wordObserver?.observe(element);
+        }
+      });
+
+      countObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            animateCount(entry.target as HTMLElement);
+            countObserver?.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.6 }
+      );
+
+      document.querySelectorAll<HTMLElement>('[data-count]').forEach((element) => {
+        countObserver?.observe(element);
+      });
+    };
+
+    const state = window as typeof window & {
+      __homeRevealBound?: boolean;
+      __homeRevealInit?: boolean;
+    };
+
+    if (!state.__homeRevealBound) {
+      state.__homeRevealBound = true;
+      document.addEventListener('astro:page-load', init);
+      document.addEventListener('astro:before-swap', cleanup);
+    }
+
+    if (document.readyState !== 'loading') {
+      init();
+    } else {
+      document.addEventListener('DOMContentLoaded', init);
+    }
+  })();
 </script>

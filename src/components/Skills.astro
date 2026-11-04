@@ -3,7 +3,7 @@ const base = import.meta.env.BASE_URL;
 ---
 <section class="skills-showcase" id="skills">
   <div class="container">
-    <header class="section-header">
+    <header class="section-header" data-reveal>
       <span class="eyebrow">// the arsenal</span>
       <h2 class="section-title">
         Skills & Technologies
@@ -13,7 +13,7 @@ const base = import.meta.env.BASE_URL;
 
     <div class="skills-grid">
       <!-- AI & VibeCoding -->
-      <div class="skill-card" data-category="ai">
+      <div class="skill-card" data-category="ai" data-reveal style="--reveal-delay:0ms">
         <div class="card-inner">
           <div class="card-glow"></div>
           <div class="card-content">
@@ -47,7 +47,7 @@ const base = import.meta.env.BASE_URL;
       </div>
 
       <!-- Infrastructure (merged Data) -->
-      <div class="skill-card" data-category="devops">
+      <div class="skill-card" data-category="devops" data-reveal style="--reveal-delay:100ms">
         <div class="card-inner">
           <div class="card-glow"></div>
           <div class="card-content">
@@ -92,7 +92,7 @@ const base = import.meta.env.BASE_URL;
       </div>
 
       <!-- Design & Music -->
-      <div class="skill-card" data-category="design">
+      <div class="skill-card" data-category="design" data-reveal style="--reveal-delay:200ms">
         <div class="card-inner">
           <div class="card-glow"></div>
           <div class="card-content">
@@ -121,7 +121,7 @@ const base = import.meta.env.BASE_URL;
       </div>
     </div>
 
-    <div class="view-all">
+    <div class="view-all" data-reveal style="--reveal-delay:140ms">
         <a href={`${base}colab/`} class="btn btn-secondary">
           View Colab
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
@@ -134,23 +134,33 @@ const base = import.meta.env.BASE_URL;
 </section>
 
 <style>
-  .skills-showcase { font-family: var(--font-body); color: var(--color-text); justify-content: center; position: relative; overflow: hidden; padding: calc(var(--nav-height) + 2rem) 2rem 4rem; }
+  @property --skill-border-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  .skills-showcase { font-family: var(--font-body); color: var(--color-text); justify-content: center; position: relative; overflow: hidden; padding: 5.5rem 2rem 4rem; scroll-margin-top: calc(var(--nav-height) + 1.5rem); }
   .skills-showcase .container { max-width: 1200px; margin: 0 auto; width: 100%; }
-  .skills-showcase .section-header { display: flex; flex-direction: column; text-align: center; margin-bottom: 64px; animation: skillsFadeUp 0.8s ease-out; }
+  .skills-showcase .section-header { display: flex; flex-direction: column; text-align: center; margin-bottom: 64px; }
   .skills-showcase .section-title { font-family: var(--font-heading); font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 800; letter-spacing: -0.03em; margin: 0 0 12px; background: linear-gradient(135deg, var(--color-text) 0%, var(--color-text-dim) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: inline-flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
   .skills-showcase .eyebrow { display: inline-block; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.8rem; color: var(--color-accent-purple); letter-spacing: 0.1em; margin-bottom: 0.75rem; text-transform: lowercase; text-shadow: 0 0 12px rgba(241, 196, 15, 0.4); }
+  @keyframes skillCaret { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
   .skills-showcase .section-subtitle { font-size: 1.1rem; color: var(--color-text-dim); max-width: 480px; margin: 0 auto; line-height: 1.6; }
   .skills-showcase .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 48px; }
   @media (max-width: 900px) {
     .skills-showcase .skills-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 768px) {
-    .skills-showcase { padding: 60px 18px; }
+    .skills-showcase { padding: 4rem 1.25rem 3rem; }
   }
   .skills-showcase .skill-card { position: relative; perspective: 1000px; touch-action: manipulation; height: 100%; }
   .skills-showcase .skill-card .card-inner { position: relative; display: flex; flex-direction: column; padding: 28px; border-radius: 16px; background: var(--color-bg-card); border: 1px solid var(--color-border); overflow: hidden; height: 100%; isolation: isolate; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 12px 24px rgba(0, 0, 0, 0.12); transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease; }
   .skills-showcase .skill-card .card-inner.tilt-active { transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, border-color 0.3s ease; }
   .skills-showcase .skill-card:hover .card-inner { border-color: var(--color-accent-purple);; box-shadow: 0 20px 60px -10px var(--color-shadow); }
+  .skills-showcase .skill-card .card-inner::before { content: ''; position: absolute; inset: 0; z-index: 4; border-radius: inherit; padding: 1px; background: conic-gradient(from var(--skill-border-angle, 0deg), transparent 0deg, transparent 68deg, var(--color-accent-purple) 92deg, transparent 118deg, transparent 360deg); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
+  .skills-showcase .skill-card:hover .card-inner::before { opacity: 0.9; animation: skillBorderSpin 4s linear infinite; }
+  @keyframes skillBorderSpin { to { --skill-border-angle: 360deg; } }
   .skills-showcase .card-glow { position: absolute; inset: 0; opacity: 0; transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none; z-index: 0; }
   .skills-showcase .skill-card[data-category="ai"] .card-glow { background: radial-gradient(600px circle at 80% 20%, rgba(241, 196, 15, 0.08), transparent 40%); }
   .skills-showcase .skill-card[data-category="devops"] .card-glow { background: radial-gradient(600px circle at 20% 80%, rgba(241, 196, 15, 0.08), transparent 40%); }
@@ -158,7 +168,10 @@ const base = import.meta.env.BASE_URL;
   .skills-showcase .skill-card:hover .card-glow { opacity: 1; }
   .skills-showcase .card-content { position: relative; z-index: 1; display: flex; flex-direction: column; flex: 1; }
   .skills-showcase .card-header { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
-  .skills-showcase .icon-wrap { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: var(--color-bg-elevated); border: 1px solid var(--color-border); flex-shrink: 0; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+  .skills-showcase .icon-wrap { position: relative; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: var(--color-bg-elevated); border: 1px solid var(--color-border); flex-shrink: 0; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+  .skills-showcase .icon-wrap::after { content: ''; position: absolute; inset: -5px; border-radius: inherit; border: 1px solid var(--color-accent-purple); opacity: 0; transform: scale(0.9); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; }
+  .skills-showcase .skill-card:hover .icon-wrap::after { opacity: 0.35; transform: scale(1.06); animation: iconRingPulse 2.4s ease-out infinite; }
+  @keyframes iconRingPulse { 0% { opacity: 0.35; transform: scale(1.02); } 70%, 100% { opacity: 0; transform: scale(1.22); } }
   .skills-showcase .skill-card[data-category="ai"] .icon-wrap { color: var(--color-accent-purple); }
   .skills-showcase .skill-card[data-category="devops"] .icon-wrap { color: var(--color-accent-purple); }
   .skills-showcase .skill-card[data-category="design"] .icon-wrap { color: var(--color-accent-purple); }
@@ -195,10 +208,6 @@ const base = import.meta.env.BASE_URL;
   .skills-showcase .skill-tags.expanded .tag-toggle { border-style: solid; border-color: var(--color-primary); color: var(--color-primary-hover); }
   .skills-showcase .skill-tags:not(:has(.tag-hidden)) .tag-toggle,
   .skills-showcase .skill-tags:not(:has(.tag-hidden)) + .tag-toggle { display: none; }
-  @keyframes skillsFadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
   @keyframes tagPop {
     from { opacity: 0; transform: scale(0.9) translateY(4px); }
     to { opacity: 1; transform: scale(1) translateY(0); }
@@ -255,6 +264,11 @@ const base = import.meta.env.BASE_URL;
       rgba(255, 255, 255, 0.05) 58%,
       transparent 80%
     );
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skills-showcase .skill-card:hover .card-inner::before,
+    .skills-showcase .skill-card:hover .icon-wrap::after { animation: none !important; }
   }
 
   @media (max-width: 768px) {

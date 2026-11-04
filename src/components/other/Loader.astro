@@ -325,6 +325,11 @@
       hasSeenLoader = sessionStorage.getItem('loader-seen') === 'true';
     } catch (e) {}
 
+    var markReady = function() {
+      document.documentElement.classList.add('app-ready');
+      document.dispatchEvent(new CustomEvent('app:ready'));
+    };
+
     if (!hasSeenLoader) {
       try {
         sessionStorage.setItem('loader-seen', 'true');
@@ -334,6 +339,7 @@
         var loader = document.getElementById('app-loader');
         if (loader) {
           loader.classList.add('loaded');
+          markReady();
           setTimeout(function() { 
             if (loader) loader.remove(); 
           }, 600);
@@ -342,6 +348,7 @@
     } else {
       var loader = document.getElementById('app-loader');
       if (loader) loader.remove();
+      markReady();
     }
   })();
 </script>
