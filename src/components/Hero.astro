@@ -3,7 +3,7 @@
 const base = import.meta.env.BASE_URL;
 ---
 
-<section class="hero" id="hero">
+<section class="hero" id="engineer" aria-label="engineer">
   <div class="hero-atmosphere" aria-hidden="true">
     <span class="hero-halo"></span>
     <span class="hero-halo hero-halo--secondary"></span>
@@ -124,7 +124,7 @@ const base = import.meta.env.BASE_URL;
 <script>
   (() => {
     const s = window, init = () => {
-      const h = document.getElementById('hero');
+      const h = document.getElementById('engineer');
       if (!h || h.dataset.init) return;
       h.dataset.init = 'true';
       const r = document.documentElement, rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
