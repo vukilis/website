@@ -1,0 +1,225 @@
+---
+title: "Ollama Installation on Linux"
+url: /ollama-installation-on-linux
+pubDate: 2026-11-08T14:34:31+02:00
+lastmod: 2026-11-08T14:34:31+02:00
+draft: false
+license: "MIT"
+description: "Complete guide to install and run Ollama on Linux with systemd service management, NVIDIA GPU acceleration, and model management."
+tags: [ollama, linux, ai, llm, nvidia, arch, debian, fedora, self-hosting, models]
+categories: [Linux]
+share:
+  enable: true
+  link: true
+  twitter: true
+  reddit: true
+  bluesky: true
+  hackernews: true
+---
+
+Running large language models locally gives you full control over your data and eliminates API costs. Ollama makes this straightforward on Linux with native packages for major distributions and built-in GPU acceleration. This guide covers installation, service management, essential commands, and NVIDIA optimization.
+
+## Prerequisites
+
+- A Linux system (Arch, Debian/Ubuntu, or Fedora)
+- `curl` and `systemd` available
+- For GPU acceleration: NVIDIA drivers installed (`nvidia-smi` works)
+
+---
+
+## Install Ollama
+
+### Arch Linux
+
+Ollama is in the official `extra` repository:
+
+```bash frame="terminal" title="Install Ollama on Arch"
+sudo pacman -S ollama
+```
+
+### Debian / Ubuntu
+
+Use the official repository for the latest stable release:
+
+```bash frame="terminal" title="Install Ollama on Debian/Ubuntu"
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+### Fedora
+
+Available via COPR or the official script:
+
+```bash frame="terminal" title="Install Ollama on Fedora"
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+> **Note:** The official install script detects your distribution and adds the appropriate repository. On Fedora, it configures the COPR repository automatically.
+
+---
+
+## Manage the Systemd Service
+
+The package installs a systemd user service. Enable and start it:
+
+```bash frame="terminal" title="Enable and start Ollama service"
+systemctl --user enable --now ollama
+```
+
+Verify the service is running:
+
+```bash frame="terminal" title="Check Ollama service status"
+systemctl --user status ollama
+```
+
+Useful service commands:
+
+| Command | Purpose |
+|---------|---------|
+| `systemctl --user start ollama` | Start the service |
+| `systemctl --user stop ollama` | Stop the service |
+| `systemctl --user restart ollama` | Restart the service |
+| `systemctl --user disable ollama` | Disable auto-start |
+| `journalctl --user -u ollama -f` | Follow service logs |
+
+> **Tip:** The user service runs on port 11434 by default. No `sudo` required for daily operations.
+
+---
+
+## Essential Ollama Commands
+
+### List Installed Models
+
+```bash frame="terminal" title="List local models"
+ollama list
+```
+
+### Pull a Model
+
+Download a model from the Ollama library:
+
+```bash frame="terminal" title="Pull Qwen 2.5 7B model"
+ollama pull qwen2.5:7b
+```
+
+### Run a Model Interactively
+
+```bash frame="terminal" title="Chat with Qwen 2.5 7B"
+ollama run qwen2.5:7b
+```
+
+> Exit the chat with `Ctrl+D` or `/bye`.
+
+### Check running models
+
+```bash frame="terminal" title="Check running models"
+ollama ps
+```
+
+### Remove a Model
+
+```bash frame="terminal" title="Remove a model"
+ollama rm qwen2.5:7b
+```
+
+### Show Model Information
+
+```bash frame="terminal" title="Show model details"
+ollama show qwen2.5:7b
+```
+
+---
+
+## NVIDIA GPU Acceleration
+
+Ollama automatically detects NVIDIA GPUs when the drivers are installed. Verify GPU usage:
+
+```bash frame="terminal" title="Check GPU detection"
+ollama run qwen2.5:7b --verbose
+```
+
+Look for `GPU` in the output. If it shows `CPU`, check the following:
+
+### Ensure NVIDIA Container Toolkit (for Docker)
+
+If running Ollama in Docker, install the toolkit:
+
+```bash frame="terminal" title="Install NVIDIA Container Toolkit (Arch)"
+sudo pacman -S nvidia-container-toolkit
+sudo nvidia-ctk runtime configure --runtime=docker
+sudo systemctl restart docker
+```
+
+### Set GPU Layers Explicitly
+
+Force full GPU offload for a model:
+
+```bash frame="terminal" title="Run with full GPU offload"
+OLLAMA_NUM_GPU=999 ollama run qwen2.5:7b
+```
+
+> **Warning:** Setting `OLLAMA_NUM_GPU` higher than available VRAM causes OOM errors. Start with `999` (auto) and reduce if needed.
+
+### Monitor VRAM Usage
+
+```bash frame="terminal" title="Watch GPU memory"
+watch -n 1 nvidia-smi
+```
+
+---
+
+## Advanced Configuration
+
+### Custom Model Storage Location
+
+By default, models live in `~/.ollama/models`. Change it via environment variable:
+
+```bash frame="terminal" title="Set custom model path"
+echo 'export OLLAMA_MODELS=/mnt/storage/ollama/models' >> ~/.bashrc
+source ~/.bashrc
+systemctl --user restart ollama
+```
+
+### Bind to All Interfaces (LAN Access)
+
+Default binds to `127.0.0.1`. To expose on LAN:
+
+```bash frame="terminal" title="Configure network binding"
+mkdir -p ~/.config/systemd/user/ollama.service.d/
+cat > ~/.config/systemd/user/ollama.service.d/override.conf << 'EOF'
+[Service]
+Environment="OLLAMA_HOST=0.0.0.0:11434"
+EOF
+systemctl --user daemon-reload
+systemctl --user restart ollama
+```
+
+> **Warning:** Exposing Ollama on LAN without authentication allows anyone on the network to use your models and VRAM. Use a firewall or Tailscale for secure access.
+
+### Adjust Context Window
+
+Increase context size for larger prompts:
+
+```bash frame="terminal" title="Run with 32K context"
+ollama run qwen2.5:7b --context-size 32768
+```
+
+---
+
+## Troubleshooting
+
+| Problem | Likely Cause | Solution |
+|---------|--------------|----------|
+| `connection refused` on `ollama run` | Service not running | `systemctl --user start ollama` |
+| Model loads but runs on CPU only | Missing NVIDIA drivers or toolkit | Verify `nvidia-smi`; reinstall drivers |
+| `OOM` / `CUDA out of memory` | Model too large for VRAM | Use smaller model (e.g., `qwen2.5:3b`) or quantized variant |
+| `pull` fails with timeout | Network issues or rate limiting | Retry; check `journalctl --user -u ollama` |
+| Service starts but API unresponsive | Port 11434 in use | `ss -tlnp \| grep 11434`; kill conflicting process |
+| Permission denied on model directory | Wrong ownership on custom path | `chown -R $USER:$USER /path/to/models` |
+
+---
+
+## Conclusion
+
+Ollama on Linux delivers a clean, package-manager-friendly way to run LLMs locally with systemd integration and first-class NVIDIA support. The official repositories keep updates simple, and the CLI covers everything from model management to GPU tuning. I keep a few quantized models ready for offline coding assistance and document analysis, no cloud dependency required.
+
+Happy local inference!
