@@ -1,0 +1,162 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import '../../styles/blog/layout.css';
+import '../../styles/blog/tags-page.css';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedAllPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Calculate tag counts and sort descending by popularity, then alphabetically
+const tagCountsMap = new Map<string, number>();
+sortedAllPosts.forEach(post => {
+  (post.data.tags ?? []).forEach(t => {
+    const lower = t.toLowerCase();
+    tagCountsMap.set(lower, (tagCountsMap.get(lower) ?? 0) + 1);
+  });
+});
+
+const allTags = [...tagCountsMap.keys()].sort(
+  (a, b) => (tagCountsMap.get(b) ?? 0) - (tagCountsMap.get(a) ?? 0) || a.localeCompare(b)
+);
+
+const totalTagAssignments = sortedAllPosts.reduce((sum, p) => sum + (p.data.tags?.length ?? 0), 0);
+const avgTags = sortedAllPosts.length ? (totalTagAssignments / sortedAllPosts.length).toFixed(1) : '0';
+const mostPopularTag = allTags[0] ?? '';
+const mostPopularCount = tagCountsMap.get(mostPopularTag) ?? 0;
+
+// Min/Max count for tag font size scaling
+const counts = [...tagCountsMap.values()];
+const maxCount = counts.length ? Math.max(...counts) : 1;
+const minCount = counts.length ? Math.min(...counts) : 1;
+
+// Load More configuration
+const BATCH_SIZE = 48;
+---
+<BaseLayout
+  title="Tags | Blog | Vuk1lis"
+  description="Browse all tags used in blog articles and view related posts."
+  keywords="vukilis, blog, tags, articles, guides, tutorials, tech blog, devops, linux, web development"
+>
+  <Navigation />
+
+  <main class="blog-page" id="main-content">
+    <div class="container">
+      <header class="blog-header">
+        <h1 class="page-title">Explore Tags</h1>
+        <p class="page-subtitle">
+          Browse {allTags.length} tags across {sortedAllPosts.length} published articles. Most popular tag:&nbsp;
+          {mostPopularTag && (
+            <a href={`/blog/tag/${mostPopularTag}/`} class="popular-link">
+              #{mostPopularTag} <span>({mostPopularCount})</span>
+            </a>
+          )}
+        </p>
+
+        <!-- Stats Bar -->
+        <div class="blog-stats">
+          <div class="blog-stat">
+            <div class="blog-stat-value">{allTags.length}</div>
+            <div class="blog-stat-label">Tags</div>
+          </div>
+          <div class="blog-stat">
+            <div class="blog-stat-value">{sortedAllPosts.length}</div>
+            <div class="blog-stat-label">Articles</div>
+          </div>
+          <div class="blog-stat">
+            <div class="blog-stat-value">{avgTags}</div>
+            <div class="blog-stat-label">Tags / Post</div>
+          </div>
+        </div>
+      </header>
+
+      <div class="tags-container">
+        <!-- Tags Cloud Container -->
+        <div class="tags-cloud" id="tags-cloud">
+          {allTags.map((tag, idx) => {
+            const count = tagCountsMap.get(tag) ?? 0;
+            const ratio = minCount === maxCount ? 1.0 : 1.0 + ((count - minCount) / (maxCount - minCount)) * 0.8;
+            const fontSize = (0.85 * ratio).toFixed(2);
+            const isPopular = tag === mostPopularTag;
+            const isHiddenInitially = idx >= BATCH_SIZE;
+
+            return (
+              <a
+                href={`/blog/tag/${tag}/`}
+                class={`tag${isPopular ? ' active' : ''}${isHiddenInitially ? ' is-hidden' : ''}`}
+                data-tag={tag}
+                data-count={count}
+                data-idx={idx}
+                aria-label={`${tag}, ${count} posts`}
+                style={`--font-scale: ${fontSize}rem; --i: ${idx % 30};`}
+              >
+                <span class="tag-name">#{tag}</span>
+                <span class="tag-pill-count">{count}</span>
+              </a>
+            );
+          })}
+        </div>
+
+        <!-- Show More Button -->
+        {allTags.length > BATCH_SIZE && (
+          <div class="tags-load-more-wrapper" id="load-more-container">
+            <button
+              id="load-more-btn"
+              class="btn-load-more"
+              type="button"
+            >
+              <span class="btn-load-more-text">Show More</span>
+              <span class="btn-load-more-progress" id="tags-progress">
+                {Math.min(BATCH_SIZE, allTags.length)} of {allTags.length}
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  function setupTagsPage() {
+    const batchSize = 48;
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    const tagsCloud = document.getElementById('tags-cloud');
+    const loadMoreContainer = document.getElementById('load-more-container');
+    const tagsProgress = document.getElementById('tags-progress');
+    if (!loadMoreBtn || !tagsCloud) return;
+    const allTags = Array.from(tagsCloud.querySelectorAll('.tag'));
+    const totalTags = allTags.length;
+    let currentlyShown = batchSize;
+    // Initially hide tags beyond first batch (already done via is-hidden class, but track count)
+    function updateUI() {
+      const shown = Math.min(currentlyShown, totalTags);
+      if (tagsProgress) {
+        tagsProgress.textContent = `${shown} of ${totalTags}`;
+      }
+      if (loadMoreContainer && currentlyShown >= totalTags) {
+        loadMoreContainer.style.display = 'none';
+      }
+    }
+    function revealNextBatch() {
+      const hiddenTags = allTags.filter(t => t.classList.contains('is-hidden'));
+      const nextBatch = hiddenTags.slice(0, batchSize);
+      currentlyShown += nextBatch.length;
+      nextBatch.forEach(tag => {
+        tag.classList.remove('is-hidden');
+      });
+      updateUI();
+    }
+    loadMoreBtn.onclick = (e) => {
+      e.preventDefault();
+      revealNextBatch();
+    };
+    updateUI();
+  }
+  document.addEventListener('DOMContentLoaded', setupTagsPage);
+  document.addEventListener('astro:page-load', setupTagsPage);
+</script>

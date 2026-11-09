@@ -1,0 +1,240 @@
+/* ============================================
+   TAGS PAGE - Using Blog Card Tag Style
+   ============================================ */
+
+.tags-container {
+  max-width: 1000px;
+  margin: 2rem auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Cloud Container */
+.tags-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Tag Pill - Matches BlogCard .tag style */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.625rem;
+  font-size: var(--font-scale, 0.75rem);
+  font-weight: 500;
+  color: var(--color-text-dim);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  animation: tagFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--i, 0) * 0.02s) backwards;
+}
+
+.tag:hover {
+  background: rgba(241, 196, 15, 0.12);
+  border-color: rgba(241, 196, 15, 0.4);
+  color: var(--color-accent-purple);
+  transform: translateY(-1px);
+}
+
+.tag:active {
+  transform: translateY(0);
+}
+
+/* Tag count badge */
+.tag-pill-count {
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text);
+  padding: 0.1rem 0.35rem;
+  border-radius: 999px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.tag:hover .tag-pill-count {
+  color: var(--color-accent-purple);
+}
+
+[data-theme="light"] .tag:hover .tag-pill-count {
+  background: var(--color-bg-count, rgba(0, 0, 0, 0.04));
+  color: #0b0b0c;
+}
+
+/* Most Popular / Active Tag Styling */
+.tag.active {
+  background: rgba(241, 196, 15, 0.2);
+  border-color: rgba(241, 196, 15, 0.5);
+  color: var(--color-accent-purple);
+  font-weight: 600;
+}
+
+.tag.active .tag-pill-count {
+  background: var(--color-accent-purple);
+  color: #0b0b0c;
+}
+
+[data-theme="light"] .tag.active .tag-pill-count {
+  background: var(--color-bg-count, rgba(0, 0, 0, 0.04));
+  color: #0b0b0c;
+}
+
+.tag.active:hover {
+  background: rgba(241, 196, 15, 0.25);
+  border-color: rgba(241, 196, 15, 0.6);
+}
+
+/* Popular link in subtitle */
+.popular-link {
+  color: var(--color-accent-purple);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px solid var(--color-border-hover);
+  transition: border-color 0.2s ease;
+}
+
+.popular-link:hover {
+  border-bottom-color: var(--color-accent-purple);
+}
+
+.popular-link span {
+  color: var(--color-text-dim);
+  font-weight: 400;
+}
+
+/* Entry Animation */
+@keyframes tagFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Hidden tag state - initially hidden before batch reveal */
+.tag.is-hidden {
+  display: none;
+}
+
+/* Load More Button */
+.tags-load-more-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5rem;
+  padding: 0.75rem 0;
+}
+
+.btn-load-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: var(--font-body, system-ui, sans-serif);
+  color: var(--color-text);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-load-more:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-accent-purple);
+  background: var(--color-bg-elevated);
+  color: var(--color-accent-purple);
+  box-shadow: 0 8px 24px -8px rgba(241, 196, 15, 0.25);
+}
+
+.btn-load-more:active {
+  transform: translateY(0);
+}
+
+.btn-load-more svg {
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.btn-load-more:hover svg {
+  transform: translateX(2px);
+}
+
+.btn-load-more:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 999px;
+}
+
+/* Progress text inside button */
+.btn-load-more-progress {
+  font-size: 0.7rem;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  color: var(--color-text-dim);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.btn-load-more:hover .btn-load-more-progress {
+  color: var(--color-accent-purple);
+}
+
+/* Reduced motion for load more button */
+@media (prefers-reduced-motion: reduce) {
+  .btn-load-more {
+    transition: none;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+  .tags-container {
+    margin: 1.5rem auto 0;
+  }
+
+  .tag {
+    padding: 0.2rem 0.5rem;
+    font-size: clamp(0.7rem, 3.5vw, 0.75rem) !important;
+    gap: 0.3rem;
+  }
+
+  .tag-pill-count {
+    font-size: 0.6rem;
+    padding: 0.05rem 0.3rem;
+  }
+
+  .tags-cloud {
+    gap: 0.4rem;
+  }
+
+  .btn-load-more {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.75rem;
+    gap: 0.4rem;
+  }
+
+  .btn-load-more-progress {
+    font-size: 0.65rem;
+  }
+}
