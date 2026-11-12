@@ -1,0 +1,300 @@
+---
+const { class: className = '' } = Astro.props;
+---
+
+<div class:list={['mini-radio-player', className, 'hidden']} aria-label="Mini radio player">
+  <div class="mini-radio-head" role="button" aria-expanded="false" aria-label="Toggle radio player">
+    <div class="mini-wave-bars" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <svg class="mini-note-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M9 18V5l12-2v13"></path>
+      <circle cx="6" cy="18" r="3"></circle>
+      <circle cx="18" cy="16" r="3"></circle>
+    </svg>
+    <button class="mini-close" aria-label="Close minimize" title="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <div class="mini-radio-content">
+    <div class="mini-radio-body">
+      <div class="mini-track-info">
+        <span class="mini-radio-track">Press Play</span>
+        <span class="mini-radio-artist">Lo-fi Beats</span>
+      </div>
+    </div>
+    <div class="mini-radio-controls">
+      <button class="mini-btn mini-prev" aria-label="Previous station" title="Previous Station">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+      </button>
+      <button class="mini-btn mini-play" aria-label="Play/Pause" title="Play/Pause">
+        <svg viewBox="0 0 24 24" fill="currentColor" class="mini-play-icon"><path d="M8 5v14l11-7z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor" class="mini-pause-icon" style="display:none"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+      </button>
+      <button class="mini-btn mini-next" aria-label="Next station" title="Next Station">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+      </button>
+      <button class="mini-btn mini-switch" aria-label="Switch station" title="Random Station">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  .mini-radio-player { position: fixed; left: 1.5rem; bottom: 1.5rem; z-index: 2000; display: flex; align-items: center; background: var(--color-bg-elevated, rgba(18, 18, 20, 0.75)); border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08)); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 999px; box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.02) inset; opacity: 1; visibility: visible; transform: translateY(0); transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, box-shadow 0.25s ease; user-select: none; touch-action: none; }
+  .mini-radio-player:hover { box-shadow: 0 14px 36px -4px rgba(0, 0, 0, 0.4), 0 0 0 1px var(--color-primary-alpha, rgba(241, 196, 15, 0.2)) inset; }
+  .mini-radio-player.hidden { opacity: 0; visibility: hidden; transform: translateY(12px) scale(0.95); pointer-events: none; }
+  .mini-radio-head { display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; background: var(--color-primary, #f1c40f); color: var(--color-bg, #0a0a0a); border-radius: 50%; cursor: grab; position: relative; flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .mini-radio-head:active { cursor: grabbing; transform: scale(0.92); }
+  .mini-note-icon { width: 26px; height: 26px; transition: opacity 0.2s ease, transform 0.2s ease; }
+  .mini-wave-bars { position: absolute; display: none; align-items: flex-end; gap: 3px; height: 18px; }
+  .mini-wave-bars span { width: 3.5px; background: currentColor; border-radius: 1.5px; animation: wave-bounce 1.2s infinite ease-in-out; }
+  .mini-wave-bars span:nth-child(2) { animation-delay: 0.2s; }
+  .mini-wave-bars span:nth-child(3) { animation-delay: 0.4s; }
+  .mini-radio-player.playing .mini-note-icon { opacity: 0; transform: scale(0.5); }
+  .mini-radio-player.playing .mini-wave-bars { display: flex; }
+  @keyframes wave-bounce { 0%, 100% { height: 6px; } 50% { height: 18px; } }
+  .mini-close { position: absolute; top: -4px; right: -4px; width: 22px; height: 22px; padding: 0; border: none; border-radius: 50%; background: var(--color-bg-elevated, #1a1a1a); color: var(--color-text-dim, #a1a1aa); cursor: pointer; opacity: 0; transform: scale(0.8); transition: opacity 0.15s ease, transform 0.15s ease, color 0.15s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
+  .mini-radio-player:hover .mini-close { opacity: 1; transform: scale(1); }
+  .mini-close:hover { color: var(--color-text, #fff); background: var(--color-danger, #ef4444); }
+  .mini-close svg { width: 12px; height: 12px; }
+  .mini-radio-content { display: flex; align-items: center; gap: 0.75rem; max-width: 0; opacity: 0; overflow: hidden; white-space: nowrap; transition: max-width 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease; }
+  .mini-radio-player.expanded .mini-radio-content { max-width: 320px; opacity: 1; }
+  .mini-radio-body { display: flex; flex-direction: column; justify-content: center; min-width: 130px; padding-left: 10px; }
+  .mini-track-info { display: flex; flex-direction: column; gap: 1px; }
+  .mini-radio-track { font-size: 0.75rem; font-weight: 600; color: var(--color-text, #faf7f0); overflow: hidden; text-overflow: ellipsis; }
+  .mini-radio-artist { font-size: 0.65rem; color: var(--color-text-dim, #94a3b8); overflow: hidden; text-overflow: ellipsis; }
+  .mini-radio-controls { display: flex; align-items: center; gap: 0.2rem; padding-right: 0.25rem; }
+  .mini-btn { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: none; border-radius: 50%; background: transparent; color: var(--color-text-dim, #94a3b8); cursor: pointer; transition: all 0.2s ease; flex-shrink: 0; padding: 0; }
+  .mini-btn:hover { color: var(--color-text, #faf7f0); background: rgba(255, 255, 255, 0.08); }
+  .mini-btn:active { transform: scale(0.85); }
+  .mini-btn.mini-play { width: 32px; height: 32px; background: var(--color-primary-alpha, rgba(241, 196, 15, 0.15)); color: var(--color-primary, #f1c40f); }
+  .mini-btn.mini-play:hover { background: var(--color-primary, #f1c40f); color: var(--color-bg, #0a0a0a); }
+  .mini-btn.mini-play svg, .mini-play-icon, .mini-pause-icon { width: 14px; height: 14px; }
+  .mini-prev svg, .mini-next svg { width: 13px; height: 13px; }
+  .mini-switch svg { width: 13px; height: 13px; }
+  @media (max-width: 480px) {
+    .mini-radio-player { left: 1rem; bottom: 1rem; }
+  }
+</style>
+
+<script>
+  let isDragging = false;
+  let dragStartX = 0, dragStartY = 0;
+  let pointerStartX = 0, pointerStartY = 0;
+  let expandOnClick = true;
+
+  function getMiniPlayer() { return document.querySelector('.mini-radio-player'); }
+
+  function updateMiniPlayer() {
+    const player = getMiniPlayer();
+    if (!player) return;
+    const state = window.__lofiState;
+    if (!state) return;
+
+    // User-initiated play should reveal the mini player again
+    if (window.__miniRadioShouldShow) {
+      window.__miniRadioShouldShow = false;
+      try { sessionStorage.removeItem('miniRadioClosed'); } catch (e) {}
+      player.classList.remove('hidden');
+      player.classList.remove('expanded');
+    }
+
+    // Closed state: keep hidden unless a play was explicitly requested
+    const closed = sessionStorage.getItem('miniRadioClosed') === '1';
+    if (closed) {
+      player.classList.add('hidden');
+      player.classList.remove('expanded');
+      return;
+    }
+
+    const trackEl = player.querySelector('.mini-radio-track');
+    const artistEl = player.querySelector('.mini-radio-artist');
+    const playIcon = player.querySelector('.mini-play-icon');
+    const pauseIcon = player.querySelector('.mini-pause-icon');
+
+    if (trackEl) trackEl.textContent = state.trackName || 'Press Play';
+    if (artistEl) artistEl.textContent = state.artistName || 'Lo-fi Beats';
+
+    if (state.isPlaying) {
+      player.classList.add('playing', 'stay-visible');
+      player.classList.remove('hidden');
+      if (playIcon) playIcon.style.display = 'none';
+      if (pauseIcon) pauseIcon.style.display = 'block';
+    } else {
+      player.classList.remove('playing');
+      player.classList.add('stay-visible');
+      if (playIcon) playIcon.style.display = 'block';
+      if (pauseIcon) pauseIcon.style.display = 'none';
+    }
+  }
+
+  function initMiniPlayer() {
+    const player = getMiniPlayer();
+    if (!player) return;
+
+    // Apply persisted closed state
+    if (sessionStorage.getItem('miniRadioClosed') === '1') {
+      player.classList.add('hidden');
+      player.classList.remove('expanded');
+    }
+
+    // Restore saved position
+    const saved = localStorage.getItem('miniRadioPosition');
+    if (saved) {
+      try {
+        const pos = JSON.parse(saved);
+        if (pos.left !== undefined && pos.top !== undefined) {
+          player.style.left = `${pos.left}px`;
+          player.style.top = `${pos.top}px`;
+          player.style.right = 'auto';
+          player.style.bottom = 'auto';
+        }
+      } catch (e) {}
+    }
+
+// Guard against duplicate listeners when the same element persists across view transitions
+    if (player.dataset.miniInit === 'true') return;
+    player.dataset.miniInit = 'true';
+
+    // Register for instant state updates (play/pause/connecting/error)
+    window.__lofiState.uiUpdaters.add(updateMiniPlayer);
+    updateMiniPlayer();
+
+    const head = player.querySelector('.mini-radio-head');
+    if (head) {
+      head.addEventListener('pointerdown', (e) => {
+        if (player.classList.contains('hidden')) return;
+        if (e.target.closest('.mini-close')) return;
+
+        isDragging = false;
+        expandOnClick = true;
+        pointerStartX = e.clientX;
+        pointerStartY = e.clientY;
+        
+        const rect = player.getBoundingClientRect();
+        dragStartX = e.clientX - rect.left;
+        dragStartY = e.clientY - rect.top;
+
+        head.setPointerCapture(e.pointerId);
+      });
+
+      head.addEventListener('pointermove', (e) => {
+        if (!head.hasPointerCapture(e.pointerId)) return;
+
+        const dx = Math.abs(e.clientX - pointerStartX);
+        const dy = Math.abs(e.clientY - pointerStartY);
+
+        if (dx > 4 || dy > 4) {
+          isDragging = true;
+          expandOnClick = false;
+          
+          const x = e.clientX - dragStartX;
+          const y = e.clientY - dragStartY;
+          const maxX = window.innerWidth - player.offsetWidth - 12;
+          const maxY = window.innerHeight - player.offsetHeight - 12;
+          
+          player.style.left = `${Math.max(12, Math.min(maxX, x))}px`;
+          player.style.top = `${Math.max(12, Math.min(maxY, y))}px`;
+          player.style.right = 'auto';
+          player.style.bottom = 'auto';
+        }
+      });
+
+      head.addEventListener('pointerup', (e) => {
+        if (head.hasPointerCapture(e.pointerId)) {
+          head.releasePointerCapture(e.pointerId);
+        }
+
+        if (expandOnClick && !isDragging) {
+          player.classList.toggle('expanded');
+          const isExpanded = player.classList.contains('expanded');
+          head.setAttribute('aria-expanded', isExpanded);
+        }
+
+        if (isDragging) {
+          const rect = player.getBoundingClientRect();
+          try {
+            localStorage.setItem('miniRadioPosition', JSON.stringify({ left: rect.left, top: rect.top }));
+          } catch (err) {}
+        }
+        isDragging = false;
+      });
+    }
+
+    // Close button handler
+    const closeBtn = player.querySelector('.mini-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        player.classList.add('hidden');
+        player.classList.remove('expanded');
+        try { sessionStorage.setItem('miniRadioClosed', '1'); } catch (err) {}
+      });
+    }
+
+    // Play/Pause button
+    const playBtn = player.querySelector('.mini-btn.mini-play');
+    if (playBtn) {
+      playBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const state = window.__lofiState;
+        const audio = window.__lofiAudio;
+        if (!audio || !state) return;
+        
+        if (state.isPlaying) {
+          audio.pause();
+          state.isPlaying = false;
+        } else {
+          if (!audio.src && state.streams?.length) {
+            const idx = state.currentStreamIndex || 0;
+            const stream = state.streams[idx];
+            if (stream) {
+              state.trackName = stream.name;
+              state.artistName = stream.subtitle;
+              audio.src = stream.url;
+              audio.load();
+            }
+          }
+          audio.play().then(() => {
+            state.isPlaying = true;
+          }).catch(() => {});
+        }
+        updateMiniPlayer();
+      });
+    }
+
+    // Station controls
+    const prevBtn = player.querySelector('.mini-btn.mini-prev');
+    const nextBtn = player.querySelector('.mini-btn.mini-next');
+    const switchBtn = player.querySelector('.mini-btn.mini-switch');
+
+    if (prevBtn) prevBtn.addEventListener('click', () => { window.prevStream?.(); updateMiniPlayer(); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { window.nextStream?.(); updateMiniPlayer(); });
+    if (switchBtn) switchBtn.addEventListener('click', () => { window.randomStream?.(); updateMiniPlayer(); });
+
+    // Polling interval for updates (single instance across view transitions)
+    if (!window.__miniRadioTimer) {
+      window.__miniRadioTimer = setInterval(updateMiniPlayer, 400);
+    }
+  }
+
+  // Re-init listeners on each Astro view transition (uiUpdaters is cleared by RadioPlayer)
+  document.addEventListener('astro:before-swap', () => {
+    const player = getMiniPlayer();
+    if (player) player.dataset.miniInit = '';
+  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMiniPlayer);
+  } else {
+    initMiniPlayer();
+  }
+
+  document.addEventListener('astro:page-load', initMiniPlayer);
+</script>
+

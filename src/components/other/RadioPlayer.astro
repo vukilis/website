@@ -18,11 +18,12 @@ const { class: className = '' } = Astro.props;
     <div class="radio-info">
       <span class="radio-label playlist-name">Lofi Radio</span>
       <span class="radio-track track-name">Press Play</span>
+      <span class="radio-artist artist-name"></span>
     </div>
 
     <div class="radio-controls">
-      <!-- Previous Track Button -->
-      <button class="radio-btn radio-prev prev-btn-radio" aria-label="Previous track" title="Previous Track">
+      <!-- Previous Station Button -->
+      <button class="radio-btn radio-prev prev-btn-radio" aria-label="Previous station" title="Previous Station">
         <svg viewBox="0 0 24 24" fill="currentColor" class="prev-icon">
           <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
         </svg>
@@ -35,15 +36,15 @@ const { class: className = '' } = Astro.props;
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" class="loading-icon spin" style="display:none"><path d="M12 2a10 10 0 0 1 10 10"/></svg>
       </button>
       
-      <!-- Next Track Button -->
-      <button class="radio-btn radio-next next-btn-radio" aria-label="Next track" title="Next Track">
+      <!-- Next Station Button -->
+      <button class="radio-btn radio-next next-btn-radio" aria-label="Next station" title="Next Station">
         <svg viewBox="0 0 24 24" fill="currentColor" class="next-icon">
           <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
         </svg>
       </button>
 
-      <!-- Switch Playlist Button -->
-      <button class="radio-btn radio-switch switch-btn" aria-label="Switch playlist" title="Switch Playlist">
+      <!-- Switch Station Button (random) -->
+      <button class="radio-btn radio-switch switch-btn" aria-label="Switch station" title="Random Station">
         <svg viewBox="0 0 24 24" fill="currentColor" class="switch-icon">
           <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/>
         </svg>
@@ -81,6 +82,7 @@ const { class: className = '' } = Astro.props;
   .radio-info { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; flex: 1 1 auto; overflow: hidden; margin-right: 0.25rem; }
   .radio-label { font-size: 0.5rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-primary, #f1c40f); opacity: 0.6; line-height: 1; margin-bottom: 1px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%; }
   .radio-track { font-size: 0.75rem; font-weight: 500; color: var(--color-text, #faf7f0); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; width: 100%; line-height: 1.2; transition: color 0.3s ease; }
+  .radio-artist { font-size: 0.6rem; font-weight: 400; color: var(--color-text-dim, #7a7568); opacity: 0.7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; width: 100%; line-height: 1.1; margin-top: 1px; }
   .radio.signal-error .radio-track { color: #f87171; }
   .radio-controls { display: flex; align-items: center; gap: 0.15rem; flex-shrink: 0; }
   .radio-btn { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border: none; border-radius: 50%; background: transparent; color: var(--color-text-dim, #7a7568); cursor: pointer; transition: all 0.2s ease; flex-shrink: 0; }
@@ -130,12 +132,50 @@ const { class: className = '' } = Astro.props;
 </style>
 
 <script>
-  const PLAYLISTS = [
-    { id: '17673', name: 'Lofi Chill' },
-    { id: '140331', name: 'Chill Set' },
-    { id: '906',   name: 'Beats' },
-    { id: '440',   name: 'Ambient' }
+  // Verified 24/7 live lofi + synthwave streams (HTTPS, browser-playable).
+  // Live stations play continuously with varied content 24/7, so tracks never repeat
+  // like a fixed playlist would.
+  const STREAMS = [
+    // Lofi / chill streams
+    {
+      id: 'box-lofi',
+      name: 'Box Radio • Lofi',
+      subtitle: 'Lofi beats 24/7',
+      url: 'https://boxradio-edge-00.streamafrica.net/lofi'
+    },
+    {
+      id: 'flux-chillhop',
+      name: 'FluxFM • Chillhop',
+      subtitle: 'Chillhop & lofi hip hop',
+      url: 'https://channels.fluxfm.de/chillhop/externalembedflxhp/stream.mp3'
+    },
+    {
+      id: 'radiorecord-lofi',
+      name: 'Radio Record • Lo-Fi',
+      subtitle: 'Russian lo-fi station',
+      url: 'https://radiorecord.hostingradio.ru/lofi96.aacp'
+    },
+    // Synthwave / retrowave / newretrowave streams
+    {
+      id: 'synthwave-nightride',
+      name: 'Nightride FM • Chill Synth',
+      subtitle: 'Chill synthwave & retrowave',
+      url: 'https://stream.nightride.fm/chillsynth.mp3'
+    },
+    {
+      id: 'synthwave-nightride-spaces',
+      name: 'Nightride FM • SpaceSynth',
+      subtitle: 'Spacesynth & retro futurism',
+      url: 'https://stream.nightride.fm/spacesynth.mp3'
+    },
+    {
+      id: 'synthwave-yesstream',
+      name: '24/7 Synthwave Radio',
+      subtitle: 'Non-stop synthwave classics',
+      url: 'https://ec6.yesstreaming.net:1745/stream'
+    }
   ];
+
   const GLOBAL_KEY = '__lofiAudio';
 
   // 1. Initialize Global Audio & Listeners ONCE
@@ -143,69 +183,86 @@ const { class: className = '' } = Astro.props;
     const audio = new Audio();
     audio.preload = 'none';
     audio.volume = parseFloat(localStorage.getItem('radio-volume') || '0.6');
-    
-    window.__lofiState = { 
-      isPlaying: false, 
-      isConnecting: false, 
-      isError: false, 
+
+    window.__lofiState = {
+      isPlaying: false,
+      isConnecting: false,
+      isError: false,
       trackName: 'Press Play',
-      playlistName: PLAYLISTS[0].name,
-      playlist: [], 
-      currentIndex: 0,
-      currentPlaylistIndex: 0,
-      uiUpdaters: new Set() // Track multiple UI instances
+      artistName: '',
+      playlistName: 'Lofi Radio',
+      currentStreamIndex: 0,
+      streams: STREAMS,
+      uiUpdaters: new Set()
     };
 
     const emit = () => window.__lofiState.uiUpdaters.forEach(fn => fn());
-    
-    audio.addEventListener('play', () => { window.__lofiState.isConnecting = true; emit(); });
-    audio.addEventListener('playing', () => { window.__lofiState.isConnecting = false; window.__lofiState.isPlaying = true; emit(); });
-    audio.addEventListener('pause', () => { window.__lofiState.isPlaying = false; emit(); });
-    audio.addEventListener('error', () => { window.__lofiState.isError = true; emit(); });
-    
-    audio.addEventListener('ended', () => {
-      if (window.__lofiState.playlist.length > 0) {
-        window.__lofiState.currentIndex = (window.__lofiState.currentIndex + 1) % window.__lofiState.playlist.length;
-        window.playCurrentTrack();
-      }
+
+    const currentStream = () => window.__lofiState.streams[window.__lofiState.currentStreamIndex];
+
+    audio.addEventListener('play', () => {
+      window.__lofiState.isConnecting = true;
+      emit();
+    });
+    audio.addEventListener('playing', () => {
+      window.__lofiState.isConnecting = false;
+      window.__lofiState.isPlaying = true;
+      emit();
+    });
+    audio.addEventListener('pause', () => {
+      window.__lofiState.isPlaying = false;
+      emit();
+    });
+    audio.addEventListener('error', () => {
+      window.__lofiState.isError = true;
+      window.__lofiState.isConnecting = false;
+      emit();
     });
 
-    window.playCurrentTrack = async function() {
+    // Auto-retry on stream disconnect so playback stays up 24/7
+    audio.addEventListener('ended', () => {
       const state = window.__lofiState;
-      if (state.playlist.length === 0) return;
+      if (!state.isPlaying) return;
+      state.isConnecting = true;
+      emit();
+      setTimeout(() => {
+        try { audio.load(); audio.play(); } catch (e) { /* retry handled by error */ }
+      }, 1500);
+    });
 
-      const track = state.playlist[state.currentIndex];
-      state.trackName = track.title;
+    window.playStream = async function(index) {
+      const state = window.__lofiState;
+      state.currentStreamIndex = ((index % state.streams.length) + state.streams.length) % state.streams.length;
+      const stream = currentStream();
+
+      state.trackName = stream.name;
+      state.artistName = stream.subtitle;
+      state.playlistName = 'Live Stream';
       state.isConnecting = true;
       state.isError = false;
       emit();
 
       try {
-        audio.src = `https://discoveryprovider.audius.co/v1/tracks/${track.id}/stream`;
+        audio.src = stream.url;
         audio.load();
         await audio.play();
       } catch (err) {
         state.isConnecting = false;
         state.isError = true;
         emit();
-        console.warn(`Radio: ${err.message}`);
+        console.warn(`Radio: stream failed ${stream.name}`, err);
       }
     };
 
-    window.loadPlaylist = async function(force = false) {
-      if (!force && window.__lofiState.playlist.length > 0) return;
-      try {
-        const currentPlaylist = PLAYLISTS[window.__lofiState.currentPlaylistIndex];
-        const res = await fetch(`https://discoveryprovider.audius.co/v1/playlists/${currentPlaylist.id}/tracks`);
-        const data = await res.json();
-        window.__lofiState.playlist = data.data.map(track => ({
-          id: track.id,
-          title: track.title
-        }));
-        emit();
-      } catch (err) {
-        console.warn("Failed to load Audius playlist", err);
+    window.nextStream = function() { window.playStream(window.__lofiState.currentStreamIndex + 1); };
+    window.prevStream = function() { window.playStream(window.__lofiState.currentStreamIndex - 1); };
+    window.randomStream = function() {
+      const state = window.__lofiState;
+      let idx = Math.floor(Math.random() * state.streams.length);
+      if (state.streams.length > 1 && idx === state.currentStreamIndex) {
+        idx = (idx + 1) % state.streams.length;
       }
+      window.playStream(idx);
     };
 
     window[GLOBAL_KEY] = audio;
@@ -223,6 +280,7 @@ const { class: className = '' } = Astro.props;
     const pauseIcon = radio.querySelector('.pause-icon-radio');
     const loadingIcon = radio.querySelector('.loading-icon');
     const trackName = radio.querySelector('.track-name');
+    const artistName = radio.querySelector('.artist-name');
     const playlistName = radio.querySelector('.playlist-name');
     const volSlider = radio.querySelector('.volume-slider');
     const volIcon = radio.querySelector('.vol-icon-svg');
@@ -230,7 +288,7 @@ const { class: className = '' } = Astro.props;
     if (!playBtn || !prevBtn || !nextBtn || !switchBtn) return;
 
     const updateUI = function() {
-      const { isPlaying, isConnecting, isError, trackName: currentTrack, playlistName: currentPlaylist } = window.__lofiState;
+      const { isPlaying, isConnecting, isError, trackName: currentTrack, artistName: currentArtist, playlistName: currentPlaylist } = window.__lofiState;
 
       playIcon.style.display = (isPlaying || isConnecting) ? 'none' : '';
       pauseIcon.style.display = isPlaying && !isConnecting ? '' : 'none';
@@ -238,7 +296,7 @@ const { class: className = '' } = Astro.props;
 
       radio.classList.remove('signal-loading', 'signal-playing', 'signal-error');
       document.body.classList.remove('radio-playing', 'radio-loading', 'radio-error');
-      
+
       if (isError) {
         radio.classList.add('signal-error');
         document.body.classList.add('radio-error');
@@ -251,6 +309,7 @@ const { class: className = '' } = Astro.props;
       }
 
       trackName.textContent = isError ? 'No signal' : (isConnecting ? 'Connecting...' : currentTrack);
+      artistName.textContent = isError || isConnecting ? '' : currentArtist;
       playlistName.textContent = currentPlaylist;
       volSlider.value = Math.round(audio.volume * 100);
 
@@ -260,13 +319,10 @@ const { class: className = '' } = Astro.props;
       else volIcon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm7-.17v6.34L9 12l3-2.83zM16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>';
     };
 
-    // Register this instance
     window.__lofiState.uiUpdaters.add(updateUI);
-    updateUI(); // Initial render
+    updateUI();
 
-    // 3. Play/Pause User Interaction
     playBtn.addEventListener('click', async () => {
-      if (window.__lofiState.playlist.length === 0) await window.loadPlaylist();
       if (window.__lofiState.isPlaying) {
         audio.pause();
         window.__lofiState.isPlaying = false;
@@ -276,44 +332,19 @@ const { class: className = '' } = Astro.props;
         window.__lofiState.isConnecting = false;
         window.__lofiState.uiUpdaters.forEach(fn => fn());
       } else {
+        // User requested playback: reveal mini radio if it was closed
+        window.__miniRadioShouldShow = true;
         if (!audio.src) {
-          window.playCurrentTrack();
+          window.playStream(window.__lofiState.currentStreamIndex);
         } else {
           try { await audio.play(); } catch (err) { console.warn(err); }
         }
       }
     });
 
-    // 4. Previous Track User Interaction
-    prevBtn.addEventListener('click', async () => {
-      if (window.__lofiState.playlist.length === 0) await window.loadPlaylist();
-      if (window.__lofiState.playlist.length === 0) return;
-      // Decrement index and loop back to the end if at 0
-      window.__lofiState.currentIndex = (window.__lofiState.currentIndex - 1 + window.__lofiState.playlist.length) % window.__lofiState.playlist.length;
-      window.playCurrentTrack();
-    });
-
-    // 5. Next Track User Interaction
-    nextBtn.addEventListener('click', async () => {
-      if (window.__lofiState.playlist.length === 0) await window.loadPlaylist();
-      if (window.__lofiState.playlist.length === 0) return;
-      // Increment index and loop back to 0 if at the end
-      window.__lofiState.currentIndex = (window.__lofiState.currentIndex + 1) % window.__lofiState.playlist.length;
-      window.playCurrentTrack();
-    });
-
-    // 6. Switch Playlist User Interaction
-    switchBtn.addEventListener('click', async () => {
-      if (window.__lofiState.isConnecting) return;
-      window.__lofiState.currentPlaylistIndex = (window.__lofiState.currentPlaylistIndex + 1) % PLAYLISTS.length;
-      window.__lofiState.playlistName = PLAYLISTS[window.__lofiState.currentPlaylistIndex].name;
-      window.__lofiState.playlist = [];
-      window.__lofiState.currentIndex = 0;
-      window.__lofiState.trackName = 'Loading...';
-      window.__lofiState.uiUpdaters.forEach(fn => fn());
-      await window.loadPlaylist(true);
-      window.playCurrentTrack();
-    });
+    prevBtn.addEventListener('click', () => window.prevStream());
+    nextBtn.addEventListener('click', () => window.nextStream());
+    switchBtn.addEventListener('click', () => window.randomStream());
 
     volSlider.addEventListener('input', () => {
       audio.volume = parseInt(volSlider.value, 10) / 100;
@@ -322,15 +353,12 @@ const { class: className = '' } = Astro.props;
     });
   }
 
-  // Clear old DOM references on page swap to prevent memory leaks
   document.addEventListener('astro:before-swap', () => {
     window.__lofiState.uiUpdaters.clear();
   }, { once: true });
 
-  // Initialize all instances on the page
   function setupAllRadios() {
     document.querySelectorAll('.radio-player-instance').forEach(setupRadioInstance);
-    window.loadPlaylist();
   }
 
   document.addEventListener('astro:page-load', setupAllRadios);
