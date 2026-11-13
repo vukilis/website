@@ -1,0 +1,271 @@
+---
+title: "Switching from X11 to XLibre on Arch Linux"
+url: /switching-from-x11-to-xlibre-on-arch-linux
+pubDate: 2026-11-13T14:41:07+01:00
+lastmod: 2026-11-13T14:41:07+01:00
+draft: false
+license: "MIT"
+description: "Complete migration guide from X11 to XLibre on Arch Linux with security and performance benefits."
+tags: [xlibre, x11, arch, linux, desktop, security, performance, display]
+categories: [Linux]
+share:
+  enable: true
+  link: true
+  twitter: true
+  reddit: true
+  bluesky: true
+  hackernews: true
+---
+
+import { Image } from 'astro:assets';
+import coverImg from '../../../assets/images/2026/switching-from-x11-to-xlibre-on-arch-linux/cover.avif';
+
+<Image
+  src={coverImg}
+  alt="Arch Linux XLibre Desktop"
+  widths={[640, 960, 1280, 1600]}
+  sizes="(max-width: 768px) 100vw, 900px"
+  formats={['avif', 'webp']}
+  quality={80}
+  loading="lazy"
+/>
+
+## Prerequisites
+
+- Arch Linux system (any architecture)
+- Root access via `sudo`
+- Backing up existing X11 configuration files
+- GPU drivers properly installed (Nvidia/Intel/AMD)
+
+## The Context
+
+The official X.org server project entered maintenance mode, leading to community concern about the future of X11 on Linux. XLibre emerged as a true community-driven fork that focuses on security, code cleanup, and eliminating proprietary ties. Arch users are taking notice because XLibre delivers the stability of X11 with modern security improvements and active development.
+
+## Why XLibre
+
+XLibre is a community-driven fork of X.org that focuses on:
+- **Security**: Regular security patches and vulnerability fixes
+- **Code cleanup**: Removes obsolete code and improves maintainability  
+- **Zero telemetry or proprietary ties**: Purely open-source with no tracking
+- **Modern maintenance**: Actively developed with frequent releases
+- **Performance**: Optimized for modern hardware
+
+## Pre-Flight Checks
+
+### Backup X11 Configuration
+
+I keep my X11 configuration in `/etc/X11/xorg.conf.d/`:
+
+```bash frame="terminal" title="Backup X11 config"
+sudo tar -czvf ~/x11-backup-$(date +%Y%m%d).tar.gz /etc/X11/xorg.conf.d/
+```
+
+### Check GPU Drivers
+
+Verify your GPU driver status:
+
+```bash frame="terminal" title="Check GPU driver installation"
+nvidia-smi || echo "NVIDIA GPU detected" && lspci | grep -i vga
+```
+
+### Verify Package Conflicts
+
+Ensure no conflicting packages are installed:
+
+```bash frame="terminal" title="Check for package conflicts"
+pacman -Qqx | grep -E "(xorg-server|xorg-utils|xorg-drivers)"
+```
+
+## Step-by-Step Migration
+
+### Replace Xorg Server Packages
+
+The XLibre team maintains an official Arch repository: [X11Libre/xserver](https://github.com/X11Libre/xserver). I added it via `pacman.conf`:
+
+```ini frame="terminal" title="Add XLibre repo to /etc/pacman.conf"
+[xlibre-stable]
+Server = https://packages.xlibre.net/arch/stable/$arch
+```
+
+Download and sign the XLibre repository public key so pacman trusts it:
+
+```bash frame="terminal" title="Add XLibre GPG key and trust it"
+curl -O https://xlibre-arch.github.io/xlibre-archlinux.asc
+sudo pacman-key --add xlibre-archlinux.asc
+sudo pacman-key --finger B97F7C613F359424
+sudo pacman-key --lsign-key B97F7C613F359424
+```
+
+> Official documentation: [XLibre Arch Linux Installation](https://xlibre-arch.github.io/#:~:text=curl%20%2DO%20https%3A%2F%2Fxlibre%2Darch.github.io%2Fxlibre%2Darchlinux.asc%20sudo%20pacman%2Dkey%20%2D%2Dadd%20xlibre%2Darchlinux.asc,series.%20%5Bxlibre%2Dstable%5D%20Server%20%3D%20https%3A%2F%2Fpackages.%20xlibre.%20net%2Farch%2Fstable%2F%24arch.)
+
+> **Warning:** Ensure you verify the GPG key fingerprint matches the official XLibre documentation to avoid man-in-the-middle attacks.
+
+Then refreshed the package database and installed XLibre:
+
+```bash frame="terminal" title="Install XLibre packages"
+sudo pacman -Syu
+sudo pacman -S xlibre-meta
+```
+
+The `xlibre` meta package pulls in:
+- `xlibre-server` – Core X server
+- `xlibre-drivers` – GPU drivers
+- `xlibre-xwayland` – Wayland compatibility layer
+- `xlibre-apps` – X client applications
+
+> **Note:** [Are We XLibre Yet?](https://github.com/X11Libre/xserver/wiki/Are-We-XLibre-Yet%3F) helps you choose your distribution and walk through the migration path.
+
+### Verify Installation
+
+Check that XLibre packages are loaded:
+
+```bash frame="terminal" title="Verify XLibre packages"
+pacman -Qi xlibre-xserver | head -10
+pacman -Qs xlibre
+```
+
+## Display Manager & Window Manager Compatibility
+
+### Display Manager Check
+
+Test your display manager:
+
+```bash frame="terminal" title="Test display manager service"
+sudo systemctl restart sddm
+sudo systemctl status sddm
+```
+
+### Window Manager Verification
+
+Common window managers work out of the box:
+- **dwm** – Minimal and fast
+- **bspwm** – Tiling window manager  
+- **i3** – Advanced tiling with scripting
+- **fvwm** – Classic window manager
+
+Test with your chosen window manager:
+
+```bash frame="terminal" title="Start window manager"
+exec dwm
+```
+
+## Configuration Adjustments
+
+### Keymap Configuration
+
+I keep the keymap in `/etc/X11/xorg.conf.d/00-keyboard.conf`:
+
+```ini frame="terminal"
+# In /etc/X11/xorg.conf.d/00-keyboard.conf
+Section "InputClass"
+    Identifier "system-keyboard"
+    MatchIsKeyboard "on"
+    Option "XkbLayout" "us,rs,rs,es"
+    Option "XkbVariant" ",latin"
+EndSection
+```
+
+### NVIDIA Configuration
+
+I keep the NVIDIA configuration in `/etc/X11/xorg.conf.d/20-nvidia.conf`:
+
+```ini frame="terminal"
+# In /etc/X11/xorg.conf.d/20-nvidia.conf
+Section "Files"
+    ModulePath "/usr/lib/nvidia/xorg"
+    ModulePath "/usr/lib/xorg/modules"
+EndSection
+
+Section "Device"
+    Identifier "Nvidia Card"
+    Driver "nvidia"
+    Option "TripleBuffer" "True"
+EndSection
+
+Section "Screen"
+    Identifier "Screen 0"
+    Device "Nvidia Card"
+    Option "ForceFullCompositionPipeline" "True"
+EndSection
+```
+
+### XLibre Configuration
+
+I keep the XLibre configuration in `/etc/X11/xorg.conf.d/xlibre.conf`:
+
+```ini frame="terminal"
+# In /etc/X11/xorg.conf.d/xlibre.conf
+Section "ServerFlags"
+    Option "IgnoreABI" "true"
+EndSection
+```
+
+`IgnoreABI` tells XLibre to ignore Application Binary Interface mismatches between the client and server. It prevents compatibility errors when older clients expect the X11 protocol behavior that XLibre handles differently. Without it, some applications can fail to start under XLibre.
+
+### Xinitrc Configuration
+
+I configure my X session via `~/.xinitrc`:
+
+```bash frame="terminal" title="Example ~/.xinitrc"
+#!/bin/bash
+dbus-run-session -- sh -c '~/.config/polybar/launch.sh --shapes &'
+flatpak run me.timschneeberger.jdsp4linux -t &
+```
+
+```bash frame="terminal" title="Make ~/.xinitrc executable"
+chmod +x ~/.xinitrc
+```
+
+## Post-Install Testing & Troubleshooting
+
+### Verify Display Output
+
+Check that XLibre starts correctly:
+
+```bash frame="terminal" title="Start X server for testing"
+sudo X -core -screen 0 :0 &
+sudo DISPLAY=:0 xmessage "XLibre working!"
+```
+
+### Review Logs
+
+Monitor XLibre logs for any issues:
+
+```bash frame="terminal" title="Monitor XLibre logs"
+tail -f /var/log/xlibre.log
+```
+
+### Common Issues & Solutions
+
+| Problem | Likely Cause | Solution |
+|---------|--------------|----------|
+| No display output | Incorrect driver | Reinstall GPU driver packages | 
+| Corrupted config | Bad xorg.conf.d entry | Restore from backup or use `sudo X -config /path/to/good.conf` |
+| Input devices not working | Missing driver | Add `10-mice.conf` or `90-touchpad.conf` |
+
+> **Note:** If you encounter display issues, temporarily revert to X11 using `sudo pacman -S xorg-server`, then troubleshoot and reinstall XLibre.
+
+## Performance Verification
+
+### Benchmarking
+
+Test XLibre performance:
+
+```bash frame="terminal" title="Benchmark OpenGL performance"
+GLX_INFO=1 firefox --version
+```
+
+### Stability Check
+
+Monitor for a full boot cycle:
+
+```bash frame="terminal" title="Full boot test"
+sudo reboot
+```
+
+## Conclusion
+
+Switching from X11 to XLibre on Arch Linux keeps lightweight X11-based desktop setups alive and secure for the future. XLibre provides a true community-driven alternative that maintains compatibility while delivering modern security improvements and active development.
+
+**Happy Ricing!**
+
